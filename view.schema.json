@@ -1,6 +1,7 @@
 {
   "$id": "https://microsoft.com/fluentui-kit/v1/view.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fluent UI Kit View",
   "description": "A Fluent UI Kit View; an experience provided to the user in the canvas available.",
   "type": "object",
   "required": ["main"],
@@ -40,7 +41,7 @@
       "allOf": [{ "$ref": "#/$defs/__section" }, { "$ref": "#/$defs/__sections" }]
     },
     "__sections": {
-      "title": "SectionsFragment",
+      "title": "Sections fragment",
       "type": "object",
       "properties": {
         "sections": {
@@ -51,7 +52,7 @@
       }
     },
     "__section": {
-      "title": "SectionFragment",
+      "title": "Section fragment",
       "type": "object",
       "properties": {
         "title": {
