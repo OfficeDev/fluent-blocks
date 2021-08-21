@@ -1,0 +1,55 @@
+{
+  "$id": "https://microsoft.com/fluentui-kit/v1/view.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "A Fluent UI Kit View; an experience provided to the user in the canvas available.",
+  "type": "object",
+  "required": ["main"],
+  "properties": {
+    "sidebar": { "$ref": "#/$defs/sidebar" },
+    "toolbar": { "$ref": "#/$defs/toolbar" },
+    "modal": {"$ref":  "#/$defs/modal"},
+    "main": { "$ref": "#/$defs/main" }
+  },
+  "$defs": {
+    "sidebar": {
+      "type": "object"
+    },
+    "toolbar": {
+      "type": "object"
+    },
+    "modal": {
+      "type": "object"
+    },
+    "main": {
+      "type": "object",
+      "allOf": [{ "$ref": "#/$defs/__sections" }],
+      "properties": {
+        "header": { "allOf": [{ "$ref": "#/$defs/__section" }] }
+      }
+    },
+    "section": {
+      "type": "object",
+      "allOf": [{ "$ref": "#/$defs/__section" }, { "$ref": "#/$defs/__sections" }]
+    },
+    "__sections": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {"$ref":  "#/$defs/section"}
+        }
+      }
+    },
+    "__section": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "abstract": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
