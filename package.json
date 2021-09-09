@@ -8,12 +8,20 @@
   "private": true,
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "rm -rf types && json2ts -i 'src/*.json' -o types/ --cwd src"
+    "lint": "prettier --write src/**/*.json",
+    "build": "rm -rf types && json2ts -i 'src/*.json' -o types/ --cwd src",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "json-schema-to-typescript": "^10.1.4"
+    "husky": ">=6",
+    "json-schema-to-typescript": "^10.1.4",
+    "lint-staged": ">=10",
+    "prettier": "^2.3.2"
+  },
+  "lint-staged": {
+    "*.{json}": "prettier --write"
   }
 }

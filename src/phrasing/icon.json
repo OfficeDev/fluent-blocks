@@ -6,7 +6,20 @@
   "properties": {
     "icon": {
       "title": "Icon ID",
-      "enum": ["accept", "add", "approval", "apps", "archive", "arrow-down", "arrow-left", "arrow-right", "arrow-sort", "arrow-up", "audience", "…"]
+      "enum": [
+        "accept",
+        "add",
+        "approval",
+        "apps",
+        "archive",
+        "arrow-down",
+        "arrow-left",
+        "arrow-right",
+        "arrow-sort",
+        "arrow-up",
+        "audience",
+        "…"
+      ]
     },
     "tooltip": {
       "type": "array",
