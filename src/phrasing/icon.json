@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "Icon",
+  "description": "An icon to display inline with text, which may include a tooltip invoked on hover/focus.",
+  "properties": {
+    "icon": {
+      "title": "Icon ID",
+      "enum": ["accept", "add", "approval", "apps", "archive", "arrow-down", "arrow-left", "arrow-right", "arrow-sort", "arrow-up", "audience", "…"]
+    },
+    "tooltip": {
+      "type": "array",
+      "items": { "$ref": "./text.json" }
+    },
+    "variant": {
+      "title": "Icon Variant",
+      "enum": ["filled", "outline"]
+    }
+  },
+  "required": ["icon"],
+  "additionalProperties": false
+}

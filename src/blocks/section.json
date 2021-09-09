@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "allOf": [{ "$ref": "../fragments/sectioning-properties.json"}, {
+    "properties": {
+      "blocks": {
+        "title": "Blocks",
+        "description": "An ordered set of block elements which are rendered after the title & abstract of the parent section and before any subsections.",
+        "type": "array",
+        "items": { "$ref":  "../fragments/non-sectioning-blocks.json" }
+      },
+      "sections": {
+        "title": "Sections",
+        "description": "An ordered set of sections, which are children of the parent section or the main surface, and which are rendered after the parent’s blocks. Sections are used to determine a view’s table of contents.",
+        "type": "array",
+        "items": {"$ref":  "./section.json"}
+      }
+    },
+    "additionalProperties": false
+  }]
+}

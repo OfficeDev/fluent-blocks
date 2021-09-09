@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "Paragraph",
+  "description": "A block of phrasing elements rendered inline together.",
+  "properties": {
+    "paragraph": { "$ref": "../fragments/phrasing-content.json" }
+  },
+  "additionalProperties": false
+}

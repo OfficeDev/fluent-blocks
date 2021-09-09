@@ -5,10 +5,10 @@
   "type": "object",
   "required": ["main"],
   "properties": {
-    "sidebar": { "$ref": "components/sidebar.json"},
-    "toolbar": { "$ref": "components/toolbar.json"},
-    "modal": {"$ref": "components/modal.json"},
-    "main": { "$ref": "components/main.json"}
+    "sidebar": { "$ref": "surfaces/sidebar.json"},
+    "toolbar": { "$ref": "surfaces/toolbar.json"},
+    "modal": {"$ref": "surfaces/modal.json"},
+    "main": { "$ref": "blocks/section.json"}
   },
   "additionalProperties": false
 }

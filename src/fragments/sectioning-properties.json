@@ -2,11 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "sections": {
-      "title": "Sections",
-      "type": "array",
-      "items": {"$ref":  "./section.json"}
-    }
+    "title": { "$ref": "./phrasing-content.json"},
+    "abstract": { "$ref": "./phrasing-content.json"}
   },
   "additionalProperties": false
 }
