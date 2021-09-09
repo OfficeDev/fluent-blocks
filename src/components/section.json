@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "allOf": [{ "$ref": "../fragments/section.json"}, { "$ref": "../fragments/sections.json"}],
+  "additionalProperties": false
+}

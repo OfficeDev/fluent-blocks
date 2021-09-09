@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "View",
+  "description": "An experience provided to the user via their device’s canvas.",
+  "type": "object",
+  "required": ["main"],
+  "properties": {
+    "sidebar": { "$ref": "components/sidebar.json"},
+    "toolbar": { "$ref": "components/toolbar.json"},
+    "modal": {"$ref": "components/modal.json"},
+    "main": { "$ref": "components/main.json"}
+  },
+  "additionalProperties": false
+}
