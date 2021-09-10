@@ -1,6 +1,6 @@
 # UI Kit schemas & type definitions
 
-This project defines an API developers can use to build fully interactive & accessible experiences using only JSON.
+This project defines an API developers can use to build fully interactive & accessible experiences using straightforward, serializeable props.
 
 This includes a set of JSON schemas from which TypeScript definitions are derived and used in the development of the design system implementation.
 
