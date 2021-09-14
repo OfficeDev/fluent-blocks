@@ -5,8 +5,8 @@
   "type": "array",
   "items": {
     "anyOf": [
-      { "$ref": "../phrasing/text.json" },
-      { "$ref": "../phrasing/icon.json" }
+      { "$ref": "../../phrasing/text/text.json" },
+      { "$ref": "../../phrasing/icon/icon.json" }
     ]
   }
 }

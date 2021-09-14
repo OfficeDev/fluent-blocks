@@ -4,7 +4,9 @@
   "title": "Paragraph",
   "description": "A block of phrasing elements rendered inline together.",
   "properties": {
-    "paragraph": { "$ref": "../fragments/phrasing-content.json" }
+    "paragraph": {
+      "$ref": "../../fragments/phrasing-content/phrasing-content.json"
+    }
   },
   "additionalProperties": false
 }

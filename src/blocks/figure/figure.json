@@ -4,7 +4,9 @@
   "title": "Figure",
   "description": "A block-level element containing media and labeled by a caption.",
   "properties": {
-    "caption": { "$ref": "../fragments/phrasing-content.json" },
+    "caption": {
+      "$ref": "../../fragments/phrasing-content/phrasing-content.json"
+    },
     "media": "…"
   },
   "required": ["caption", "media"],

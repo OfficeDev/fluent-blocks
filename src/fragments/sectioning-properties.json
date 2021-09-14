@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "title": { "$ref": "./phrasing-content.json" },
-    "abstract": { "$ref": "./phrasing-content.json" }
+    "title": { "$ref": "phrasing-content/phrasing-content.json" },
+    "abstract": { "$ref": "phrasing-content/phrasing-content.json" }
   },
   "additionalProperties": false
 }
