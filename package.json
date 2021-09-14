@@ -12,35 +12,48 @@
     "build": "rm -rf types && cd ./src/view && json2ts -i './view.json' -o ../../types/view.d.ts",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --project-token=6c943fd2f5e9"
   },
   "engines": {
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@storybook/addon-actions": "^6.3.8",
-    "@storybook/addon-essentials": "^6.3.8",
-    "@storybook/addon-links": "^6.3.8",
-    "@storybook/react": "^6.3.8",
-    "@types/lodash": "^4.14.172",
+    "@types/eslint": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-import-resolver-typescript": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-jest": "latest",
+    "eslint-plugin-lodash": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-security": "latest",
+    "@babel/core": "latest",
+    "@storybook/addon-actions": "latest",
+    "@storybook/addon-essentials": "latest",
+    "@storybook/addon-links": "latest",
+    "@storybook/react": "latest",
+    "@types/lodash": "latest",
     "@types/react": ">=16.8.0 <17.0.0",
     "@types/react-dom": ">=16.8.0 <17.0.0",
-    "babel-loader": "^8.2.2",
-    "chromatic": "^5.9.2",
-    "husky": ">=6",
+    "babel-loader": "latest",
+    "chromatic": "latest",
+    "husky": "latest",
     "json-schema-to-typescript": "^10.1.4",
     "lint-staged": ">=10",
-    "prettier": "^2.3.2",
+    "prettier": "latest",
     "typescript": "^4.4.3"
   },
   "lint-staged": {
     "*.{json}": "prettier --write"
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.0.0-alpha.1",
-    "lodash": "^4.17.21",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "@fluentui/react-components": "alpha",
+    "lodash": "latest",
+    "react": "^16.14",
+    "react-dom": "^16.14"
   }
 }

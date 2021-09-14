@@ -1,0 +1,4 @@
+{
+  "{src,.storybook}/**/*.{js,jsx,ts,tsx,json}": "prettier --write",
+  "{src,.storybook}/**/*.{js,jsx,ts,tsx}": "eslint --cache --max-warnings 0 --fix"
+}
