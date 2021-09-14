@@ -8,10 +8,8 @@ const Provider = ({ children }) => (
   </FluentProvider>
 )
 
-// test linting
-
 export const View = ({ main }: ViewProps) => (
-    <Provider>
-      <Main {...main} />
-    </Provider>
-  )
+  <Provider>
+    <Main {...main} />
+  </Provider>
+)
