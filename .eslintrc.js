@@ -304,7 +304,6 @@ const eslintrc = {
     "react/no-find-dom-node": "warn",
     "react/no-direct-mutation-state": "warn",
     "react/display-name": "warn",
-    semi: "warn",
     "spaced-comment": [
       "warn",
       "always",
