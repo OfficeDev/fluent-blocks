@@ -26,6 +26,16 @@ export default {
       defaultValue: defaultMain,
       control: { type: 'object' },
     },
+    dir: {
+      name: 'Text direction',
+      defaultValue: 'ltr',
+      control: { type: 'inline-radio', options: ['ltr', 'rtl'] },
+    },
+    theme: {
+      name: 'Teams theme variant',
+      defaultValue: 'light',
+      control: { type: 'inline-radio', options: ['light', 'dark', 'high-contrast'] },
+    },
   },
 }
 

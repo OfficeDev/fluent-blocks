@@ -8,7 +8,9 @@
     "sidebar": { "$ref": "../surfaces/sidebar.json" },
     "toolbar": { "$ref": "../surfaces/toolbar.json" },
     "modal": { "$ref": "../surfaces/modal.json" },
-    "main": { "$ref": "../blocks/section/section.json" }
+    "main": { "$ref": "../blocks/section/section.json" },
+    "theme": { "enum": ["light", "dark", "high-contrast"] },
+    "dir": { "enum": ["ltr", "rtl"] }
   },
   "additionalProperties": false
 }
