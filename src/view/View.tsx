@@ -3,7 +3,11 @@ import { View as ViewProps } from '../../types/view'
 import { Main } from '../surfaces/main/Main'
 import { PropsWithChildren } from 'react'
 
-const Provider = ({ theme, dir, children }: PropsWithChildren<{ theme: ViewProps['theme']; dir: ViewProps['dir'] }>) => (
+export const FluentKitProvider = ({
+  theme,
+  dir,
+  children,
+}: PropsWithChildren<{ theme: ViewProps['theme']; dir: ViewProps['dir'] }>) => (
   <FluentProvider
     {...{
       theme: (() => {
@@ -25,7 +29,7 @@ const Provider = ({ theme, dir, children }: PropsWithChildren<{ theme: ViewProps
 )
 
 export const View = ({ main, theme, dir }: ViewProps) => (
-  <Provider {...{ theme, dir }}>
+  <FluentKitProvider {...{ theme, dir }}>
     <Main {...main} />
-  </Provider>
+  </FluentKitProvider>
 )

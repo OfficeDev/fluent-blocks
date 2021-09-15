@@ -3,7 +3,7 @@
   "title": "View",
   "description": "An experience provided to the user via their device’s canvas.",
   "type": "object",
-  "required": ["main"],
+  "required": ["main", "theme", "dir"],
   "properties": {
     "sidebar": { "$ref": "../surfaces/sidebar.json" },
     "toolbar": { "$ref": "../surfaces/toolbar.json" },

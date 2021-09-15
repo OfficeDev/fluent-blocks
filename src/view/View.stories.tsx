@@ -34,15 +34,13 @@ export default {
     },
     dir: {
       name: 'Text direction',
-      options: ['ltr', 'rtl'],
       defaultValue: 'ltr',
-      control: { type: 'inline-radio' },
+      control: { type: 'inline-radio', labels: { ltr: '→', rtl: '←' } },
     },
     theme: {
-      name: 'Teams theme variant',
-      options: ['light', 'dark', 'high-contrast'],
+      name: 'Theme variant',
       defaultValue: 'light',
-      control: { type: 'inline-radio' },
+      control: { type: 'inline-radio', labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'High contrast' } },
     },
   },
 }
