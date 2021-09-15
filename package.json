@@ -8,6 +8,7 @@
   "private": true,
   "types": "types/view.d.ts",
   "scripts": {
+    "dev": "just dev",
     "build": "rm -rf types && cd ./src/view && json2ts -i './view.json' -o ../../types/view.d.ts",
     "prepare": "husky install",
     "storybook": "start-storybook -p 4000",
@@ -33,6 +34,7 @@
     "@types/react-dom": ">=16.8.0 <17.0.0",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
+    "awatch": "^2.0.4",
     "babel-loader": "latest",
     "chromatic": "latest",
     "eslint": "latest",
@@ -47,7 +49,9 @@
     "faker": "thure/faker.js#v5.1.2",
     "husky": "latest",
     "json-schema-to-typescript": "^10.1.4",
+    "just-scripts": "^1.5.8",
     "lint-staged": ">=10",
+    "node-watch": "^0.7.1",
     "prettier": "latest",
     "typescript": "^4.4.3"
   },
