@@ -11,9 +11,15 @@ const fakeTitle = () => {
 const defaultMain = {
   title: [{ text: 'Fluent Kit' }],
   abstract: [{ text: 'This is a demonstration of Fluent Kit’s View component. ' }, { text: fake('{{lorem.paragraph}}') }],
-  sections: range(4).map(() => ({
+  sections: range(4).map((s) => ({
     title: [{ text: fakeTitle() }],
     blocks: range(3).map(() => ({ paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })) })),
+    ...(s === 1 && {
+      sections: range(2).map(() => ({
+        title: [{ text: fakeTitle() }],
+        blocks: range(3).map(() => ({ paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })) })),
+      })),
+    }),
   })),
 }
 
@@ -28,13 +34,15 @@ export default {
     },
     dir: {
       name: 'Text direction',
+      options: ['ltr', 'rtl'],
       defaultValue: 'ltr',
-      control: { type: 'inline-radio', options: ['ltr', 'rtl'] },
+      control: { type: 'inline-radio' },
     },
     theme: {
       name: 'Teams theme variant',
+      options: ['light', 'dark', 'high-contrast'],
       defaultValue: 'light',
-      control: { type: 'inline-radio', options: ['light', 'dark', 'high-contrast'] },
+      control: { type: 'inline-radio' },
     },
   },
 }
