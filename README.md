@@ -12,7 +12,13 @@ Install `node` greater than or equal to v10 and `yarn`, then run:
 $ yarn install
 ```
 
-Then, to build the TypeScript types, run:
+Then, to start Storybook and watch the JSON schemas, run:
+
+```shell
+$ yarn dev
+```
+
+To only build TypeScript types from the JSON schemas once, run:
 
 ```shell
 $ yarn build

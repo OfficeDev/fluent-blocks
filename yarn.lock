@@ -3626,7 +3626,7 @@ autoprefixer@^9.8.6:
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
-awatch@^2.0.4:
+awatch@latest:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/awatch/-/awatch-2.0.4.tgz#11cc1ebd4180726bed7aeeacb965b697964178b0"
   integrity sha512-RB6AC/+aHcxMef/lsmWfFJobkmkTAbcfWQ3TxPzxaeJGh0PKfspBzFK9nv5X/OTEh9juX3CLEWOHzKxt8yDjlQ==
@@ -8889,11 +8889,6 @@ node-releases@^1.1.61, node-releases@^1.1.75:
   version "1.1.75"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.75.tgz#6dd8c876b9897a1b8e5a02de26afa79bb54ebbfe"
   integrity sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw==
-
-node-watch@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.7.1.tgz#0caaa6a6833b0d533487f953c52a6c787769ba7c"
-  integrity sha512-UWblPYuZYrkCQCW5PxAwYSxaELNBLUckrTBBk8xr1/bUgyOkYYTsUcV4e3ytcazFEOyiRyiUrsG37pu6I0I05g==
 
 normalize-package-data@^2.3.2, normalize-package-data@^2.5.0:
   version "2.5.0"

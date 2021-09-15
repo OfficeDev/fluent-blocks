@@ -11,7 +11,6 @@
     "dev": "just dev",
     "build": "rm -rf types && cd ./src/view && json2ts -i './view.json' -o ../../types/view.d.ts",
     "prepare": "husky install",
-    "storybook": "start-storybook -p 4000",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic --project-token=6c943fd2f5e9",
     "lint-staged": "lint-staged"
@@ -34,7 +33,7 @@
     "@types/react-dom": ">=16.8.0 <17.0.0",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "awatch": "^2.0.4",
+    "awatch": "latest",
     "babel-loader": "latest",
     "chromatic": "latest",
     "eslint": "latest",
@@ -51,7 +50,6 @@
     "json-schema-to-typescript": "^10.1.4",
     "just-scripts": "^1.5.8",
     "lint-staged": ">=10",
-    "node-watch": "^0.7.1",
     "prettier": "latest",
     "typescript": "^4.4.3"
   },
