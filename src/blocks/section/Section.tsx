@@ -2,7 +2,7 @@ import { createElement } from 'react'
 import { Section as SectionProps } from '../../../types/view'
 import { Paragraph, Heading } from '../paragraph/Paragraph'
 import { Block } from '../Block'
-import { makeStyles } from '@fluentui/react-components'
+import { makeStyles, mergeClasses } from '@fluentui/react-components'
 import { PropsWithPath } from '../../lib/types'
 import { nextPathAndKey, nextPath } from '../../lib'
 
@@ -16,12 +16,13 @@ export const Section = ({
   sections,
   blocks,
   path,
+  className,
   as = 'section',
-}: PropsWithPath<SectionProps> & { as?: string }) => {
+}: PropsWithPath<SectionProps> & { as?: string; className?: string }) => {
   const styles = useStyles()
   return createElement(
     as,
-    { className: styles.root },
+    { className: mergeClasses(styles.root, className) },
     <>
       {title && <Heading paragraph={title} level={path.length} path={nextPath(path, 'h')} />}
       {abstract && <Paragraph paragraph={abstract} path={nextPath(path, 'a')} />}
