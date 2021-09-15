@@ -12,7 +12,7 @@ export const PhrasingContent = (phrasingElements: PhrasingContentProps) => (
       if (phrasingElement.hasOwnProperty('icon')) {
         return <Icon {...(phrasingElement as IconProps)} />
       } else {
-        console.warn('Unsupporting phrasing element:', phrasingElement)
+        console.warn('Unsupported phrasing element:', phrasingElement)
         return null
       }
     })}
