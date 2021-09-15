@@ -12,7 +12,12 @@ const useStyles = makeStyles({
   },
   heading: (theme) => ({
     color: theme.alias.color.neutral.neutralForeground1,
+    fontSize: 'inherit',
   }),
+  h1: {
+    fontSize: rem(18),
+    lineHeight: 1.3333,
+  },
 })
 
 export const Heading = ({ paragraph, path, level = 6 }: PropsWithPath<ParagraphProps> & { level: number }) => {
@@ -21,7 +26,7 @@ export const Heading = ({ paragraph, path, level = 6 }: PropsWithPath<ParagraphP
   const headingClassName = mergeClasses(styles.root, styles.heading)
   switch (level) {
     case 1:
-      return <h1 className={headingClassName}>{content}</h1>
+      return <h1 className={mergeClasses(styles.root, styles.heading, styles.h1)}>{content}</h1>
     case 2:
       return <h2 className={headingClassName}>{content}</h2>
     case 3:
