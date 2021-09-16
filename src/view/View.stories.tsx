@@ -38,6 +38,11 @@ ViewDemo.args = {
       title: [{ text: fakeTitle() }],
       blocks: range(3).map(() => ({ paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })) })),
       ...(s === 1 && {
+        blocks: [
+          {
+            inputs: [{ label: fake(fakeTitle()) }, { label: fake(fakeTitle()) }, { label: fake(fakeTitle()) }],
+          },
+        ],
         sections: range(2).map(() => ({
           title: [{ text: fakeTitle() }],
           blocks: range(3).map(() => ({ paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })) })),
@@ -47,4 +52,4 @@ ViewDemo.args = {
   },
   dir: 'ltr',
   theme: 'light',
-}
+} as ViewProps

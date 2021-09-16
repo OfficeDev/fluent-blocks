@@ -1,7 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "anyOf": [
-    { "$ref": "../blocks/paragraph/paragraph.json" },
-    { "$ref": "../blocks/figure/figure.json" }
-  ]
-}
