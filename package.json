@@ -1,6 +1,6 @@
 {
   "name": "fluent-kit",
-  "version": "0.1.0",
+  "version": "9.0.0-alpha.1",
   "main": "index.js",
   "repository": "git@github.com:thure/fluent-kit.git",
   "author": "Will Shown <willshown@microsoft.com>",
