@@ -7,16 +7,22 @@ import { PropsWithPath } from '../../lib/types'
 const useStyles = makeStyles({
   root: {
     maxWidth: rem(432),
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    lineHeight: 20 / 14,
+    marginInlineStart: 'auto',
+    marginInlineEnd: 'auto',
+    marginBlockStart: rem(4),
+    marginBlockEnd: rem(4),
   },
   heading: (theme) => ({
     color: theme.alias.color.neutral.neutralForeground1,
     fontSize: 'inherit',
+    fontWeight: 600,
+    marginBlockStart: rem(24),
   }),
   h1: {
     fontSize: rem(18),
-    lineHeight: 1.3333,
+    lineHeight: 24 / 18,
+    fontWeight: 700,
   },
 })
 
