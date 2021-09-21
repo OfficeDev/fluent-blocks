@@ -8,14 +8,15 @@ import { PropsWithPath } from '../../lib/types'
 export const PhrasingContent = ({ path, elements }: PropsWithPath<{ elements: PhrasingContentProps }>) => (
   <>
     {Array.prototype.map.call(Array.isArray(elements) ? elements : values(elements), (phrasingElement, p) => {
-      if (phrasingElement.hasOwnProperty('text')) {
-        return <Text {...(phrasingElement as TextProps)} key={concat(path, p).join(':')} />
-      }
-      if (phrasingElement.hasOwnProperty('icon')) {
-        return <Icon {...(phrasingElement as IconProps)} key={concat(path, p).join(':')} />
-      } else {
-        console.warn('Unsupported phrasing element:', phrasingElement)
-        return null
+      const key = concat(path, p).join(':')
+      switch (true) {
+        case phrasingElement.hasOwnProperty('text'):
+          return <Text {...(phrasingElement as TextProps)} key={key} />
+        case phrasingElement.hasOwnProperty('icon'):
+          return <Icon {...(phrasingElement as IconProps)} key={key} />
+        default:
+          console.warn('Unsupported phrasing element:', phrasingElement, key)
+          return null
       }
     })}
   </>

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "Input",
+  "description": "An element for gathering input.",
+  "properties": {
+    "label": { "type": "string" }
+  },
+  "required": ["label"],
+  "additionalProperties": false
+}
