@@ -1,11 +1,10 @@
 import {
   Blocks,
-  InputsBlock,
   Paragraph as ParagraphProps,
   // Figure as FigureProps
 } from '../../types/view'
 import { Paragraph } from './paragraph/Paragraph'
-import { Inputs } from './inputs/Inputs'
+import { InputsProps, Inputs } from './inputs/Inputs'
 import { PropsWithPath } from '../lib/types'
 // import {Figure} from "./figure/Figure";
 
@@ -18,7 +17,7 @@ export const Block = (block: PropsWithPath<Blocks[0]>) => {
       return <Paragraph {...(block as PropsWithPath<ParagraphProps>)} />
     // case block.hasOwnProperty('media'): return <Figure {...block as FigureProps }/>
     case block.hasOwnProperty('inputs'):
-      return <Inputs {...(block as PropsWithPath<InputsBlock>)} />
+      return <Inputs {...(block as PropsWithPath<InputsProps>)} />
     default:
       console.warn('Unsupported block:', block)
       return null
