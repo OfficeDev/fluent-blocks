@@ -13,12 +13,21 @@ export const Section = ({
   path,
   className,
   as = 'section',
-}: PropsWithPath<SectionProps> & { as?: string; className?: string }) => createElement(
+}: PropsWithPath<SectionProps> & { as?: string; className?: string }) =>
+  createElement(
     as,
     { className },
     <>
-      {title && <Heading paragraph={title} level={path.length} path={nextPath(path, 'h')} />}
-      {abstract && <Paragraph paragraph={abstract} path={nextPath(path, 'a')} />}
+      {title && (
+        <Heading
+          paragraph={title}
+          level={path.length}
+          path={nextPath(path, 'h')}
+        />
+      )}
+      {abstract && (
+        <Paragraph paragraph={abstract} path={nextPath(path, 'a')} />
+      )}
       {(blocks || []).map((block, b) => {
         const [nextPath, key] = nextPathAndKey(path, `b${b}`)
         return <Block {...block} path={nextPath} key={key} />

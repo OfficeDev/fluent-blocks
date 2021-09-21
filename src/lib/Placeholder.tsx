@@ -20,7 +20,13 @@ const useStyles = makeStyles({
   }),
 })
 
-export const Placeholder = ({ label, className }: { label: string; className?: string }) => {
+export const Placeholder = ({
+  label,
+  className,
+}: {
+  label: string
+  className?: string
+}) => {
   const styles = useStyles()
   return <div className={cx(styles.root, className)}>{label}</div>
 }

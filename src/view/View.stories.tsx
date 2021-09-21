@@ -22,7 +22,14 @@ export default {
     },
     theme: {
       name: 'Theme variant',
-      control: { type: 'inline-radio', labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'High contrast' } },
+      control: {
+        type: 'inline-radio',
+        labels: {
+          light: 'Light',
+          dark: 'Dark',
+          'high-contrast': 'High contrast',
+        },
+      },
     },
   },
 }
@@ -33,19 +40,32 @@ export const ViewDemo = ViewTemplate.bind({})
 ViewDemo.args = {
   main: {
     title: [{ text: 'Fluent Kit' }],
-    abstract: [{ text: 'This is a demonstration of Fluent Kit’s View component. ' }, { text: fake('{{lorem.paragraph}}') }],
+    abstract: [
+      { text: 'This is a demonstration of Fluent Kit’s View component. ' },
+      { text: fake('{{lorem.paragraph}}') },
+    ],
     sections: range(4).map((s) => ({
       title: [{ text: fakeTitle() }],
-      blocks: range(3).map(() => ({ paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })) })),
+      blocks: range(3).map(() => ({
+        paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })),
+      })),
       ...(s === 1 && {
         blocks: [
           {
-            inputs: [{ label: fake(fakeTitle()) }, { label: fake(fakeTitle()) }, { label: fake(fakeTitle()) }],
+            inputs: [
+              { label: fake(fakeTitle()) },
+              { label: fake(fakeTitle()) },
+              { label: fake(fakeTitle()) },
+            ],
           },
         ],
         sections: range(2).map(() => ({
           title: [{ text: fakeTitle() }],
-          blocks: range(3).map(() => ({ paragraph: range(3).map(() => ({ text: fake('{{lorem.sentence}} ') })) })),
+          blocks: range(3).map(() => ({
+            paragraph: range(3).map(() => ({
+              text: fake('{{lorem.sentence}} '),
+            })),
+          })),
         })),
       }),
     })),

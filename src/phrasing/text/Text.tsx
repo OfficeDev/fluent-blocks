@@ -1,6 +1,11 @@
 import { z } from 'zod'
 
-export const textVariant = z.union([z.literal('normal'), z.literal('emphasized'), z.literal('strong'), z.literal('highlighted')])
+export const textVariant = z.union([
+  z.literal('normal'),
+  z.literal('emphasized'),
+  z.literal('strong'),
+  z.literal('highlighted'),
+])
 
 export const textProps = z.object({
   text: z.string(),

@@ -26,13 +26,21 @@ const useStyles = makeStyles({
   },
 })
 
-export const Heading = ({ paragraph, path, level = 6 }: PropsWithPath<ParagraphProps> & { level: number }) => {
+export const Heading = ({
+  paragraph,
+  path,
+  level = 6,
+}: PropsWithPath<ParagraphProps> & { level: number }) => {
   const content = <PhrasingContent elements={paragraph} path={path} />
   const styles = useStyles()
   const headingClassName = cx(styles.root, styles.heading)
   switch (level) {
     case 1:
-      return <h1 className={cx(styles.root, styles.heading, styles.h1)}>{content}</h1>
+      return (
+        <h1 className={cx(styles.root, styles.heading, styles.h1)}>
+          {content}
+        </h1>
+      )
     case 2:
       return <h2 className={headingClassName}>{content}</h2>
     case 3:
@@ -46,7 +54,10 @@ export const Heading = ({ paragraph, path, level = 6 }: PropsWithPath<ParagraphP
   }
 }
 
-export const Paragraph = ({ paragraph, path }: PropsWithPath<ParagraphProps>) => {
+export const Paragraph = ({
+  paragraph,
+  path,
+}: PropsWithPath<ParagraphProps>) => {
   const styles = useStyles()
   return (
     <p className={styles.root}>

@@ -1,4 +1,9 @@
-import { FluentProvider, teamsLightTheme, teamsDarkTheme, teamsHighContrastTheme } from '@fluentui/react-components'
+import {
+  FluentProvider,
+  teamsLightTheme,
+  teamsDarkTheme,
+  teamsHighContrastTheme,
+} from '@fluentui/react-components'
 import { View as ViewProps } from '../../types/view'
 import { Main } from '../surfaces/main/Main'
 import { PropsWithChildren } from 'react'
