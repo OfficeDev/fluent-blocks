@@ -9,7 +9,8 @@ export const textProps = z.object({
 
 export type TextProps = z.infer<typeof textProps>
 
-export const Text = ({ text, variant }: TextProps) => {
+export const Text = (props: TextProps) => {
+  const { text, variant } = textProps.parse(props)
   switch (variant) {
     // todo: handle other cases by wrapping in a `span` that applies the correct styles.
     default:
