@@ -4,7 +4,7 @@ export const textVariant = z.union([z.literal('normal'), z.literal('emphasized')
 
 export const textProps = z.object({
   text: z.string(),
-  variant: textVariant,
+  variant: textVariant.optional(),
 })
 
 export type TextProps = z.infer<typeof textProps>
