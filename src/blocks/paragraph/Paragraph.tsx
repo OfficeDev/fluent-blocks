@@ -1,8 +1,15 @@
-import { Paragraph as ParagraphProps } from '../../../types/view'
+import { z } from 'zod'
 import { PhrasingContent } from '../../fragments/phrasing-content/PhrasingContent'
+import { phrasingContentProps } from '../../phrasing'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import { rem } from '../../lib'
 import { PropsWithPath } from '../../lib/types'
+
+export const paragraphProps = z.object({
+  paragraph: phrasingContentProps.optional(),
+})
+
+export type ParagraphProps = z.infer<typeof paragraphProps>
 
 const useStyles = makeStyles({
   root: {
