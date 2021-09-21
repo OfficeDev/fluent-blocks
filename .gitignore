@@ -3,3 +3,4 @@ node_modules
 /types
 *.log
 .eslintcache
+.DS_Store
