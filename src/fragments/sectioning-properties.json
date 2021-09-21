@@ -5,5 +5,6 @@
     "title": { "$ref": "phrasing-content/phrasing-content.json" },
     "abstract": { "$ref": "phrasing-content/phrasing-content.json" }
   },
+  "required": ["title"],
   "additionalProperties": false
 }

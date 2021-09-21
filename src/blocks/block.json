@@ -1,0 +1,4 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [{ "$ref": "paragraph/paragraph.json" }, { "$ref": "figure/figure.json" }, { "$ref": "inputs/inputs.json" }]
+}

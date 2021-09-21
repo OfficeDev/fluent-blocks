@@ -11,7 +11,7 @@
           "title": "Blocks",
           "description": "An ordered set of block elements which are rendered after the title & abstract of the parent section and before any subsections.",
           "type": "array",
-          "items": { "$ref": "../../fragments/non-sectioning-blocks.json" }
+          "items": { "$ref": "../block.json" }
         },
         "sections": {
           "title": "Sections",
