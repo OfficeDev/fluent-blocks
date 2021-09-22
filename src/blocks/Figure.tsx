@@ -8,7 +8,8 @@ export const figureProps = z.object({
 
 export type FigureProps = z.infer<typeof figureProps>
 
-export function isFigure(o: unknown): o is FigureProps {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isFigure(o: any): o is FigureProps {
   return 'caption' in o
 }
 

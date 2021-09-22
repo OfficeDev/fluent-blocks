@@ -1,7 +1,6 @@
-import { View } from './View'
 import range from 'lodash/range'
-import { View as ViewProps } from '../../types/view'
 import { fake } from 'faker/locale/en_US'
+import { View, ViewProps } from './View'
 
 const fakeTitle = () => {
   const lowercase = fake('{{lorem.words}}')
@@ -36,9 +35,10 @@ export default {
 
 const ViewTemplate = (props: ViewProps) => <View {...props} />
 
-export const ViewDemo = ViewTemplate.bind({})
+export const ViewDemo: typeof ViewTemplate & { args?: ViewProps } =
+  ViewTemplate.bind({})
 ViewDemo.args = {
-  main: {
+  mainSection: {
     title: [{ text: 'Fluent Kit' }],
     abstract: [
       { text: 'This is a demonstration of Fluent Kit’s View component. ' },

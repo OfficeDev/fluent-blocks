@@ -1,9 +1,7 @@
-import { View as ViewProps } from '../../types/view'
-import { Section } from '../blocks/Section'
+import { z } from 'zod'
+import { Section, sectionProps, SectionProps } from '../blocks/Section'
 import { makeStyles } from '@fluentui/react-components'
 import { rem } from '../lib'
-
-type MainProps = ViewProps['main']
 
 const useStyles = makeStyles({
   root: (theme) => {
@@ -19,7 +17,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const Main = (main: MainProps) => {
+export const MainSection = (props: SectionProps) => {
   const styles = useStyles()
-  return <Section {...main} as="main" className={styles.root} />
+  return <Section {...props} as="main" className={styles.root} />
 }
