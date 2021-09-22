@@ -29,6 +29,11 @@ export const iconProps = z.object({
 
 export type IconProps = z.infer<typeof iconProps>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isIconProps(p: any): p is IconProps {
+  return 'icon' in p
+}
+
 export const Icon = (props: IconProps) => {
   const { icon, tooltip, variant } = iconProps.parse(props)
   return <span>🆗︎</span>

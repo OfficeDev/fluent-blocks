@@ -14,6 +14,11 @@ export const textProps = z.object({
 
 export type TextProps = z.infer<typeof textProps>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isTextProps(p: any): p is TextProps {
+  return 'text' in p
+}
+
 export const Text = (props: TextProps) => {
   const { text, variant } = textProps.parse(props)
   switch (variant) {

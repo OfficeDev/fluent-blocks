@@ -1,7 +1,8 @@
-import { View as ViewProps } from '../../../types/view'
-import { Section } from '../../blocks/section/Section'
+import { View as ViewProps } from '../../types/view'
+import { Section } from '../blocks/Section'
 import { makeStyles } from '@fluentui/react-components'
-import { rem } from '../../lib'
+import { rem } from '../lib'
+
 type MainProps = ViewProps['main']
 
 const useStyles = makeStyles({
@@ -20,5 +21,5 @@ const useStyles = makeStyles({
 
 export const Main = (main: MainProps) => {
   const styles = useStyles()
-  return <Section {...main} path={['m']} as="main" className={styles.root} />
+  return <Section {...main} as="main" className={styles.root} />
 }

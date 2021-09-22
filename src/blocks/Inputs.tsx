@@ -1,11 +1,10 @@
 import { z } from 'zod'
-import { Placeholder } from '../../lib/Placeholder'
-import { PropsWithPath } from '../../lib/types'
+import { Placeholder } from '../lib/Placeholder'
 import {
   multilineTextInputProps,
   shortTextInputProps,
-} from '../../fragments/inputs/text-input'
-import { radioGroupProps } from '../../fragments/inputs/radio-group'
+} from '../inputs/text-input'
+import { radioGroupProps } from '../inputs/radio-group'
 
 export const inputsProps = z.object({
   inputs: z.union([
@@ -17,6 +16,6 @@ export const inputsProps = z.object({
 
 export type InputsProps = z.infer<typeof inputsProps>
 
-export const Inputs = (props: PropsWithPath<InputsProps>) => (
+export const Inputs = (props: InputsProps) => (
   <Placeholder {...inputsProps.parse(props)} label="Inputs block" />
 )
