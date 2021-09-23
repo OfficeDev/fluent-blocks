@@ -14,19 +14,18 @@ export type SectionProps = {
   sections?: SectionSequence
 }
 
-export const sectionProps: z.ZodSchema<SectionProps> = z.lazy(() =>
-  z.object({
-    title: inlineSequence,
-    abstract: inlineSequence.optional(),
-    blocks: blockSequence.optional(),
-    sections: sectionSequence.optional(),
-  })
+export const sectionSequence: z.ZodSchema<SectionSequence> = z.lazy(() =>
+  z.array(sectionProps)
 )
 
-export type SectionSequence = SectionProps[]
+export const sectionProps = z.object({
+  title: inlineSequence,
+  abstract: inlineSequence.optional(),
+  blocks: blockSequence.optional(),
+  sections: sectionSequence.optional(),
+})
 
-export const sectionSequence: z.ZodSchema<SectionSequence> =
-  z.array(sectionProps)
+export type SectionSequence = SectionProps[]
 
 const topLevelSectionProps = z.object({
   className: z.string().optional(),
@@ -37,10 +36,7 @@ const topLevelSectionProps = z.object({
 type TopLevelSectionProps = z.infer<typeof topLevelSectionProps>
 
 // TODO: understand zod better
-export const sectionComponentProps: z.ZodSchema<
-  SectionProps & TopLevelSectionProps
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-> = topLevelSectionProps.merge(sectionProps as any) as any
+export const sectionComponentProps = topLevelSectionProps.merge(sectionProps)
 
 export type SectionComponentProps = Partial<TopLevelSectionProps> & SectionProps
 
