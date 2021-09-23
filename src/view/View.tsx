@@ -1,35 +1,27 @@
-import { FluentProvider, teamsLightTheme, teamsDarkTheme, teamsHighContrastTheme } from '@fluentui/react-components'
-import { View as ViewProps } from '../../types/view'
-import { Main } from '../surfaces/main/Main'
-import { PropsWithChildren } from 'react'
+import { z } from 'zod'
+import { MainSection } from '../surfaces/MainSection'
+import { FluentKitProvider } from '../lib/FluentKitProvider'
+import { sectionProps } from '../blocks/Section'
+import { theme } from '../lib/theme'
+import { dir } from '../lib/readingDirection'
 
-export const FluentKitProvider = ({
-  theme,
-  dir,
-  children,
-}: PropsWithChildren<{ theme: ViewProps['theme']; dir: ViewProps['dir'] }>) => (
-  <FluentProvider
-    {...{
-      theme: (() => {
-        switch (theme) {
-          case 'dark':
-            return teamsDarkTheme
-          case 'high-contrast':
-            return teamsHighContrastTheme
-          default:
-            return teamsLightTheme
-        }
-      })(),
-      targetDocument: typeof document === 'undefined' ? undefined : document,
-      dir,
-    }}
-  >
-    {children}
-  </FluentProvider>
-)
+export const viewProps = z.object({
+  sidebar: z.object({}).optional(),
+  toolbar: z.object({}).optional(),
+  modal: z.object({}).optional(),
+  mainSection: sectionProps,
+  theme: theme.optional(),
+  dir: dir.optional(),
+})
 
-export const View = ({ main, theme, dir }: ViewProps) => (
-  <FluentKitProvider {...{ theme, dir }}>
-    <Main {...main} />
-  </FluentKitProvider>
-)
+export type ViewProps = z.infer<typeof viewProps>
+
+/** An experience provided to the user via their device’s canvas. */
+export const View = (props: ViewProps) => {
+  const { mainSection, theme = 'light', dir = 'ltr' } = viewProps.parse(props)
+  return (
+    <FluentKitProvider {...{ theme, dir }}>
+      <MainSection {...mainSection} />
+    </FluentKitProvider>
+  )
+}

@@ -9,7 +9,6 @@
   "types": "types/view.d.ts",
   "scripts": {
     "dev": "just dev",
-    "build": "rm -rf types && cd ./src/view && json2ts -i './view.json' -o ../../types/view.d.ts",
     "prepare": "husky install",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic --project-token=6c943fd2f5e9",
@@ -47,7 +46,6 @@
     "eslint-plugin-security": "latest",
     "faker": "thure/faker.js#v5.1.2",
     "husky": "latest",
-    "json-schema-to-typescript": "^10.1.4",
     "just-scripts": "^1.5.8",
     "lint-staged": ">=10",
     "prettier": "latest",
@@ -57,6 +55,7 @@
     "@fluentui/react-components": "alpha",
     "lodash": "latest",
     "react": "^16.14",
-    "react-dom": "^16.14"
+    "react-dom": "^16.14",
+    "zod": "^3.8.2"
   }
 }

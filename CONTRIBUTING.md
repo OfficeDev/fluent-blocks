@@ -6,8 +6,8 @@ When implementing a new pattern, be sure to:
 2. Create/update all relevant component stories
    - Controls
    - Docs
-      - What is this component for?
-      - Links to design specs
+     - What is this component for?
+     - Links to design specs
 3. Create/update any relevant accessibility tests:
    - Elements receive focus as expected
    - Announcements are made in screen readers as needed
