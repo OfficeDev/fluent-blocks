@@ -72,4 +72,4 @@ ViewDemo.args = {
   },
   dir: 'ltr',
   theme: 'light',
-} as ViewProps
+}
