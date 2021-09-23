@@ -1,7 +1,7 @@
 import { BlockProps, blockProps } from './Blocks'
-import { Paragraph, isParagraph, ParagraphProps } from './Paragraph'
-import { Figure, isFigure, FigureProps } from './Figure'
-import { Inputs, isInputs, InputsProps } from './Inputs'
+import { Paragraph, isParagraph } from './Paragraph'
+import { Figure, isFigure } from './Figure'
+import { Inputs, isInputs } from './Inputs'
 import { invalidBlock } from '../lib/warnings'
 
 export * from './Blocks'
@@ -12,11 +12,11 @@ export * from './Blocks'
 export const Block = (props: BlockProps) => {
   const block = blockProps.parse(props)
   return isFigure(block) ? (
-    <Figure {...(block as FigureProps)} />
-  ) : isParagraph(props) ? (
-    <Paragraph {...(block as ParagraphProps)} />
-  ) : isInputs(props) ? (
-    <Inputs {...(block as InputsProps)} />
+    <Figure {...block} />
+  ) : isParagraph(block) ? (
+    <Paragraph {...block} />
+  ) : isInputs(block) ? (
+    <Inputs {...block} />
   ) : (
     invalidBlock(props)
   )
