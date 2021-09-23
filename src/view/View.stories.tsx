@@ -38,7 +38,7 @@ const ViewTemplate = (props: ViewProps) => <View {...props} />
 export const ViewDemo: typeof ViewTemplate & { args?: ViewProps } =
   ViewTemplate.bind({})
 ViewDemo.args = {
-  mainSection: {
+  main: {
     title: [{ text: 'Fluent Kit' }],
     abstract: [
       { text: 'This is a demonstration of Fluent Kit’s View component. ' },
