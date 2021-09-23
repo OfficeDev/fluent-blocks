@@ -1,7 +1,8 @@
 import { z } from 'zod'
+import { inlineSequence } from '../inlines'
 
 export const inputProps = z.object({
-  label: z.string().nonempty(), // TODO: change to `phrasingContentProps`
+  label: inlineSequence,
   required: z.boolean().optional(),
 })
 

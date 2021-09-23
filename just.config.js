@@ -5,10 +5,6 @@ const { task, parallel } = require('just-scripts')
 
 const storybook = require('@storybook/react/standalone')
 
-task('watch-json', () =>
-  awatch('src/**/*.json', () => child_process.execSync('yarn build'))
-)
-
 task('storybook', () => {
   // This shouldn't be necessary but is needed due to strange logic in
   // storybook lib/core/src/server/config/utils.js
@@ -23,4 +19,4 @@ task('storybook', () => {
   }
 })
 
-task('dev', parallel('storybook', 'watch-json'))
+task('dev', parallel('storybook'))

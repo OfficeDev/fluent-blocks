@@ -1,7 +1,6 @@
 import { z } from 'zod'
-import { InlineContent } from './InlineContent'
-import { inlineSequence } from '../inlines'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { InlineContent, inlineSequence } from '../inlines'
+import { makeStyles } from '@fluentui/react-components'
 import { rem } from '../lib'
 
 export const paragraphProps = z.object({

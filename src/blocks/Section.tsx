@@ -44,14 +44,6 @@ export const sectionComponentProps: z.ZodSchema<
 
 export type SectionComponentProps = Partial<TopLevelSectionProps> & SectionProps
 
-/**
- *
- * @param blocks
- * An ordered set of block elements which are rendered after the title & abstract of the parent section and before any subsections.
- * @param sections
- * An ordered set of sections, which are children of the parent section or the main surface, and which are rendered after the parent’s blocks. Sections are used to determine a view’s table of contents.
- */
-
 export const Section = (props: SectionComponentProps) => {
   const { title, abstract, sections, blocks, className, as, level } =
     sectionComponentProps.parse(props)

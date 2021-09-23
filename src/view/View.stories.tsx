@@ -53,9 +53,9 @@ ViewDemo.args = {
         blocks: [
           {
             inputs: [
-              { label: fake(fakeTitle()) },
-              { label: fake(fakeTitle()) },
-              { label: fake(fakeTitle()) },
+              { label: [{ text: fake(fakeTitle()) }] },
+              { label: [{ text: fake(fakeTitle()) }] },
+              { label: [{ text: fake(fakeTitle()) }] },
             ],
           },
         ],

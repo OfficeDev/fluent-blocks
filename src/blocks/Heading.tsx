@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { z } from 'zod'
-import { InlineContent } from './InlineContent'
+import { InlineContent } from '../inlines'
 import { mergeClasses as cx } from '@fluentui/react-components'
 import { useParagraphStyles, paragraphProps } from './Paragraph'
 
