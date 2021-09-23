@@ -58,3 +58,7 @@ export const Section = (props: SectionComponentProps) => {
     </>
   )
 }
+
+export const MainSection = (props: SectionComponentProps) => (
+  <Section {...props} as="main" level={1} />
+)
