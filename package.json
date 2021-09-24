@@ -8,12 +8,13 @@
   "private": true,
   "types": "types/view.d.ts",
   "scripts": {
-    "prepare": "husky install",
-    "dev": "just dev",
-    "test": "ts-mocha -p ./tsconfig.test.json src/**/*.test.tsx",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic --project-token=6c943fd2f5e9",
-    "lint-staged": "lint-staged"
+    "dev": "just dev",
+    "lint": "eslint --max-warnings 0 src/**/*.{ts,tsx} .storybook/*.js",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install",
+    "test": "ts-mocha -p ./tsconfig.test.json src/**/*.test.tsx"
   },
   "engines": {
     "node": ">=10.0.0"

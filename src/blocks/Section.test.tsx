@@ -16,8 +16,6 @@ describe('Section', () => {
       )
       .toJSON()
 
-    console.log('[section]', section)
-
-    expect(section).toBeTruthy()
+    expect(get(section, ['children', 0, 'type'])).toEqual('h2')
   })
 })
