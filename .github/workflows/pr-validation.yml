@@ -1,0 +1,28 @@
+name: 'PR validation'
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Check for code quality issues
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test

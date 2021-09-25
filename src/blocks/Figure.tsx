@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { inlineSequence , InlineContent } from '../inlines'
+import { inlineSequence, InlineContent } from '../inlines'
 
 export const figureProps = z.object({
   caption: inlineSequence,

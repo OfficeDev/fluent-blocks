@@ -8,7 +8,7 @@ const fakeTitle = () => {
 }
 
 export default {
-  title: 'View',
+  title: 'Patterns/View',
   component: View,
   argTypes: {
     main: {

@@ -13,10 +13,9 @@ export const theme = z.union([
 
 export type Theme = z.infer<typeof theme>
 
-export const getTeamsTheme = (theme: Theme) => (
-    {
-      light: teamsLightTheme,
-      dark: teamsDarkTheme,
-      ['high-contrast']: teamsHighContrastTheme,
-    }[theme] ?? teamsLightTheme
-  )
+export const getTeamsTheme = (theme: Theme) =>
+  ({
+    light: teamsLightTheme,
+    dark: teamsDarkTheme,
+    ['high-contrast']: teamsHighContrastTheme,
+  }[theme] ?? teamsLightTheme)
