@@ -8,13 +8,16 @@
   "private": true,
   "types": "types/view.d.ts",
   "scripts": {
-    "build-storybook": "build-storybook",
+    "storybook:build": "build-storybook",
+    "storybook:start": "start-storybook -p 4000",
+    "storybook:start-ci": "start-storybook -p 4000 --ci",
     "chromatic": "npx chromatic --project-token=6c943fd2f5e9",
-    "dev": "just dev",
+    "dev": "yarn storybook:start",
     "lint": "eslint --max-warnings 0 src/**/*.{ts,tsx} .storybook/*.js",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "test": "ts-mocha -p ./tsconfig.test.json src/**/*.test.tsx"
+    "test": "start-server-and-test 'yarn storybook:start-ci' http://localhost:4000 'yarn test:run'",
+    "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -37,7 +40,6 @@
     "@types/react-test-renderer": ">=16.8.0 <17.0.0",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "awatch": "latest",
     "babel-loader": "latest",
     "chromatic": "latest",
     "eslint": "latest",
@@ -52,12 +54,12 @@
     "expect": "latest",
     "faker": "thure/faker.js#v5.1.2",
     "husky": "latest",
-    "just-scripts": "^1.5.8",
     "lint-staged": ">=10",
     "mocha": "^9.1.1",
-    "playwright-core": "latest",
+    "playwright-chromium": "latest",
     "prettier": "latest",
     "react-test-renderer": ">=16.8.0 <17.0.0",
+    "start-server-and-test": "latest",
     "ts-mocha": "latest",
     "ts-node": "latest",
     "typescript": "^4.4.3"
