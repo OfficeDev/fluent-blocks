@@ -20,6 +20,7 @@ const nonRecursiveSectionProps = {
   blocks: blockSequence.optional(),
 }
 
+// 𝔅𝔢𝔥𝔬𝔩𝔡 𝔱𝔥𝔦𝔰 𝔰𝔲𝔟𝔩𝔦𝔪𝔢 𝔭𝔶𝔯𝔞𝔪𝔦𝔡
 export const sectionProps = z.object({
   ...nonRecursiveSectionProps,
   sections: z
