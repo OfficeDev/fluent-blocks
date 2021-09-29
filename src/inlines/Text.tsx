@@ -14,22 +14,12 @@ export const textProps = z.object({
   text: z.string(),
   variant: textVariant.optional(),
 })
-export const textPropsOrInstance = jsxon(textProps)
 
 export type TextProps = z.infer<typeof textProps>
-export type TextPropsOrInstance = z.infer<typeof textPropsOrInstance>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isTextPropsOrInstance(p: any): p is TextPropsOrInstance {
   return 'text' in p || 'text' in p?.props
-}
-
-export function renderText(t: TextPropsOrInstance) {
-  return 'text' in t ? (
-    <Text {...(t as TextProps)} key={key(t)} />
-  ) : 'text' in t?.props ? (
-    cloneElement(t as JSX.Element, { key: key(t.props) })
-  ) : null
 }
 
 export const Text = (props: TextProps) => {
@@ -39,4 +29,16 @@ export const Text = (props: TextProps) => {
     default:
       return <>{text}</>
   }
+}
+
+export const textPropsOrInstance = jsxon<typeof textProps, TextProps>(textProps)
+export type TextPropsOrInstance = z.infer<typeof textPropsOrInstance>
+
+export function renderText(arg: TextPropsOrInstance) {
+  const t = textPropsOrInstance.parse(arg)
+  return 'text' in t ? (
+    <Text {...(t as TextProps)} key={key(t)} />
+  ) : 'text' in t?.props ? (
+    cloneElement(t as JSX.Element, { key: key(t.props) })
+  ) : null
 }
