@@ -2,7 +2,7 @@
 
 An implementation of [Fluent][figma-fluent] & [UI Kit][figma-uikit] designs for app development based on [`@fluentui/react-components`][fluentui-v9]. This project succeeds [`@fluentui/react-teams`][react-teams].
 
-THe kit provides an API developers can use to build fully interactive & accessible experiences using straightforward, serializeable props, described by JSON schemas which build to TypeScript types, that render experiences matching Fluent & UI Kit designs.
+THe kit provides an API developers can use to build fully interactive & accessible experiences using straightforward, serializeable and parseable props, that render experiences matching Fluent & UI Kit designs.
 
 ## Getting started
 
@@ -12,16 +12,22 @@ Install `node` greater than or equal to v10 and `yarn`, then run:
 $ yarn install
 ```
 
-Then, to start Storybook and watch the JSON schemas, run:
+Then, to start Storybook, run:
 
 ```shell
 $ yarn dev
 ```
 
-To only build TypeScript types from the JSON schemas once, run:
+To test while Storybook is running, run:
 
 ```shell
-$ yarn build
+$ yarn test:run
+```
+
+To run tests also starting Storybook as needed (Storybook should _not_ already be running), run:
+
+```shell
+$ yarn test
 ```
 
 [figma-fluent]: https://www.figma.com/community/file/836828295772957889/Microsoft-Fluent-Web

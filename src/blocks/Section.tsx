@@ -14,16 +14,53 @@ export type SectionProps = {
   sections?: SectionSequence
 }
 
-export const sectionSequence: z.ZodSchema<SectionSequence> = z.lazy(() =>
-  z.array(sectionProps)
-)
-
-export const sectionProps = z.object({
+const nonRecursiveSectionProps = {
   title: inlineSequence,
   abstract: inlineSequence.optional(),
   blocks: blockSequence.optional(),
-  sections: sectionSequence.optional(),
+}
+
+// 𝔅𝔢𝔥𝔬𝔩𝔡 𝔱𝔥𝔦𝔰 𝔰𝔲𝔟𝔩𝔦𝔪𝔢 𝔭𝔶𝔯𝔞𝔪𝔦𝔡
+export const sectionProps = z.object({
+  ...nonRecursiveSectionProps,
+  sections: z
+    .array(
+      z.object({
+        ...nonRecursiveSectionProps,
+        sections: z
+          .array(
+            z.object({
+              ...nonRecursiveSectionProps,
+              sections: z
+                .array(
+                  z.object({
+                    ...nonRecursiveSectionProps,
+                    sections: z
+                      .array(
+                        z.object({
+                          ...nonRecursiveSectionProps,
+                          sections: z
+                            .array(
+                              z.object({
+                                ...nonRecursiveSectionProps,
+                              })
+                            )
+                            .optional(),
+                        })
+                      )
+                      .optional(),
+                  })
+                )
+                .optional(),
+            })
+          )
+          .optional(),
+      })
+    )
+    .optional(),
 })
+
+export const sectionSequence = z.array(sectionProps)
 
 export type SectionSequence = SectionProps[]
 
@@ -52,7 +89,7 @@ export const Section = (props: SectionComponentProps) => {
       {(blocks || []).map((block) => (
         <Block {...block} key={key(block)} />
       ))}
-      {(sections || []).map((section, s) => (
+      {(sections || []).map((section, _s) => (
         <Section {...section} key={key(section)} as={as} level={level + 1} />
       ))}
     </>
