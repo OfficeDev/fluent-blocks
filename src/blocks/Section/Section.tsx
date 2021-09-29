@@ -1,11 +1,11 @@
 import { z } from 'zod'
 import { createElement } from 'react'
-import { inlineSequence, InlineSequence } from '../inlines'
-import { blockSequence, BlockSequence } from './Blocks'
-import { Paragraph } from './Paragraph'
-import { Heading } from './Heading'
-import { Block } from './Block'
-import { key } from '../lib/keys'
+import { inlineSequence, InlineSequence } from '../../inlines'
+import { blockSequence, BlockSequence } from '../Blocks'
+import { Paragraph } from '../Paragraph'
+import { Heading } from '../Heading'
+import { Block } from '../Block'
+import { key } from '../../lib'
 
 export type SectionProps = {
   title: InlineSequence

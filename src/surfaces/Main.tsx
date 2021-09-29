@@ -1,4 +1,4 @@
-import { MainSection, SectionProps } from '../blocks/Section'
+import { MainSection, SectionProps } from '../blocks/Section/Section'
 import { makeStyles } from '@fluentui/react-components'
 import { rem } from '../lib'
 

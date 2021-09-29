@@ -1,9 +1,7 @@
 import { z } from 'zod'
 import { Main } from '../surfaces/Main'
-import { FluentKitProvider } from '../lib/FluentKitProvider'
-import { sectionProps } from '../blocks/Section'
-import { theme } from '../lib/theme'
-import { dir } from '../lib/readingDirection'
+import { FluentKitProvider, theme, dir } from '../lib'
+import { sectionProps } from '../blocks/Section/Section'
 
 export const viewProps = z.object({
   sidebar: z.object({}).optional(),

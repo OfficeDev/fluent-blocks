@@ -1,5 +1,5 @@
 import { Section, SectionProps } from './Section'
-import { Text } from '../inlines'
+import { Text } from '../../inlines'
 
 export default {
   title: 'Tests/Section',

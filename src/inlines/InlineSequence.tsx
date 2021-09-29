@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { key } from '../lib/keys'
-import { textPropsOrInstance, isTextPropsOrInstance, renderText } from './Text'
+import { key } from '../lib'
+import { textPropsOrInstance, renderIfText } from './Text'
 import { Icon, iconProps, isIconProps } from './Icon'
 import { invalidInline } from '../lib/warnings'
 
@@ -27,10 +27,8 @@ export const InlineContent = (props: InlineContentProps) => {
       {(inlines ?? []).map((inline) =>
         isIconProps(inline) ? (
           <Icon {...inline} key={key(inline)} />
-        ) : isTextPropsOrInstance(inline) ? (
-          renderText(inline)
         ) : (
-          invalidInline(inline)
+          renderIfText(inline) || invalidInline(inline)
         )
       )}
     </>

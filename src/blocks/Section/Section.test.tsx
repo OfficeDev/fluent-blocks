@@ -3,8 +3,10 @@
 import expect from 'expect'
 import renderer from 'react-test-renderer'
 import { Section } from './Section'
-import { Text } from '../inlines'
+import { Text as ExpectedText } from '../../inlines'
 import get from 'lodash/get'
+
+const Text = ({ text }: { text: string }) => <span>{text}</span>
 
 describe('Section: unit tests', function () {
   it('accepts JSON props', async function () {
@@ -24,12 +26,17 @@ describe('Section: unit tests', function () {
     const section = renderer
       .create(
         <Section
-          // @ts-ignore
           title={[
-            <Text text="9aa37e16-99b8-4f01-9cc4-ab773c3640e9" key="t1" />,
+            <ExpectedText
+              text="9aa37e16-99b8-4f01-9cc4-ab773c3640e9"
+              key="t1"
+            />,
           ]}
           abstract={[
-            <Text text="97718842-fdf6-4ea3-9245-cb32bfb1daa4" key="t1" />,
+            <ExpectedText
+              text="97718842-fdf6-4ea3-9245-cb32bfb1daa4"
+              key="t1"
+            />,
           ]}
         />
       )
@@ -40,6 +47,22 @@ describe('Section: unit tests', function () {
     )
     expect(get(section, ['children', 1, 'children', 0])).toEqual(
       '97718842-fdf6-4ea3-9245-cb32bfb1daa4'
+    )
+  })
+
+  it('will not accept arbitrary JSX content', async function () {
+    const section = renderer
+      .create(
+        <Section
+          title={[
+            <Text text="a2389698-50d0-46e5-93f7-e991e32b003c" key="t1" />,
+          ]}
+        />
+      )
+      .toJSON()
+
+    expect(get(section, ['children', 0, 'children', 0], 'not present')).toEqual(
+      'not present'
     )
   })
 })
