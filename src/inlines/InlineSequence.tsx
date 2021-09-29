@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import { key } from '../lib'
-import { textPropsOrInstance, renderIfText } from './Text'
+import { textPropsOrElement, renderIfText } from './Text'
 import { Icon, iconProps, isIconProps } from './Icon'
 import { invalidInline } from '../lib/warnings'
 
-export const inlineProps = z.union([textPropsOrInstance, iconProps])
+export const inlineProps = z.union([textPropsOrElement, iconProps])
 
 export const inlineSequence = z.array(inlineProps)
 

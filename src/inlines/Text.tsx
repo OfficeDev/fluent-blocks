@@ -1,6 +1,6 @@
 import { cloneElement, ReactElement } from 'react'
 import { z } from 'zod'
-import { jsxon, key } from '../lib'
+import { propsElementUnion, key } from '../lib'
 
 export const textVariant = z.union([
   z.literal('normal'),
@@ -31,17 +31,21 @@ function isTextProps(p: any): p is TextProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isTextInstance(p: any): p is ReactElement<TextProps> {
+function isTextElement(p: any): p is ReactElement<TextProps> {
   return p?.type === Text
 }
 
-export const textPropsOrInstance = jsxon<typeof textProps, TextProps>(textProps)
-export type TextPropsOrInstance = z.infer<typeof textPropsOrInstance>
+export const textPropsOrElement = propsElementUnion<
+  typeof textProps,
+  TextProps,
+  typeof Text
+>(textProps)
+export type TextPropsOrElement = z.infer<typeof textPropsOrElement>
 
-export function renderIfText(p: TextPropsOrInstance) {
+export function renderIfText(p: TextPropsOrElement) {
   return isTextProps(p) ? (
     <Text {...p} key={key(p)} />
-  ) : isTextInstance(p) ? (
+  ) : isTextElement(p) ? (
     cloneElement(p, { key: key(p.props) })
   ) : null
 }

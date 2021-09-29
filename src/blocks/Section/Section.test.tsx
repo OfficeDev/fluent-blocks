@@ -51,6 +51,7 @@ describe('Section: unit tests', function () {
   })
 
   it('will not accept arbitrary JSX content', async function () {
+    const nWarnings = this.warnings.length
     const section = renderer
       .create(
         <Section
@@ -64,6 +65,8 @@ describe('Section: unit tests', function () {
     expect(get(section, ['children', 0, 'children', 0], 'not present')).toEqual(
       'not present'
     )
+
+    expect(this.warnings.length).toBeGreaterThan(nWarnings)
   })
 })
 
