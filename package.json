@@ -61,6 +61,7 @@
     "eslint-plugin-security": "latest",
     "expect": "latest",
     "faker": "thure/faker.js#v5.1.2",
+    "http-proxy-middleware": "latest",
     "husky": "latest",
     "lint-staged": "latest",
     "mocha": "latest",

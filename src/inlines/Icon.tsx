@@ -22,9 +22,9 @@ function spriteHref(
   variant: IconVariant
 ): string {
   const assetId = `${icon}_${size}_${
-    variant === 'filled' ? 'regular' : variant
+    variant === 'outline' ? 'regular' : variant
   }`
-  return `https://cdn.jsdelivr.net/npm/fluentui-svg-icon-sprites@1.1.142/sprites/${assetId}.sprite.svg#${assetId}`
+  return `/sprites/${assetId}.sprite.svg#${assetId}`
 }
 
 export const iconProps = z.object({

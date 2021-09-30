@@ -39,9 +39,14 @@ export const ViewDemo: typeof ViewTemplate & { args?: ViewProps } =
   ViewTemplate.bind({})
 ViewDemo.args = {
   main: {
-    title: [{ text: 'Fluent Kit' }],
+    title: [
+      { icon: 'fluent', size: 24, variant: 'filled' },
+      { text: 'Fluent React Patterns' },
+    ],
     abstract: [
-      { text: 'This is a demonstration of Fluent Kit’s View component. ' },
+      {
+        text: 'This is a demonstration of Fluent React Patterns’ View component. ',
+      },
       { text: fake('{{lorem.paragraph}}') },
     ],
     sections: range(4).map((s) => ({

@@ -3,7 +3,7 @@
 import expect from 'expect'
 import renderer from 'react-test-renderer'
 import { Section } from './Section'
-import { Text as ExpectedText } from '../../inlines'
+import { Text as ExpectedText, Icon as ExpectedIcon } from '../../inlines'
 import get from 'lodash/get'
 
 const Text = ({ text }: { text: string }) => <span>{text}</span>
@@ -13,8 +13,8 @@ describe('Section: unit tests', function () {
     const section = renderer
       .create(
         <Section
-          title={[{ text: 'Title' }]}
-          abstract={[{ text: 'Abstract' }]}
+          title={[{ text: 'Title' }, { icon: 'animal_cat' }]}
+          abstract={[{ text: 'Abstract' }, { icon: 'diversity' }]}
         />
       )
       .toJSON()
@@ -31,12 +31,14 @@ describe('Section: unit tests', function () {
               text="9aa37e16-99b8-4f01-9cc4-ab773c3640e9"
               key="t1"
             />,
+            <ExpectedIcon icon="animal_cat" key="t2" />,
           ]}
           abstract={[
             <ExpectedText
               text="97718842-fdf6-4ea3-9245-cb32bfb1daa4"
               key="t1"
             />,
+            <ExpectedIcon icon="diversity" key="t2" />,
           ]}
         />
       )
