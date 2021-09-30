@@ -44,13 +44,11 @@ export const Icon = (props: IconProps) => {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isIconProps(p: any): p is IconProps {
   return 'icon' in p
 }
 
 export function isIconElement(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   p: any
 ): p is ReactElement<IconProps, typeof Icon> {
   return p?.type === Icon
@@ -63,7 +61,6 @@ export const iconPropsOrElement = propsElementUnion<
 >(iconProps)
 export type IconPropsOrElement = z.infer<typeof iconPropsOrElement>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function renderIfIcon(p: any) {
   return isIconProps(p) ? (
     <Icon {...p} key={key(p)} />

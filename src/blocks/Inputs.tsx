@@ -16,7 +16,6 @@ export const inputsProps = z.object({
 
 export type InputsProps = z.infer<typeof inputsProps>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isInputs(o: any): o is InputsProps {
   return 'inputs' in o
 }

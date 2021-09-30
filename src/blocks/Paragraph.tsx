@@ -9,7 +9,6 @@ export const paragraphProps = z.object({
 
 export type ParagraphProps = z.infer<typeof paragraphProps>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isParagraph(o: any): o is ParagraphProps {
   return 'paragraph' in o
 }

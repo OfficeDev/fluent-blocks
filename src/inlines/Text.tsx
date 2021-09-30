@@ -25,12 +25,10 @@ export const Text = (props: TextProps) => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isTextProps(p: any): p is TextProps {
   return 'text' in p
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isTextElement(p: any): p is ReactElement<TextProps, typeof Text> {
   return p?.type === Text
 }
@@ -42,7 +40,6 @@ export const textPropsOrElement = propsElementUnion<
 >(textProps)
 export type TextPropsOrElement = z.infer<typeof textPropsOrElement>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function renderIfText(p: any) {
   return isTextProps(p) ? (
     <Text {...p} key={key(p)} />
