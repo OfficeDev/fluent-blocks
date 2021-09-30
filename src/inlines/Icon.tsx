@@ -49,8 +49,8 @@ export function isIconProps(p: any): p is IconProps {
   return 'icon' in p
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isIconElement(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   p: any
 ): p is ReactElement<IconProps, typeof Icon> {
   return p?.type === Icon
