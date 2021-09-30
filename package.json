@@ -24,7 +24,6 @@
   },
   "peerDependencies": {
     "@fluentui/react-components": "alpha",
-    "@fluentui/react-icons": "latest",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "react": ">=16.8.0 <18.0.0",
@@ -33,7 +32,6 @@
   "devDependencies": {
     "@babel/core": "latest",
     "@fluentui/react-components": "alpha",
-    "@fluentui/react-icons": "latest",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
