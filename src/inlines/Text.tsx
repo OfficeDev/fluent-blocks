@@ -31,7 +31,7 @@ function isTextProps(p: any): p is TextProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isTextElement(p: any): p is ReactElement<TextProps> {
+function isTextElement(p: any): p is ReactElement<TextProps, typeof Text> {
   return p?.type === Text
 }
 
