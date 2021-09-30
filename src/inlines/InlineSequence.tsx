@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import { key } from '../lib'
 import { textPropsOrElement, renderIfText } from './Text'
-import { Icon, iconProps, isIconProps } from './Icon'
+import { iconPropsOrElement, renderIfIcon } from './Icon'
 import { invalidInline } from '../lib/warnings'
 
-export const inlineProps = z.union([textPropsOrElement, iconProps])
+export const inlineProps = z.union([textPropsOrElement, iconPropsOrElement])
 
 export const inlineSequence = z.array(inlineProps)
 
@@ -24,12 +24,9 @@ export const InlineContent = (props: InlineContentProps) => {
   const { inlines } = inlineContentProps.parse(props)
   return (
     <>
-      {(inlines ?? []).map((inline) =>
-        isIconProps(inline) ? (
-          <Icon {...inline} key={key(inline)} />
-        ) : (
-          renderIfText(inline) || invalidInline(inline)
-        )
+      {(inlines ?? []).map(
+        (inline) =>
+          renderIfIcon(inline) || renderIfText(inline) || invalidInline(inline)
       )}
     </>
   )

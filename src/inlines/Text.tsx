@@ -42,7 +42,8 @@ export const textPropsOrElement = propsElementUnion<
 >(textProps)
 export type TextPropsOrElement = z.infer<typeof textPropsOrElement>
 
-export function renderIfText(p: TextPropsOrElement) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function renderIfText(p: any) {
   return isTextProps(p) ? (
     <Text {...p} key={key(p)} />
   ) : isTextElement(p) ? (
