@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { cloneElement, ReactElement } from 'react'
+import { makeStyles } from '@fluentui/react-components'
 import { key, propsElementUnion } from '../lib'
 
 export const iconVariant = z.union([z.literal('filled'), z.literal('outline')])
@@ -16,6 +17,14 @@ export const iconSize = z.union([
 ])
 export type IconSize = z.infer<typeof iconSize>
 
+export const iconProps = z.object({
+  icon: z.string(),
+  variant: iconVariant.default('outline').optional(),
+  size: iconSize.default(20).optional(),
+})
+
+export type IconProps = z.infer<typeof iconProps>
+
 function spriteHref(
   icon: string,
   size: IconSize,
@@ -27,18 +36,20 @@ function spriteHref(
   return `/sprites/${assetId}.sprite.svg#${assetId}`
 }
 
-export const iconProps = z.object({
-  icon: z.string(),
-  variant: iconVariant.default('outline').optional(),
-  size: iconSize.default(20).optional(),
+const useStyles = makeStyles({
+  root: {
+    height: '1.1em',
+    width: '1.1em',
+    verticalAlign: 'baseline',
+    marginBottom: '-0.1em',
+  },
 })
-
-export type IconProps = z.infer<typeof iconProps>
 
 export const Icon = (props: IconProps) => {
   const { icon, variant = 'outline', size = 20 } = iconProps.parse(props)
+  const styles = useStyles()
   return (
-    <svg width={size} height={size}>
+    <svg className={styles.root}>
       <use href={spriteHref(icon, size, variant)} />
     </svg>
   )

@@ -13,6 +13,8 @@ export function isParagraph(o: any): o is ParagraphProps {
   return 'paragraph' in o
 }
 
+const fontSizeLevel = (level: number) => rem(14 * Math.pow(1.25, level - 1))
+
 export const useParagraphStyles = makeStyles({
   root: {
     maxWidth: rem(432),
@@ -27,10 +29,14 @@ export const useParagraphStyles = makeStyles({
     fontSize: 'inherit',
     fontWeight: 600,
     marginBlockStart: rem(24),
+    lineHeight: 24 / 18,
   }),
   h1: {
-    fontSize: rem(18),
-    lineHeight: 24 / 18,
+    fontSize: fontSizeLevel(3),
+    fontWeight: 700,
+  },
+  h2: {
+    fontSize: fontSizeLevel(2),
     fontWeight: 700,
   },
 })
