@@ -1,5 +1,6 @@
 import { Section, SectionProps } from './Section'
 import { Text, Icon } from '../../inlines'
+import { Escape } from '../../lib/Escape'
 
 export default {
   title: 'Tests/Section',
@@ -33,5 +34,17 @@ SectionJsxTest.args = {
   abstract: [
     <Text text="fa3ac1fc-1976-459e-9a6e-1b69315cd7be" key="t1" />,
     <Icon icon="diversity" key="t2" />,
+  ],
+}
+
+export const SectionEscapeTest: typeof SectionTemplate & {
+  args?: SectionProps
+} = SectionTemplate.bind({})
+
+SectionEscapeTest.args = {
+  title: [
+    <Escape contentMeetsAccessibilityAndDesignStandards={true} key="t1">
+      <span>8e86641e-3efc-472c-bcb1-a7d74c1080fc</span>
+    </Escape>,
   ],
 }
