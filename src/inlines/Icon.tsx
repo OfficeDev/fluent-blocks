@@ -36,12 +36,13 @@ function spriteHref(
   return `/sprites/${assetId}.sprite.svg#${assetId}`
 }
 
+const iconToTextRatio = 1.16
+
 const useStyles = makeStyles({
   root: {
-    height: '1.1em',
-    width: '1.1em',
-    verticalAlign: 'baseline',
-    marginBottom: '-0.1em',
+    height: `${iconToTextRatio}em`,
+    width: `${iconToTextRatio}em`,
+    verticalAlign: 'text-bottom',
   },
 })
 

@@ -39,10 +39,7 @@ export const ViewDemo: typeof ViewTemplate & { args?: ViewProps } =
   ViewTemplate.bind({})
 ViewDemo.args = {
   main: {
-    title: [
-      { icon: 'fluent', size: 24, variant: 'filled' },
-      { text: 'Fluent React Patterns' },
-    ],
+    title: [{ text: 'Fluent React Patterns' }],
     abstract: [
       {
         text: 'This is a demonstration of Fluent React Patterns’ View component. ',
