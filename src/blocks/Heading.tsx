@@ -21,6 +21,10 @@ export const Heading = (props: HeadingProps) => {
       className:
         level === 1
           ? cx(styles.root, styles.heading, styles.h1)
+          : level === 2
+          ? cx(styles.root, styles.heading, styles.h2)
+          : level === 3
+          ? cx(styles.root, styles.heading, styles.h3)
           : cx(styles.root, styles.heading),
     },
     content

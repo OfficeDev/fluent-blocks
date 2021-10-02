@@ -1,10 +1,10 @@
 import { create } from '@storybook/theming/create'
+import brandImage from './public/brandImage.svg'
 
 export default create({
   base: 'light',
-  brandTitle: 'React Teams',
-  brandImage: 'https://i.ibb.co/T1GptPT/react-library-logo-v2.jpg',
-
+  brandTitle: 'Fluent React Patterns',
+  brandImage,
   colorPrimary: '#6264A7',
 
   // UI

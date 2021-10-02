@@ -206,7 +206,6 @@ const eslintrc = {
     'no-labels': 'warn',
     'no-multiple-empty-lines': 'warn',
     'no-new-wrappers': 'warn',
-    '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-redeclare': 'warn',
     'no-restricted-syntax': [
       'warn',
