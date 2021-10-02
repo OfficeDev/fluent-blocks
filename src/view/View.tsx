@@ -1,13 +1,13 @@
 import { z } from 'zod'
 import { Main } from '../surfaces/Main'
 import { FluentKitProvider, theme, dir } from '../lib'
-import { sectionProps } from '../blocks/Section/Section'
+import { sectionContentProps } from '../blocks/Section/Section'
 
 export const viewProps = z.object({
   sidebar: z.object({}).optional(),
   toolbar: z.object({}).optional(),
   modal: z.object({}).optional(),
-  main: sectionProps,
+  main: sectionContentProps,
   theme: theme.optional(),
   dir: dir.optional(),
 })

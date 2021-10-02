@@ -2,11 +2,15 @@ import { z } from 'zod'
 import { paragraphProps } from './Paragraph'
 import { figureProps } from './Figure'
 import { inputsProps } from './Inputs'
+import { escapeElement } from '../lib/Escape'
 
-export const blockProps = z.union([paragraphProps, figureProps, inputsProps])
-
+export const blockProps = z.union([
+  paragraphProps,
+  figureProps,
+  inputsProps,
+  escapeElement,
+])
 export type BlockProps = z.infer<typeof blockProps>
 
 export const blockSequence = z.array(blockProps)
-
 export type BlockSequence = z.infer<typeof blockSequence>
