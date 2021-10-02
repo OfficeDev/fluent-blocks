@@ -1,4 +1,4 @@
-import { Section, SectionContentProps } from '../blocks/Section/Section'
+import { MainSection, SectionProps } from '../blocks/Section/Section'
 import { makeStyles } from '@fluentui/react-components'
 import { rem } from '../lib'
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   }),
 })
 
-export const Main = (props: SectionContentProps) => {
+export const Main = (props: SectionProps) => {
   const styles = useStyles()
-  return <Section {...props} className={styles.root} />
+  return <MainSection {...props} className={styles.root} />
 }

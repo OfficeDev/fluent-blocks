@@ -1,41 +1,48 @@
 import { z } from 'zod'
 import { createElement } from 'react'
-import { inlineSequence } from '../../inlines'
-import { blockSequence } from '../Blocks'
+import { inlineSequence, InlineSequence } from '../../inlines'
+import { blockSequence, BlockSequence } from '../Blocks'
 import { Paragraph } from '../Paragraph'
 import { Heading } from '../Heading'
 import { Block } from '../Block'
 import { key } from '../../lib'
 
-const nonRecursiveSectionContentProps = {
+export type SectionProps = {
+  title: InlineSequence
+  abstract?: InlineSequence
+  blocks?: BlockSequence
+  sections?: SectionSequence
+}
+
+const nonRecursiveSectionProps = {
   title: inlineSequence,
   abstract: inlineSequence.optional(),
   blocks: blockSequence.optional(),
 }
 
 // 𝔅𝔢𝔥𝔬𝔩𝔡 𝔱𝔥𝔦𝔰 𝔰𝔲𝔟𝔩𝔦𝔪𝔢 𝔭𝔶𝔯𝔞𝔪𝔦𝔡
-export const sectionContentProps = z.object({
-  ...nonRecursiveSectionContentProps,
+export const sectionProps = z.object({
+  ...nonRecursiveSectionProps,
   sections: z
     .array(
       z.object({
-        ...nonRecursiveSectionContentProps,
+        ...nonRecursiveSectionProps,
         sections: z
           .array(
             z.object({
-              ...nonRecursiveSectionContentProps,
+              ...nonRecursiveSectionProps,
               sections: z
                 .array(
                   z.object({
-                    ...nonRecursiveSectionContentProps,
+                    ...nonRecursiveSectionProps,
                     sections: z
                       .array(
                         z.object({
-                          ...nonRecursiveSectionContentProps,
+                          ...nonRecursiveSectionProps,
                           sections: z
                             .array(
                               z.object({
-                                ...nonRecursiveSectionContentProps,
+                                ...nonRecursiveSectionProps,
                               })
                             )
                             .optional(),
@@ -52,33 +59,32 @@ export const sectionContentProps = z.object({
     )
     .optional(),
 })
-export type SectionContentProps = z.infer<typeof sectionContentProps>
 
-const sectionManagedProps = z.object({
+export const sectionSequence = z.array(sectionProps)
+
+export type SectionSequence = SectionProps[]
+
+const topLevelSectionProps = z.object({
   className: z.string().optional(),
-  level: z.number().default(2).optional(),
-  as: z.string().default('section').optional(),
+  level: z.number().default(2),
+  as: z.string().default('section'),
 })
-type SectionManagedProps = z.infer<typeof sectionManagedProps>
 
-export const sectionProps = sectionManagedProps.merge(sectionContentProps)
-export type SectionProps = z.infer<typeof sectionProps>
+type TopLevelSectionProps = z.infer<typeof topLevelSectionProps>
 
-export const Section = (props: SectionProps) => {
-  const {
-    title,
-    abstract,
-    sections,
-    blocks,
-    className,
-    as = 'section',
-    level = 2,
-  } = props
+// TODO: understand zod better
+export const sectionComponentProps = topLevelSectionProps.merge(sectionProps)
+
+export type SectionComponentProps = Partial<TopLevelSectionProps> & SectionProps
+
+export const Section = (props: SectionComponentProps) => {
+  const { title, abstract, sections, blocks, className, as, level } =
+    sectionComponentProps.parse(props)
   return createElement(
     as,
     { className },
     <>
-      {title && <Heading paragraph={title} level={level} />}
+      {title && <Heading paragraph={title} level={level ?? 2} />}
       {abstract && <Paragraph paragraph={abstract} />}
       {(blocks || []).map((block) => (
         <Block {...block} key={key(block)} />
@@ -89,3 +95,7 @@ export const Section = (props: SectionProps) => {
     </>
   )
 }
+
+export const MainSection = (props: SectionComponentProps) => (
+  <Section {...props} as="main" level={1} />
+)

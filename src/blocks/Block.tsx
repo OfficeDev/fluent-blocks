@@ -3,7 +3,6 @@ import { Paragraph, isParagraph } from './Paragraph'
 import { Figure, isFigure } from './Figure'
 import { Inputs, isInputs } from './Inputs'
 import { invalidBlock } from '../lib/warnings'
-import { renderIfEscape } from '../lib/Escape'
 
 export * from './Blocks'
 
@@ -19,6 +18,6 @@ export const Block = (props: BlockProps) => {
   ) : isInputs(block) ? (
     <Inputs {...block} />
   ) : (
-    renderIfEscape(block) || invalidBlock(block)
+    invalidBlock(props)
   )
 }
