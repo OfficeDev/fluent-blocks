@@ -1,17 +1,13 @@
 import { z } from 'zod'
 import { InlineContent, inlineSequence } from '../inlines'
 import { makeStyles } from '@fluentui/react-components'
-import { rem } from '../lib'
+import { propsElementUnion, rem } from '../lib'
+import { ReactElement } from 'react'
 
 export const paragraphProps = z.object({
   paragraph: inlineSequence,
 })
-
 export type ParagraphProps = z.infer<typeof paragraphProps>
-
-export function isParagraph(o: any): o is ParagraphProps {
-  return 'paragraph' in o
-}
 
 export const useParagraphStyles = makeStyles({
   root: {
@@ -51,4 +47,29 @@ export const Paragraph = (props: ParagraphProps) => {
       <InlineContent inlines={paragraph} />
     </p>
   )
+}
+
+function isParagraphProps(p: any): p is ParagraphProps {
+  return 'paragraph' in p
+}
+
+function isParagraphElement(
+  p: any
+): p is ReactElement<ParagraphProps, typeof Paragraph> {
+  return p?.type === Paragraph
+}
+
+export const paragraphPropsOrElement = propsElementUnion<
+  typeof paragraphProps,
+  ParagraphProps,
+  typeof Paragraph
+>(paragraphProps)
+export type ParagraphPropsOrElement = z.infer<typeof paragraphPropsOrElement>
+
+export function renderIfParagraph(p: any) {
+  return isParagraphProps(p) ? (
+    <Paragraph {...p} />
+  ) : isParagraphElement(p) ? (
+    p
+  ) : null
 }

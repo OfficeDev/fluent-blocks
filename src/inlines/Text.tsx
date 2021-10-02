@@ -13,7 +13,6 @@ export const textProps = z.object({
   text: z.string(),
   variant: textVariant.optional(),
 })
-
 export type TextProps = z.infer<typeof textProps>
 
 export const Text = (props: TextProps) => {

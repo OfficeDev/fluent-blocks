@@ -1,10 +1,9 @@
 import { z } from 'zod'
 import { createElement } from 'react'
 import { inlineSequence } from '../../inlines'
-import { blockSequence } from '../Blocks'
 import { Paragraph } from '../Paragraph'
 import { Heading } from '../Heading'
-import { Block } from '../Block'
+import { Block, blockSequence } from '../Block'
 import { key } from '../../lib'
 
 const nonRecursiveSectionContentProps = {
