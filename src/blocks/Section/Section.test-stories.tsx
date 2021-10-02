@@ -1,4 +1,4 @@
-import { Section, SectionProps } from './Section'
+import { Section, SectionContentProps } from './Section'
 import { Text, Icon } from '../../inlines'
 import { Escape } from '../../lib/Escape'
 
@@ -7,10 +7,11 @@ export default {
   component: Section,
 }
 
-const SectionTemplate = (props: SectionProps) => <Section {...props} />
+const SectionTemplate = (props: SectionContentProps) => <Section {...props} />
 
-export const SectionJsonTest: typeof SectionTemplate & { args?: SectionProps } =
-  SectionTemplate.bind({})
+export const SectionJsonTest: typeof SectionTemplate & {
+  args?: SectionContentProps
+} = SectionTemplate.bind({})
 
 SectionJsonTest.args = {
   title: [
@@ -23,8 +24,9 @@ SectionJsonTest.args = {
   ],
 }
 
-export const SectionJsxTest: typeof SectionTemplate & { args?: SectionProps } =
-  SectionTemplate.bind({})
+export const SectionJsxTest: typeof SectionTemplate & {
+  args?: SectionContentProps
+} = SectionTemplate.bind({})
 
 SectionJsxTest.args = {
   title: [
@@ -38,7 +40,7 @@ SectionJsxTest.args = {
 }
 
 export const SectionEscapeTest: typeof SectionTemplate & {
-  args?: SectionProps
+  args?: SectionContentProps
 } = SectionTemplate.bind({})
 
 SectionEscapeTest.args = {
