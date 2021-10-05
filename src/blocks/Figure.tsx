@@ -12,7 +12,7 @@ export type FigureProps = z.infer<typeof figureProps>
  * A block-level element containing media and labeled by a caption.
  */
 export const Figure = (props: FigureProps) => {
-  const { caption } = figureProps.parse(props)
+  const { caption } = props
   return (
     <div className="figure">
       <InlineContent inlines={caption} />
@@ -20,14 +20,14 @@ export const Figure = (props: FigureProps) => {
   )
 }
 
-function isFigureProps(p: any): p is FigureProps {
-  return 'caption' in p
+function isFigureProps(o: any): o is FigureProps {
+  return 'caption' in o
 }
 
 function isFigureElement(
-  p: any
-): p is ReactElement<FigureProps, typeof Figure> {
-  return p?.type === Figure
+  o: any
+): o is ReactElement<FigureProps, typeof Figure> {
+  return o?.type === Figure
 }
 
 export const figurePropsOrElement = propsElementUnion<
@@ -37,6 +37,6 @@ export const figurePropsOrElement = propsElementUnion<
 >(figureProps)
 export type FigurePropsOrElement = z.infer<typeof figurePropsOrElement>
 
-export function renderIfFigure(p: any) {
-  return isFigureProps(p) ? <Figure {...p} /> : isFigureElement(p) ? p : null
+export function renderIfFigure(o: any) {
+  return isFigureProps(o) ? <Figure {...o} /> : isFigureElement(o) ? o : null
 }

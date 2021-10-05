@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { cloneElement, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
-import { key, propsElementUnion } from '../lib'
+import { propsElementUnion } from '../lib'
 
 export const iconVariant = z.union([z.literal('filled'), z.literal('outline')])
 export type IconVariant = z.infer<typeof iconVariant>
@@ -22,7 +22,6 @@ export const iconProps = z.object({
   variant: iconVariant.default('outline').optional(),
   size: iconSize.default(20).optional(),
 })
-
 export type IconProps = z.infer<typeof iconProps>
 
 function spriteHref(
@@ -47,7 +46,7 @@ const useStyles = makeStyles({
 })
 
 export const Icon = (props: IconProps) => {
-  const { icon, variant = 'outline', size = 20 } = iconProps.parse(props)
+  const { icon, variant = 'outline', size = 20 } = props
   const styles = useStyles()
   return (
     <svg className={styles.root}>
@@ -56,14 +55,12 @@ export const Icon = (props: IconProps) => {
   )
 }
 
-export function isIconProps(p: any): p is IconProps {
-  return 'icon' in p
+function isIconProps(o: any): o is IconProps {
+  return 'icon' in o
 }
 
-export function isIconElement(
-  p: any
-): p is ReactElement<IconProps, typeof Icon> {
-  return p?.type === Icon
+function isIconElement(o: any): o is ReactElement<IconProps, typeof Icon> {
+  return o?.type === Icon
 }
 
 export const iconPropsOrElement = propsElementUnion<
@@ -73,10 +70,6 @@ export const iconPropsOrElement = propsElementUnion<
 >(iconProps)
 export type IconPropsOrElement = z.infer<typeof iconPropsOrElement>
 
-export function renderIfIcon(p: any) {
-  return isIconProps(p) ? (
-    <Icon {...p} key={key(p)} />
-  ) : isIconElement(p) ? (
-    cloneElement(p, { key: key(p.props) })
-  ) : null
+export function renderIfIcon(o: any) {
+  return isIconProps(o) ? <Icon {...o} /> : isIconElement(o) ? o : null
 }

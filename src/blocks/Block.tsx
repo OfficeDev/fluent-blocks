@@ -1,31 +1,27 @@
 import { z } from 'zod'
-import { paragraphProps, renderIfParagraph } from './Paragraph'
-import { figureProps, renderIfFigure } from './Figure'
-import { inputsProps, renderIfInputs } from './Inputs'
+import { paragraphPropsOrElement, renderIfParagraph } from './Paragraph'
+import { figurePropsOrElement, renderIfFigure } from './Figure'
+import { inputsPropsOrElement, renderIfInputs } from './Inputs'
 import { invalidBlock } from '../lib/warnings'
 import { escapeElement, renderIfEscape } from '../lib/Escape'
 
-export const blockProps = z.union([
-  paragraphProps,
-  figureProps,
-  inputsProps,
+export const blockEntity = z.union([
+  paragraphPropsOrElement,
+  figurePropsOrElement,
+  inputsPropsOrElement,
   escapeElement,
 ])
-export type BlockProps = z.infer<typeof blockProps>
+export type BlockEntity = z.infer<typeof blockEntity>
 
-export const blockSequence = z.array(blockProps)
+export const blockSequence = z.array(blockEntity)
 export type BlockSequence = z.infer<typeof blockSequence>
 
 /**
  * This component primarily serves as a way to route to more specific block elements based on which properties are present.
  */
-export const Block = (props: BlockProps) => {
-  const block = blockProps.parse(props)
-  return (
-    renderIfFigure(block) ||
-    renderIfParagraph(block) ||
-    renderIfInputs(block) ||
-    renderIfEscape(block) ||
-    invalidBlock(block)
-  )
-}
+export const Block = (o: BlockEntity) =>
+  renderIfFigure(o) ||
+  renderIfParagraph(o) ||
+  renderIfInputs(o) ||
+  renderIfEscape(o) ||
+  invalidBlock(o)
