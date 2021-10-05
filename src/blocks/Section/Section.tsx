@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { createElement } from 'react'
 import { inlineSequence } from '../../inlines'
 import { Paragraph } from '../Paragraph'
-import { Heading } from '../Heading'
+import { Heading } from '../Heading/Heading'
 import { Block, blockSequence } from '../Block'
 import { key } from '../../lib'
 

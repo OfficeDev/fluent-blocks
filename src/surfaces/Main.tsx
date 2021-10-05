@@ -15,5 +15,5 @@ const useStyles = makeStyles({
 
 export const Main = (props: SectionContentProps) => {
   const styles = useStyles()
-  return <Section {...props} className={styles.root} />
+  return <Section {...props} level={1} className={styles.root} />
 }

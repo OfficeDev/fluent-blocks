@@ -1,0 +1,37 @@
+import {View} from "../../view/View";
+
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Heading } from './Heading';
+
+<Meta title="Facets/Type scale" component={Heading} argTypes={{disable: true}}/>
+
+# Type scale
+
+Fluent and the UI Kit specify a series of type sizes also paired with font weights which signify where in the structure of the page a heading and the following content belongs.
+
+- [Fluent › Text](https://www.figma.com/file/IkBEp9pnO4Ep7HH4Bq5xrW/Text?node-id=2%3A895)
+- [UI Kit › Design system › Type](https://www.figma.com/file/UwN095fVIvwZDNtzTtUE3E/Microsoft-Teams-UI-Kit-Internal?node-id=4303%3A180379)
+
+The `Heading` component maps 4 of these size-weight pairs to semantic HTML tags. A `Heading` element’s place in the document structure is managed automatically by the `Section` component.
+
+<Canvas>
+  <Story name="Type scale">
+    <View main={{
+      title: [{text: 'Main section (h1)'}],
+      abstract: [{text: '24px size, 32px line height, 600 weight'}],
+      sections: [{
+        title: [{text: 'Level 2 (h2)'}],
+        abstract: [{text: '20px size, 28px line height, 600 weight'}],
+        sections: [{
+          title: [{text: 'Level 3 (h3)'}],
+          abstract: [{text: '16px size, 22px line height, 600 weight'}],
+          sections: [{
+            title: [{text: 'Levels 4 and lower (h4, h5, h6)'}],
+            abstract: [{text: '14px size, 20px line height, 600 weight'}]
+          }]
+        }]
+      }]
+    }}/>
+  </Story>
+</Canvas>
