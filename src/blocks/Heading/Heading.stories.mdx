@@ -4,7 +4,16 @@ import {View} from "../../view/View";
 import { Meta, Story, Canvas } from '@storybook/addon-docs';
 import { Heading } from './Heading';
 
-<Meta title="Facets/Type scale" component={Heading} argTypes={{disable: true}}/>
+<Meta
+  title="Facets/Type scale"
+  component={Heading}
+  parameters={{
+    viewMode: 'docs',
+    previewTabs: {
+      canvas: { hidden: true }
+    },
+  }}
+/>
 
 # Type scale
 
@@ -14,6 +23,8 @@ Fluent and the UI Kit specify a series of type sizes also paired with font weigh
 - [UI Kit › Design system › Type](https://www.figma.com/file/UwN095fVIvwZDNtzTtUE3E/Microsoft-Teams-UI-Kit-Internal?node-id=4303%3A180379)
 
 The `Heading` component maps 4 of these size-weight pairs to semantic HTML tags. A `Heading` element’s place in the document structure is managed automatically by the `Section` component.
+
+All `Heading`s apply a top margin of 24px and the same bottom margin as `Paragraph` of 4px.
 
 <Canvas>
   <Story name="Type scale">
