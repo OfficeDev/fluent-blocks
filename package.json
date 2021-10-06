@@ -13,7 +13,6 @@
     "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
     "chromatic": "npx chromatic --project-token=6c943fd2f5e9",
     "dev": "yarn storybook:start",
-    "lint": "eslint --max-warnings 0 src/**/*.{ts,tsx} .storybook/*.js",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "test": "start-server-and-test 'yarn storybook:start-ci' http://localhost:4000 'yarn test:run'",

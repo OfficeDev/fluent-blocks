@@ -1,8 +1,7 @@
-import {View} from "../../view/View";
+import { View } from '../../view/View'
 
-
-import { Meta, Story, Canvas } from '@storybook/addon-docs';
-import { Heading } from './Heading';
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import { Heading } from './Heading'
 
 <Meta
   title="Facets/Type scale"
@@ -10,7 +9,7 @@ import { Heading } from './Heading';
   parameters={{
     viewMode: 'docs',
     previewTabs: {
-      canvas: { hidden: true }
+      canvas: { hidden: true },
     },
   }}
 />
@@ -28,21 +27,31 @@ All `Heading`s apply a top margin of 24px and the same bottom margin as `Paragra
 
 <Canvas>
   <Story name="Type scale">
-    <View main={{
-      title: [{text: 'Main section (h1)'}],
-      abstract: [{text: '24px size, 32px line height, 600 weight'}],
-      sections: [{
-        title: [{text: 'Level 2 (h2)'}],
-        abstract: [{text: '20px size, 28px line height, 600 weight'}],
-        sections: [{
-          title: [{text: 'Level 3 (h3)'}],
-          abstract: [{text: '16px size, 22px line height, 600 weight'}],
-          sections: [{
-            title: [{text: 'Levels 4 and lower (h4, h5, h6)'}],
-            abstract: [{text: '14px size, 20px line height, 600 weight'}]
-          }]
-        }]
-      }]
-    }}/>
+    <View
+      main={{
+        title: [{ text: 'Main section (h1)' }],
+        abstract: [{ text: '24px size, 32px line height, 600 weight' }],
+        sections: [
+          {
+            title: [{ text: 'Level 2 (h2)' }],
+            abstract: [{ text: '20px size, 28px line height, 600 weight' }],
+            sections: [
+              {
+                title: [{ text: 'Level 3 (h3)' }],
+                abstract: [{ text: '16px size, 22px line height, 600 weight' }],
+                sections: [
+                  {
+                    title: [{ text: 'Levels 4 and lower (h4, h5, h6)' }],
+                    abstract: [
+                      { text: '14px size, 20px line height, 600 weight' },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }}
+    />
   </Story>
 </Canvas>
