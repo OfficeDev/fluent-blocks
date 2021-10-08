@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer'
 import get from 'lodash/get'
 import { Section } from './Section'
 import { Text as ExpectedText, Icon as ExpectedIcon } from '../../inlines'
-import { Escape } from '../../lib/Escape'
+import { Escape } from '../../lib'
 
 const Text = ({ text }: { text: string }) => <span>{text}</span>
 

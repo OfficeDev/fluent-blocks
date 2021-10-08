@@ -1,10 +1,7 @@
 import { z } from 'zod'
 import { textPropsOrElement, renderIfText } from './Text'
 import { iconPropsOrElement, renderIfIcon } from './Icon'
-import { invalidInline } from '../lib/warnings'
-import { escapeElement, renderIfEscape } from '../lib/Escape'
-import { key } from '../lib'
-import { cloneElement } from 'react'
+import { invalidInline, escapeElement, renderIfEscape, Sequence } from '../lib'
 
 export const inlineEntity = z.union([
   textPropsOrElement,
@@ -33,15 +30,5 @@ export const Inline = (o: InlineEntity) =>
  */
 export const InlineContent = (props: InlineContentProps) => {
   const { inlines } = props
-  return (
-    <>
-      {(inlines ?? []).map((o) => {
-        // todo: why does React throw "Warning: Inline: `key` is not a prop" here if
-        //  Inline is called using the spread operator like Section does for
-        //  <Block {...block} key={…}/> without encountering that error?
-        const contentElement = Inline(o)
-        return contentElement && cloneElement(contentElement, { key: key(o) })
-      })}
-    </>
-  )
+  return <>{Sequence<InlineEntity>(inlines, Inline)}</>
 }

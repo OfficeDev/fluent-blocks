@@ -14,9 +14,12 @@ export type FigureProps = z.infer<typeof figureProps>
 export const Figure = (props: FigureProps) => {
   const { caption } = props
   return (
-    <div className="figure">
-      <InlineContent inlines={caption} />
-    </div>
+    <figure>
+      {/* todo: implement media types here */}
+      <figcaption>
+        <InlineContent inlines={caption} />
+      </figcaption>
+    </figure>
   )
 }
 

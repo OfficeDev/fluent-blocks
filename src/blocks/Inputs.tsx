@@ -17,7 +17,7 @@ export const inputsProps = z.object({
 export type InputsProps = z.infer<typeof inputsProps>
 
 export const Inputs = (props: InputsProps) => (
-  <Placeholder {...props} label="Inputs block" />
+  <Placeholder {...props} label="Inputs block placeholder" />
 )
 
 function isInputsProps(o: any): o is InputsProps {
