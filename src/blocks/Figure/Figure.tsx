@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { inlineSequence, InlineContent } from '../inlines'
+import { inlineSequence, InlineContent } from '../../inlines'
 import { ReactElement } from 'react'
-import { propsElementUnion } from '../lib'
+import { propsElementUnion } from '../../lib'
 
 export const figureProps = z.object({
   caption: inlineSequence,

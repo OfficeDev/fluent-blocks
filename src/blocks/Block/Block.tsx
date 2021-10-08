@@ -1,7 +1,10 @@
 import { z } from 'zod'
-import { paragraphPropsOrElement, renderIfParagraph } from '../Paragraph'
-import { figurePropsOrElement, renderIfFigure } from '../Figure'
-import { inputsPropsOrElement, renderIfInputs } from '../Inputs'
+import {
+  paragraphPropsOrElement,
+  renderIfParagraph,
+} from '../Paragraph/Paragraph'
+import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
+import { inputsPropsOrElement, renderIfInputs } from '../Inputs/Inputs'
 import { invalidBlock, escapeElement, renderIfEscape } from '../../lib'
 
 export const blockEntity = z.union([

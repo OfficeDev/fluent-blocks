@@ -1,11 +1,11 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { Placeholder, propsElementUnion } from '../lib'
+import { Placeholder, propsElementUnion } from '../../lib'
 import {
   multilineTextInputProps,
   shortTextInputProps,
-} from '../inputs/text-input'
-import { radioGroupProps } from '../inputs/radio-group'
+} from '../../inputs/text-input'
+import { radioGroupProps } from '../../inputs/radio-group'
 
 export const inputsProps = z.object({
   inputs: z.union([

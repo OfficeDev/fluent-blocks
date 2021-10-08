@@ -1,7 +1,7 @@
 import { Block, BlockEntity, BlockSequence } from './Block'
 import { Escape, Sequence } from '../../lib'
-import { Figure } from '../Figure'
-import { Paragraph } from '../Paragraph'
+import { Figure } from '../Figure/Figure'
+import { Paragraph } from '../Paragraph/Paragraph'
 
 export default {
   title: 'Tests/Block',
