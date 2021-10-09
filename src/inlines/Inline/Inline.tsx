@@ -1,7 +1,12 @@
 import { z } from 'zod'
-import { textPropsOrElement, renderIfText } from './Text'
-import { iconPropsOrElement, renderIfIcon } from './Icon'
-import { invalidInline, escapeElement, renderIfEscape, Sequence } from '../lib'
+import { textPropsOrElement, renderIfText } from '../Text/Text'
+import { iconPropsOrElement, renderIfIcon } from '../Icon/Icon'
+import {
+  invalidInline,
+  escapeElement,
+  renderIfEscape,
+  Sequence,
+} from '../../lib'
 
 export const inlineEntity = z.union([
   textPropsOrElement,

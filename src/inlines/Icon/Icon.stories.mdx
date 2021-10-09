@@ -1,0 +1,72 @@
+import get from 'lodash/get'
+import find from 'lodash/find'
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import { Icon } from './Icon'
+
+<Meta
+  title="Facets/Icons"
+  component={Icon}
+  parameters={{
+    viewMode: 'docs',
+    previewTabs: {
+      canvas: { hidden: true },
+    },
+  }}
+/>
+
+export const getIcons = async () => {
+  const nameExp = /(.+)_(\d+_\w+)\.sprite\.svg$/
+  const response = await fetch(
+    'https://data.jsdelivr.com/v1/package/npm/fluentui-svg-icon-sprites@1.1.142'
+  )
+  if (response.ok) {
+    const jsonValue = await response.json() // Get JSON value from the response body
+    const { all, styles } = get(
+      find(get(jsonValue, 'files', []), ({ name }) => name === 'sprites'),
+      'files',
+      []
+    ).reduce(
+      (acc, { name }) => {
+        const matches = name.match(nameExp)
+        if (matches) {
+          const [_, icon, styles] = matches
+          acc.all.add(icon)
+          if (icon in acc.styles) {
+            acc.styles[icon].push(styles)
+          } else {
+            acc.styles[icon] = [styles]
+          }
+        }
+        return acc
+      },
+      { all: new Set(), styles: {} }
+    )
+    return Promise.resolve({ allIcons: Array.from(all), styles })
+  } else {
+    return Promise.reject('Problem fetching icon list')
+  }
+}
+
+export const IconTemplate = (props) => {
+  getIcons().then(console.log)
+  return (
+    <span style={{ fontSize: '4rem' }}>
+      <Icon {...props} />
+    </span>
+  )
+}
+
+# Icons
+
+There are more than 1,500 icons in `react-system-icons` available for you to use
+with the `Icon` component, without having to list the repository containing the
+icon assets as a dependency.
+
+<Canvas>
+  <Story
+    name="Icons"
+    args={{ icon: 'diversity', size: 24, variant: 'outline' }}
+  >
+    {IconTemplate.bind({})}
+  </Story>
+</Canvas>

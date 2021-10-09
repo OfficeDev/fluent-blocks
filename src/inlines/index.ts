@@ -1,3 +1,3 @@
-export * from './Inline'
-export * from './Text'
-export * from './Icon'
+export * from './Inline/Inline'
+export * from './Text/Text'
+export * from './Icon/Icon'
