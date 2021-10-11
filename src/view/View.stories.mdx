@@ -27,6 +27,9 @@ import { Meta, Story, Canvas } from '@storybook/addon-docs'
       },
     },
   }}
+  parameters={{
+    viewMode: 'docs',
+  }}
 />
 
 export const fakeTitle = () => {
@@ -99,7 +102,7 @@ call its error callback with the issues.
 
 <Canvas>
   <Story
-    name="Parse issue"
+    name="Props validation"
     args={{
       main: {
         title: [{ potato: 'This content won’t be valid.' }],

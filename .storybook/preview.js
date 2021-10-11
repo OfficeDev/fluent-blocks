@@ -12,4 +12,5 @@ export const parameters = {
       order: ['Patterns', 'Facets', '*'],
     },
   },
+  viewMode: 'docs',
 }
