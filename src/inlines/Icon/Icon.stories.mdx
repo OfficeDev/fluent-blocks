@@ -1,7 +1,9 @@
 import get from 'lodash/get'
 import find from 'lodash/find'
+import range from 'lodash/range'
 import { Meta, Story, Canvas } from '@storybook/addon-docs'
 import { Icon } from './Icon'
+import { useState, useEffect } from 'react'
 
 <Meta
   title="Facets/Icons"
@@ -47,26 +49,110 @@ export const getIcons = async () => {
   }
 }
 
-export const IconTemplate = (props) => {
-  getIcons().then(console.log)
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+  return debouncedValue
+}
+
+export const IconCard = ({ icon, style }) => {
+  const [sizeStr, variant] = style.split('_')
   return (
-    <span style={{ fontSize: '4rem' }}>
-      <Icon {...props} />
-    </span>
+    <article>
+      <p style={{ fontSize: '4rem', textAlign: 'center' }}>
+        <Icon icon={icon} size={parseInt(sizeStr)} variant="outline" />
+      </p>
+      <p style={{ textAlign: 'center', overflowWrap: 'break-word' }}>{icon}</p>
+    </article>
+  )
+}
+
+export const IconFinder = () => {
+  const [query, setQuery] = useState('')
+  const debouncedQuery = useDebounce(query, 500)
+  const [icons, setIcons] = useState({
+    allIcons: [],
+    styles: {},
+    randomSample: [],
+  })
+  const loaded = icons.allIcons && icons.allIcons.length > 0
+  const querying = loaded && debouncedQuery.length > 2
+  useEffect(() => {
+    getIcons().then(({ allIcons, styles }) => {
+      setIcons({
+        allIcons,
+        styles,
+        randomSample: range(0, 20).map(
+          (_i) => allIcons[Math.floor(Math.random() * allIcons.length)]
+        ),
+      })
+    })
+  }, [])
+  const queryResults = querying
+    ? icons.allIcons.filter((icon) => icon.includes(debouncedQuery))
+    : []
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder={loaded ? 'Search for icons' : 'Loading…'}
+        disabled={!loaded}
+      />
+      {loaded && (
+        <>
+          {querying ? (
+            <>
+              <h4 style={{ margin: '2rem 0 1rem 0' }}>
+                Showing all {queryResults.length} results:
+              </h4>
+              <section
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                }}
+              >
+                {queryResults.map((icon) => {
+                  return <IconCard icon={icon} style={icons.styles[icon][0]} />
+                })}
+              </section>
+            </>
+          ) : (
+            <>
+              <h4 style={{ margin: '2rem 0 1rem 0' }}>
+                Random sample of 20 icons:
+              </h4>
+              <section
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                  gap: '.5rem',
+                }}
+              >
+                {icons.randomSample.map((icon) => {
+                  return <IconCard icon={icon} style={icons.styles[icon][0]} />
+                })}
+              </section>
+            </>
+          )}
+        </>
+      )}
+    </div>
   )
 }
 
 # Icons
 
-There are more than 1,500 icons in `react-system-icons` available for you to use
+There are more than 1,750 icons in `react-system-icons` available for you to use
 with the `Icon` component, without having to list the repository containing the
 icon assets as a dependency.
 
-<Canvas>
-  <Story
-    name="Icons"
-    args={{ icon: 'diversity', size: 24, variant: 'outline' }}
-  >
-    {IconTemplate.bind({})}
-  </Story>
-</Canvas>
+<IconFinder />
