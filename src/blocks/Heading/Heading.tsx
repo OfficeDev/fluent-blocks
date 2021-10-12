@@ -1,17 +1,16 @@
 import { createElement } from 'react'
 import { z } from 'zod'
-import { InlineContent } from '../inlines'
+import { InlineContent } from '../../inlines'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { useParagraphStyles, paragraphProps } from './Paragraph'
+import { useParagraphStyles, paragraphProps } from '../Paragraph/Paragraph'
 
 export const headingProps = paragraphProps.extend({
   level: z.number().max(6).min(1).default(6),
 })
-
 export type HeadingProps = z.infer<typeof headingProps>
 
 export const Heading = (props: HeadingProps) => {
-  const { paragraph, level } = headingProps.parse(props)
+  const { paragraph, level } = props
   const content = <InlineContent inlines={paragraph} />
   const styles = useParagraphStyles()
   const elementName = level >= 1 && level <= 5 ? `h${level}` : 'h6'
@@ -28,5 +27,5 @@ export const Heading = (props: HeadingProps) => {
           : cx(styles.root, styles.heading),
     },
     content
-  )
+  ) as JSX.Element
 }

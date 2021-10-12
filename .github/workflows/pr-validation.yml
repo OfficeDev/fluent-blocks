@@ -22,7 +22,7 @@ jobs:
         run: yarn install
 
       - name: Check for code quality issues
-        run: yarn lint
+        run: yarn lint-ci
 
       - name: Run tests
         run: yarn test

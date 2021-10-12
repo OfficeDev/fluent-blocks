@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import { cloneElement, ReactNode } from 'react'
-import { key } from './keys'
+import { ReactNode } from 'react'
 import { zodElement } from './propsElementUnion'
 
 export const escapeProps = z.object({
@@ -35,10 +34,10 @@ export const escapeElement = zodElement<
 
 export type EscapeElement = z.infer<typeof escapeElement>
 
-export function isEscapeElement(p: any): p is EscapeElement {
-  return p?.type === Escape
+export function isEscapeElement(o: any): o is EscapeElement {
+  return o?.type === Escape
 }
 
-export function renderIfEscape(p: any) {
-  return isEscapeElement(p) ? cloneElement(p, { key: key(p) }) : null
+export function renderIfEscape(o: any) {
+  return isEscapeElement(o) ? o : null
 }

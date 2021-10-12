@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { InlineContent, inlineSequence } from '../inlines'
+import { InlineContent, inlineSequence } from '../../inlines'
 import { makeStyles } from '@fluentui/react-components'
-import { propsElementUnion, rem } from '../lib'
+import { propsElementUnion, rem } from '../../lib'
 import { ReactElement } from 'react'
 
 export const paragraphProps = z.object({
@@ -40,7 +40,7 @@ export const useParagraphStyles = makeStyles({
 })
 
 export const Paragraph = (props: ParagraphProps) => {
-  const { paragraph } = paragraphProps.parse(props)
+  const { paragraph } = props
   const styles = useParagraphStyles()
   return (
     <p className={styles.root}>
@@ -49,14 +49,14 @@ export const Paragraph = (props: ParagraphProps) => {
   )
 }
 
-function isParagraphProps(p: any): p is ParagraphProps {
-  return 'paragraph' in p
+function isParagraphProps(o: any): o is ParagraphProps {
+  return 'paragraph' in o
 }
 
 function isParagraphElement(
-  p: any
-): p is ReactElement<ParagraphProps, typeof Paragraph> {
-  return p?.type === Paragraph
+  o: any
+): o is ReactElement<ParagraphProps, typeof Paragraph> {
+  return o?.type === Paragraph
 }
 
 export const paragraphPropsOrElement = propsElementUnion<
@@ -66,10 +66,10 @@ export const paragraphPropsOrElement = propsElementUnion<
 >(paragraphProps)
 export type ParagraphPropsOrElement = z.infer<typeof paragraphPropsOrElement>
 
-export function renderIfParagraph(p: any) {
-  return isParagraphProps(p) ? (
-    <Paragraph {...p} />
-  ) : isParagraphElement(p) ? (
-    p
+export function renderIfParagraph(o: any) {
+  return isParagraphProps(o) ? (
+    <Paragraph {...o} />
+  ) : isParagraphElement(o) ? (
+    o
   ) : null
 }

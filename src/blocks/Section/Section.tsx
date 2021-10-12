@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import { createElement } from 'react'
 import { inlineSequence } from '../../inlines'
-import { Paragraph } from '../Paragraph'
-import { Heading } from '../Heading'
-import { Block, blockSequence } from '../Block'
-import { key } from '../../lib'
+import { Paragraph } from '../Paragraph/Paragraph'
+import { Heading } from '../Heading/Heading'
+import { Block, BlockEntity, blockSequence } from '../Block/Block'
+import { key, Sequence } from '../../lib'
 
 const nonRecursiveSectionContentProps = {
   title: inlineSequence,
@@ -79,11 +79,9 @@ export const Section = (props: SectionProps) => {
     <>
       {title && <Heading paragraph={title} level={level} />}
       {abstract && <Paragraph paragraph={abstract} />}
-      {(blocks || []).map((block) => (
-        <Block {...block} key={key(block)} />
-      ))}
+      {Sequence<BlockEntity>(blocks, Block)}
       {(sections || []).map((section, _s) => (
-        <Section {...section} key={key(section)} as={as} level={level + 1} />
+        <Section {...section} key={key(section)} level={level + 1} />
       ))}
     </>
   )

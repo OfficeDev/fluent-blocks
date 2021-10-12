@@ -1,0 +1,257 @@
+import get from 'lodash/get'
+import find from 'lodash/find'
+import range from 'lodash/range'
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import { Icon } from './Icon'
+import { useState, useEffect } from 'react'
+
+<Meta
+  title="Facets/Icons"
+  component={Icon}
+  parameters={{
+    viewMode: 'docs',
+    previewTabs: {
+      canvas: { hidden: true },
+    },
+  }}
+/>
+
+export const getIcons = async () => {
+  const nameExp = /(.+)_(\d+)_\w+\.sprite\.svg$/
+  const response = await fetch(
+    'https://data.jsdelivr.com/v1/package/npm/fluentui-svg-icon-sprites@1.1.142'
+  )
+  if (response.ok) {
+    const jsonValue = await response.json() // Get JSON value from the response body
+    const { all, sizes, possibleSizes } = get(
+      find(get(jsonValue, 'files', []), ({ name }) => name === 'sprites'),
+      'files',
+      []
+    ).reduce(
+      (acc, { name }) => {
+        const matches = name.match(nameExp)
+        if (matches) {
+          const [_, icon, sizeStr] = matches
+          const size = parseInt(sizeStr)
+          acc.possibleSizes.add(size)
+          acc.all.add(icon)
+          if (icon in acc.sizes) {
+            acc.sizes[icon].add(size)
+          } else {
+            acc.sizes[icon] = new Set([size])
+          }
+        }
+        return acc
+      },
+      { all: new Set(), sizes: {}, possibleSizes: new Set() }
+    )
+    return Promise.resolve({
+      allIcons: Array.from(all),
+      sizes,
+      possibleSizes: Array.from(possibleSizes).sort(),
+    })
+  } else {
+    return Promise.reject('Problem fetching icon list')
+  }
+}
+
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+  return debouncedValue
+}
+
+export const IconCard = ({ icon, size, sizes, variant }) => {
+  const sizeAvailable = sizes.has(size)
+  const displaySize = sizeAvailable ? size : Array.from(sizes)[0]
+  return (
+    <article style={{ textAlign: 'center' }}>
+      <p style={{ fontSize: `${displaySize * 2}px` }}>
+        <Icon icon={icon} size={displaySize} variant={variant} />
+      </p>
+      <p style={{ overflowWrap: 'break-word' }}>{icon}</p>
+      <p>
+        {Array.from(sizes).map((possibleSize) => (
+          <span
+            key={possibleSize}
+            {...(possibleSize === displaySize && {
+              style: { fontWeight: 'bold' },
+            })}
+          >
+            {possibleSize}{' '}
+          </span>
+        ))}
+      </p>
+    </article>
+  )
+}
+
+export const IconFinder = () => {
+  const [query, setQuery] = useState('')
+  const debouncedQuery = useDebounce(query, 500)
+  const [icons, setIcons] = useState({
+    allIcons: [],
+    sizes: {},
+    possibleSizes: [],
+    randomSample: [],
+  })
+  const [size, setSize] = useState(24)
+  const [variant, setVariant] = useState('outline')
+  const loaded = icons.allIcons && icons.allIcons.length > 0
+  const querying = loaded && debouncedQuery.length > 2
+  useEffect(() => {
+    getIcons().then(({ allIcons, sizes, possibleSizes }) => {
+      setIcons({
+        allIcons,
+        sizes,
+        possibleSizes,
+        randomSample: range(0, 18).map(
+          (_i) => allIcons[Math.floor(Math.random() * allIcons.length)]
+        ),
+      })
+    })
+  }, [])
+  const queryResults = querying
+    ? icons.allIcons.filter((icon) => icon.includes(debouncedQuery))
+    : []
+  return (
+    <div>
+      <section
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, min-content)',
+          gap: '.5rem',
+          marginTop: '2rem',
+        }}
+      >
+        <div>
+          <label id="ii1">Icon identifier</label>
+          <input
+            type="text"
+            value={query}
+            aria-labelledby="ii1"
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={loaded ? 'Search for icons' : 'Loading…'}
+            disabled={!loaded}
+            style={{ fontSize: '1.2em', boxSizing: 'border-box' }}
+          />
+        </div>
+        <div>
+          <label id="ii2">Size</label>
+          <select
+            aria-labelledby="ii2"
+            disabled={!loaded}
+            style={{ fontSize: '1.25em' }}
+            onChange={(e) => setSize(parseInt(e.target.value))}
+          >
+            {loaded ? (
+              <>
+                {icons.possibleSizes.map((possibleSize) => (
+                  <option value={possibleSize} selected={possibleSize === size}>
+                    {possibleSize}
+                  </option>
+                ))}
+              </>
+            ) : (
+              <option disabled value="">
+                Loading…
+              </option>
+            )}
+          </select>
+        </div>
+        <div>
+          <label id="ii3">Variant</label>
+          <select
+            aria-labelledby="ii3"
+            disabled={!loaded}
+            style={{ fontSize: '1.25em' }}
+            onChange={(e) => setVariant(e.target.value)}
+          >
+            <option selected={variant === 'outline'} value="outline">
+              Outline
+            </option>
+            <option selected={variant === 'filled'} value="filled">
+              Filled
+            </option>
+          </select>
+        </div>
+      </section>
+      {loaded && (
+        <>
+          {querying ? (
+            <>
+              <h4 style={{ margin: '2rem 0 1rem 0' }}>
+                Showing all {queryResults.length} results:
+              </h4>
+              <section
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                  gap: '.5rem',
+                }}
+              >
+                {queryResults.map((icon) => {
+                  return (
+                    <IconCard
+                      key={icon}
+                      icon={icon}
+                      size={size}
+                      sizes={icons.sizes[icon]}
+                      variant={variant}
+                    />
+                  )
+                })}
+              </section>
+            </>
+          ) : (
+            <>
+              <h4 style={{ margin: '2rem 0 1rem 0' }}>
+                Random sample of {icons.randomSample.length} icons:
+              </h4>
+              <section
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                  gap: '.5rem',
+                }}
+              >
+                {icons.randomSample.map((icon) => {
+                  return (
+                    <IconCard
+                      key={icon}
+                      icon={icon}
+                      size={size}
+                      sizes={icons.sizes[icon]}
+                      variant={variant}
+                    />
+                  )
+                })}
+              </section>
+            </>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
+
+# Icons
+
+There are more than 1,750 icons in `react-system-icons` available for you to use
+with the `Icon` component, without having to list the repository containing the
+icon assets as a dependency.
+
+You can search for the icon you want to use here. Simply type a query in the
+input below and select the desired size. All icons are available in both
+‘outline’ and ‘filled’ variants. Each result shows the icon at twice the
+display size, the name of the icon, and the sizes available with the display
+size in bold.
+
+<IconFinder />

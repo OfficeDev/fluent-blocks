@@ -1,6 +1,6 @@
-import { cloneElement, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { z } from 'zod'
-import { propsElementUnion, key } from '../lib'
+import { propsElementUnion } from '../../lib'
 
 export const textVariant = z.union([
   z.literal('normal'),
@@ -16,7 +16,7 @@ export const textProps = z.object({
 export type TextProps = z.infer<typeof textProps>
 
 export const Text = (props: TextProps) => {
-  const { text, variant } = textProps.parse(props)
+  const { text, variant } = props
   switch (variant) {
     // todo: handle other cases by wrapping in a `span` that applies the correct styles.
     default:
@@ -40,9 +40,5 @@ export const textPropsOrElement = propsElementUnion<
 export type TextPropsOrElement = z.infer<typeof textPropsOrElement>
 
 export function renderIfText(p: any) {
-  return isTextProps(p) ? (
-    <Text {...p} key={key(p)} />
-  ) : isTextElement(p) ? (
-    cloneElement(p, { key: key(p.props) })
-  ) : null
+  return isTextProps(p) ? <Text {...p} /> : isTextElement(p) ? p : null
 }

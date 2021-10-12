@@ -1,11 +1,11 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { Placeholder, propsElementUnion } from '../lib'
+import { Placeholder, propsElementUnion } from '../../lib'
 import {
   multilineTextInputProps,
   shortTextInputProps,
-} from '../inputs/text-input'
-import { radioGroupProps } from '../inputs/radio-group'
+} from '../../inputs/text-input'
+import { radioGroupProps } from '../../inputs/radio-group'
 
 export const inputsProps = z.object({
   inputs: z.union([
@@ -17,17 +17,17 @@ export const inputsProps = z.object({
 export type InputsProps = z.infer<typeof inputsProps>
 
 export const Inputs = (props: InputsProps) => (
-  <Placeholder {...inputsProps.parse(props)} label="Inputs block" />
+  <Placeholder {...props} label="Inputs block placeholder" />
 )
 
-function isInputsProps(p: any): p is InputsProps {
-  return 'inputs' in p
+function isInputsProps(o: any): o is InputsProps {
+  return 'inputs' in o
 }
 
 function isInputsElement(
-  p: any
-): p is ReactElement<InputsProps, typeof Inputs> {
-  return p?.type === Inputs
+  o: any
+): o is ReactElement<InputsProps, typeof Inputs> {
+  return o?.type === Inputs
 }
 
 export const inputsPropsOrElement = propsElementUnion<
@@ -37,6 +37,6 @@ export const inputsPropsOrElement = propsElementUnion<
 >(inputsProps)
 export type InputsPropsOrElement = z.infer<typeof inputsPropsOrElement>
 
-export function renderIfInputs(p: any) {
-  return isInputsProps(p) ? <Inputs {...p} /> : isInputsElement(p) ? p : null
+export function renderIfInputs(o: any) {
+  return isInputsProps(o) ? <Inputs {...o} /> : isInputsElement(o) ? o : null
 }

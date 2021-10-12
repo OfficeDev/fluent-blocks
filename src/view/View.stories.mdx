@@ -1,0 +1,114 @@
+import range from 'lodash/range'
+import { fake, seed } from 'faker/locale/en_US'
+import { View } from './View'
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+<Meta
+  title="Patterns/View"
+  component={View}
+  argTypes={{
+    main: {
+      name: 'Main',
+      control: { type: 'object' },
+    },
+    dir: {
+      name: 'Text direction',
+      control: { type: 'inline-radio', labels: { ltr: '→', rtl: '←' } },
+    },
+    theme: {
+      name: 'Theme variant',
+      control: {
+        type: 'inline-radio',
+        labels: {
+          light: 'Light',
+          dark: 'Dark',
+          'high-contrast': 'High contrast',
+        },
+      },
+    },
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const fakeTitle = () => {
+  const lowercase = fake('{{lorem.words}}')
+  return lowercase.charAt(0).toUpperCase() + lowercase.slice(1)
+}
+
+export const ViewTemplate = (props) => <View {...props} />
+
+# View
+
+The `View` component organizes all patterns supported in this library into one
+coherent “view” for the user to experience. A view renders an experience that
+may have motion and interactivity but starts with the same content you
+supply. Content will only change if the user triggers the change, and at
+that time `View` will call its interaction callback with the update.
+
+<Canvas>
+  <Story
+    name="Demo"
+    args={{
+      main: {
+        title: [{ text: 'Fluent React Patterns' }],
+        abstract: [
+          {
+            text: 'This is a demonstration of Fluent React Patterns’ View component. ',
+          },
+          { text: fake('{{lorem.paragraph}}') },
+        ],
+        sections: range(4).map((s) => ({
+          title: [{ text: fakeTitle(fake) }],
+          blocks: range(3).map(() => ({
+            paragraph: range(3).map(() => ({
+              text: fake('{{lorem.sentence}} '),
+            })),
+          })),
+          ...(s === 1 && {
+            blocks: [
+              {
+                inputs: [
+                  { label: [{ text: fakeTitle(fake) }] },
+                  { label: [{ text: fakeTitle(fake) }] },
+                  { label: [{ text: fakeTitle(fake) }] },
+                ],
+              },
+            ],
+            sections: range(2).map(() => ({
+              title: [{ text: fakeTitle(fake) }],
+              blocks: range(3).map(() => ({
+                paragraph: range(3).map(() => ({
+                  text: fake('{{lorem.sentence}} '),
+                })),
+              })),
+            })),
+          }),
+        })),
+      },
+      dir: 'ltr',
+      theme: 'light',
+    }}
+  >
+    {seed(1234) || ViewTemplate.bind({})}
+  </Story>
+</Canvas>
+
+As a first-class pattern, `View` will parse the content props you give it
+and render any schema validation issues it encounters to the page in
+development. In production, it will display an error message to the user and
+call its error callback with the issues.
+
+<Canvas>
+  <Story
+    name="Props validation"
+    args={{
+      main: {
+        title: [{ potato: 'This content won’t be valid.' }],
+      },
+    }}
+  >
+    {seed(1234) || ViewTemplate.bind({})}
+  </Story>
+</Canvas>

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { Main } from '../surfaces/Main'
-import { FluentKitProvider, theme, dir } from '../lib'
+import { FluentKitProvider, theme, dir, ParseBoundary } from '../lib'
 import { sectionContentProps } from '../blocks/Section/Section'
 
 export const viewProps = z.object({
@@ -15,11 +15,14 @@ export const viewProps = z.object({
 export type ViewProps = z.infer<typeof viewProps>
 
 /** An experience provided to the user via their device’s canvas. */
-export const View = (props: ViewProps) => {
-  const { main, theme = 'light', dir = 'ltr' } = viewProps.parse(props)
-  return (
-    <FluentKitProvider {...{ theme, dir }}>
-      <Main {...main} />
-    </FluentKitProvider>
-  )
-}
+export const View = (data: ViewProps) => (
+  <ParseBoundary<ViewProps>
+    schema={viewProps}
+    data={data}
+    children={({ main, theme = 'light', dir = 'ltr' }) => (
+      <FluentKitProvider {...{ theme, dir }}>
+        <Main {...main} />
+      </FluentKitProvider>
+    )}
+  />
+)

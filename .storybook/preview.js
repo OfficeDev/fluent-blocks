@@ -8,6 +8,9 @@ export const parameters = {
     },
   },
   options: {
-    storySort: ['Patterns', '*'],
+    storySort: {
+      order: ['Patterns', 'Facets', '*'],
+    },
   },
+  viewMode: 'docs',
 }
