@@ -2,6 +2,7 @@ import { Block, BlockEntity, BlockSequence } from './Block'
 import { Escape, Sequence } from '../../lib'
 import { Figure } from '../Figure/Figure'
 import { Paragraph } from '../Paragraph/Paragraph'
+import { Parameters } from '@storybook/addons'
 
 export default {
   title: 'Tests/Block',
@@ -15,6 +16,7 @@ const BlockTemplate = ({ blocks }: BlockSequenceArgs) =>
 
 export const BlockJsonTest: typeof BlockTemplate & {
   args?: BlockSequenceArgs
+  parameters?: Parameters
 } = BlockTemplate.bind({})
 
 BlockJsonTest.args = {
@@ -23,9 +25,11 @@ BlockJsonTest.args = {
     { paragraph: [{ text: '3b517894-57f8-4ed2-824b-90285b4686ce' }] },
   ],
 }
+BlockJsonTest.parameters = { chromatic: { disableSnapshot: true } }
 
 export const BlockJsxTest: typeof BlockTemplate & {
   args?: BlockSequenceArgs
+  parameters?: Parameters
 } = BlockTemplate.bind({})
 
 BlockJsxTest.args = {
@@ -40,9 +44,11 @@ BlockJsxTest.args = {
     />,
   ],
 }
+BlockJsxTest.parameters = { chromatic: { disableSnapshot: true } }
 
 export const BlockEscapeTest: typeof BlockTemplate & {
   args?: BlockSequenceArgs
+  parameters?: Parameters
 } = BlockTemplate.bind({})
 
 BlockEscapeTest.args = {
@@ -52,3 +58,4 @@ BlockEscapeTest.args = {
     </Escape>,
   ],
 }
+BlockEscapeTest.parameters = { chromatic: { disableSnapshot: true } }

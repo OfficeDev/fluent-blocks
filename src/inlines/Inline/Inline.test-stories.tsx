@@ -2,6 +2,7 @@ import { Inline, InlineEntity, InlineSequence } from './Inline'
 import { Escape, Sequence } from '../../lib'
 import { Text } from '../Text/Text'
 import { Icon } from '../Icon/Icon'
+import { Parameters } from '@storybook/addons'
 
 export default {
   title: 'Tests/Inline',
@@ -15,6 +16,7 @@ const InlineTemplate = ({ inlines }: InlineSequenceArgs) =>
 
 export const InlineJsonTest: typeof InlineTemplate & {
   args?: InlineSequenceArgs
+  parameters?: Parameters
 } = InlineTemplate.bind({})
 
 InlineJsonTest.args = {
@@ -23,9 +25,11 @@ InlineJsonTest.args = {
     { icon: '313be9f9-1c3b-4cf8-adb4-5dc59d4197a3' },
   ],
 }
+InlineJsonTest.parameters = { chromatic: { disableSnapshot: true } }
 
 export const InlineJsxTest: typeof InlineTemplate & {
   args?: InlineSequenceArgs
+  parameters?: Parameters
 } = InlineTemplate.bind({})
 
 InlineJsxTest.args = {
@@ -34,9 +38,11 @@ InlineJsxTest.args = {
     <Icon icon="3e6f7b4e-9d9c-4c4a-85fe-4e36e558b052" key="t2" />,
   ],
 }
+InlineJsxTest.parameters = { chromatic: { disableSnapshot: true } }
 
 export const InlineEscapeTest: typeof InlineTemplate & {
   args?: InlineSequenceArgs
+  parameters?: Parameters
 } = InlineTemplate.bind({})
 
 InlineEscapeTest.args = {
@@ -46,3 +52,4 @@ InlineEscapeTest.args = {
     </Escape>,
   ],
 }
+InlineEscapeTest.parameters = { chromatic: { disableSnapshot: true } }
