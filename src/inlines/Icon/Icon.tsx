@@ -7,6 +7,7 @@ export const iconVariant = z.union([z.literal('filled'), z.literal('outline')])
 export type IconVariant = z.infer<typeof iconVariant>
 
 export const iconSize = z.union([
+  z.literal(10),
   z.literal(12),
   z.literal(16),
   z.literal(20),
@@ -14,6 +15,14 @@ export const iconSize = z.union([
   z.literal(28),
   z.literal(32),
   z.literal(48),
+  z.literal('10'),
+  z.literal('12'),
+  z.literal('16'),
+  z.literal('20'),
+  z.literal('24'),
+  z.literal('28'),
+  z.literal('32'),
+  z.literal('48'),
 ])
 export type IconSize = z.infer<typeof iconSize>
 
@@ -46,11 +55,11 @@ const useStyles = makeStyles({
 })
 
 export const Icon = (props: IconProps) => {
-  const { icon, variant = 'outline', size = 20 } = props
+  const { icon, variant, size } = props
   const styles = useStyles()
   return (
     <svg className={styles.root}>
-      <use href={spriteHref(icon, size, variant)} />
+      <use href={spriteHref(icon, size!, variant!)} />
     </svg>
   )
 }
