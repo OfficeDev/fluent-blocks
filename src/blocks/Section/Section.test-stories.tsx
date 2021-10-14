@@ -1,6 +1,7 @@
 import { Section, SectionContentProps } from './Section'
 import { Text, Icon } from '../../inlines'
-import { Escape } from '../../lib/Escape'
+import { Escape } from '../../lib'
+import { Parameters } from '@storybook/addons'
 
 export default {
   title: 'Tests/Section',
@@ -11,6 +12,7 @@ const SectionTemplate = (props: SectionContentProps) => <Section {...props} />
 
 export const SectionJsonTest: typeof SectionTemplate & {
   args?: SectionContentProps
+  parameters?: Parameters
 } = SectionTemplate.bind({})
 
 SectionJsonTest.args = {
@@ -23,9 +25,11 @@ SectionJsonTest.args = {
     { icon: 'diversity' },
   ],
 }
+SectionJsonTest.parameters = { chromatic: { disableSnapshot: true } }
 
 export const SectionJsxTest: typeof SectionTemplate & {
   args?: SectionContentProps
+  parameters?: Parameters
 } = SectionTemplate.bind({})
 
 SectionJsxTest.args = {
@@ -38,9 +42,11 @@ SectionJsxTest.args = {
     <Icon icon="diversity" key="t2" />,
   ],
 }
+SectionJsxTest.parameters = { chromatic: { disableSnapshot: true } }
 
 export const SectionEscapeTest: typeof SectionTemplate & {
   args?: SectionContentProps
+  parameters?: Parameters
 } = SectionTemplate.bind({})
 
 SectionEscapeTest.args = {
@@ -50,3 +56,4 @@ SectionEscapeTest.args = {
     </Escape>,
   ],
 }
+SectionEscapeTest.parameters = { chromatic: { disableSnapshot: true } }
