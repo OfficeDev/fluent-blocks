@@ -11,7 +11,6 @@
     "storybook:build": "build-storybook",
     "storybook:start": "start-storybook -p 4000",
     "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
-    "chromatic": "npx chromatic --project-token=6c943fd2f5e9",
     "dev": "yarn storybook:start",
     "lint-ci": "eslint --max-warnings 0 src/**/*.{ts,tsx} .storybook/*.js",
     "lint-staged": "lint-staged",
