@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { InlineContent, inlineSequence } from '../../inlines'
-import { makeStyles } from '@fluentui/react-components'
-import { propsElementUnion, rem } from '../../lib'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 import { ReactElement } from 'react'
 
 export const paragraphProps = z.object({
@@ -11,10 +11,7 @@ export type ParagraphProps = z.infer<typeof paragraphProps>
 
 export const useParagraphStyles = makeStyles({
   root: {
-    maxWidth: rem(432),
     lineHeight: 20 / 14,
-    marginInlineStart: 'auto',
-    marginInlineEnd: 'auto',
     marginBlockStart: rem(4),
     marginBlockEnd: rem(4),
   },
@@ -42,8 +39,9 @@ export const useParagraphStyles = makeStyles({
 export const Paragraph = (props: ParagraphProps) => {
   const { paragraph } = props
   const styles = useParagraphStyles()
+  const commonStyles = useCommonStyles()
   return (
-    <p className={styles.root}>
+    <p className={cx(styles.root, commonStyles.mainContentWidth)}>
       <InlineContent inlines={paragraph} />
     </p>
   )

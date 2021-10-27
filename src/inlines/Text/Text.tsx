@@ -24,12 +24,12 @@ export const Text = (props: TextProps) => {
   }
 }
 
-function isTextProps(p: any): p is TextProps {
-  return 'text' in p
+function isTextProps(o: any): o is TextProps {
+  return 'text' in o
 }
 
-function isTextElement(p: any): p is ReactElement<TextProps, typeof Text> {
-  return p?.type === Text
+function isTextElement(o: any): o is ReactElement<TextProps, typeof Text> {
+  return o?.type === Text
 }
 
 export const textPropsOrElement = propsElementUnion<
@@ -39,6 +39,6 @@ export const textPropsOrElement = propsElementUnion<
 >(textProps)
 export type TextPropsOrElement = z.infer<typeof textPropsOrElement>
 
-export function renderIfText(p: any) {
-  return isTextProps(p) ? <Text {...p} /> : isTextElement(p) ? p : null
+export function renderIfText(o: any) {
+  return isTextProps(o) ? <Text {...o} /> : isTextElement(o) ? o : null
 }

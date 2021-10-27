@@ -4,13 +4,24 @@ import {
   renderIfParagraph,
 } from '../Paragraph/Paragraph'
 import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
-import { inputsPropsOrElement, renderIfInputs } from '../Inputs/Inputs'
+import {
+  shortInputsPropsOrElement,
+  renderIfShortInputs,
+} from '../ShortInputs/ShortInputs'
 import { invalidBlock, escapeElement, renderIfEscape } from '../../lib'
+import {
+  multilineTextInputPropsOrElement,
+  radioGroupPropsOrElement,
+  renderIfMultilineTextInput,
+  renderIfRadioGroup,
+} from '../../inputs'
 
 export const blockEntity = z.union([
   paragraphPropsOrElement,
   figurePropsOrElement,
-  inputsPropsOrElement,
+  shortInputsPropsOrElement,
+  multilineTextInputPropsOrElement,
+  radioGroupPropsOrElement,
   escapeElement,
 ])
 export type BlockEntity = z.infer<typeof blockEntity>
@@ -24,6 +35,8 @@ export type BlockSequence = z.infer<typeof blockSequence>
 export const Block = (o: BlockEntity) =>
   renderIfFigure(o) ||
   renderIfParagraph(o) ||
-  renderIfInputs(o) ||
+  renderIfShortInputs(o) ||
+  renderIfMultilineTextInput(o) ||
+  renderIfRadioGroup(o) ||
   renderIfEscape(o) ||
   invalidBlock(o)
