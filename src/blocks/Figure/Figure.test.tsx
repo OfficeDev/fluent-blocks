@@ -2,6 +2,6 @@
 
 import expect from 'expect'
 
-describe('Figure: to do', function () {
-  it('has no tests yet')
+describe('Figure', function () {
+  it('is still in placeholder stage')
 })

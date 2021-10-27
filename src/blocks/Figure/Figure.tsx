@@ -1,22 +1,35 @@
 import { z } from 'zod'
 import { inlineSequence, InlineContent } from '../../inlines'
 import { ReactElement } from 'react'
-import { propsElementUnion } from '../../lib'
+import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 export const figureProps = z.object({
   caption: inlineSequence,
 })
 export type FigureProps = z.infer<typeof figureProps>
 
-/**
- * A block-level element containing media and labeled by a caption.
- */
+const useFigureStyles = makeStyles({
+  media: {
+    marginInlineStart: 0,
+    marginInlineEnd: 0,
+  },
+  mediaPlaceholder: {
+    minHeight: '8rem',
+  },
+})
+
 export const Figure = (props: FigureProps) => {
+  const styles = useFigureStyles()
+  const commonStyles = useCommonStyles()
   const { caption } = props
   return (
     <figure>
-      {/* todo: implement media types here */}
-      <figcaption>
+      <Placeholder
+        label="Figure media"
+        className={cx(styles.media, styles.mediaPlaceholder)}
+      />
+      <figcaption className={commonStyles.mainContentWidth}>
         <InlineContent inlines={caption} />
       </figcaption>
     </figure>

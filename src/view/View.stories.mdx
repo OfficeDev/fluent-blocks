@@ -88,6 +88,12 @@ that time `View` will call its interaction callback with the update.
                 multiline: true,
                 label: [{ text: fakeTitle(fake) }],
               },
+              {
+                caption: [
+                  { text: 'Figure caption: ' },
+                  { text: fake('{{lorem.sentence}}') },
+                ],
+              },
             ],
             sections: range(2).map(() => ({
               title: [{ text: fakeTitle(fake) }],

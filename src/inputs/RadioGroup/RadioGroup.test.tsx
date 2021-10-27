@@ -2,6 +2,6 @@
 
 import expect from 'expect'
 
-describe('Short inputs', function () {
+describe('Radio group', function () {
   it('is still in placeholder stage')
 })
