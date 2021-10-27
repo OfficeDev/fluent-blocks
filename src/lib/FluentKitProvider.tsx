@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react'
 import { FluentProvider } from '@fluentui/react-components'
+
 import { Dir } from './readingDirection'
 import { getTeamsTheme, Theme } from './theme'
 

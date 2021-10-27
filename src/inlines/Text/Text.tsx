@@ -1,5 +1,6 @@
-import { ReactElement } from 'react'
 import { z } from 'zod'
+import { ReactElement } from 'react'
+
 import { propsElementUnion } from '../../lib'
 
 export const textVariant = z.union([

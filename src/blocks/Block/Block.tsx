@@ -1,4 +1,7 @@
 import { z } from 'zod'
+
+import { invalidBlock, escapeElement, renderIfEscape } from '../../lib'
+
 import {
   paragraphPropsOrElement,
   renderIfParagraph,
@@ -8,11 +11,10 @@ import {
   shortInputsPropsOrElement,
   renderIfShortInputs,
 } from '../ShortInputs/ShortInputs'
-import { invalidBlock, escapeElement, renderIfEscape } from '../../lib'
 import {
   multilineTextInputPropsOrElement,
-  radioGroupPropsOrElement,
   renderIfMultilineTextInput,
+  radioGroupPropsOrElement,
   renderIfRadioGroup,
 } from '../../inputs'
 

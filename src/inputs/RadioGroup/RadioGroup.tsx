@@ -1,11 +1,12 @@
 import { z } from 'zod'
+import { ReactElement } from 'react'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import {
   inputPropsWithInitialStringValue,
   labeledValueProps,
 } from '../input-properties'
 import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
-import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 export const radioGroupProps = inputPropsWithInitialStringValue.merge(
   z.object({

@@ -1,9 +1,11 @@
-import { createElement } from 'react'
 import { z } from 'zod'
-import { InlineContent } from '../../inlines'
+import { createElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { useParagraphStyles, paragraphProps } from '../Paragraph/Paragraph'
+
+import { InlineContent } from '../../inlines'
 import { useCommonStyles } from '../../lib'
+
+import { useParagraphStyles, paragraphProps } from '../Paragraph/Paragraph'
 
 export const headingProps = paragraphProps.extend({
   level: z.number().max(6).min(1).default(6),

@@ -1,8 +1,9 @@
-import { textInputProps } from '../input-properties'
 import { z } from 'zod'
-import { Placeholder, propsElementUnion, rem } from '../../lib'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
+
+import { textInputProps } from '../input-properties'
+import { Placeholder, propsElementUnion, rem } from '../../lib'
 
 export const shortTextInputProps = textInputProps.merge(
   z.object({

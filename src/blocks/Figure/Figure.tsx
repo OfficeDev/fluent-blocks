@@ -1,8 +1,9 @@
 import { z } from 'zod'
-import { inlineSequence, InlineContent } from '../../inlines'
 import { ReactElement } from 'react'
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
+import { inlineSequence, InlineContent } from '../../inlines'
+import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
   caption: inlineSequence,

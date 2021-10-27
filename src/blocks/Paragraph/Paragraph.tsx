@@ -1,8 +1,9 @@
 import { z } from 'zod'
-import { InlineContent, inlineSequence } from '../../inlines'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 import { ReactElement } from 'react'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
+import { InlineContent, inlineSequence } from '../../inlines'
+import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 
 export const paragraphProps = z.object({
   paragraph: inlineSequence,

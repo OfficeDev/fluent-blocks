@@ -1,8 +1,9 @@
 import { z } from 'zod'
-import { textInputProps } from '../input-properties'
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
+import { textInputProps } from '../input-properties'
+import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 
 export const multilineTextInputProps = textInputProps.merge(
   z.object({

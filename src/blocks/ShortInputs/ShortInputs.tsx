@@ -1,12 +1,13 @@
 import { z } from 'zod'
+import { ReactElement } from 'react'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import {
   invalidShortInput,
   propsElementUnion,
   useCommonStyles,
 } from '../../lib'
 import { renderIfShortTextInput, shortTextInputProps } from '../../inputs'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { ReactElement } from 'react'
 
 const shortInputsProps = z.object({
   inputs: z.array(shortTextInputProps).min(1),
