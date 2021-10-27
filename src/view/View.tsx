@@ -1,6 +1,8 @@
 import { z } from 'zod'
-import { Main } from '../surfaces/Main'
+
 import { FluentKitProvider, theme, dir, ParseBoundary } from '../lib'
+
+import { Main } from '../surfaces/Main'
 import { sectionContentProps } from '../blocks/Section/Section'
 
 export const viewProps = z.object({

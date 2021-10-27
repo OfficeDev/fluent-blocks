@@ -1,11 +1,15 @@
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import { rem } from './index'
 
 const useStyles = makeStyles({
   root: (theme) => ({
     boxSizing: 'border-box',
     minHeight: '3rem',
-    margin: rem(4),
+    marginInlineStart: rem(4),
+    marginInlineEnd: rem(4),
+    marginBlockStart: rem(4),
+    marginBlockEnd: rem(4),
     padding: rem(4),
     display: 'flex',
     justifyContent: 'center',
@@ -13,10 +17,10 @@ const useStyles = makeStyles({
 
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderColor: theme.alias.color.red.border2,
+    borderColor: theme.colorPaletteRedBorder2,
     borderRadius: rem(6),
 
-    color: theme.alias.color.red.foreground1,
+    color: theme.colorPaletteRedForeground1,
   }),
 })
 

@@ -11,3 +11,15 @@ export const inputPropsWithInitialStringValue = inputProps.merge(
     initialValue: z.string().nonempty().optional().nullable(),
   })
 )
+
+export const textInputProps = inputPropsWithInitialStringValue.merge(
+  z.object({
+    type: z.literal('text'),
+    placeholder: z.string().optional(),
+  })
+)
+
+export const labeledValueProps = z.object({
+  value: z.string().nonempty(),
+  label: inlineSequence,
+})

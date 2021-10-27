@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
+
 import { propsElementUnion } from '../../lib'
 
 export const iconVariant = z.union([z.literal('filled'), z.literal('outline')])
