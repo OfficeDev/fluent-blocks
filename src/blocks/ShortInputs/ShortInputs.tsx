@@ -3,14 +3,27 @@ import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import {
+  escapeElement,
   invalidShortInput,
   propsElementUnion,
   useCommonStyles,
 } from '../../lib'
-import { renderIfShortTextInput, shortTextInputProps } from '../../inputs'
+import {
+  renderIfShortTextInput,
+  shortTextInputPropsOrElement,
+} from '../../inputs'
+
+export const shortInputEntity = z.union([
+  shortTextInputPropsOrElement,
+  escapeElement,
+])
+export type ShortInputEntity = z.infer<typeof shortInputEntity>
+
+export const shortInputSequence = z.array(shortInputEntity)
+export type ShortInputSequence = z.infer<typeof shortInputSequence>
 
 const shortInputsProps = z.object({
-  inputs: z.array(shortTextInputProps).min(1),
+  inputs: shortInputSequence,
 })
 export type ShortInputsProps = z.infer<typeof shortInputsProps>
 
@@ -18,7 +31,7 @@ const useShortInputsStyles = makeStyles({
   root: {
     marginBlockEnd: '.5rem',
   },
-  shortInputSeries: {
+  shortInputSequence: {
     display: 'flex',
     flexFlow: 'row wrap',
     marginInlineEnd: '-.5rem',
@@ -32,7 +45,7 @@ export const ShortInputs = (props: ShortInputsProps) => {
   const commonStyles = useCommonStyles()
   return (
     <div className={cx(commonStyles.mainContentWidth, styles.root)}>
-      <div className={styles.shortInputSeries}>
+      <div className={styles.shortInputSequence}>
         {inputs.map((o) => renderIfShortTextInput(o) || invalidShortInput(o))}
       </div>
     </div>
