@@ -7,8 +7,8 @@ import { Section, SectionContentProps } from '../blocks/Section/Section'
 const useMainSectionStyles = makeStyles({
   root: (theme) => ({
     overflow: 'hidden',
-    '--surface-background': theme.alias.color.neutral.neutralBackground3,
-    '--surface-foreground': theme.alias.color.neutral.neutralForeground3,
+    '--surface-background': theme.colorNeutralBackground3,
+    '--surface-foreground': theme.colorNeutralForeground3,
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     paddingBlockEnd: rem(44),

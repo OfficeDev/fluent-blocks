@@ -17,10 +17,10 @@ const useStyles = makeStyles({
 
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderColor: theme.alias.color.red.border2,
+    borderColor: theme.colorPaletteRedBorder2,
     borderRadius: rem(6),
 
-    color: theme.alias.color.red.foreground1,
+    color: theme.colorPaletteRedForeground1,
   }),
 })
 

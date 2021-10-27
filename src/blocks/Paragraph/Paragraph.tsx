@@ -17,7 +17,7 @@ export const useParagraphStyles = makeStyles({
     marginBlockEnd: rem(4),
   },
   heading: (theme) => ({
-    color: theme.alias.color.neutral.neutralForeground1,
+    color: theme.colorNeutralForeground1,
     fontSize: 'inherit',
     fontWeight: 600,
     marginBlockStart: rem(24),
