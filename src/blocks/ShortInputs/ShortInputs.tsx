@@ -15,12 +15,13 @@ export type ShortInputsProps = z.infer<typeof shortInputsProps>
 
 const useShortInputsStyles = makeStyles({
   root: {
-    marginBlockEnd: 0,
+    marginBlockEnd: '.5rem',
   },
   shortInputSeries: {
     display: 'flex',
     flexFlow: 'row wrap',
     marginInlineEnd: '-.5rem',
+    marginBlockEnd: '-.5rem',
   },
 })
 
