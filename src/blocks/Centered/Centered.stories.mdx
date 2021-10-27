@@ -1,0 +1,19 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs'
+import { Centered } from './Centered'
+
+<Meta title="Blocks/Centered" component={Centered} />
+
+# Centered Element
+
+Use this element to create content centered in the page, both vertically and horizontally.
+
+<Canvas>
+  <Story
+    name="Center"
+    args={{
+      fullHeight: true,
+    }}
+  >
+    {(args) => <Centered {...args} />}
+  </Story>
+</Canvas>
