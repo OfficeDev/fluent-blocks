@@ -1,12 +1,48 @@
 import { Meta, Canvas, Story } from '@storybook/addon-docs'
 import { Illustration } from './Illustration'
 
-<Meta title="Illustration" component={Illustration} />
+<Meta title="Blocks/Illustration" component={Illustration} />
 
 # Illustration
 
+An image visual. There is a set of built-in illustrations you can use by name, or supply a custom image for every supported theme.
+
+### Default:
+
 <Canvas>
-  <Story name="Illustration">
-    <Illustration />
+  <Story name="Default">
+    <Illustration name="default" />
+  </Story>
+</Canvas>
+
+### Empty:
+
+<Canvas>
+  <Story name="Empty">
+    <Illustration name="empty" />
+  </Story>
+</Canvas>
+
+### Error:
+
+<Canvas>
+  <Story name="Error">
+    <Illustration name="error" />
+  </Story>
+</Canvas>
+
+### Hello:
+
+<Canvas>
+  <Story name="Hello">
+    <Illustration name="hello" />
+  </Story>
+</Canvas>
+
+### Thanks:
+
+<Canvas>
+  <Story name="Thanks">
+    <Illustration name="thanks" />
   </Story>
 </Canvas>

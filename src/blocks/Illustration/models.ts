@@ -21,8 +21,12 @@ export const namedIllustrationProps = z.object({
 
 export type NamedIllustrationProps = z.infer<typeof namedIllustrationProps>
 
-export function isNamedIllustration(o: any): o is NamedIllustrationProps {
-  return 'name' in o
+export function isNamedIllustrationProps(o: any): o is NamedIllustrationProps {
+  return !!o && typeof o == 'object' && 'name' in o
+}
+
+export function isIllustrationName(o: any): o is IllustrationName {
+  return illustrationName.safeParse(o)?.success
 }
 
 export const urlOrJsx = z.union([url, z.any()]) // TODO avoid any
@@ -37,31 +41,17 @@ export const themedImageProps = z.object(themedImageShape)
 
 export type ThemedImageProps = z.infer<typeof themedImageProps>
 
-export function isThemedImage(o: any): o is ThemedImageProps {
+export function isThemedImageProps(o: any): o is ThemedImageProps {
   return theme.options.reduce<boolean>(
-    (all, next) => all && !!(next.value in o),
+    (all, next) => all && !!(!!o && typeof o == 'object' && next.value in o),
     true
   )
 }
 
-export const urlImageProps = z.object({
-  url: urlOrJsx,
-})
-
-export type UrlImageProps = z.infer<typeof urlImageProps>
-
-export function isUrlImage(o: any): o is UrlImageProps {
-  return 'url' in o
-}
-
-export const imageProps = z.union([
-  namedIllustrationProps,
-  themedImageProps,
-  urlImageProps,
-])
+export const imageProps = z.union([namedIllustrationProps, themedImageProps])
 
 export type ImageProps = z.infer<typeof imageProps>
 
 export function isImageProps(o: any): o is ImageProps {
-  return isUrlImage(o) || isNamedIllustration(o) || isThemedImage(o)
+  return isNamedIllustrationProps(o) || isThemedImageProps(o)
 }

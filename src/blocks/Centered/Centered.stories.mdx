@@ -14,6 +14,15 @@ Use this element to create content centered in the page, both vertically and hor
       fullHeight: true,
     }}
   >
-    {(args) => <Centered {...args} />}
+    {(args) => (
+      <Centered {...args}>
+        <div
+          style={{
+            height: 550,
+            background: '#ddd',
+          }}
+        ></div>
+      </Centered>
+    )}
   </Story>
 </Canvas>

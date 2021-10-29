@@ -14,3 +14,9 @@ export const parameters = {
   },
   viewMode: 'docs',
 }
+
+document.addEventListener('keyup', (e) => {
+  if (e.key === '`') {
+    document.body.classList.toggle('debug-css')
+  }
+})
