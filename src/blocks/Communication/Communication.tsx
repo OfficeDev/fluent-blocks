@@ -14,14 +14,12 @@ import {
   escapeElement,
   renderIfEscape,
   isEscapeElement,
+  rem,
 } from '../../lib'
+import { ActionsBlock, actionsBlockProps } from './ActionsBlock'
 
 function escaped<T extends ZodTypeAny>(arg: T) {
   return z.union([arg, escapeElement])
-}
-
-function oneOrMany<T extends ZodTypeAny>(arg: T) {
-  return z.union([arg, z.array(arg)])
 }
 
 export const variant = z.union([
@@ -30,22 +28,11 @@ export const variant = z.union([
   z.literal('tertiary'),
 ])
 
-export const action = z.object({
-  label: z.string(),
-  variant,
-})
-
-export const actionsBlock = z.object({
-  primary: action.optional(),
-  secondary: action.optional(),
-  tertiary: action.optional(),
-})
-
 export const communicationProps = z.object({
   illustration: z.union([illustrationName, themedImageProps]).optional(),
   title: escaped(z.string()),
   description: escaped(z.string()).optional(),
-  actions: escaped(actionsBlock).optional(),
+  actions: escaped(actionsBlockProps).optional(),
   viewportHeight: z.boolean().optional(),
 })
 
@@ -61,9 +48,9 @@ const useStyles = makeStyles({
     minHeight: '100vh',
   },
   container: {
-    margin: '20px',
-    maxWidth: '510px',
-    minWidth: '280px',
+    margin: rem(20),
+    maxWidth: rem(510),
+    minWidth: rem(280),
     width: '100%',
     textAlign: 'center',
   },
@@ -102,6 +89,12 @@ export function Communication(props: CommunicationProps) {
             renderIfEscape(description)
           ) : (
             <Paragraph paragraph={[{ text: description }]} />
+          ))}
+        {!!actions &&
+          (isEscapeElement(actions) ? (
+            renderIfEscape(actions)
+          ) : (
+            <ActionsBlock {...actions} />
           ))}
       </div>
     </div>

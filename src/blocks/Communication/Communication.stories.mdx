@@ -19,20 +19,11 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
         illustration="hello"
         title="Welcome to Contoso! Your opinion counts."
         description="Contoso is your tool to create, take, and manage polls."
-        actions={[
-          {
-            label: 'Sign in',
-            variant: 'primary',
-          },
-          {
-            label: 'Sign up',
-            variant: 'secondary',
-          },
-          {
-            label: 'Learn more about Contoso',
-            variant: 'tertiary',
-          },
-        ]}
+        actions={{
+          primary: { label: 'Sign in' },
+          secondary: { label: 'Sign up' },
+          tertiary: { label: 'Learn more about Contoso' },
+        }}
       />
     </FluentPatternsProvider>
   </Story>
@@ -45,16 +36,14 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
         illustration="hello"
         title="Welcome to your workspace, Daniela"
         description="Access all your boards for photos, files, and tasks from a single place."
-        actions={[
-          {
+        actions={{
+          primary: {
             label: 'Create a board',
-            variant: 'primary',
           },
-          {
+          secondary: {
             label: 'Find an existing board',
-            variant: 'secondary',
           },
-        ]}
+        }}
       />
     </FluentPatternsProvider>
   </Story>
@@ -71,16 +60,14 @@ A no data state should provide clear direction on the next steps to populate the
     <FluentPatternsProvider>
       <Communication
         illustration="empty"
-        actions={[
-          {
+        actions={{
+          primary: {
             label: 'Create a task',
-            variant: 'primary',
           },
-          {
+          secondary: {
             label: 'Find an existing task',
-            variant: 'secondary',
           },
-        ]}
+        }}
       />
     </FluentPatternsProvider>
   </Story>
