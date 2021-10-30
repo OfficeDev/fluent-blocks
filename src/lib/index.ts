@@ -1,5 +1,5 @@
 export * from './Escape'
-export * from './FluentKitProvider'
+export * from './FluentPatternsProvider'
 export * from './keys'
 export * from './log'
 export * from './ParseBoundary'

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { useFluentKitContext } from '../../lib/FluentKitContext'
+import { useFluentPatternsContext } from '../../lib/FluentPatternsContext'
 import { ThemedImageProps } from './models'
 
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 })
 
 export function ThemedImage(props: ThemedImageProps) {
-  const { theme } = useFluentKitContext()
+  const { theme } = useFluentPatternsContext()
   const value = props[theme]
   const styles = useStyles()
   return (

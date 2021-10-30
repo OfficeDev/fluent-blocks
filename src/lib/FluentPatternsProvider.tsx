@@ -2,15 +2,18 @@ import { PropsWithChildren } from 'react'
 import { FluentProvider } from '@fluentui/react-components'
 import { Dir } from './readingDirection'
 import { getTeamsTheme, Theme } from './theme'
-import { FluentKitContext, FluentKitContextData } from './FluentKitContext'
+import {
+  FluentPatternsContext,
+  FluentPatternsContextData,
+} from './FluentPatternsContext'
 
-export const FluentKitProvider = ({
-  theme,
-  dir,
+export const FluentPatternsProvider = ({
+  theme = 'light',
+  dir = 'ltr',
   children,
-}: PropsWithChildren<{ theme: Theme; dir: Dir }>) => {
+}: PropsWithChildren<{ theme?: Theme; dir?: Dir }>) => {
   const fluentTheme = getTeamsTheme(theme)
-  const context: FluentKitContextData = {
+  const context: FluentPatternsContextData = {
     dir,
     theme,
     fluentTheme,
@@ -23,9 +26,9 @@ export const FluentKitProvider = ({
         dir,
       }}
     >
-      <FluentKitContext.Provider value={context}>
+      <FluentPatternsContext.Provider value={context}>
         {children}
-      </FluentKitContext.Provider>
+      </FluentPatternsContext.Provider>
     </FluentProvider>
   )
 }

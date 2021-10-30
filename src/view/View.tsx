@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { Main } from '../surfaces/Main'
-import { FluentKitProvider, theme, dir, ParseBoundary } from '../lib'
+import { FluentPatternsProvider, theme, dir, ParseBoundary } from '../lib'
 import { sectionContentProps } from '../blocks/Section/Section'
 
 export const viewProps = z.object({
@@ -20,9 +20,9 @@ export const View = (data: ViewProps) => (
     schema={viewProps}
     data={data}
     children={({ main, theme = 'light', dir = 'ltr' }) => (
-      <FluentKitProvider {...{ theme, dir }}>
+      <FluentPatternsProvider {...{ theme, dir }}>
         <Main {...main} />
-      </FluentKitProvider>
+      </FluentPatternsProvider>
     )}
   />
 )
