@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-components": "alpha",
+    "@fluentui/react-components": "^9.0.0-alpha.124",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",

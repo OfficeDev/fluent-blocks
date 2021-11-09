@@ -40,13 +40,13 @@ export function ActionsBlock(props: ActionsBlockProps) {
   return (
     <div className={styles.root}>
       {isAction(primary) && (
-        <Button block primary>
+        <Button block appearance="primary">
           {primary.label}
         </Button>
       )}
       {isAction(secondary) && <Button block>{secondary.label}</Button>}
       {isAction(tertiary) && (
-        <Button block transparent>
+        <Button block appearance="transparent">
           {tertiary.label}
         </Button>
       )}
