@@ -1,3 +1,4 @@
+export * from './commonStyles'
 export * from './Escape'
 export * from './FluentPatternsProvider'
 export * from './keys'

@@ -2,6 +2,6 @@
 
 import expect from 'expect'
 
-describe('Figure', function () {
+describe('Short text input', function () {
   it('is still in placeholder stage')
 })

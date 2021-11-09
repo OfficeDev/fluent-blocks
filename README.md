@@ -1,5 +1,7 @@
 # Fluent React Patterns
 
+## [Open Storybook ↗︎][storybook]
+
 An implementation of [Fluent][figma-fluent] & [UI Kit][figma-uikit] designs for app development based on [`@fluentui/react-components`][fluentui-v9]. This project succeeds [`@fluentui/react-teams`][react-teams].
 
 This package provides a set of components developers can use to build fully interactive & accessible experiences using whatever React coding convention they prefer, rendering experiences that match Fluent & UI Kit designs.
@@ -81,3 +83,4 @@ Make sure the content you add meets Microsoft’s design & accessibility standar
 [fluent-icons]: https://github.com/microsoft/fluentui-system-icons
 [fluentui-v9]: https://www.npmjs.com/package/@fluentui/react-components
 [react-teams]: https://www.npmjs.com/package/@fluentui/react-teams
+[storybook]: https://6168794438f17a003a2f124a-xfrbausxzq.chromatic.com/

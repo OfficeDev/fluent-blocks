@@ -1,19 +1,23 @@
-import { Section, SectionContentProps } from '../blocks/Section/Section'
 import { makeStyles } from '@fluentui/react-components'
+
 import { rem } from '../lib'
 
-const useStyles = makeStyles({
+import { Section, SectionContentProps } from '../blocks/Section/Section'
+
+const useMainSectionStyles = makeStyles({
   root: (theme) => ({
     overflow: 'hidden',
-    '--surface-background': theme.alias.color.neutral.neutralBackground3,
-    '--surface-foreground': theme.alias.color.neutral.neutralForeground3,
+    '--surface-background': theme.colorNeutralBackground3,
+    '--surface-foreground': theme.colorNeutralForeground3,
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     paddingBlockEnd: rem(44),
+    paddingInlineStart: '1rem',
+    paddingInlineEnd: '1rem',
   }),
 })
 
 export const Main = (props: SectionContentProps) => {
-  const styles = useStyles()
+  const styles = useMainSectionStyles()
   return <Section {...props} as="main" level={1} className={styles.root} />
 }
