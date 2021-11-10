@@ -1,12 +1,12 @@
 import { z } from 'zod'
-import { Illustration } from '../Illustration'
+import { Illustration } from '../../lib/Illustration'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
   themedImageProps,
   illustrationName,
   isIllustrationName,
   isThemedImageProps,
-} from '../Illustration/models'
+} from '../../lib/Illustration/models'
 import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { escaped, renderIfEscape, rem } from '../../lib'

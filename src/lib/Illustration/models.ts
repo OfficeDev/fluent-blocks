@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Theme, theme } from '../../lib/theme'
+import { Theme, theme } from '../theme'
 
 export const url = z.string()
 

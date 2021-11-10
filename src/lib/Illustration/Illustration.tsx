@@ -14,7 +14,9 @@ export type IllustrationProps = z.infer<typeof illustrationProps>
 
 export function Illustration(props: IllustrationProps) {
   const error = <NamedIllustration name="error" />
-  if (!props) {return error}
+  if (!props) {
+    return error
+  }
   return isNamedIllustrationProps(props) ? (
     <NamedIllustration {...props} />
   ) : isThemedImageProps(props) ? (

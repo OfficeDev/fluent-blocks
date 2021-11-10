@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { useFluentPatternsContext } from '../../lib/FluentPatternsContext'
+import { useFluentPatternsContext } from '../FluentPatternsContext'
 import { ThemedImageProps } from './models'
 
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'

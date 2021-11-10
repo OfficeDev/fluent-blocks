@@ -5,7 +5,7 @@ export type TestsContext = {
   page: Page
   storybookUrl: (storyId: string) => string
   warnings: string[]
-  timeout: number
+  timeout: (ms: number) => void
 }
 
 type MochaHooks = {
@@ -15,7 +15,7 @@ type MochaHooks = {
 
 export const mochaHooks: MochaHooks & Partial<TestsContext> = {
   async beforeAll() {
-    this.timeout = 5e3
+    this.timeout && this.timeout(5e3)
     this.browser = await play.launch()
     this.page = await this.browser.newPage()
     this.storybookUrl = (storyId) =>

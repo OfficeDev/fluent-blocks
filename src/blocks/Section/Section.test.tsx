@@ -95,6 +95,7 @@ describe('Section: unit tests', function () {
 })
 
 describe('Section: interactions', function () {
+  this.timeout(5e3)
   describe('using serializeable props', function () {
     before(async function (this) {
       await this.page.goto(

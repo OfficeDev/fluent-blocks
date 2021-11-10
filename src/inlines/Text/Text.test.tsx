@@ -3,6 +3,7 @@
 import expect from 'expect'
 
 describe('Text: interactions', function () {
+  this.timeout(5e3)
   before(async function (this) {
     await this.page.goto(this.storybookUrl('tests-text--text-test'))
   })

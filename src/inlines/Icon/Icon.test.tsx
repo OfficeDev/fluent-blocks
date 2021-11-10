@@ -3,6 +3,7 @@
 import expect from 'expect'
 
 describe('Icon: interactions', function () {
+  this.timeout(5e3)
   before(async function (this) {
     await this.page.goto(this.storybookUrl('tests-icon--icon-test'))
   })

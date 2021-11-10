@@ -3,6 +3,7 @@
 import expect from 'expect'
 
 describe('Paragraph: interactions', function () {
+  this.timeout(5e3)
   describe('using serializeable props', function () {
     before(async function (this) {
       await this.page.goto(
