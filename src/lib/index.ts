@@ -1,5 +1,6 @@
 export * from './commonStyles'
 export * from './Escape'
+export * from './escaped'
 export * from './FluentPatternsProvider'
 export * from './keys'
 export * from './log'
