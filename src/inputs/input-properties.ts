@@ -3,8 +3,11 @@ import { inlineSequence } from '../inlines'
 
 export const inputProps = z.object({
   label: inlineSequence,
+  actionId: z.string(),
   required: z.boolean().optional(),
 })
+
+export const actionProps = z.object({})
 
 export const inputPropsWithInitialStringValue = inputProps.merge(
   z.object({
