@@ -70,13 +70,26 @@ that time `View` will call its interaction callback with the update.
             blocks: [
               {
                 inputs: [
-                  { type: 'text', label: [{ text: fakeTitle(fake) }] },
-                  { type: 'text', label: [{ text: fakeTitle(fake) }] },
-                  { type: 'text', label: [{ text: fakeTitle(fake) }] },
+                  {
+                    type: 'text',
+                    actionId: 'a1',
+                    label: [{ text: fakeTitle(fake) }],
+                  },
+                  {
+                    type: 'text',
+                    actionId: 'a2',
+                    label: [{ text: fakeTitle(fake) }],
+                  },
+                  {
+                    type: 'text',
+                    actionId: 'a3',
+                    label: [{ text: fakeTitle(fake) }],
+                  },
                 ],
               },
               {
                 type: 'radio-group',
+                actionId: 'b1',
                 label: [{ text: fakeTitle(fake) }],
                 options: [
                   { label: [{ text: fakeTitle(fake) }], value: 'v1' },
@@ -85,6 +98,7 @@ that time `View` will call its interaction callback with the update.
               },
               {
                 type: 'text',
+                actionId: 'c1',
                 multiline: true,
                 label: [{ text: fakeTitle(fake) }],
               },
