@@ -6,7 +6,8 @@ type FCElementConstructor<P> = (props: P) => ReactElement<P> | null
 
 export function Sequence<P>(
   entities: P[] | undefined,
-  Entity: FCElementConstructor<P>
+  Entity: FCElementConstructor<P>,
+  props?: Record<string, any>
 ) {
   return (
     <>
@@ -14,7 +15,7 @@ export function Sequence<P>(
         const contentElement = Entity(o)
         return (
           contentElement &&
-          cloneElement(contentElement, { key: key(o) } as Partial<P> &
+          cloneElement(contentElement, { key: key(o), ...props } as Partial<P> &
             Attributes)
         )
       })}

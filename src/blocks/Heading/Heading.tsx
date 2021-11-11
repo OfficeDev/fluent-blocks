@@ -13,7 +13,7 @@ export const headingProps = paragraphProps.extend({
 export type HeadingProps = z.infer<typeof headingProps>
 
 export const Heading = (props: HeadingProps) => {
-  const { paragraph, level } = props
+  const { paragraph, level, flexItem } = props
   const content = <InlineContent inlines={paragraph} />
   const styles = useParagraphStyles()
   const commonStyles = useCommonStyles()
@@ -26,6 +26,7 @@ export const Heading = (props: HeadingProps) => {
           ? cx(
               styles.root,
               commonStyles.mainContentWidth,
+              !flexItem && commonStyles.centerBlock,
               styles.heading,
               styles.h1
             )
@@ -33,6 +34,7 @@ export const Heading = (props: HeadingProps) => {
           ? cx(
               styles.root,
               commonStyles.mainContentWidth,
+              !flexItem && commonStyles.centerBlock,
               styles.heading,
               styles.h2
             )
@@ -40,10 +42,16 @@ export const Heading = (props: HeadingProps) => {
           ? cx(
               styles.root,
               commonStyles.mainContentWidth,
+              !flexItem && commonStyles.centerBlock,
               styles.heading,
               styles.h3
             )
-          : cx(styles.root, commonStyles.mainContentWidth, styles.heading),
+          : cx(
+              styles.root,
+              commonStyles.mainContentWidth,
+              !flexItem && commonStyles.centerBlock,
+              styles.heading
+            ),
     },
     content
   ) as JSX.Element

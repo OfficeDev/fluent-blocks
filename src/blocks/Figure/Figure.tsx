@@ -7,6 +7,7 @@ import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
   caption: inlineSequence,
+  flexItem: z.boolean().optional(),
 })
 export type FigureProps = z.infer<typeof figureProps>
 
@@ -23,14 +24,19 @@ const useFigureStyles = makeStyles({
 export const Figure = (props: FigureProps) => {
   const styles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption } = props
+  const { caption, flexItem } = props
   return (
     <figure>
       <Placeholder
         label="Figure media"
         className={cx(styles.media, styles.mediaPlaceholder)}
       />
-      <figcaption className={commonStyles.mainContentWidth}>
+      <figcaption
+        className={cx(
+          commonStyles.mainContentWidth,
+          !flexItem && commonStyles.centerBlock
+        )}
+      >
         <InlineContent inlines={caption} />
       </figcaption>
     </figure>

@@ -7,6 +7,7 @@ import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 
 export const paragraphProps = z.object({
   paragraph: inlineSequence,
+  flexItem: z.boolean().optional(),
 })
 export type ParagraphProps = z.infer<typeof paragraphProps>
 
@@ -38,11 +39,17 @@ export const useParagraphStyles = makeStyles({
 })
 
 export const Paragraph = (props: ParagraphProps) => {
-  const { paragraph } = props
+  const { paragraph, flexItem } = props
   const styles = useParagraphStyles()
   const commonStyles = useCommonStyles()
   return (
-    <p className={cx(styles.root, commonStyles.mainContentWidth)}>
+    <p
+      className={cx(
+        styles.root,
+        commonStyles.mainContentWidth,
+        !flexItem && commonStyles.centerBlock
+      )}
+    >
       <InlineContent inlines={paragraph} />
     </p>
   )

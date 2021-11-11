@@ -6,6 +6,8 @@ import {
   escapeElement,
   invalidShortInput,
   propsElementUnion,
+  renderIfEscape,
+  Sequence,
   useCommonStyles,
 } from '../../lib'
 import {
@@ -39,14 +41,23 @@ const useShortInputsStyles = makeStyles({
   },
 })
 
+const ShortInput = (o: ShortInputEntity) =>
+  renderIfShortTextInput(o) || renderIfEscape(o) || invalidShortInput(o)
+
 export const ShortInputs = (props: ShortInputsProps) => {
   const { inputs } = props
   const styles = useShortInputsStyles()
   const commonStyles = useCommonStyles()
   return (
-    <div className={cx(commonStyles.mainContentWidth, styles.root)}>
+    <div
+      className={cx(
+        commonStyles.mainContentWidth,
+        commonStyles.centerBlock,
+        styles.root
+      )}
+    >
       <div className={styles.shortInputSequence}>
-        {inputs.map((o) => renderIfShortTextInput(o) || invalidShortInput(o))}
+        {Sequence<ShortInputEntity>(inputs, ShortInput)}
       </div>
     </div>
   )

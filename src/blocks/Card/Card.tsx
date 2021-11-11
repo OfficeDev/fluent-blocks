@@ -42,10 +42,10 @@ const CardContentItem = (o: CardContentItemEntity) =>
   invalidCardContentItem(o)
 
 export const Card = ({ card }: CardProps) => (
-    <FluentCard>
-      {Sequence<CardContentItemEntity>(card, CardContentItem)}
-    </FluentCard>
-  )
+  <FluentCard>
+    {Sequence<CardContentItemEntity>(card, CardContentItem, { flexItem: true })}
+  </FluentCard>
+)
 
 function isCardProps(o: any): o is CardProps {
   return 'card' in o
