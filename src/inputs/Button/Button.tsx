@@ -1,13 +1,19 @@
-import { ReactElement } from 'react'
+import { ReactElement, useCallback, useRef } from 'react'
 import { z } from 'zod'
 import { Button as FluentButton } from '@fluentui/react-components'
 import { Icon, iconSize, iconVariant } from '../../inlines'
-import { propsElementUnion2 } from '../../lib'
+import {
+  propsElementUnion2,
+  emit,
+  actionPayload,
+  actionHandler,
+} from '../../lib'
 
-const buttonActivateAction = z.object({
-  type: z.literal('activate'),
-  actionId: z.string(),
-})
+const buttonActivateAction = actionPayload.merge(
+  z.object({
+    type: z.literal('activate'),
+  })
+)
 export type ButtonActivateAction = z.infer<typeof buttonActivateAction>
 
 export const buttonProps = z.object({
@@ -28,11 +34,7 @@ export const buttonProps = z.object({
   iconPosition: z.union([z.literal('before'), z.literal('after')]).optional(),
   iconSize: iconSize.optional(),
   iconVariant: iconVariant.optional(),
-  onAction: z
-    .function()
-    .args(buttonActivateAction)
-    .returns(z.void())
-    .optional(),
+  onAction: actionHandler(buttonActivateAction).optional(),
 })
 export type ButtonProps = z.infer<typeof buttonProps>
 
@@ -46,28 +48,40 @@ export const Button = ({
   iconVariant,
   actionId,
   onAction,
-}: ButtonProps) => (
-  <FluentButton
-    block
-    aria-label={label}
-    appearance={variant}
-    {...{ iconOnly, iconPosition }}
-    {...(icon && {
-      icon: (
-        <Icon
-          icon={icon}
-          size={iconSize || 24}
-          variant={iconVariant || 'outline'}
-        />
-      ),
-    })}
-    {...(onAction && {
-      onClick: () => onAction({ type: 'activate', actionId }),
-    })}
-  >
-    {iconOnly ? null : label}
-  </FluentButton>
-)
+}: ButtonProps) => {
+  const $el = useRef<HTMLButtonElement | null>(null)
+
+  const onButtonActivate = useCallback(() => {
+    onAction && onAction({ type: 'activate', actionId })
+    $el.current &&
+      emit<HTMLButtonElement, ButtonActivateAction>($el.current, {
+        type: 'activate',
+        actionId,
+      })
+  }, [onAction])
+
+  return (
+    <FluentButton
+      block
+      aria-label={label}
+      appearance={variant}
+      {...{ iconOnly, iconPosition }}
+      {...(icon && {
+        icon: (
+          <Icon
+            icon={icon}
+            size={iconSize || 24}
+            variant={iconVariant || 'outline'}
+          />
+        ),
+      })}
+      onClick={onButtonActivate}
+      ref={$el}
+    >
+      {iconOnly ? null : label}
+    </FluentButton>
+  )
+}
 
 function isButtonProps(o: any): o is ButtonProps {
   return o && 'type' in o && o.type === 'button'
