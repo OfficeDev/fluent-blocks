@@ -37,6 +37,14 @@ const useLayoutStyles = makeStyles({
   },
   flex: {
     display: 'flex',
+    flexFlow: 'row wrap',
+    marginInlineEnd: '-.5rem',
+    marginBlockEnd: '-.5rem',
+    '& > [role="group"]': {
+      flex: '1 0 auto',
+      marginInlineEnd: '.5rem',
+      marginBlockEnd: '.5rem',
+    },
   },
 })
 

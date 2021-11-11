@@ -1,6 +1,6 @@
 import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
-import { Layout } from './Layout'
+import { Layout } from './StorybookLayout'
 import { Main } from '../../surfaces/Main'
 import { Meta, Story, Canvas } from '@storybook/addon-docs'
 import { FluentKitProvider } from '../../lib'
@@ -43,7 +43,7 @@ The `Layout` component is a block which can arrange its content items such that 
 
 <Canvas>
   <Story
-    name="Demo"
+    name="Layout"
     args={{
       variation: 'grid',
       items: [
