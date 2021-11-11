@@ -1,15 +1,10 @@
-import { ReactElement, useCallback, useRef } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { z } from 'zod'
 import { Button as FluentButton } from '@fluentui/react-components'
 import { Icon, iconSize, iconVariant } from '../../inlines'
-import {
-  propsElementUnion2,
-  emit,
-  actionPayload,
-  withActionHandler,
-} from '../../lib'
+import { propsElementUnion2, actionPayload, withActionHandler } from '../../lib'
 
-const buttonActivateAction = actionPayload.merge(
+export const buttonActivateAction = actionPayload.merge(
   z.object({
     type: z.literal('activate'),
   })
@@ -49,17 +44,10 @@ export const Button = ({
   actionId,
   onAction,
 }: ButtonProps) => {
-  const $el = useRef<HTMLButtonElement | null>(null)
-
-  const onButtonActivate = useCallback(() => {
-    onAction && onAction({ type: 'activate', actionId })
-    $el.current &&
-      emit<HTMLButtonElement, ButtonActivateAction>($el.current, {
-        type: 'activate',
-        actionId,
-      })
-  }, [onAction])
-
+  const onButtonActivate = useCallback(
+    () => onAction && onAction({ type: 'activate', actionId }),
+    [onAction, actionId]
+  )
   return (
     <FluentButton
       block
@@ -76,7 +64,6 @@ export const Button = ({
         ),
       })}
       onClick={onButtonActivate}
-      ref={$el}
     >
       {iconOnly ? null : label}
     </FluentButton>

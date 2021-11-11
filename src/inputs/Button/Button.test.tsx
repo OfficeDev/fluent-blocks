@@ -20,27 +20,6 @@ describe('Button', function () {
         const dialog = await this.page.waitForEvent('dialog')
         expect(dialog.message()).toEqual('03cae49a-aaf5-4641-a652-6e633ffd1b75')
       })
-      after(async function (this) {
-        await this.page.close()
-      })
-    })
-
-    describe('emit', function () {
-      before(async function (this) {
-        // todo: why isn't `load` or any other event firing between the button tests? Should we be closing and opening pages for each test?
-        this.page = await this.browser.newPage()
-        await this.page.goto(
-          this.storybookUrl('tests-button--button-emit-test'),
-          { timeout: 3e3 }
-        )
-      })
-      it('calls parent onAction on click', async function () {
-        this.page
-          .locator('text=1c525f9a-de85-4b35-8c23-658c625a2bf8')
-          .click({ noWaitAfter: true })
-        const dialog = await this.page.waitForEvent('dialog')
-        expect(dialog.message()).toEqual('bb35aced-ab23-4eaa-96c0-48cb8800f58f')
-      })
     })
 
     describe('keyboard focus & activate', function () {
