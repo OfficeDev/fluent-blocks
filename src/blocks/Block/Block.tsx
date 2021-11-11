@@ -17,10 +17,12 @@ import {
   radioGroupPropsOrElement,
   renderIfRadioGroup,
 } from '../../inputs'
+import { layoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 
 export const blockEntity = z.union([
   paragraphPropsOrElement,
   figurePropsOrElement,
+  layoutPropsOrElement,
   shortInputsPropsOrElement,
   multilineTextInputPropsOrElement,
   radioGroupPropsOrElement,
@@ -37,6 +39,7 @@ export type BlockSequence = z.infer<typeof blockSequence>
 export const Block = (o: BlockEntity) =>
   renderIfFigure(o) ||
   renderIfParagraph(o) ||
+  renderIfLayout(o) ||
   renderIfShortInputs(o) ||
   renderIfMultilineTextInput(o) ||
   renderIfRadioGroup(o) ||

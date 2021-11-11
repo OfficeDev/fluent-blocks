@@ -1,9 +1,9 @@
 import { z } from 'zod'
-import { createElement } from 'react'
+import { createElement, ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
 
 import { InlineContent } from '../../inlines'
-import { useCommonStyles } from '../../lib'
+import { propsElementUnion, useCommonStyles } from '../../lib'
 
 import { useParagraphStyles, paragraphProps } from '../Paragraph/Paragraph'
 
@@ -47,4 +47,25 @@ export const Heading = (props: HeadingProps) => {
     },
     content
   ) as JSX.Element
+}
+
+function isHeadingProps(o: any): o is HeadingProps {
+  return 'level' in o
+}
+
+function isHeadingElement(
+  o: any
+): o is ReactElement<HeadingProps, typeof Heading> {
+  return o?.type === Heading
+}
+
+export const headingPropsOrElement = propsElementUnion<
+  typeof headingProps,
+  HeadingProps,
+  typeof Heading
+>(headingProps)
+export type HeadingPropsOrElement = z.infer<typeof headingPropsOrElement>
+
+export function renderIfHeading(o: any) {
+  return isHeadingProps(o) ? <Heading {...o} /> : isHeadingElement(o) ? o : null
 }

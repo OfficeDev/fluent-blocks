@@ -1,0 +1,65 @@
+import range from 'lodash/range'
+import { fake, seed } from 'faker/locale/en_US'
+import { Layout } from './Layout'
+import { Main } from '../../surfaces/Main'
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import { FluentKitProvider } from '../../lib'
+
+export const fakeTitle = () => {
+  const lowercase = fake('{{lorem.words}}')
+  return lowercase.charAt(0).toUpperCase() + lowercase.slice(1)
+}
+
+<Meta
+  title="Blocks/Layout"
+  component={Layout}
+  argTypes={{
+    variation: {
+      name: 'Variation',
+      control: {
+        type: 'inline-radio',
+        labels: { grid: 'Grid', flex: 'Flexbox' },
+      },
+    },
+    items: {
+      name: 'Items',
+      control: { type: 'object' },
+    },
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const LayoutTemplate = (props) => (
+  <FluentKitProvider theme="light" dir="ltr">
+    <Main blocks={[{ layout: props }]} />
+  </FluentKitProvider>
+)
+
+# Layout
+
+The `Layout` component is a block which can arrange its content items such that more than one can occupy the same inline-axis space. This is useful for arranging content items so that they’re side-by-side, like in a grid or flexbox.
+
+<Canvas>
+  <Story
+    name="Demo"
+    args={{
+      variation: 'grid',
+      items: [
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
+      ],
+    }}
+  >
+    {seed(1234) || LayoutTemplate.bind({})}
+  </Story>
+</Canvas>
