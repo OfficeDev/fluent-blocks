@@ -49,7 +49,6 @@ function isFigureElement(
 
 export const figurePropsOrElement = propsElementUnion<
   typeof figureProps,
-  FigureProps,
   typeof Figure
 >(figureProps)
 export type FigurePropsOrElement = z.infer<typeof figurePropsOrElement>

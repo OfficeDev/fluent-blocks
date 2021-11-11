@@ -64,7 +64,6 @@ function isShortInputsElement(
 
 export const shortInputsPropsOrElement = propsElementUnion<
   typeof shortInputsProps,
-  ShortInputsProps,
   typeof ShortInputs
 >(shortInputsProps)
 export type ShortInputsPropsOrElement = z.infer<

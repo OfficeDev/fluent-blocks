@@ -43,7 +43,6 @@ function isShortTextInputElement(
 
 export const shortTextInputPropsOrElement = propsElementUnion<
   typeof shortTextInputProps,
-  ShortTextInputProps,
   typeof ShortTextInput
 >(shortTextInputProps)
 export type ShortTextInputPropsOrElement = z.infer<

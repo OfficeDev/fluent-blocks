@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { z } from 'zod'
 import { Button as FluentButton } from '@fluentui/react-components'
 import { Icon, iconSize, iconVariant } from '../../inlines'
-import { propsElementUnion2, actionPayload, withActionHandler } from '../../lib'
+import { propsElementUnion, actionPayload, withActionHandler } from '../../lib'
 import { useFluentPatternsContext } from '../../lib/FluentPatternsContext'
 
 export const buttonActivateAction = actionPayload.merge(
@@ -84,7 +84,7 @@ function isButtonElement(
   return o?.type === Button
 }
 
-export const buttonPropsOrElement = propsElementUnion2<
+export const buttonPropsOrElement = propsElementUnion<
   typeof buttonProps,
   typeof Button
 >(buttonProps)

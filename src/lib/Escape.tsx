@@ -27,11 +27,9 @@ export const Escape = ({
   return contentMeetsAccessibilityAndDesignStandards ? <>{children}</> : null
 }
 
-export const escapeElement = zodElement<
-  typeof escapeProps,
-  EscapeProps,
-  typeof Escape
->(escapeProps)
+export const escapeElement = zodElement<typeof escapeProps, typeof Escape>(
+  escapeProps
+)
 
 export type EscapeElement = z.infer<typeof escapeElement>
 
