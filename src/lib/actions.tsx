@@ -30,6 +30,10 @@ export function emit<E extends HTMLElement, P extends ActionPayload>(
   $el: E,
   payload: P
 ): void {
+  // todo: actions should use a dispatch provider instead of an event model
+  console.warn(
+    'todo: actions should use a dispatch provider instead of an event model'
+  )
   $el.dispatchEvent(
     new CustomEvent('action', { detail: payload, bubbles: true })
   )
