@@ -1,4 +1,13 @@
-import { PropsWithChildren, useCallback, useEffect, useRef } from 'react'
+import {
+  createElement,
+  useCallback,
+  useEffect,
+  useRef,
+  ComponentClass,
+  FunctionComponent,
+  PropsWithChildren,
+  RefAttributes,
+} from 'react'
 import { z, ZodObject } from 'zod'
 
 export const actionPayload = z.object({
@@ -6,10 +15,15 @@ export const actionPayload = z.object({
   actionId: z.string(),
 })
 export type ActionPayload = z.infer<typeof actionPayload>
+
 export type ActionEvent = CustomEvent<ActionPayload>
 
-export function actionHandler<P extends ZodObject<any>>(payload: P) {
-  return z.function().args(payload).returns(z.void())
+export type ActionHandler = (payload: ActionPayload) => void
+
+export type PropsWithActionHandler<P> = P & { onAction?: ActionHandler }
+
+export function withActionHandler<P extends ZodObject<any>>(payload: P) {
+  return { onAction: z.function().args(payload).returns(z.void()).optional() }
 }
 
 export function emit<E extends HTMLElement, P extends ActionPayload>(
@@ -21,10 +35,18 @@ export function emit<E extends HTMLElement, P extends ActionPayload>(
   )
 }
 
-export function CaptureActions({
+type ActionsListenerComponent =
+  | FunctionComponent<PropsWithChildren<RefAttributes<{}>>>
+  | ComponentClass<PropsWithChildren<RefAttributes<{}>>>
+  | string
+
+export function ActionsListener({
   onAction,
   children,
-}: PropsWithChildren<{ onAction?: (payload: ActionPayload) => void }>) {
+  as,
+}: PropsWithChildren<
+  PropsWithActionHandler<{ as?: ActionsListenerComponent }>
+>) {
   const $el = useRef<HTMLDivElement | null>(null)
 
   const onActionCb = useCallback(
@@ -37,5 +59,5 @@ export function CaptureActions({
     return () => $el.current?.removeEventListener('action', onActionCb)
   }, [$el.current])
 
-  return <div ref={$el}>{children}</div>
+  return createElement(as || 'div', { ref: $el, children })
 }

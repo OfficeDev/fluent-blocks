@@ -6,7 +6,7 @@ import {
   propsElementUnion2,
   emit,
   actionPayload,
-  actionHandler,
+  withActionHandler,
 } from '../../lib'
 
 const buttonActivateAction = actionPayload.merge(
@@ -34,7 +34,7 @@ export const buttonProps = z.object({
   iconPosition: z.union([z.literal('before'), z.literal('after')]).optional(),
   iconSize: iconSize.optional(),
   iconVariant: iconVariant.optional(),
-  onAction: actionHandler(buttonActivateAction).optional(),
+  ...withActionHandler(buttonActivateAction),
 })
 export type ButtonProps = z.infer<typeof buttonProps>
 

@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from './Button'
-import { CaptureActions, ActionPayload } from '../../lib'
+import { ActionsListener, ActionPayload } from '../../lib'
 import { Parameters } from '@storybook/addons'
 
 export default {
@@ -13,9 +13,9 @@ type ButtonTestArgs = {
 }
 
 const ButtonTemplate = ({ button, onAction }: ButtonTestArgs) => (
-  <CaptureActions onAction={onAction}>
+  <ActionsListener onAction={onAction}>
     <Button {...button} />
-  </CaptureActions>
+  </ActionsListener>
 )
 
 export const ButtonClickTest: typeof ButtonTemplate & {
