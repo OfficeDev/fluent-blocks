@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { Button as FluentButton } from '@fluentui/react-components'
 import { Icon, iconSize, iconVariant } from '../../inlines'
 import { propsElementUnion2, actionPayload, withActionHandler } from '../../lib'
+import { useFluentPatternsContext } from '../../lib/FluentPatternsContext'
 
 export const buttonActivateAction = actionPayload.merge(
   z.object({
@@ -44,10 +45,13 @@ export const Button = ({
   actionId,
   onAction,
 }: ButtonProps) => {
-  const onButtonActivate = useCallback(
-    () => onAction && onAction({ type: 'activate', actionId }),
-    [onAction, actionId]
-  )
+  const context = useFluentPatternsContext()
+
+  const onButtonActivate = useCallback(() => {
+    const payload = { type: 'activate' as 'activate', actionId }
+    onAction && onAction(payload)
+    context.onAction(payload)
+  }, [onAction, actionId])
   return (
     <FluentButton
       block

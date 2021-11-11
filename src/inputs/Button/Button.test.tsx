@@ -22,6 +22,24 @@ describe('Button', function () {
       })
     })
 
+    describe('emit', function () {
+      before(async function (this) {
+        await this.page.close()
+        this.page = await this.browser.newPage()
+        await this.page.goto(
+          this.storybookUrl('tests-button--button-emit-test'),
+          { timeout: 3e3 }
+        )
+      })
+      it('calls onAction on click', async function () {
+        this.page
+          .locator('text=1c525f9a-de85-4b35-8c23-658c625a2bf8')
+          .click({ noWaitAfter: true })
+        const dialog = await this.page.waitForEvent('dialog')
+        expect(dialog.message()).toEqual('bb35aced-ab23-4eaa-96c0-48cb8800f58f')
+      })
+    })
+
     describe('keyboard focus & activate', function () {
       // todo: why isn't this working in Playwright when it works in browsers already?
       it(

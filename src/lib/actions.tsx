@@ -1,3 +1,5 @@
+import noop from 'lodash/noop'
+import { createContext } from 'react'
 import { z, ZodObject } from 'zod'
 
 export const actionPayload = z.object({
@@ -13,3 +15,7 @@ export type PropsWithActionHandler<P> = P & { onAction?: ActionHandler }
 export function withActionHandler<P extends ZodObject<any>>(payload: P) {
   return { onAction: z.function().args(payload).returns(z.void()).optional() }
 }
+
+const ActionsContext = createContext({
+  onAction: noop,
+})
