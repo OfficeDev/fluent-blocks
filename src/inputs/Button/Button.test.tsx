@@ -8,10 +8,7 @@ describe('Button', function () {
 
     describe('click', function () {
       before(async function (this) {
-        await this.page.goto(
-          this.storybookUrl('tests-button--button-click-test'),
-          { timeout: 3e3 }
-        )
+        await this.goto(this.storybookUrl('tests-button--button-click-test'))
       })
       it('calls onAction on click', async function () {
         this.page
@@ -24,12 +21,7 @@ describe('Button', function () {
 
     describe('emit', function () {
       before(async function (this) {
-        await this.page.close()
-        this.page = await this.browser.newPage()
-        await this.page.goto(
-          this.storybookUrl('tests-button--button-emit-test'),
-          { timeout: 3e3 }
-        )
+        await this.goto(this.storybookUrl('tests-button--button-emit-test'))
       })
       it('calls onAction on click', async function () {
         this.page
