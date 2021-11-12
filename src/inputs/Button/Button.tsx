@@ -1,9 +1,14 @@
-import { ReactElement, useCallback } from 'react'
 import { z } from 'zod'
+import { ReactElement, useCallback } from 'react'
 import { Button as FluentButton } from '@fluentui/react-components'
+
+import {
+  propsElementUnion,
+  actionPayload,
+  withActionHandler,
+  useFluentPatternsContext,
+} from '../../lib'
 import { Icon, iconSize, iconVariant } from '../../inlines'
-import { propsElementUnion, actionPayload, withActionHandler } from '../../lib'
-import { useFluentPatternsContext } from '../../lib/FluentPatternsContext'
 
 export const buttonActivateAction = actionPayload.merge(
   z.object({

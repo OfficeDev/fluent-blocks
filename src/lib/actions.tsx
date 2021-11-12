@@ -8,9 +8,11 @@ export const actionPayload = z.object({
 })
 export type ActionPayload = z.infer<typeof actionPayload>
 
-export type ActionHandler<P = ActionPayload> = (payload: P) => void
+export type ActionHandler<A = ActionPayload> = (payload: A) => void
 
-export type PropsWithActionHandler<P> = P & { onAction?: ActionHandler }
+export type PropsWithActionHandler<P extends {}, A> = P & {
+  onAction?: ActionHandler<A>
+}
 
 export function withActionHandler<P extends ZodObject<any>>(payload: P) {
   return { onAction: z.function().args(payload).returns(z.void()).optional() }
