@@ -21,7 +21,10 @@ export const BlockJsonTest: typeof BlockTemplate & {
 
 BlockJsonTest.args = {
   blocks: [
-    { caption: [{ text: '8efae607-15cd-4294-a71b-c585ca28278f' }] },
+    {
+      media: { illustration: 'hello' },
+      caption: [{ text: '8efae607-15cd-4294-a71b-c585ca28278f' }],
+    },
     { paragraph: [{ text: '3b517894-57f8-4ed2-824b-90285b4686ce' }] },
   ],
 }
@@ -35,6 +38,7 @@ export const BlockJsxTest: typeof BlockTemplate & {
 BlockJsxTest.args = {
   blocks: [
     <Figure
+      media={{ illustration: 'hello' }}
       caption={[{ text: '2bc0f585-7129-41be-aa66-ab8fd24372bc' }]}
       key="t1"
     />,

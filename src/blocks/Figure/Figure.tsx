@@ -61,7 +61,7 @@ export const Figure = (props: FigureProps) => {
 }
 
 function isFigureProps(o: any): o is FigureProps {
-  return 'caption' in o
+  return 'media' in o
 }
 
 function isFigureElement(
