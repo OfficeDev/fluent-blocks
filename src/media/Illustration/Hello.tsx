@@ -1,8 +1,6 @@
-import { ThemedImageProps } from './models'
-
-const illustration: ThemedImageProps = {
+const illustration = {
   light: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193 219">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193 219" width="100%">
       <defs />
       <defs>
         <linearGradient id="a" x1="44.1%" x2="64.9%" y1="73%" y2="42.5%">
@@ -88,7 +86,7 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   dark: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193 219">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193 219" width="100%">
       <defs />
       <defs>
         <linearGradient id="a" x1="44.1%" x2="64.9%" y1="73%" y2="42.5%">
@@ -174,7 +172,7 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   'high-contrast': (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 221">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 221" width="100%">
       <defs />
       <g fill="none" fillRule="nonzero">
         <path

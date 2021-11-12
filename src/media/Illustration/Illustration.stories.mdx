@@ -1,17 +1,17 @@
 import { Meta, Canvas, Story } from '@storybook/addon-docs'
 import { Illustration } from './Illustration'
 
-<Meta title="Facets/Illustrations" component={Illustration} />
+<Meta title="Media/Illustrations" component={Illustration} />
 
 # Illustration
 
-An image visual. There is a set of built-in illustrations you can use by name, or supply a custom image for every supported theme.
+This library comes with a set of built-in illustrations you can simply reference by name in a `Figure` or `BigMessage` component.
 
 ### Default:
 
 <Canvas>
   <Story name="Default">
-    <Illustration name="default" />
+    <Illustration illustration="default" />
   </Story>
 </Canvas>
 
@@ -19,7 +19,7 @@ An image visual. There is a set of built-in illustrations you can use by name, o
 
 <Canvas>
   <Story name="Empty">
-    <Illustration name="empty" />
+    <Illustration illustration="empty" />
   </Story>
 </Canvas>
 
@@ -27,7 +27,7 @@ An image visual. There is a set of built-in illustrations you can use by name, o
 
 <Canvas>
   <Story name="Error">
-    <Illustration name="error" />
+    <Illustration illustration="error" />
   </Story>
 </Canvas>
 
@@ -35,7 +35,7 @@ An image visual. There is a set of built-in illustrations you can use by name, o
 
 <Canvas>
   <Story name="Hello">
-    <Illustration name="hello" />
+    <Illustration illustration="hello" />
   </Story>
 </Canvas>
 
@@ -43,6 +43,6 @@ An image visual. There is a set of built-in illustrations you can use by name, o
 
 <Canvas>
   <Story name="Thanks">
-    <Illustration name="thanks" />
+    <Illustration illustration="thanks" />
   </Story>
 </Canvas>

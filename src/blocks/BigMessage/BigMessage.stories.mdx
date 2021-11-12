@@ -1,5 +1,5 @@
 import { Meta, Canvas, Story } from '@storybook/addon-docs'
-import { BigMessage } from './BigMessage'
+import { BigMessage } from './StorybookBigMessage'
 import { FluentPatternsProvider } from '../../lib'
 
 <Meta title="Blocks/Big message" component={BigMessage} />
@@ -18,7 +18,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
   <Story name="Welcome variation 1">
     <FluentPatternsProvider>
       <BigMessage
-        illustration="hello"
+        media={{ illustration: 'hello' }}
         title={[{ text: 'Welcome to Contoso! Your opinion counts.' }]}
         description={[
           { text: 'Contoso is your tool to create, take, and manage polls.' },
@@ -28,6 +28,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
           secondary: { actionId: 'a2', label: 'Sign up' },
           tertiary: { actionId: 'a3', label: 'Learn more about Contoso' },
         }}
+        viewportHeight={false}
       />
     </FluentPatternsProvider>
   </Story>
@@ -37,7 +38,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
   <Story name="Welcome variation 2">
     <FluentPatternsProvider>
       <BigMessage
-        illustration="hello"
+        media={{ illustration: 'hello' }}
         title={[{ text: 'Welcome to your workspace, Daniela' }]}
         description={[
           {
@@ -56,14 +57,15 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
             icon: 'search',
           },
         }}
+        viewportHeight={false}
       />
     </FluentPatternsProvider>
   </Story>
 </Canvas>
 
-## No Data
+## Empty state
 
-A no data state should provide clear direction on the next steps to populate the page. Sometimes there may not be an action for the user to take. In those cases, actions are not required but text should clearly explain what the user can expect from the page in the future.
+An empty state should provide clear direction on what the user can do to begin working with the host feature. Sometimes there may not be an action for the user to take, in which case actions are not required but text should clearly explain what the user can expect from the page in the future.
 
 ### With actions
 
@@ -71,7 +73,7 @@ A no data state should provide clear direction on the next steps to populate the
   <Story name="Empty with Actions">
     <FluentPatternsProvider>
       <BigMessage
-        illustration="empty"
+        media={{ illustration: 'empty' }}
         actions={{
           primary: {
             actionId: 'a1',
@@ -84,6 +86,7 @@ A no data state should provide clear direction on the next steps to populate the
             icon: 'search',
           },
         }}
+        viewportHeight={false}
       />
     </FluentPatternsProvider>
   </Story>
@@ -95,9 +98,10 @@ A no data state should provide clear direction on the next steps to populate the
   <Story name="Empty">
     <FluentPatternsProvider>
       <BigMessage
-        illustration="empty"
+        media={{ illustration: 'empty' }}
         title={[{ text: "Once you're assigned a task, you'll find it here" }]}
         description={[{ text: 'Until then, enjoy your time off.' }]}
+        viewportHeight={false}
       />
     </FluentPatternsProvider>
   </Story>
@@ -111,8 +115,9 @@ Error states come in many different forms. Consider an appropriate illustration 
   <Story name="Error">
     <FluentPatternsProvider>
       <BigMessage
-        illustration="error"
+        media={{ illustration: 'error' }}
         title={[{ text: 'Something went wrong' }]}
+        viewportHeight={false}
       />
     </FluentPatternsProvider>
   </Story>
@@ -128,6 +133,7 @@ Error states come in many different forms. Consider an appropriate illustration 
             text: 'Try searching with common words or checking for spelling errors.',
           },
         ]}
+        viewportHeight={false}
       />
     </FluentPatternsProvider>
   </Story>

@@ -3,10 +3,20 @@ import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { inlineSequence, InlineContent } from '../../inlines'
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+import { mediaEntity, Media } from '../../media'
+import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
-  caption: inlineSequence,
+  media: mediaEntity,
+  caption: inlineSequence.optional(),
+  variation: z
+    .union([
+      z.literal('viewportWidth'),
+      z.literal('textWidth'),
+      z.literal('narrow'),
+    ])
+    .default('viewportWidth')
+    .optional(),
 })
 export type FigureProps = z.infer<typeof figureProps>
 
@@ -18,21 +28,34 @@ const useFigureStyles = makeStyles({
   mediaPlaceholder: {
     minHeight: '8rem',
   },
+  'media--viewportWidth': {},
+  'media--textWidth': {},
+  'media--narrow': {
+    maxWidth: rem(280),
+    marginInlineStart: 'auto',
+    marginInlineEnd: 'auto',
+  },
 })
 
 export const Figure = (props: FigureProps) => {
   const styles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption } = props
+  const { caption, variation = 'viewportWidth' } = props
   return (
     <figure>
-      <Placeholder
-        label="Figure media"
-        className={cx(styles.media, styles.mediaPlaceholder)}
-      />
-      <figcaption className={commonStyles.mainContentWidth}>
-        <InlineContent inlines={caption} />
-      </figcaption>
+      <div
+        className={cx(
+          variation === 'textWidth' && commonStyles.mainContentWidth,
+          variation && styles[`media--${variation}`]
+        )}
+      >
+        <Media {...props.media} />
+      </div>
+      {caption && (
+        <figcaption className={commonStyles.mainContentWidth}>
+          <InlineContent inlines={caption} />
+        </figcaption>
+      )}
     </figure>
   )
 }

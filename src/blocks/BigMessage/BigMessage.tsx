@@ -1,17 +1,15 @@
 import { z } from 'zod'
-import { Illustration } from '../../lib/Illustration'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import {
-  themedImageProps,
-  illustrationName,
-  isIllustrationName,
-  isThemedImageProps,
-} from '../../lib/Illustration/models'
+
+import { escaped, renderIfEscape, rem, propsElementUnion } from '../../lib'
+import { mediaEntity } from '../../media'
+import { inlineSequence } from '../../inlines'
+
+import { Figure } from '../Figure/Figure'
 import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
-import { escaped, renderIfEscape, rem } from '../../lib'
-import { inlineSequence } from '../../inlines'
 import { Button, buttonProps } from '../../inputs/Button/Button'
+import { ReactElement } from 'react'
 
 const actionProps = buttonProps.omit({ variant: true, type: true })
 type ActionProps = z.infer<typeof actionProps>
@@ -28,11 +26,14 @@ const actionsBlockProps = z.object({
 type ActionsBlockProps = z.infer<typeof actionsBlockProps>
 
 export const bigMessageProps = z.object({
-  illustration: z.union([illustrationName, themedImageProps]).optional(),
-  title: inlineSequence,
-  description: inlineSequence.optional(),
-  actions: escaped(actionsBlockProps).optional(),
-  viewportHeight: z.boolean().optional(),
+  message: z.object({
+    variation: z.literal('big'),
+    media: mediaEntity.optional(),
+    title: inlineSequence,
+    description: inlineSequence.optional(),
+    actions: escaped(actionsBlockProps).optional(),
+    viewportHeight: z.boolean().optional(),
+  }),
 })
 
 export type BigMessageProps = z.infer<typeof bigMessageProps>
@@ -81,10 +82,9 @@ function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
 }
 
 export function BigMessage(props: BigMessageProps) {
-  const { illustration, title, description, actions, viewportHeight } = {
-    viewportHeight: true,
-    ...props,
-  }
+  const {
+    message: { media, title, description, actions, viewportHeight = true },
+  } = props
   const styles = useBigMessageStyles()
   return (
     <div
@@ -93,23 +93,37 @@ export function BigMessage(props: BigMessageProps) {
       }
     >
       <div className={styles.container}>
-        {!!illustration ? (
-          isIllustrationName(illustration) ? (
-            <Illustration name={illustration} />
-          ) : isThemedImageProps(illustration) ? (
-            <Illustration {...illustration} />
-          ) : (
-            <Illustration name="error" />
-          )
-        ) : null}
-        {!!title && (renderIfEscape(title) || <Heading paragraph={title} />)}
-        {!!description &&
-          (renderIfEscape(description) || (
-            <Paragraph paragraph={description} />
-          ))}
-        {!!actions &&
-          (renderIfEscape(actions) || <ActionsBlock {...actions} />)}
+        {media && <Figure media={media} variation="narrow" />}
+        <Heading level={3} paragraph={title} />
+        {description && <Paragraph paragraph={description} />}
+        {actions && (renderIfEscape(actions) || <ActionsBlock {...actions} />)}
       </div>
     </div>
   )
+}
+
+function isBigMessageProps(o: any): o is BigMessageProps {
+  return (
+    'message' in o && 'variation' in o.message && o.message.variation === 'big'
+  )
+}
+
+function isBigMessageElement(
+  o: any
+): o is ReactElement<BigMessageProps, typeof BigMessage> {
+  return o?.type === BigMessage
+}
+
+export const bigMessagePropsOrElement = propsElementUnion<
+  typeof bigMessageProps,
+  typeof BigMessage
+>(bigMessageProps)
+export type BigMessagePropsOrElement = z.infer<typeof bigMessagePropsOrElement>
+
+export function renderIfBigMessage(o: any) {
+  return isBigMessageProps(o) ? (
+    <BigMessage {...o} />
+  ) : isBigMessageElement(o) ? (
+    o
+  ) : null
 }
