@@ -5,12 +5,10 @@ export const useCommonStyles = makeStyles({
   mainContentWidth: {
     maxWidth: rem(432),
   },
-  centerBlock: {
-    marginInlineStart: 'auto',
-    marginInlineEnd: 'auto',
-  },
   narrowWidth: {
     maxWidth: rem(280),
+  },
+  centerBlock: {
     marginInlineStart: 'auto',
     marginInlineEnd: 'auto',
   },

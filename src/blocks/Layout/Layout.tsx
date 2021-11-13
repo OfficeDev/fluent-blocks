@@ -72,7 +72,6 @@ function isLayoutElement(
 
 export const layoutPropsOrElement = propsElementUnion<
   typeof layoutProps,
-  LayoutProps,
   typeof Layout
 >(layoutProps)
 export type LayoutPropsOrElement = z.infer<typeof layoutPropsOrElement>

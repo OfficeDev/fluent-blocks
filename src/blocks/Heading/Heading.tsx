@@ -69,7 +69,6 @@ function isHeadingElement(
 
 export const headingPropsOrElement = propsElementUnion<
   typeof headingProps,
-  HeadingProps,
   typeof Heading
 >(headingProps)
 export type HeadingPropsOrElement = z.infer<typeof headingPropsOrElement>

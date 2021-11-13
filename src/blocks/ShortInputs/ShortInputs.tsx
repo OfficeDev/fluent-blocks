@@ -69,12 +69,20 @@ export const ShortInputs = (props: ShortInputsProps) => {
   const styles = useShortInputsStyles()
   const commonStyles = useCommonStyles()
   return (
-    <div className={cx(commonStyles.mainContentWidth, styles.root)}>
+    <div
+      className={cx(
+        commonStyles.mainContentWidth,
+        commonStyles.centerBlock,
+        styles.root
+      )}
+    >
       <div
-        className={cx(
+        className={cx.apply(this, [
           styles[`shortInputSequence--${variant}`],
-          variant === 'narrow-block' && commonStyles.narrowWidth
-        )}
+          ...(variant === 'narrow-block'
+            ? [commonStyles.narrowWidth, commonStyles.centerBlock]
+            : []),
+        ])}
       >
         {Sequence<ShortInputEntity>(inputs, ShortInput)}
       </div>

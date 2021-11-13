@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ReactElement, useCallback } from 'react'
-import { Button as FluentButton } from '@fluentui/react-components'
+import { Button as FluentButton, makeStyles } from '@fluentui/react-components'
 
 import {
   propsElementUnion,
@@ -39,6 +39,12 @@ export const buttonProps = z.object({
 })
 export type ButtonProps = z.infer<typeof buttonProps>
 
+const useButtonStyles = makeStyles({
+  root: {
+    margin: 'inherit',
+  },
+})
+
 export const Button = ({
   label,
   iconOnly,
@@ -57,11 +63,15 @@ export const Button = ({
     onAction && onAction(payload)
     context.onAction(payload)
   }, [onAction, actionId])
+
+  const styles = useButtonStyles()
+
   return (
     <FluentButton
       block
       aria-label={label}
       appearance={variant}
+      className={styles.root}
       {...{ iconOnly, iconPosition }}
       {...(icon && {
         icon: (

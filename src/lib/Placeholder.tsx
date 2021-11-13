@@ -6,10 +6,6 @@ const useStyles = makeStyles({
   root: (theme) => ({
     boxSizing: 'border-box',
     minHeight: '3rem',
-    marginInlineStart: rem(4),
-    marginInlineEnd: rem(4),
-    marginBlockStart: rem(4),
-    marginBlockEnd: rem(4),
     padding: rem(4),
     display: 'flex',
     justifyContent: 'center',

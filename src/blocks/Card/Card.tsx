@@ -57,7 +57,6 @@ function isCardElement(o: any): o is ReactElement<CardProps, typeof Card> {
 
 export const cardPropsOrElement = propsElementUnion<
   typeof cardProps,
-  CardProps,
   typeof Card
 >(cardProps)
 export type CardPropsOrElement = z.infer<typeof cardPropsOrElement>
