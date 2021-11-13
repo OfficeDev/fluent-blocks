@@ -3,10 +3,20 @@ import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { inlineSequence, InlineContent } from '../../inlines'
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+import { mediaEntity, Media } from '../../media'
+import { propsElementUnion, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
-  caption: inlineSequence,
+  media: mediaEntity,
+  caption: inlineSequence.optional(),
+  variant: z
+    .union([
+      z.literal('viewportWidth'),
+      z.literal('textWidth'),
+      z.literal('narrow'),
+    ])
+    .default('viewportWidth')
+    .optional(),
   flexItem: z.boolean().optional(),
 })
 export type FigureProps = z.infer<typeof figureProps>
@@ -24,27 +34,34 @@ const useFigureStyles = makeStyles({
 export const Figure = (props: FigureProps) => {
   const styles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption, flexItem } = props
+  const { caption, flexItem, variant = 'viewportWidth' } = props
   return (
     <figure>
-      <Placeholder
-        label="Figure media"
-        className={cx(styles.media, styles.mediaPlaceholder)}
-      />
-      <figcaption
+      <div
         className={cx(
-          commonStyles.mainContentWidth,
+          variant === 'textWidth' && commonStyles.mainContentWidth,
+          variant === 'narrow' && commonStyles.narrowWidth,
           !flexItem && commonStyles.centerBlock
         )}
       >
-        <InlineContent inlines={caption} />
-      </figcaption>
+        <Media {...props.media} />
+      </div>
+      {caption && (
+        <figcaption
+          className={cx(
+            commonStyles.mainContentWidth,
+            !flexItem && commonStyles.centerBlock
+          )}
+        >
+          <InlineContent inlines={caption} />
+        </figcaption>
+      )}
     </figure>
   )
 }
 
 function isFigureProps(o: any): o is FigureProps {
-  return 'caption' in o
+  return 'media' in o
 }
 
 function isFigureElement(
@@ -55,7 +72,6 @@ function isFigureElement(
 
 export const figurePropsOrElement = propsElementUnion<
   typeof figureProps,
-  FigureProps,
   typeof Figure
 >(figureProps)
 export type FigurePropsOrElement = z.infer<typeof figurePropsOrElement>

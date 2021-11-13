@@ -1,9 +1,16 @@
 import { z } from 'zod'
 
-import { FluentKitProvider, theme, dir, ParseBoundary } from '../lib'
+import {
+  FluentPatternsProvider,
+  theme,
+  dir,
+  ParseBoundary,
+  withActionHandler,
+  anyActionPayload,
+} from '../../lib'
 
-import { Main } from '../surfaces/Main'
-import { sectionContentProps } from '../blocks/Section/Section'
+import { Main } from '../../surfaces'
+import { sectionContentProps } from '../../blocks'
 
 export const viewProps = z.object({
   sidebar: z.object({}).optional(),
@@ -12,6 +19,7 @@ export const viewProps = z.object({
   main: sectionContentProps,
   theme: theme.optional(),
   dir: dir.optional(),
+  ...withActionHandler(anyActionPayload),
 })
 
 export type ViewProps = z.infer<typeof viewProps>
@@ -21,10 +29,10 @@ export const View = (data: ViewProps) => (
   <ParseBoundary<ViewProps>
     schema={viewProps}
     data={data}
-    children={({ main, theme = 'light', dir = 'ltr' }) => (
-      <FluentKitProvider {...{ theme, dir }}>
+    children={({ main, theme = 'light', dir = 'ltr', onAction }) => (
+      <FluentPatternsProvider {...{ theme, dir, onAction }}>
         <Main {...main} />
-      </FluentKitProvider>
+      </FluentPatternsProvider>
     )}
   />
 )

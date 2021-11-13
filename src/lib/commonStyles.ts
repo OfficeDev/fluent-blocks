@@ -9,4 +9,9 @@ export const useCommonStyles = makeStyles({
     marginInlineStart: 'auto',
     marginInlineEnd: 'auto',
   },
+  narrowWidth: {
+    maxWidth: rem(280),
+    marginInlineStart: 'auto',
+    marginInlineEnd: 'auto',
+  },
 })

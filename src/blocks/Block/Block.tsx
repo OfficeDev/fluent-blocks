@@ -17,6 +17,10 @@ import {
   radioGroupPropsOrElement,
   renderIfRadioGroup,
 } from '../../inputs'
+import {
+  bigMessagePropsOrElement,
+  renderIfBigMessage,
+} from '../BigMessage/BigMessage'
 import { layoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 
 export const blockEntity = z.union([
@@ -26,6 +30,7 @@ export const blockEntity = z.union([
   shortInputsPropsOrElement,
   multilineTextInputPropsOrElement,
   radioGroupPropsOrElement,
+  bigMessagePropsOrElement,
   escapeElement,
 ])
 export type BlockEntity = z.infer<typeof blockEntity>
@@ -37,11 +42,12 @@ export type BlockSequence = z.infer<typeof blockSequence>
  * This component primarily serves as a way to route to more specific block elements based on which properties are present.
  */
 export const Block = (o: BlockEntity) =>
-  renderIfFigure(o) ||
   renderIfParagraph(o) ||
   renderIfLayout(o) ||
+  renderIfFigure(o) ||
   renderIfShortInputs(o) ||
   renderIfMultilineTextInput(o) ||
   renderIfRadioGroup(o) ||
+  renderIfBigMessage(o) ||
   renderIfEscape(o) ||
   invalidBlock(o)

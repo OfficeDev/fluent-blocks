@@ -75,7 +75,6 @@ function isIconElement(o: any): o is ReactElement<IconProps, typeof Icon> {
 
 export const iconPropsOrElement = propsElementUnion<
   typeof iconProps,
-  IconProps,
   typeof Icon
 >(iconProps)
 export type IconPropsOrElement = z.infer<typeof iconPropsOrElement>

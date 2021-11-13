@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z, ZodTypeAny } from 'zod'
 import {
   teamsLightTheme,
   teamsDarkTheme,
@@ -10,8 +10,15 @@ export const theme = z.union([
   z.literal('dark'),
   z.literal('high-contrast'),
 ])
-
 export type Theme = z.infer<typeof theme>
+
+export function themedMap<T extends ZodTypeAny>(valueSchema: T) {
+  return z.object({
+    light: valueSchema,
+    dark: valueSchema,
+    'high-contrast': valueSchema,
+  })
+}
 
 export const getTeamsTheme = (theme: Theme) =>
   ({

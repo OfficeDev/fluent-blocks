@@ -1,8 +1,8 @@
 import { makeStyles } from '@fluentui/react-components'
 
-import { rem } from '../lib'
+import { rem } from '../../lib'
 
-import { Section, SectionContentProps } from '../blocks/Section/Section'
+import { Section, SectionContentProps } from '../../blocks'
 
 const useMainSectionStyles = makeStyles({
   root: (theme) => ({

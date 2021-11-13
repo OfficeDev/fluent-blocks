@@ -5,9 +5,8 @@ type FCElementConstructor<P> = (props: P) => ReactElement<P> | null
 
 export function zodElement<
   Z extends ZodObject<ZodRawShape>,
-  P,
-  T extends FCElementConstructor<P>
->(props: Z): ZodEffects<ZodObject<{ props: Z }>, ReactElement<P, T>> {
+  T extends FCElementConstructor<z.infer<Z>>
+>(props: Z): ZodEffects<ZodObject<{ props: Z }>, ReactElement<z.infer<Z>, T>> {
   return (
     z
       // check only the props
@@ -15,16 +14,17 @@ export function zodElement<
       // mark all other keys as known and ignorable
       .catchall(z.any())
       // cast result as ReactElement accepting provided props `P` and constructor `T`
-      .transform((el) => el as ReactElement<P, T>)
+      .transform((el) => el as ReactElement<z.infer<Z>, T>)
   )
 }
 
 export function propsElementUnion<
   Z extends ZodObject<ZodRawShape>,
-  P,
-  T extends FCElementConstructor<P>
+  T extends FCElementConstructor<z.infer<Z>>
 >(
   props: Z
-): ZodUnion<[Z, ZodEffects<ZodObject<{ props: Z }>, ReactElement<P, T>>]> {
-  return z.union([props, zodElement<Z, P, T>(props)])
+): ZodUnion<
+  [Z, ZodEffects<ZodObject<{ props: Z }>, ReactElement<z.infer<Z>, T>>]
+> {
+  return z.union([props, zodElement<Z, T>(props)])
 }

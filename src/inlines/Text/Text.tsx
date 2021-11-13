@@ -35,7 +35,6 @@ function isTextElement(o: any): o is ReactElement<TextProps, typeof Text> {
 
 export const textPropsOrElement = propsElementUnion<
   typeof textProps,
-  TextProps,
   typeof Text
 >(textProps)
 export type TextPropsOrElement = z.infer<typeof textPropsOrElement>

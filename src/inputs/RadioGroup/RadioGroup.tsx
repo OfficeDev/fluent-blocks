@@ -49,7 +49,6 @@ function isRadioGroupElement(
 
 export const radioGroupPropsOrElement = propsElementUnion<
   typeof radioGroupProps,
-  RadioGroupProps,
   typeof RadioGroup
 >(radioGroupProps)
 export type RadioGroupPropsOrElement = z.infer<typeof radioGroupPropsOrElement>

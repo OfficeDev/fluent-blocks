@@ -46,7 +46,6 @@ function isMultilineTextInputElement(
 
 export const multilineTextInputPropsOrElement = propsElementUnion<
   typeof multilineTextInputProps,
-  MultilineTextInputProps,
   typeof MultilineTextInput
 >(multilineTextInputProps)
 export type MultilineTextInputPropsOrElement = z.infer<
