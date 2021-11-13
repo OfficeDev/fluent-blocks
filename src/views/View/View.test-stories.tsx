@@ -19,7 +19,7 @@ ViewOnActionTest.args = {
     blocks: [
       {
         message: {
-          variation: 'big',
+          variant: 'big',
           title: [{ text: 'Big message' }],
           actions: {
             primary: {

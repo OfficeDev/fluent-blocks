@@ -23,7 +23,7 @@ type ActionsBlockProps = z.infer<typeof actionsBlockProps>
 
 export const bigMessageProps = z.object({
   message: z.object({
-    variation: z.literal('big'),
+    variant: z.literal('big'),
     media: mediaEntity.optional(),
     title: inlineSequence,
     description: inlineSequence.optional(),
@@ -56,7 +56,7 @@ function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
   primary && inputs.push({ type: 'button', variant: 'primary', ...primary })
   secondary && inputs.push({ type: 'button', ...secondary })
   tertiary && inputs.push({ type: 'button', variant: 'subtle', ...tertiary })
-  return <ShortInputs variation="narrow-block" inputs={inputs} />
+  return <ShortInputs variant="narrow-block" inputs={inputs} />
 }
 
 export function BigMessage(props: BigMessageProps) {
@@ -71,7 +71,7 @@ export function BigMessage(props: BigMessageProps) {
       }
     >
       <div className={styles.container}>
-        {media && <Figure media={media} variation="narrow" />}
+        {media && <Figure media={media} variant="narrow" />}
         <Heading level={3} paragraph={title} />
         {description && <Paragraph paragraph={description} />}
         {actions && (renderIfEscape(actions) || <ActionsBlock {...actions} />)}
@@ -81,9 +81,7 @@ export function BigMessage(props: BigMessageProps) {
 }
 
 function isBigMessageProps(o: any): o is BigMessageProps {
-  return (
-    'message' in o && 'variation' in o.message && o.message.variation === 'big'
-  )
+  return 'message' in o && 'variant' in o.message && o.message.variant === 'big'
 }
 
 function isBigMessageElement(

@@ -29,7 +29,7 @@ export type ShortInputSequence = z.infer<typeof shortInputSequence>
 
 const shortInputsProps = z.object({
   inputs: shortInputSequence,
-  variation: z
+  variant: z
     .union([z.literal('flex'), z.literal('narrow-block')])
     .default('flex')
     .optional(),
@@ -65,15 +65,15 @@ const ShortInput = (o: ShortInputEntity) =>
   invalidShortInput(o)
 
 export const ShortInputs = (props: ShortInputsProps) => {
-  const { inputs, variation = 'flex' } = props
+  const { inputs, variant = 'flex' } = props
   const styles = useShortInputsStyles()
   const commonStyles = useCommonStyles()
   return (
     <div className={cx(commonStyles.mainContentWidth, styles.root)}>
       <div
         className={cx(
-          styles[`shortInputSequence--${variation}`],
-          variation === 'narrow-block' && commonStyles.narrowWidth
+          styles[`shortInputSequence--${variant}`],
+          variant === 'narrow-block' && commonStyles.narrowWidth
         )}
       >
         {Sequence<ShortInputEntity>(inputs, ShortInput)}

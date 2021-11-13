@@ -9,7 +9,7 @@ import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 export const figureProps = z.object({
   media: mediaEntity,
   caption: inlineSequence.optional(),
-  variation: z
+  variant: z
     .union([
       z.literal('viewportWidth'),
       z.literal('textWidth'),
@@ -33,13 +33,13 @@ const useFigureStyles = makeStyles({
 export const Figure = (props: FigureProps) => {
   const styles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption, variation = 'viewportWidth' } = props
+  const { caption, variant = 'viewportWidth' } = props
   return (
     <figure>
       <div
         className={cx(
-          variation === 'textWidth' && commonStyles.mainContentWidth,
-          variation === 'narrow' && commonStyles.narrowWidth
+          variant === 'textWidth' && commonStyles.mainContentWidth,
+          variant === 'narrow' && commonStyles.narrowWidth
         )}
       >
         <Media {...props.media} />
