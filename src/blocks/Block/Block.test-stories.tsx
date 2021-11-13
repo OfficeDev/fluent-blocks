@@ -1,8 +1,10 @@
-import { Block, BlockEntity, BlockSequence } from './Block'
+import { Parameters } from '@storybook/addons'
+
 import { Escape, Sequence } from '../../lib'
+
+import { Block, BlockEntity, BlockSequence } from './Block'
 import { Figure } from '../Figure/Figure'
 import { Paragraph } from '../Paragraph/Paragraph'
-import { Parameters } from '@storybook/addons'
 
 export default {
   title: 'Tests/Block',

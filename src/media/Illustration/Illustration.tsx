@@ -3,12 +3,13 @@ import { ReactElement } from 'react'
 
 import { propsElementUnion } from '../../lib'
 
-import { ThemedImage } from '../ThemedImage/ThemedImage'
 import dfault from './Default'
 import error from './Error'
 import empty from './Empty'
 import hello from './Hello'
 import thanks from './Thanks'
+
+import { ThemedImage } from '../ThemedImage/ThemedImage'
 
 export const illustrationProps = z.object({
   illustration: z.union([

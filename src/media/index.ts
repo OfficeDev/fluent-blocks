@@ -10,3 +10,6 @@ export type MediaEntity = z.infer<typeof mediaEntity>
 
 export const Media = (o: MediaEntity) =>
   renderIfIllustration(o) || renderIfEscape(o) || invalidMedia(o)
+
+export * from './Illustration/Illustration'
+export * from './ThemedImage/ThemedImage'

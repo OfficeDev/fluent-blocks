@@ -9,8 +9,8 @@ import {
   anyActionPayload,
 } from '../../lib'
 
-import { Main } from '../../surfaces/Main'
-import { sectionContentProps } from '../../blocks/Section/Section'
+import { Main } from '../../surfaces'
+import { sectionContentProps } from '../../blocks'
 
 export const viewProps = z.object({
   sidebar: z.object({}).optional(),

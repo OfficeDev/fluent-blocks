@@ -12,7 +12,7 @@ const imageElement = z
 const image = z.union([z.string().url(), imageElement])
 type Image = z.infer<typeof image>
 
-const themedImageProps = mediaProps.merge(themedMap<typeof image>(image))
+export const themedImageProps = mediaProps.merge(themedMap<typeof image>(image))
 export type ThemedImageProps = z.infer<typeof themedImageProps>
 
 export function ThemedImage(props: ThemedImageProps) {

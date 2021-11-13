@@ -1,15 +1,15 @@
 import { z } from 'zod'
+import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { escaped, renderIfEscape, rem, propsElementUnion } from '../../lib'
 import { mediaEntity } from '../../media'
 import { inlineSequence } from '../../inlines'
+import { Button, buttonProps } from '../../inputs'
 
 import { Figure } from '../Figure/Figure'
 import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
-import { Button, buttonProps } from '../../inputs/Button/Button'
-import { ReactElement } from 'react'
 
 const actionProps = buttonProps.omit({ variant: true, type: true })
 type ActionProps = z.infer<typeof actionProps>
