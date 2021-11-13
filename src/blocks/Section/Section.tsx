@@ -4,9 +4,9 @@ import { createElement } from 'react'
 import { key, Sequence } from '../../lib'
 import { inlineSequence } from '../../inlines'
 
+import { Block, BlockEntity, blockSequence } from '../Block/Block'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { Heading } from '../Heading/Heading'
-import { Block, BlockEntity, blockSequence } from '../Block/Block'
 
 const nonRecursiveSectionContentProps = {
   title: inlineSequence,

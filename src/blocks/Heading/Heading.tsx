@@ -8,12 +8,12 @@ import { useCommonStyles } from '../../lib'
 import { useParagraphStyles, paragraphProps } from '../Paragraph/Paragraph'
 
 export const headingProps = paragraphProps.extend({
-  level: z.number().max(6).min(1).default(6),
+  level: z.number().max(6).min(1).default(6).optional(),
 })
 export type HeadingProps = z.infer<typeof headingProps>
 
 export const Heading = (props: HeadingProps) => {
-  const { paragraph, level } = props
+  const { paragraph, level } = { level: 6, ...props }
   const content = <InlineContent inlines={paragraph} />
   const styles = useParagraphStyles()
   const commonStyles = useCommonStyles()

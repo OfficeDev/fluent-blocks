@@ -1,0 +1,37 @@
+{
+  "Component": {
+    "prefix": "component",
+    "body": [
+        "import { z } from 'zod'",
+        "",
+        "export const ${1:${TM_FILENAME_BASE/(.*)/${1:/downcase}/}}Props = z.object({$0})",
+        "",
+        "export type ${2:${TM_FILENAME_BASE}}Props = z.infer<typeof ${1}Props>",
+        "",
+        "export function ${2}(props: ${2}Props) {",
+        "  return <div></div>",
+        "}",
+        ""
+    ],
+    "description": "React Component"
+  },
+  "Story": {
+    "prefix": "story",
+    "body": [
+        "import { Meta, Canvas, Story } from '@storybook/addon-docs'",
+        "import { ${1:${TM_FILENAME_BASE/^(.*)\\.(.*)$/$1/}} } from './${1}'",
+        "",
+        "<Meta title=\"${1}\" component={${1}} />",
+        "",
+        "# ${1}",
+        "",
+        "<Canvas>",
+        "  <Story name=\"${1}\">",
+        "    <${1} />",
+        "  </Story>",
+        "</Canvas>",
+        ""
+    ],
+    "description": "Create a new Storybook Story"
+}
+}

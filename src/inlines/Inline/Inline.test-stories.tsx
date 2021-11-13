@@ -1,8 +1,10 @@
-import { Inline, InlineEntity, InlineSequence } from './Inline'
+import { Parameters } from '@storybook/addons'
+
 import { Escape, Sequence } from '../../lib'
+
 import { Text } from '../Text/Text'
 import { Icon } from '../Icon/Icon'
-import { Parameters } from '@storybook/addons'
+import { Inline, InlineEntity, InlineSequence } from './Inline'
 
 export default {
   title: 'Tests/Inline',

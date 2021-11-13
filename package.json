@@ -16,7 +16,8 @@
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "test": "start-server-and-test 'yarn storybook:start-ci' http://localhost:4000 'yarn test:run'",
-    "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx"
+    "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx",
+    "check": "tsc --noEmit"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-components": "alpha",
+    "@fluentui/react-components": "^9.0.0-alpha.124",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
