@@ -1,8 +1,10 @@
-import { ThemedImageProps } from './models'
-
-const illustration: ThemedImageProps = {
+const illustration = {
   light: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 119.8 120">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 119.8 120"
+      width="100%"
+    >
       <defs />
       <circle cx="61.5" cy="69.7" r="44.1" fill="#EDEBE9" />
       <radialGradient
@@ -18,6 +20,7 @@ const illustration: ThemedImageProps = {
         <stop offset=".8" stopColor="#d7b089" />
         <stop offset="1" stopColor="#e0bb95" />
       </radialGradient>
+      {/* todo: what's wrong with radialGradiant#a here? */}
       <path
         fill="url(#a)"
         d="M62.1 30c-2.2-1.9-.3-6-3.3-10.5l-6.4.9-7-2.6-2.8 18s.8.3 6.3 3.7c2.6 1.7 5 1.7 6.8 1.8.8 0 21.7 12.1 21.7 12.1L86 41s-23.4-10.4-24-11z"
@@ -164,7 +167,11 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   dark: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.7 120">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 117.7 120"
+      width="100%"
+    >
       <defs />
       <circle cx="59.5" cy="69.7" r="44.1" fill="#BDBDE6" opacity=".5" />
       <radialGradient
@@ -343,7 +350,11 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   'high-contrast': (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 117.7 120">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 117.7 120"
+      width="100%"
+    >
       <defs>
         <path
           id="reuse-0"

@@ -3,10 +3,20 @@ import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { inlineSequence, InlineContent } from '../../inlines'
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+import { mediaEntity, Media } from '../../media'
+import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
-  caption: inlineSequence,
+  media: mediaEntity,
+  caption: inlineSequence.optional(),
+  variant: z
+    .union([
+      z.literal('viewportWidth'),
+      z.literal('textWidth'),
+      z.literal('narrow'),
+    ])
+    .default('viewportWidth')
+    .optional(),
 })
 export type FigureProps = z.infer<typeof figureProps>
 
@@ -23,22 +33,28 @@ const useFigureStyles = makeStyles({
 export const Figure = (props: FigureProps) => {
   const styles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption } = props
+  const { caption, variant = 'viewportWidth' } = props
   return (
     <figure>
-      <Placeholder
-        label="Figure media"
-        className={cx(styles.media, styles.mediaPlaceholder)}
-      />
-      <figcaption className={commonStyles.mainContentWidth}>
-        <InlineContent inlines={caption} />
-      </figcaption>
+      <div
+        className={cx(
+          variant === 'textWidth' && commonStyles.mainContentWidth,
+          variant === 'narrow' && commonStyles.narrowWidth
+        )}
+      >
+        <Media {...props.media} />
+      </div>
+      {caption && (
+        <figcaption className={commonStyles.mainContentWidth}>
+          <InlineContent inlines={caption} />
+        </figcaption>
+      )}
     </figure>
   )
 }
 
 function isFigureProps(o: any): o is FigureProps {
-  return 'caption' in o
+  return 'media' in o
 }
 
 function isFigureElement(
@@ -49,7 +65,6 @@ function isFigureElement(
 
 export const figurePropsOrElement = propsElementUnion<
   typeof figureProps,
-  FigureProps,
   typeof Figure
 >(figureProps)
 export type FigurePropsOrElement = z.infer<typeof figurePropsOrElement>

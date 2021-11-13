@@ -1,8 +1,10 @@
-import { ThemedImageProps } from './models'
-
-const illustration: ThemedImageProps = {
+const illustration = {
   light: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 173.2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 280 173.2"
+      width="100%"
+    >
       <path fill="#FFF" d="M166 126.3l20-93L263.8 50l-20 93z" />
       <path fill="#E66693" d="M175.7 108l14.6-68L257 54.3l-14.7 68z" />
       <path fill="#FFF" d="M166 141.4l34.6-95L280 75.1l-34.6 95.2z" />
@@ -85,7 +87,11 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   dark: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 173.2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 280 173.2"
+      width="100%"
+    >
       <defs />
       <path fill="#EDEBE9" d="M166 126.3l20-93L263.8 50l-20 93z" />
       <path fill="#E66693" d="M175.6 108l14.7-68 66.6 14.3-14.7 68z" />
@@ -120,9 +126,9 @@ const illustration: ThemedImageProps = {
         gradientTransform="matrix(-.9395 -.3425 .5744 -1.5754 -472 -231.6)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#9689c1" />
-        <stop offset=".3" stop-color="#b8afd5" stopOpacity=".7" />
-        <stop offset="1" stop-color="#fff" stopOpacity="0" />
+        <stop offset="0" stopColor="#9689c1" />
+        <stop offset=".3" stopColor="#b8afd5" stopOpacity=".7" />
+        <stop offset="1" stopColor="#fff" stopOpacity="0" />
       </radialGradient>
       <path
         fill="url(#a)"
@@ -164,7 +170,11 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   'high-contrast': (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 281.6 171.8">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 281.6 171.8"
+      width="100%"
+    >
       <defs />
       <g
         strokeLinecap="round"

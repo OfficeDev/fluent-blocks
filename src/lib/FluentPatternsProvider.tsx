@@ -6,16 +6,23 @@ import {
   FluentPatternsContext,
   FluentPatternsContextData,
 } from './FluentPatternsContext'
+import { ActionHandler } from './actions'
 
 export const FluentPatternsProvider = ({
-  theme = 'light',
   dir = 'ltr',
+  theme = 'light',
+  onAction = () => {},
   children,
-}: PropsWithChildren<{ theme?: Theme; dir?: Dir }>) => {
+}: PropsWithChildren<{
+  theme?: Theme
+  dir?: Dir
+  onAction?: ActionHandler
+}>) => {
   const fluentTheme = getTeamsTheme(theme)
   const context: FluentPatternsContextData = {
     dir,
     theme,
+    onAction,
     fluentTheme,
   }
   return (

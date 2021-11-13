@@ -1,8 +1,10 @@
-import { ThemedImageProps } from './models'
-
-const illustration: ThemedImageProps = {
+const illustration = {
   light: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121.6 122.2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 121.6 122.2"
+      width="100%"
+    >
       <defs />
       <path
         fill="#C8C6C4"
@@ -26,7 +28,11 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   dark: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121.6 122.2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 121.6 122.2"
+      width="100%"
+    >
       <defs />
       <path
         fill="#B3B0AD"
@@ -50,7 +56,11 @@ const illustration: ThemedImageProps = {
     </svg>
   ),
   'high-contrast': (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121.6 122.2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 121.6 122.2"
+      width="100%"
+    >
       <defs />
       <path
         fill="#FFF"

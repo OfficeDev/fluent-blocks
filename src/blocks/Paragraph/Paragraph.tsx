@@ -60,7 +60,6 @@ function isParagraphElement(
 
 export const paragraphPropsOrElement = propsElementUnion<
   typeof paragraphProps,
-  ParagraphProps,
   typeof Paragraph
 >(paragraphProps)
 export type ParagraphPropsOrElement = z.infer<typeof paragraphPropsOrElement>
