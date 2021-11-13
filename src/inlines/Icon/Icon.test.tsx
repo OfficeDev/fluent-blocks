@@ -5,7 +5,7 @@ import expect from 'expect'
 describe('Icon', function () {
   describe('interactions', function () {
     this.timeout(5e3)
-    before(async function (this) {
+    before(async function () {
       await this.goto(this.storybookUrl('tests-icon--icon-test'))
     })
 

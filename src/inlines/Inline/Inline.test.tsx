@@ -25,7 +25,7 @@ describe('Inline', function () {
   describe('interactions', function () {
     this.timeout(5e3)
     describe('using serializeable props', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-inline--inline-json-test'))
       })
 
@@ -46,7 +46,7 @@ describe('Inline', function () {
     })
 
     describe('using JSX', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-inline--inline-jsx-test'))
       })
 
@@ -67,7 +67,7 @@ describe('Inline', function () {
     })
 
     describe('using `Escape`', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-inline--inline-escape-test'))
       })
 

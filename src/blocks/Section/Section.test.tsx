@@ -102,7 +102,7 @@ describe('Section', function () {
   describe('interactions', function () {
     this.timeout(5e3)
     describe('using serializeable props', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-section--section-json-test'))
       })
 
@@ -121,7 +121,7 @@ describe('Section', function () {
     })
 
     describe('using JSX', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-section--section-jsx-test'))
       })
 
@@ -140,7 +140,7 @@ describe('Section', function () {
     })
 
     describe('using `Escape`', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-section--section-escape-test'))
       })
 

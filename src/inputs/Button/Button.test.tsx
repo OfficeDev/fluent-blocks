@@ -7,7 +7,7 @@ describe('Button', function () {
     this.timeout(5e3)
 
     describe('click', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-button--button-click-test'))
       })
       it('calls onAction on click', async function () {
@@ -20,7 +20,7 @@ describe('Button', function () {
     })
 
     describe('emit', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-button--button-emit-test'))
       })
       it('calls onAction on click', async function () {

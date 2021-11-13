@@ -7,7 +7,7 @@ describe('View', function () {
     this.timeout(5e3)
 
     describe('onAction handles actions at the context', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(this.storybookUrl('tests-view--view-on-action-test'))
       })
       it('calls onAction on click', async function () {

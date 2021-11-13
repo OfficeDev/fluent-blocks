@@ -6,7 +6,7 @@ describe('Paragraph', function () {
   describe('interactions', function () {
     this.timeout(5e3)
     describe('using serializeable props', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(
           this.storybookUrl('tests-paragraph--paragraph-json-test')
         )
@@ -20,7 +20,7 @@ describe('Paragraph', function () {
     })
 
     describe('using JSX', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(
           this.storybookUrl('tests-paragraph--paragraph-jsx-test')
         )
@@ -34,7 +34,7 @@ describe('Paragraph', function () {
     })
 
     describe('using `Escape`', function () {
-      before(async function (this) {
+      before(async function () {
         await this.goto(
           this.storybookUrl('tests-paragraph--paragraph-escape-test')
         )
