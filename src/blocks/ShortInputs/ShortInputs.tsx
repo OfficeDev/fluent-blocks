@@ -6,15 +6,20 @@ import {
   escapeElement,
   invalidShortInput,
   propsElementUnion,
+  renderIfEscape,
+  Sequence,
   useCommonStyles,
 } from '../../lib'
 import {
+  buttonPropsOrElement,
+  renderIfButton,
   renderIfShortTextInput,
   shortTextInputPropsOrElement,
 } from '../../inputs'
 
 export const shortInputEntity = z.union([
   shortTextInputPropsOrElement,
+  buttonPropsOrElement,
   escapeElement,
 ])
 export type ShortInputEntity = z.infer<typeof shortInputEntity>
@@ -24,6 +29,10 @@ export type ShortInputSequence = z.infer<typeof shortInputSequence>
 
 const shortInputsProps = z.object({
   inputs: shortInputSequence,
+  variation: z
+    .union([z.literal('flex'), z.literal('narrow-block')])
+    .default('flex')
+    .optional(),
 })
 export type ShortInputsProps = z.infer<typeof shortInputsProps>
 
@@ -31,22 +40,43 @@ const useShortInputsStyles = makeStyles({
   root: {
     marginBlockEnd: '.5rem',
   },
-  shortInputSequence: {
+  'shortInputSequence--flex': {
     display: 'flex',
     flexFlow: 'row wrap',
     marginInlineEnd: '-.5rem',
     marginBlockEnd: '-.5rem',
+    '& > *': {
+      marginInlineEnd: '.5rem',
+      marginBlockEnd: '.5rem',
+    },
+  },
+  'shortInputSequence--narrow-block': {
+    marginBlockStart: '.5rem',
+    '& > *': {
+      marginBlockEnd: '.5rem',
+    },
   },
 })
 
+const ShortInput = (o: ShortInputEntity) =>
+  renderIfShortTextInput(o) ||
+  renderIfButton(o) ||
+  renderIfEscape(o) ||
+  invalidShortInput(o)
+
 export const ShortInputs = (props: ShortInputsProps) => {
-  const { inputs } = props
+  const { inputs, variation = 'flex' } = props
   const styles = useShortInputsStyles()
   const commonStyles = useCommonStyles()
   return (
     <div className={cx(commonStyles.mainContentWidth, styles.root)}>
-      <div className={styles.shortInputSequence}>
-        {inputs.map((o) => renderIfShortTextInput(o) || invalidShortInput(o))}
+      <div
+        className={cx(
+          styles[`shortInputSequence--${variation}`],
+          variation === 'narrow-block' && commonStyles.narrowWidth
+        )}
+      >
+        {Sequence<ShortInputEntity>(inputs, ShortInput)}
       </div>
     </div>
   )

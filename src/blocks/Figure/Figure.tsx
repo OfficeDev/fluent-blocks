@@ -28,13 +28,6 @@ const useFigureStyles = makeStyles({
   mediaPlaceholder: {
     minHeight: '8rem',
   },
-  'media--viewportWidth': {},
-  'media--textWidth': {},
-  'media--narrow': {
-    maxWidth: rem(280),
-    marginInlineStart: 'auto',
-    marginInlineEnd: 'auto',
-  },
 })
 
 export const Figure = (props: FigureProps) => {
@@ -46,7 +39,7 @@ export const Figure = (props: FigureProps) => {
       <div
         className={cx(
           variation === 'textWidth' && commonStyles.mainContentWidth,
-          variation && styles[`media--${variation}`]
+          variation === 'narrow' && commonStyles.narrowWidth
         )}
       >
         <Media {...props.media} />

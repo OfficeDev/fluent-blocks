@@ -14,10 +14,6 @@ export type ShortTextInputProps = z.infer<typeof shortTextInputProps>
 
 const useShortTextInputStyles = makeStyles({
   rootPlaceholder: {
-    marginBlockStart: 0,
-    marginBlockEnd: '.5rem',
-    marginInlineStart: 0,
-    marginInlineEnd: '.5rem',
     minWidth: rem(140),
     flex: '1 0 0',
   },

@@ -5,18 +5,14 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import { escaped, renderIfEscape, rem, propsElementUnion } from '../../lib'
 import { mediaEntity } from '../../media'
 import { inlineSequence } from '../../inlines'
-import { Button, buttonProps } from '../../inputs'
+import { ButtonProps, buttonProps } from '../../inputs'
 
 import { Figure } from '../Figure/Figure'
 import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
+import { ShortInputs } from '../ShortInputs/ShortInputs'
 
 const actionProps = buttonProps.omit({ variant: true, type: true })
-type ActionProps = z.infer<typeof actionProps>
-
-function isActionProps(o: any): o is ActionProps {
-  return o && 'label' in o && 'actionId' in o
-}
 
 const actionsBlockProps = z.object({
   primary: actionProps.optional(),
@@ -55,30 +51,12 @@ const useBigMessageStyles = makeStyles({
   },
 })
 
-const useActionBlockStyles = makeStyles({
-  root: {
-    maxWidth: rem(280),
-    margin: `${rem(20)} auto`,
-    '& button': {
-      marginBlockStart: rem(4),
-      marginBlockEnd: rem(4),
-    },
-  },
-})
-
 function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
-  const styles = useActionBlockStyles()
-  return (
-    <div className={styles.root}>
-      {isActionProps(primary) && (
-        <Button {...primary} type="button" variant="primary" />
-      )}
-      {isActionProps(secondary) && <Button {...secondary} type="button" />}
-      {isActionProps(tertiary) && (
-        <Button {...tertiary} type="button" variant="subtle" />
-      )}
-    </div>
-  )
+  const inputs: ButtonProps[] = []
+  primary && inputs.push({ type: 'button', variant: 'primary', ...primary })
+  secondary && inputs.push({ type: 'button', ...secondary })
+  tertiary && inputs.push({ type: 'button', variant: 'subtle', ...tertiary })
+  return <ShortInputs variation="narrow-block" inputs={inputs} />
 }
 
 export function BigMessage(props: BigMessageProps) {
