@@ -3,7 +3,7 @@ import { fake, seed } from 'faker/locale/en_US'
 import { Layout } from './StorybookLayout'
 import { Main } from '../../surfaces'
 import { Meta, Story, Canvas } from '@storybook/addon-docs'
-import { FluentKitProvider } from '../../lib'
+import { FluentPatternsProvider } from '../../lib'
 
 export const fakeTitle = () => {
   const lowercase = fake('{{lorem.words}}')
@@ -32,9 +32,9 @@ export const fakeTitle = () => {
 />
 
 export const LayoutTemplate = (props) => (
-  <FluentKitProvider theme="light" dir="ltr">
+  <FluentPatternsProvider theme="light" dir="ltr">
     <Main blocks={[{ layout: props }]} />
-  </FluentKitProvider>
+  </FluentPatternsProvider>
 )
 
 # Layout
