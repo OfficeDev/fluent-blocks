@@ -1,21 +1,18 @@
 import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
-import { Layout } from './StorybookLayout'
-import { Main } from '../../surfaces'
-import { Meta, Story, Canvas } from '@storybook/addon-docs'
-import { FluentPatternsProvider } from '../../lib'
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
-export const fakeTitle = () => {
-  const lowercase = fake('{{lorem.words}}')
-  return lowercase.charAt(0).toUpperCase() + lowercase.slice(1)
-}
+import { Layout } from './StorybookLayout'
+import { themeArgType } from '../../lib'
 
 <Meta
   title="Blocks/Layout"
   component={Layout}
   argTypes={{
+    ...themeArgType,
     variation: {
       name: 'Variation',
+      description: 'Which layout strategy to use.',
       control: {
         type: 'inline-radio',
         labels: { grid: 'Grid', flex: 'Flexbox' },
@@ -23,7 +20,13 @@ export const fakeTitle = () => {
     },
     items: {
       name: 'Items',
+      description: 'The items to arrange.',
       control: { type: 'object' },
+      table: {
+        type: {
+          summary: 'LayoutItemSequence',
+        },
+      },
     },
   }}
   parameters={{
@@ -31,11 +34,7 @@ export const fakeTitle = () => {
   }}
 />
 
-export const LayoutTemplate = (props) => (
-  <FluentPatternsProvider theme="light" dir="ltr">
-    <Main blocks={[{ layout: props }]} />
-  </FluentPatternsProvider>
-)
+export const LayoutTemplate = (props) => <Layout {...props} />
 
 # Layout
 
@@ -45,21 +44,15 @@ The `Layout` component is a block which can arrange its content items such that 
   <Story
     name="Layout"
     args={{
+      theme: 'light',
       variation: 'grid',
-      items: [
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-        { card: [{ paragraph: [{ text: fakeTitle() }] }] },
-      ],
+      items: range(7).map(() => ({
+        card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
+      })),
     }}
   >
     {seed(1234) || LayoutTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Layout" />
