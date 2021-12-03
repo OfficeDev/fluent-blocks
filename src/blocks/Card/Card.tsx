@@ -19,8 +19,8 @@ import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
 import { headingPropsOrElement, renderIfHeading } from '../Heading/Heading'
 
 export const cardContentItemEntity = z.union([
-  paragraphPropsOrElement,
   headingPropsOrElement,
+  paragraphPropsOrElement,
   figurePropsOrElement,
   escapeElement,
 ])
@@ -35,8 +35,8 @@ export const cardProps = z.object({
 export type CardProps = z.infer<typeof cardProps>
 
 const CardContentItem = (o: CardContentItemEntity) =>
-  renderIfParagraph(o) ||
   renderIfHeading(o) ||
+  renderIfParagraph(o) ||
   renderIfFigure(o) ||
   renderIfEscape(o) ||
   invalidCardContentItem(o)
