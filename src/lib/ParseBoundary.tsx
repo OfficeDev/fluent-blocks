@@ -1,10 +1,10 @@
-import { ParseParamsNoData, ZodError } from 'zod'
+import { ParseParams, ZodError } from 'zod'
 
 export function ParseBoundary<P>(props: {
   schema: {
     safeParse(
       data: unknown,
-      params?: Partial<ParseParamsNoData>
+      params?: Partial<ParseParams>
     ):
       | {
           success: true

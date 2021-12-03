@@ -254,7 +254,15 @@ input below and select the desired size. All icons are available in both
 display size, the name of the icon, and the sizes available with the display
 size in bold.
 
-The icons must load through this Storybook’s middleware, which does not run on
-Chromatic. To use this page, run this project’s Storybook locally.
+This project currently expects any requests to `/sprites/**` to serve an SVG
+sprite with the appropriate content, which for this Storybook development server
+is proxied to a specific release on jsDelivr.
+
+Do not use proxies for icons in production.
+
+## Icon finder
+
+**These icons won’t appear on Chromatic. To see the icons on this page, run this
+project’s Storybook on your device locally.**
 
 <IconFinder />
