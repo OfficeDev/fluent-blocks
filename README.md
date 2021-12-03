@@ -83,4 +83,4 @@ Make sure the content you add meets Microsoft’s design & accessibility standar
 [fluent-icons]: https://github.com/microsoft/fluentui-system-icons
 [fluentui-v9]: https://www.npmjs.com/package/@fluentui/react-components
 [react-teams]: https://www.npmjs.com/package/@fluentui/react-teams
-[storybook]: https://6168794438f17a003a2f124a-xfrbausxzq.chromatic.com/
+[storybook]: https://staging--6168794438f17a003a2f124a.chromatic.com
