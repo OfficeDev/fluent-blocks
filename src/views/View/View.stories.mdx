@@ -47,7 +47,7 @@ may have motion and interactivity but starts with the same content you
 supply. Content will only change if the user triggers the change, and at
 that time `View` will call its interaction callback with the update.
 
-<Canvas>
+<Canvas withSource="none">
   <Story
     name="Demo"
     args={{
@@ -137,7 +137,7 @@ and render any schema validation issues it encounters to the page in
 development. In production, it will display an error message to the user and
 call its error callback with the issues.
 
-<Canvas>
+<Canvas withSource="none">
   <Story
     name="Props validation"
     args={{

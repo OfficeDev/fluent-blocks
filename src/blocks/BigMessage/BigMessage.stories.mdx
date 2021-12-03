@@ -1,8 +1,22 @@
-import { Meta, Canvas, Story } from '@storybook/addon-docs'
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { BigMessage } from './StorybookBigMessage'
-import { FluentPatternsProvider } from '../../lib'
+import { themeArgType } from '../../lib'
 
-<Meta title="Blocks/Big message" component={BigMessage} />
+<Meta
+  title="Blocks/Big message"
+  component={BigMessage}
+  argTypes={{
+    ...themeArgType,
+    media: { table: { disable: true } },
+    title: { table: { disable: true } },
+    description: { table: { disable: true } },
+    actions: { table: { disable: true } },
+    viewportHeight: { table: { disable: true } },
+    variant: { table: { disable: true } },
+  }}
+/>
+
+export const BigMessageTemplate = (props) => <BigMessage {...props} />
 
 # Big message
 
@@ -14,54 +28,60 @@ Designed primarily for error messages, empty states, success messages, etc.
 
 For a welcome screen on a first-run experience, use an inviting illustration or branding. It should give users a sense of what your app does and offer first steps for getting started.
 
-<Canvas>
-  <Story name="Welcome variant 1">
-    <FluentPatternsProvider>
-      <BigMessage
-        media={{ illustration: 'hello' }}
-        title={[{ text: 'Welcome to Contoso! Your opinion counts.' }]}
-        description={[
-          { text: 'Contoso is your tool to create, take, and manage polls.' },
-        ]}
-        actions={{
-          primary: { actionId: 'a1', label: 'Sign in' },
-          secondary: { actionId: 'a2', label: 'Sign up' },
-          tertiary: { actionId: 'a3', label: 'Learn more about Contoso' },
-        }}
-        viewportHeight={false}
-      />
-    </FluentPatternsProvider>
+<Canvas withSource="none">
+  <Story
+    name="Welcome variant 1"
+    args={{
+      theme: 'light',
+      media: { illustration: 'hello' },
+      title: [{ text: 'Welcome to Contoso! Your opinion counts.' }],
+      description: [
+        { text: 'Contoso is your tool to create, take, and manage polls.' },
+      ],
+      actions: {
+        primary: { actionId: 'a1', label: 'Sign in' },
+        secondary: { actionId: 'a2', label: 'Sign up' },
+        tertiary: { actionId: 'a3', label: 'Learn more about Contoso' },
+      },
+    }}
+  >
+    {BigMessageTemplate.bind({})}
   </Story>
 </Canvas>
 
-<Canvas>
-  <Story name="Welcome variant 2">
-    <FluentPatternsProvider>
-      <BigMessage
-        media={{ illustration: 'hello' }}
-        title={[{ text: 'Welcome to your workspace, Daniela' }]}
-        description={[
-          {
-            text: 'Access all your boards for photos, files, and tasks from a single place.',
-          },
-        ]}
-        actions={{
-          primary: {
-            actionId: 'a1',
-            label: 'Create a board',
-            icon: 'add',
-          },
-          secondary: {
-            actionId: 'a2',
-            label: 'Find an existing board',
-            icon: 'search',
-          },
-        }}
-        viewportHeight={false}
-      />
-    </FluentPatternsProvider>
+<ArgsTable story="Welcome variant 1" />
+
+<Canvas withSource="none">
+  <Story
+    name="Welcome variant 2"
+    args={{
+      theme: 'light',
+      media: { illustration: 'hello' },
+      title: [{ text: 'Welcome to your workspace, Daniela' }],
+      description: [
+        {
+          text: 'Access all your boards for photos, files, and tasks from a single place.',
+        },
+      ],
+      actions: {
+        primary: {
+          actionId: 'a1',
+          label: 'Create a board',
+          icon: 'add',
+        },
+        secondary: {
+          actionId: 'a2',
+          label: 'Find an existing board',
+          icon: 'search',
+        },
+      },
+    }}
+  >
+    {BigMessageTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Welcome variant 2" />
 
 ## Empty state
 
@@ -69,72 +89,96 @@ An empty state should provide clear direction on what the user can do to begin w
 
 ### With actions
 
-<Canvas>
-  <Story name="Empty with Actions">
-    <FluentPatternsProvider>
-      <BigMessage
-        media={{ illustration: 'empty' }}
-        actions={{
-          primary: {
-            actionId: 'a1',
-            label: 'Create a task',
-            icon: 'add',
-          },
-          secondary: {
-            actionId: 'a2',
-            label: 'Find an existing task',
-            icon: 'search',
-          },
-        }}
-        viewportHeight={false}
-      />
-    </FluentPatternsProvider>
+<Canvas withSource="none">
+  <Story
+    name="Empty with Actions"
+    args={{
+      theme: 'light',
+      media: { illustration: 'empty' },
+      actions: {
+        primary: {
+          actionId: 'a1',
+          label: 'Create a task',
+          icon: 'add',
+        },
+        secondary: {
+          actionId: 'a2',
+          label: 'Find an existing task',
+          icon: 'search',
+        },
+      },
+    }}
+  >
+    {BigMessageTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Empty with Actions" />
 
 ### Without actions
 
-<Canvas>
-  <Story name="Empty">
-    <FluentPatternsProvider>
-      <BigMessage
-        media={{ illustration: 'empty' }}
-        title={[{ text: "Once you're assigned a task, you'll find it here" }]}
-        description={[{ text: 'Until then, enjoy your time off.' }]}
-        viewportHeight={false}
-      />
-    </FluentPatternsProvider>
+<Canvas withSource="none">
+  <Story
+    name="Empty"
+    args={{
+      theme: 'light',
+      media: { illustration: 'empty' },
+      title: [{ text: "Once you're assigned a task, you'll find it here" }],
+      description: [{ text: 'Until then, enjoy your time off.' }],
+    }}
+  >
+    {BigMessageTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Empty" />
 
 ## Error
 
-Error states come in many different forms. Consider an appropriate illustration to ease the pain convey next steps to resolve the issue.
+Error states come in many forms. Consider an appropriate illustration to ease the pain convey next steps to resolve the issue.
 
-<Canvas>
-  <Story name="Error">
-    <FluentPatternsProvider>
-      <BigMessage
-        media={{ illustration: 'error' }}
-        title={[{ text: 'Something went wrong' }]}
-        viewportHeight={false}
-      />
-    </FluentPatternsProvider>
+<Canvas withSource="none">
+  <Story
+    name="Error"
+    args={{
+      theme: 'light',
+      media: { illustration: 'error' },
+      title: [{ text: 'Something went wrong' }],
+      actions: {
+        secondary: {
+          actionId: 'a1',
+          label: 'Go back',
+          icon: 'arrow_left',
+        },
+        tertiary: {
+          actionId: 'a2',
+          label: 'Try again',
+          icon: 'arrow_counterclockwise',
+        },
+      },
+    }}
+  >
+    {BigMessageTemplate.bind({})}
   </Story>
 </Canvas>
 
-<Canvas>
-  <Story name="Error without illustration">
-    <FluentPatternsProvider>
-      <BigMessage
-        title={[{ text: 'Something went wrong' }]}
-        description={[
-          {
-            text: 'Try searching with common words or checking for spelling errors.',
-          },
-        ]}
-        viewportHeight={false}
-      />
-    </FluentPatternsProvider>
+<ArgsTable story="Error" />
+
+<Canvas withSource="none">
+  <Story
+    name="Error without illustration"
+    args={{
+      theme: 'light',
+      title: [{ text: 'Something went wrong' }],
+      description: [
+        {
+          text: 'Try searching with common words or checking for spelling errors',
+        },
+      ],
+    }}
+  >
+    {BigMessageTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Error without illustration" />

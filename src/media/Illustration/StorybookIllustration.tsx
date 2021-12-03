@@ -1,10 +1,6 @@
-import {
-  Illustration as NaturalIllustration,
-  IllustrationProps,
-} from './Illustration'
+import { IllustrationProps } from './Illustration'
 import { FluentPatternsProvider, Theme } from '../../lib'
 import { Main } from '../../surfaces'
-import { InlineSequence } from '../../inlines'
 
 export const Illustration = ({
   theme,
@@ -13,7 +9,7 @@ export const Illustration = ({
   <FluentPatternsProvider theme={theme}>
     <Main
       blocks={[{ media: props, variant: 'narrow' }]}
-      title={null as unknown as InlineSequence}
+      title={[{ text: ' ' }]}
     />
   </FluentPatternsProvider>
 )
