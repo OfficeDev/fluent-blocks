@@ -1,5 +1,33 @@
 # Contributing to Fluent React Patterns
 
+We’re
+
+## Getting started
+
+Install `node` greater than or equal to v10 and `yarn`, then run:
+
+```shell
+$ yarn install
+```
+
+Then, to start Storybook, run:
+
+```shell
+$ yarn dev
+```
+
+To test while Storybook is running, run:
+
+```shell
+$ yarn test:run
+```
+
+To run tests also starting Storybook as needed (this will fail if Storybook is already running), run:
+
+```shell
+$ yarn test
+```
+
 When implementing a new pattern, be sure to:
 
 1. Create/update all relevant Zod schemas and TypeScript types.
