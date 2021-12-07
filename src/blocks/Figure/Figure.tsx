@@ -4,7 +4,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { inlineSequence, InlineContent } from '../../inlines'
 import { mediaEntity, Media } from '../../media'
-import { propsElementUnion, useCommonStyles } from '../../lib'
+import { propsElementUnion, renderIfEscape, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
   media: mediaEntity,
@@ -44,7 +44,7 @@ export const Figure = (props: FigureProps) => {
           !flexItem && commonStyles.centerBlock
         )}
       >
-        <Media {...props.media} />
+        {Media(props.media)}
       </div>
       {caption && (
         <figcaption
