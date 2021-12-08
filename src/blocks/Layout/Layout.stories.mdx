@@ -10,8 +10,8 @@ import { themeArgType } from '../../lib'
   component={Layout}
   argTypes={{
     ...themeArgType,
-    variation: {
-      name: 'Variation',
+    variant: {
+      name: 'variant',
       description: 'Which layout strategy to use.',
       control: {
         type: 'inline-radio',
@@ -45,7 +45,7 @@ The `Layout` component is a block which can arrange its content items such that 
     name="Layout"
     args={{
       theme: 'light',
-      variation: 'grid',
+      variant: 'grid',
       items: range(7).map(() => ({
         card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
       })),

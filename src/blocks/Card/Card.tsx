@@ -43,7 +43,9 @@ const CardContentItem = (o: CardContentItemEntity) =>
 
 export const Card = ({ card }: CardProps) => (
   <FluentCard>
-    {Sequence<CardContentItemEntity>(card, CardContentItem, { flexItem: true })}
+    {Sequence<CardContentItemEntity>(card, CardContentItem, {
+      contextualVariant: 'card',
+    })}
   </FluentCard>
 )
 

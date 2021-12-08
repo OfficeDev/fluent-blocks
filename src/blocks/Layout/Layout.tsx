@@ -19,7 +19,7 @@ export const layoutItemSequence = z.array(layoutItemEntity)
 
 export const layoutProps = z.object({
   layout: z.object({
-    variation: z.union([z.literal('grid'), z.literal('flex')]),
+    variant: z.union([z.literal('grid'), z.literal('flex')]),
     items: layoutItemSequence,
   }),
 })
@@ -51,10 +51,10 @@ const useLayoutStyles = makeStyles({
 export const LayoutItem = (o: LayoutItemEntity) =>
   renderIfCard(o) || renderIfEscape(o) || invalidLayoutItem(o)
 
-export const Layout = ({ layout: { variation, items } }: LayoutProps) => {
+export const Layout = ({ layout: { variant, items } }: LayoutProps) => {
   const styles = useLayoutStyles()
   return (
-    <section className={cx(styles.root, styles[variation])}>
+    <section className={cx(styles.root, styles[variant])}>
       {<>{Sequence<LayoutItemEntity>(items, LayoutItem)}</>}
     </section>
   )

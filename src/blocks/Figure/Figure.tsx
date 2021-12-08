@@ -6,19 +6,28 @@ import { inlineSequence, InlineContent } from '../../inlines'
 import { mediaEntity, Media } from '../../media'
 import { propsElementUnion, renderIfEscape, useCommonStyles } from '../../lib'
 
-export const figureProps = z.object({
-  media: mediaEntity,
-  caption: inlineSequence.optional(),
-  variant: z
-    .union([
-      z.literal('viewportWidth'),
-      z.literal('textWidth'),
-      z.literal('narrow'),
-    ])
-    .default('viewportWidth')
-    .optional(),
-  flexItem: z.boolean().optional(),
-})
+export const figureProps = z
+  .object({
+    media: mediaEntity,
+    caption: inlineSequence.optional(),
+    variant: z
+      .union([
+        z.literal('viewportWidth'),
+        z.literal('textWidth'),
+        z.literal('narrow'),
+      ])
+      .default('viewportWidth')
+      .optional(),
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('card'), z.literal('block')])
+          .default('block'),
+      })
+      .partial()
+  )
 export type FigureProps = z.infer<typeof figureProps>
 
 const useFigureStyles = makeStyles({
@@ -34,14 +43,18 @@ const useFigureStyles = makeStyles({
 export const Figure = (props: FigureProps) => {
   const styles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption, flexItem, variant = 'viewportWidth' } = props
+  const {
+    caption,
+    contextualVariant = 'block',
+    variant = 'viewportWidth',
+  } = props
   return (
     <figure>
       <div
         className={cx(
           variant === 'textWidth' && commonStyles.mainContentWidth,
           variant === 'narrow' && commonStyles.narrowWidth,
-          !flexItem && commonStyles.centerBlock
+          contextualVariant === 'block' && commonStyles.centerBlock
         )}
       >
         {Media(props.media)}
@@ -50,7 +63,7 @@ export const Figure = (props: FigureProps) => {
         <figcaption
           className={cx(
             commonStyles.mainContentWidth,
-            !flexItem && commonStyles.centerBlock
+            contextualVariant === 'block' && commonStyles.centerBlock
           )}
         >
           <InlineContent inlines={caption} />

@@ -5,10 +5,19 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import { InlineContent, inlineSequence } from '../../inlines'
 import { propsElementUnion, rem, useCommonStyles } from '../../lib'
 
-export const paragraphProps = z.object({
-  paragraph: inlineSequence,
-  flexItem: z.boolean().optional(),
-})
+export const paragraphProps = z
+  .object({
+    paragraph: inlineSequence,
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('card'), z.literal('block')])
+          .default('block'),
+      })
+      .partial()
+  )
 export type ParagraphProps = z.infer<typeof paragraphProps>
 
 export const useParagraphStyles = makeStyles({
@@ -39,7 +48,7 @@ export const useParagraphStyles = makeStyles({
 })
 
 export const Paragraph = (props: ParagraphProps) => {
-  const { paragraph, flexItem } = props
+  const { paragraph, contextualVariant = 'block' } = props
   const styles = useParagraphStyles()
   const commonStyles = useCommonStyles()
   return (
@@ -47,7 +56,7 @@ export const Paragraph = (props: ParagraphProps) => {
       className={cx(
         styles.root,
         commonStyles.mainContentWidth,
-        !flexItem && commonStyles.centerBlock
+        contextualVariant === 'block' && commonStyles.centerBlock
       )}
     >
       <InlineContent inlines={paragraph} />
