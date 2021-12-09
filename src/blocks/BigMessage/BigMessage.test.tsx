@@ -15,7 +15,7 @@ describe('BigMessage', function () {
       it('renders to the page', async function () {
         expect(await this.page.locator('#root svg').count()).toEqual(1)
 
-        expect(await this.page.locator('#root h3').first().innerText()).toEqual(
+        expect(await this.page.locator('#root h2').first().innerText()).toEqual(
           '9bd4bf8e-6747-440f-bba2-fe419a17bbc5'
         )
 
@@ -47,7 +47,7 @@ describe('BigMessage', function () {
       it('renders to the page', async function () {
         expect(await this.page.locator('#root svg').count()).toEqual(1)
 
-        expect(await this.page.locator('#root h3').first().innerText()).toEqual(
+        expect(await this.page.locator('#root h2').first().innerText()).toEqual(
           '13ec92f2-57b6-4e50-9e5b-eb3924f4da88'
         )
 
