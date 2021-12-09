@@ -17,26 +17,38 @@ export const buttonActivateAction = actionPayload.merge(
 )
 export type ButtonActivateAction = z.infer<typeof buttonActivateAction>
 
-export const buttonProps = z.object({
-  // buttons can't be 'required', so that property is excluded
-  type: z.literal('button'),
-  label: z.string().min(1), // this is intentionally not `inlineSequence` and it must not be an empty string
-  actionId: z.string(),
-  variant: z
-    .union([
-      z.literal('outline'),
-      z.literal('primary'),
-      z.literal('subtle'),
-      z.literal('transparent'),
-    ])
-    .optional(),
-  iconOnly: z.boolean().optional(),
-  icon: z.string().optional(),
-  iconPosition: z.union([z.literal('before'), z.literal('after')]).optional(),
-  iconSize: iconSize.optional(),
-  iconVariant: iconVariant.optional(),
-  ...withActionHandler(buttonActivateAction),
-})
+export const buttonProps = z
+  .object({
+    // buttons can't be 'required', so that property is excluded
+    type: z.literal('button'),
+    label: z.string().min(1), // this is intentionally not `inlineSequence` and it must not be an empty string
+    actionId: z.string(),
+    variant: z
+      .union([
+        z.literal('outline'),
+        z.literal('primary'),
+        z.literal('subtle'),
+        z.literal('transparent'),
+      ])
+      .optional(),
+    iconOnly: z.boolean().optional(),
+    icon: z.string().optional(),
+    iconPosition: z.union([z.literal('before'), z.literal('after')]).optional(),
+    iconSize: iconSize.optional(),
+    iconVariant: iconVariant.optional(),
+    ...withActionHandler(buttonActivateAction),
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('inputs'), z.literal('tabs')])
+          .default('inputs'),
+        selected: z.boolean().default(false),
+        controls: z.string(),
+      })
+      .partial()
+  )
 export type ButtonProps = z.infer<typeof buttonProps>
 
 const useButtonStyles = makeStyles({
@@ -55,6 +67,9 @@ export const Button = ({
   iconVariant,
   actionId,
   onAction,
+  contextualVariant,
+  selected,
+  controls,
 }: ButtonProps) => {
   const context = useFluentPatternsContext()
 
@@ -83,6 +98,13 @@ export const Button = ({
         ),
       })}
       onClick={onButtonActivate}
+      id={actionId}
+      {...(selected && { 'aria-selected': selected })}
+      {...(controls && { 'aria-controls': controls })}
+      {...(contextualVariant === 'tabs' && {
+        role: 'tab',
+        ...(!selected && { tabIndex: -1 }),
+      })}
     >
       {iconOnly ? null : label}
     </FluentButton>
