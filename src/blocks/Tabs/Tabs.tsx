@@ -4,8 +4,8 @@ import { Button, buttonProps } from '../../inputs'
 import { figurePropsOrElement } from '../Figure/Figure'
 import { headingPropsOrElement } from '../Heading/Heading'
 import { paragraphPropsOrElement } from '../Paragraph/Paragraph'
-import { escapeElement, Sequence } from '../../lib'
-import { useState } from 'react'
+import { escapeElement, propsElementUnion, Sequence } from '../../lib'
+import { ReactElement, useState } from 'react'
 import { Block } from '../Block/Block'
 
 export const tabProps = buttonProps.omit({
@@ -40,34 +40,41 @@ export const tabsProps = z.object({
 })
 export type TabsProps = z.infer<typeof tabsProps>
 
+function tabId(itemId: string) {
+  return `${itemId}__tab`
+}
+function panelId(itemId: string) {
+  return `${itemId}__panel`
+}
+
 export const Tabs = ({ tabs, label, variant }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(0)
-  const tabIds = tabs.map(() => uniqueId('tabItem'))
+  const itemIds = tabs.map(() => uniqueId('tabItem'))
   return (
     <div aria-label={label}>
       <div role="tablist">
         {tabs.map((tabItem, t) => (
           <Button
-            key={tabIds[t]}
+            key={itemIds[t]}
             {...{
               ...tabItem.tab,
               type: 'button',
-              actionId: `${tabIds[t]}__tab`,
+              actionId: tabId(itemIds[t]),
               variant,
               contextualVariant: 'tabs',
               selected: activeTab === t,
-              controls: `${tabIds[t]}__panel`,
+              controls: panelId(itemIds[t]),
             }}
           />
         ))}
       </div>
       {tabs.map((tabItem, t) => (
         <div
-          key={tabIds[t]}
-          id={`${tabIds[t]}__panel`}
+          key={itemIds[t]}
+          id={panelId(itemIds[t])}
           tabIndex={0}
           role="tabpanel"
-          aria-labelledby={`${tabIds[t]}__tab`}
+          aria-labelledby={tabId(itemIds[t])}
           {...(activeTab !== t && { hidden: true })}
         >
           {Sequence<TabPanelItemEntity>(tabItem.panel, Block)}
@@ -75,4 +82,22 @@ export const Tabs = ({ tabs, label, variant }: TabsProps) => {
       ))}
     </div>
   )
+}
+
+function isTabsProps(o: any): o is TabsProps {
+  return 'tabs' in o
+}
+
+function isTabsElement(o: any): o is ReactElement<TabsProps, typeof Tabs> {
+  return o?.type === Tabs
+}
+
+export const tabsPropsOrElement = propsElementUnion<
+  typeof tabsProps,
+  typeof Tabs
+>(tabsProps)
+export type TabsPropsOrElement = z.infer<typeof tabsPropsOrElement>
+
+export function renderIfTabs(o: any) {
+  return isTabsProps(o) ? <Tabs {...o} /> : isTabsElement(o) ? o : null
 }

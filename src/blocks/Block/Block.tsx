@@ -23,12 +23,14 @@ import {
 } from '../BigMessage/BigMessage'
 import { layoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 import { cardPropsOrElement, renderIfCard } from '../Card/Card'
+import { tabsPropsOrElement, renderIfTabs } from '../Tabs/Tabs'
 
 export const blockEntity = z.union([
   paragraphPropsOrElement,
   layoutPropsOrElement,
   figurePropsOrElement,
   cardPropsOrElement,
+  tabsPropsOrElement,
   shortInputsPropsOrElement,
   multilineTextInputPropsOrElement,
   radioGroupPropsOrElement,
@@ -48,6 +50,7 @@ export const Block = (o: BlockEntity) =>
   renderIfLayout(o) ||
   renderIfFigure(o) ||
   renderIfCard(o) ||
+  renderIfTabs(o) ||
   renderIfShortInputs(o) ||
   renderIfMultilineTextInput(o) ||
   renderIfRadioGroup(o) ||

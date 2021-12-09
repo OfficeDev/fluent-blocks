@@ -8,7 +8,7 @@ This package provides a set of components developers can use to build fully inte
 
 ## ⚠️ In active development
 
-This project’s API is subject to breaking changes and is not yet on any release cycle.
+This project’s API is subject to unannounced breaking changes and is not yet on any release cycle.
 
 ## Contributing
 
@@ -30,9 +30,9 @@ Since the goal of this library is to aid in implementing experiences that confor
 
 The bolded terms are used in the TypeScript types for the components in this project, e.g. a valid icon instance matches `IconPropsOrElement`, which is either 1) `IconProps`, or 2) `IconElement`.
 
-A union of specific `…PropsOrElement` types characterizing a certain class is called an `…Entity`, e.g. `InlineEntity` includes both text and icon elements. An ordered set of entities is called a `…Sequence`, e.g. `InlineSequence`.
+For consistency between the two syntaxes, the `children` prop and its implicit nesting equivalent in JSX is avoided in favor of named content props that parallel the serializeable syntax.
 
-Some components like `View` will check the props it was provided and provide a detailed error if the props are incorrect in any way. All other components won’t check for issues and will simply refuse to render unexpected content. In either case, developers can explicitly mark where exceptions should be made using the `Escape` component described below.
+Some top-level components like `View` will check the props it was provided and provide a detailed error if the props are incorrect in any way. All other components won’t check for issues and will simply refuse to render unexpected content. In either case, developers can explicitly mark where exceptions should be made using the `Escape` component described below.
 
 ## Escaping validation
 
