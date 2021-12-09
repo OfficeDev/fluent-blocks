@@ -3,7 +3,7 @@ const illustration = {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193 219" width="100%">
       <defs />
       <defs>
-        <linearGradient id="a" x1="44.1%" x2="64.9%" y1="73%" y2="42.5%">
+        <linearGradient id="c" x1="44.1%" x2="64.9%" y1="73%" y2="42.5%">
           <stop offset="0%" stopColor="#B3AFAB" />
           <stop offset="2.6%" stopColor="#B8B5B1" />
           <stop offset="17.7%" stopColor="#D2CFCD" />
@@ -51,7 +51,7 @@ const illustration = {
             d="M0 33.7L135 .4l23.4 94.8-135 33.3z"
           />
           <path
-            fill="url(#a)"
+            fill="url(#c)"
             fillRule="nonzero"
             d="M158.4 95.3l-4.8-19.4-46.8-33.2c-1.2-.9-3-.4-3.5 1.1l-27.8 72 82.9-20.5z"
           />
@@ -89,7 +89,7 @@ const illustration = {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 193 219" width="100%">
       <defs />
       <defs>
-        <linearGradient id="a" x1="44.1%" x2="64.9%" y1="73%" y2="42.5%">
+        <linearGradient id="d" x1="44.1%" x2="64.9%" y1="73%" y2="42.5%">
           <stop offset="0%" stopColor="#B3AFAB" />
           <stop offset="2.6%" stopColor="#B8B5B1" />
           <stop offset="17.7%" stopColor="#D2CFCD" />
@@ -137,7 +137,7 @@ const illustration = {
             d="M0 33.7L135 .4l23.4 94.8-135 33.3z"
           />
           <path
-            fill="url(#a)"
+            fill="url(#d)"
             fillRule="nonzero"
             d="M158.4 95.3l-4.8-19.4-46.8-33.2c-1.2-.9-3-.4-3.5 1.1l-27.8 72 82.9-20.5z"
           />

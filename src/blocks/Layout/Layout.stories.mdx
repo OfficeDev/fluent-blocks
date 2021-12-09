@@ -12,7 +12,7 @@ import { themeArgType } from '../../lib'
     ...themeArgType,
     variant: {
       name: 'variant',
-      description: 'Which layout strategy to use.',
+      abstract: 'Which layout strategy to use.',
       control: {
         type: 'inline-radio',
         labels: { grid: 'Grid', flex: 'Flexbox' },
@@ -20,7 +20,7 @@ import { themeArgType } from '../../lib'
     },
     items: {
       name: 'Items',
-      description: 'The items to arrange.',
+      abstract: 'The items to arrange.',
       control: { type: 'object' },
       table: {
         type: {

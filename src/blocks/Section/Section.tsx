@@ -7,10 +7,14 @@ import { inlineSequence } from '../../inlines'
 import { Block, BlockEntity, blockSequence } from '../Block/Block'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { Heading } from '../Heading/Heading'
+import { BigMessage, bigMessageProps } from '../BigMessage/BigMessage'
 
 const nonRecursiveSectionContentProps = {
   title: inlineSequence,
   abstract: inlineSequence.optional(),
+  message: bigMessageProps.shape.message
+    .omit({ title: true, variant: true, abstract: true })
+    .optional(),
   blocks: blockSequence.optional(),
 }
 
@@ -72,6 +76,7 @@ export const Section = (props: SectionProps) => {
     sections,
     blocks,
     className,
+    message,
     as = 'section',
     level = 2,
   } = props
@@ -79,8 +84,25 @@ export const Section = (props: SectionProps) => {
     as,
     { className },
     <>
-      {title && <Heading paragraph={title} level={level} />}
-      {abstract && <Paragraph paragraph={abstract} />}
+      {(message && (
+        <BigMessage
+          {...{
+            message: {
+              ...message,
+              variant: 'big',
+              title,
+              abstract,
+              viewportHeight: false,
+            },
+            level,
+          }}
+        />
+      )) || (
+        <>
+          <Heading paragraph={title} level={level} />
+          {abstract && <Paragraph paragraph={abstract} />}
+        </>
+      )}
       {Sequence<BlockEntity>(blocks, Block)}
       {(sections || []).map((section, _s) => (
         <Section {...section} key={key(section)} level={level + 1} />

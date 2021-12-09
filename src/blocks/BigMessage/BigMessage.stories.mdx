@@ -9,7 +9,7 @@ import { themeArgType } from '../../lib'
     ...themeArgType,
     media: { table: { disable: true } },
     title: { table: { disable: true } },
-    description: { table: { disable: true } },
+    abstract: { table: { disable: true } },
     actions: { table: { disable: true } },
     viewportHeight: { table: { disable: true } },
     variant: { table: { disable: true } },
@@ -35,7 +35,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
       theme: 'light',
       media: { illustration: 'hello' },
       title: [{ text: 'Welcome to Contoso! Your opinion counts.' }],
-      description: [
+      abstract: [
         { text: 'Contoso is your tool to create, take, and manage polls.' },
       ],
       actions: {
@@ -58,7 +58,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
       theme: 'light',
       media: { illustration: 'hello' },
       title: [{ text: 'Welcome to your workspace, Daniela' }],
-      description: [
+      abstract: [
         {
           text: 'Access all your boards for photos, files, and tasks from a single place.',
         },
@@ -124,7 +124,7 @@ An empty state should provide clear direction on what the user can do to begin w
       theme: 'light',
       media: { illustration: 'empty' },
       title: [{ text: "Once you're assigned a task, you'll find it here" }],
-      description: [{ text: 'Until then, enjoy your time off.' }],
+      abstract: [{ text: 'Until then, enjoy your time off.' }],
     }}
   >
     {BigMessageTemplate.bind({})}
@@ -170,7 +170,7 @@ Error states come in many forms. Consider an appropriate illustration to ease th
     args={{
       theme: 'light',
       title: [{ text: 'Something went wrong' }],
-      description: [
+      abstract: [
         {
           text: 'Try searching with common words or checking for spelling errors',
         },

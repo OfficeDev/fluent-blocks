@@ -8,7 +8,7 @@ import { inlineSequence } from '../../inlines'
 import { ButtonProps, buttonProps } from '../../inputs'
 
 import { Figure } from '../Figure/Figure'
-import { Heading } from '../Heading/Heading'
+import { Heading, headingLevel } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
@@ -26,10 +26,11 @@ export const bigMessageProps = z.object({
     variant: z.literal('big'),
     media: mediaEntity.optional(),
     title: inlineSequence,
-    description: inlineSequence.optional(),
+    abstract: inlineSequence.optional(),
     actions: escaped(actionsBlockProps).optional(),
     viewportHeight: z.boolean().optional(),
   }),
+  level: headingLevel.default(2).optional(),
 })
 
 export type BigMessageProps = z.infer<typeof bigMessageProps>
@@ -61,7 +62,8 @@ function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
 
 export function BigMessage(props: BigMessageProps) {
   const {
-    message: { media, title, description, actions, viewportHeight = true },
+    message: { media, title, abstract, actions, viewportHeight = true },
+    level = 2,
   } = props
   const styles = useBigMessageStyles()
   return (
@@ -72,8 +74,8 @@ export function BigMessage(props: BigMessageProps) {
     >
       <div className={styles.container}>
         {media && <Figure media={media} variant="narrow" />}
-        <Heading level={3} paragraph={title} />
-        {description && <Paragraph paragraph={description} />}
+        <Heading level={level} paragraph={title} />
+        {abstract && <Paragraph paragraph={abstract} />}
         {actions && (renderIfEscape(actions) || <ActionsBlock {...actions} />)}
       </div>
     </div>

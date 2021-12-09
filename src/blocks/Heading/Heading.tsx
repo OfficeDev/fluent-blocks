@@ -7,8 +7,10 @@ import { propsElementUnion, useCommonStyles } from '../../lib'
 
 import { useParagraphStyles, paragraphProps } from '../Paragraph/Paragraph'
 
+export const headingLevel = z.number().max(6).min(1)
+
 export const headingProps = paragraphProps.extend({
-  level: z.number().max(6).min(1).default(6).optional(),
+  level: headingLevel.default(6).optional(),
 })
 export type HeadingProps = z.infer<typeof headingProps>
 

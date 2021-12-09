@@ -49,7 +49,7 @@ that time `View` will call its interaction callback with the update.
 
 <Canvas withSource="none">
   <Story
-    name="Demo"
+    name="Intro"
     args={{
       main: {
         title: [{ text: 'Fluent React Patterns' }],
@@ -130,7 +130,28 @@ that time `View` will call its interaction callback with the update.
   </Story>
 </Canvas>
 
-<ArgsTable story="Demo" />
+<ArgsTable story="Intro" />
+
+## Teams Toolkit tab
+
+Here’s `View` rendering the Teams Toolkit tab boilerplate experience
+
+<Canvas>
+  <Story
+    name="Teams Toolkit tab"
+    args={{
+      main: {
+        title: [{ text: 'Congratulations!' }],
+        abstract: [{ text: 'Your app is running in your local environment' }],
+        message: { media: { illustration: 'thanks' } },
+      },
+    }}
+  >
+    {seed(1234) || ViewTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props parsing & validation issues
 
 As a first-class pattern, `View` will parse the content props you give it
 and render any schema validation issues it encounters to the page in

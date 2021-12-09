@@ -8,7 +8,7 @@ const illustration = {
       <defs />
       <circle cx="61.5" cy="69.7" r="44.1" fill="#EDEBE9" />
       <radialGradient
-        id="a"
+        id="e"
         cx="52.3"
         cy="-167.6"
         r="15.5"
@@ -20,9 +20,8 @@ const illustration = {
         <stop offset=".8" stopColor="#d7b089" />
         <stop offset="1" stopColor="#e0bb95" />
       </radialGradient>
-      {/* todo: what's wrong with radialGradiant#a here? */}
       <path
-        fill="url(#a)"
+        fill="url(#e)"
         d="M62.1 30c-2.2-1.9-.3-6-3.3-10.5l-6.4.9-7-2.6-2.8 18s.8.3 6.3 3.7c2.6 1.7 5 1.7 6.8 1.8.8 0 21.7 12.1 21.7 12.1L86 41s-23.4-10.4-24-11z"
       />
       <g fill="#E0BB95">
@@ -37,7 +36,7 @@ const illustration = {
         d="M71.5 54.6l34 18.8a44.5 44.5 0 00-7.1-28l-23.7-9.6-3.2 18.8z"
       />
       <radialGradient
-        id="b"
+        id="f"
         cx="23.8"
         cy="-9.4"
         r="12.7"
@@ -50,7 +49,7 @@ const illustration = {
         <stop offset="1" stopColor="#bf8f68" />
       </radialGradient>
       <path
-        fill="url(#b)"
+        fill="url(#f)"
         d="M32.5 45.7c-3-2.5-.4-8.3-4.6-14.4L19 32.5 10 29 5.5 53.8s1-.4 8.8 4C18 60 22.7 60 25 60.2c1.1.1 7.4 3.7 13 7 5.5-3.3 7.6-7.8 9.5-14.1-6.2-2.9-14.4-6.6-15.1-7.3z"
       />
       <path
@@ -66,7 +65,7 @@ const illustration = {
       </g>
       <g>
         <linearGradient
-          id="c"
+          id="g"
           x1="39"
           x2="48.2"
           y1="52.8"
@@ -80,7 +79,7 @@ const illustration = {
           <stop offset="1" stopColor="#fad8b4" />
         </linearGradient>
         <path
-          fill="url(#c)"
+          fill="url(#g)"
           d="M66.6 101.5s-26.5-11.1-27-11.6c-2.4-2-.4-6.4-3.6-11L30.3 82l-6.7-4.8-2.7 19s.8.2 6.6 3.8c2.7 1.7 5.3 1.8 7.1 1.9l16.6 9.1c9.9 5.5 15.4-9.5 15.4-9.5z"
         />
         <path
@@ -175,7 +174,7 @@ const illustration = {
       <defs />
       <circle cx="59.5" cy="69.7" r="44.1" fill="#BDBDE6" opacity=".5" />
       <radialGradient
-        id="a"
+        id="h"
         cx="50.1"
         cy="-162.3"
         r="15.5"
@@ -188,7 +187,7 @@ const illustration = {
         <stop offset="1" stopColor="#e0bb95" />
       </radialGradient>
       <path
-        fill="url(#a)"
+        fill="url(#h)"
         d="M60 30c-2.2-1.9-.2-6-3.3-10.5l-6.4.9-7-2.6-2.7 18s.8.3 6.2 3.7c2.6 1.7 5.1 1.7 6.9 1.8.8 0 21.6 12.1 21.6 12.1L84.1 41S60.6 30.5 60 30z"
       />
       <g fill="#E0BB95">
@@ -204,7 +203,7 @@ const illustration = {
       />
       <g>
         <radialGradient
-          id="b"
+          id="i"
           cx="21.6"
           cy="-18.3"
           r="12.7"
@@ -217,7 +216,7 @@ const illustration = {
           <stop offset="1" stopColor="#bf8f68" />
         </radialGradient>
         <path
-          fill="url(#b)"
+          fill="url(#i)"
           d="M30.4 45.7c-3-2.5-.4-8.3-4.5-14.4l-9 1.2L8 29 3.6 53.8s1-.4 8.7 4C16 60 20.7 60 23.1 60.2c1 .1 7.4 3.7 13 7 5.5-3.3 7.5-7.8 9.5-14.1-6.2-2.9-14.4-6.6-15.2-7.3z"
         />
         <path
@@ -234,7 +233,7 @@ const illustration = {
       </g>
       <g>
         <linearGradient
-          id="c"
+          id="j"
           x1="36.4"
           x2="45.4"
           y1="43.7"
@@ -248,7 +247,7 @@ const illustration = {
           <stop offset="1" stopColor="#fad8b4" />
         </linearGradient>
         <path
-          fill="url(#c)"
+          fill="url(#j)"
           d="M64.6 101.5S38 90.4 37.5 89.9c-2.4-2-.3-6.4-3.5-11L28.3 82l-6.7-4.8-2.8 19s.9.2 6.6 3.8c2.7 1.7 5.4 1.8 7.2 1.9.4 0 19.2 10.6 19.2 10.6l12.8-11z"
         />
         <path
