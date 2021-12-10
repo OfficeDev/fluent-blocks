@@ -43,7 +43,7 @@ export const useTextBlockStyles = makeStyles({
   root: {
     lineHeight: 20 / 14,
     marginBlockStart: rem(4),
-    marginBlockEnd: rem(4),
+    marginBlockEnd: rem(8),
   },
   code: {
     padding: '.5rem 1rem',

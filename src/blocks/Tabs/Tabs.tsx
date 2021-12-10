@@ -7,6 +7,7 @@ import {
   escapeElement,
   invalidTabPanelItem,
   propsElementUnion,
+  rem,
   renderIfEscape,
   Sequence,
   useCommonStyles,
@@ -80,6 +81,8 @@ const useTabsStyles = makeStyles({
   tabList: {
     display: 'flex',
     flexFlow: 'row nowrap',
+    paddingBlockStart: rem(2),
+    paddingBlockEnd: rem(2),
   },
   tabListCenter: {
     justifyContent: 'center',
@@ -124,6 +127,9 @@ export const Tabs = ({
                 contextualVariant: 'tabs',
                 selected: activeTab === t,
                 controls: panelId(itemIds[t]),
+                onAction: () => {
+                  setActiveTab(t)
+                },
               }}
             />
           ))}
@@ -138,7 +144,9 @@ export const Tabs = ({
           aria-labelledby={tabId(itemIds[t])}
           {...(activeTab !== t && { hidden: true })}
         >
-          {Sequence<TabPanelItemEntity>(tabItem.panel, TabPanelItem)}
+          {Sequence<TabPanelItemEntity>(tabItem.panel, TabPanelItem, {
+            contextualVariant: 'tabPanel',
+          })}
         </div>
       ))}
     </div>

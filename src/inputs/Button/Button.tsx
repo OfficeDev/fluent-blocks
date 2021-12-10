@@ -1,12 +1,17 @@
 import { z } from 'zod'
 import { ReactElement, useCallback } from 'react'
-import { Button as FluentButton, makeStyles } from '@fluentui/react-components'
+import {
+  Button as FluentButton,
+  makeStyles,
+  mergeClasses as cx,
+} from '@fluentui/react-components'
 
 import {
   propsElementUnion,
   actionPayload,
   withActionHandler,
   useFluentPatternsContext,
+  rem,
 } from '../../lib'
 import { Icon, iconSize, iconVariant } from '../../inlines'
 
@@ -56,6 +61,19 @@ const useButtonStyles = makeStyles({
     margin: 'inherit',
     flexShrink: 0,
   },
+  tabSelected: (theme) => ({
+    position: 'relative',
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      insetBlockEnd: 0,
+      insetInlineStart: rem(8),
+      insetInlineEnd: rem(8),
+      height: rem(2),
+      borderRadius: theme.borderRadiusCircular,
+      backgroundColor: theme.colorBrandForeground1,
+    },
+  }),
 })
 
 export const Button = ({
@@ -80,21 +98,30 @@ export const Button = ({
     context.onAction(payload)
   }, [onAction, actionId])
 
-  const styles = useButtonStyles()
+  const buttonStyles = useButtonStyles()
 
   return (
     <FluentButton
       {...(contextualVariant !== 'tabs' && { block: true })}
       aria-label={label}
       appearance={variant}
-      className={styles.root}
+      className={cx(
+        buttonStyles.root,
+        contextualVariant === 'tabs' && selected && buttonStyles.tabSelected
+      )}
       {...{ iconOnly, iconPosition }}
       {...(icon && {
         icon: (
           <Icon
             icon={icon}
             size={iconSize || 24}
-            variant={iconVariant || 'outline'}
+            variant={
+              contextualVariant === 'tabs'
+                ? selected
+                  ? 'filled'
+                  : 'outline'
+                : iconVariant || 'outline'
+            }
           />
         ),
       })}
