@@ -197,6 +197,55 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                           },
                         ],
                       },
+                      {
+                        inputs: [
+                          {
+                            type: 'button',
+                            actionId: 'auth',
+                            label: 'Authorize',
+                            variant: 'primary',
+                          },
+                        ],
+                        variant: 'narrow-block',
+                      },
+                    ],
+                  },
+                  {
+                    tab: { label: '2. Provision and deploy to the cloud' },
+                    panel: [
+                      {
+                        paragraph: [{ text: 'Deploy to the cloud' }],
+                        level: 2,
+                      },
+                      {
+                        paragraph: [
+                          {
+                            text: 'Before publishing your app to Teams App Catalog, you may want to provision and deploy your app’s resources to the cloud to make sure your app will be running smoothly!',
+                          },
+                        ],
+                      },
+                      {
+                        paragraph: [
+                          {
+                            text: 'To provision your resources, you can either use our CLI command ',
+                          },
+                          { text: 'teamsfx provision', variant: 'code' },
+                          {
+                            text: ' or apply “Teams: Provision in the cloud” in Command palette.',
+                          },
+                        ],
+                      },
+                      {
+                        paragraph: [
+                          {
+                            text: 'To deploy your app, you can either use our CLI command ',
+                          },
+                          { text: 'teamsfx deploy', variant: 'code' },
+                          {
+                            text: ' or apply “Teams: Deploy to the cloud” in Command palette.',
+                          },
+                        ],
+                      },
                     ],
                   },
                 ],

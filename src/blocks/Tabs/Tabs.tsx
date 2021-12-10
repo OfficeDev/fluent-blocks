@@ -5,7 +5,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import {
   escapeElement,
-  invalidCardContentItem,
+  invalidTabPanelItem,
   propsElementUnion,
   renderIfEscape,
   Sequence,
@@ -19,6 +19,10 @@ import {
   paragraphPropsOrElement,
   renderIfParagraph,
 } from '../Paragraph/Paragraph'
+import {
+  renderIfShortInputs,
+  shortInputsPropsOrElement,
+} from '../ShortInputs/ShortInputs'
 
 export const tabProps = buttonProps.omit({
   type: true,
@@ -30,9 +34,10 @@ export const tabProps = buttonProps.omit({
 })
 
 export const tabPanelItemEntity = z.union([
-  figurePropsOrElement,
   headingPropsOrElement,
   paragraphPropsOrElement,
+  figurePropsOrElement,
+  shortInputsPropsOrElement,
   escapeElement,
 ])
 export type TabPanelItemEntity = z.infer<typeof tabPanelItemEntity>
@@ -43,9 +48,9 @@ const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfHeading(o) ||
   renderIfParagraph(o) ||
   renderIfFigure(o) ||
-  renderIfTabs(o) ||
+  renderIfShortInputs(o) ||
   renderIfEscape(o) ||
-  invalidCardContentItem(o)
+  invalidTabPanelItem(o)
 
 export const tabsItemProps = z.object({
   tab: tabProps,
