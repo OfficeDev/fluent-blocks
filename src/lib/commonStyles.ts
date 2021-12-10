@@ -3,27 +3,40 @@ import { rem } from './units'
 
 export const useCommonStyles = makeStyles({
   mainContentWidth: {
-    maxWidth: rem(600),
+    maxWidth: rem(572),
   },
   narrowWidth: {
     maxWidth: rem(280),
   },
   centerBlock: {
-    marginInlineStart: 'auto',
-    marginInlineEnd: 'auto',
+    marginInlineStart: 'var(--content-margin-inline-start)',
+    marginInlineEnd: 'var(--content-margin-inline-end)',
   },
   baseSurface: (theme) => ({
     '--surface-background': theme.colorNeutralBackground3,
     '--surface-foreground': theme.colorNeutralForeground3,
     '--input-background': theme.colorNeutralBackground1,
     '--content-elevation': theme.shadow4,
+    '--content-margin-inline-start': 'auto',
+    '--content-margin-inline-end': 'auto',
   }),
   elevatedSurface: (theme) => ({
     '--surface-background': theme.colorNeutralBackground1,
     '--surface-foreground': theme.colorNeutralForeground1,
     '--input-background': theme.colorNeutralBackground3,
     '--content-elevation': 'none',
+    '--content-margin-inline-start': 0,
+    '--content-margin-inline-end': 0,
   }),
+  visuallyHidden: {
+    clipPath: 'inset(100%)',
+    clip: 'rect(1px, 1px, 1px, 1px)',
+    height: '1px',
+    overflow: 'hidden',
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    width: '1px',
+  },
 })
 
 export const useTextBlockStyles = makeStyles({
@@ -31,6 +44,9 @@ export const useTextBlockStyles = makeStyles({
     lineHeight: 20 / 14,
     marginBlockStart: rem(4),
     marginBlockEnd: rem(4),
+  },
+  code: {
+    padding: '.5rem 1rem',
   },
   heading: (theme) => ({
     color: theme.colorNeutralForeground1, // always this, no matter what surface

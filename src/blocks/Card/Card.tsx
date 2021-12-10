@@ -61,14 +61,15 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   return (
     <FluentCard
       className={cx(
-        commonStyles.elevatedSurface,
         contextualVariant === 'block' && commonStyles.mainContentWidth,
         contextualVariant === 'block' && commonStyles.centerBlock
       )}
     >
-      {Sequence<CardContentItemEntity>(card, CardContentItem, {
-        contextualVariant: 'card',
-      })}
+      <div className={commonStyles.elevatedSurface}>
+        {Sequence<CardContentItemEntity>(card, CardContentItem, {
+          contextualVariant: 'card',
+        })}
+      </div>
     </FluentCard>
   )
 }

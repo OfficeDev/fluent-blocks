@@ -136,8 +136,6 @@ that time `View` will call its interaction callback with the update.
 
 Here’s `View` rendering the Teams Toolkit tab boilerplate experience
 
-Also add {code: 'const credential = new TeamsUserCredential();\nconst user = await credential.getUserInfo();'}
-
 <Canvas>
   <Story
     name="Teams Toolkit tab"
@@ -176,6 +174,17 @@ Also add {code: 'const credential = new TeamsUserCredential();\nconst user = awa
                             text: 'Access basic information about the user like this:',
                           },
                         ],
+                      },
+                      {
+                        caption: [
+                          {
+                            text: 'Javascript code for accessing the user’s basic information',
+                          },
+                        ],
+                        captionHidden: true,
+                        media: {
+                          code: 'const credential = new TeamsUserCredential();\nconst user = await credential.getUserInfo();',
+                        },
                       },
                       {
                         paragraph: [{ text: 'Get the user’s profile photo' }],

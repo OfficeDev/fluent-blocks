@@ -22,7 +22,7 @@ export const Text = (props: TextProps) => {
   const textStyles = useTextStyles()
   switch (variant) {
     case 'code':
-      return <span className={textStyles.code}>{text}</span>
+      return <code className={textStyles.code}>{text}</code>
     default:
       return <>{text}</>
   }

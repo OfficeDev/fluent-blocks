@@ -32,8 +32,8 @@ export const Paragraph = (props: ParagraphProps) => {
     <p
       className={cx(
         textStyles.root,
+        commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        contextualVariant === 'block' && commonStyles.centerBlock,
         contextualVariant === 'card' && textStyles.cardSpacing
       )}
     >

@@ -27,8 +27,8 @@ export const Heading = (props: HeadingProps) => {
 
   const baseStyles = cx(
     textStyles.root,
+    commonStyles.centerBlock,
     commonStyles.mainContentWidth,
-    contextualVariant === 'block' && commonStyles.centerBlock,
     textStyles.heading
   )
 

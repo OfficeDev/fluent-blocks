@@ -71,8 +71,8 @@ export const ShortInputs = (props: ShortInputsProps) => {
   return (
     <div
       className={cx(
-        commonStyles.mainContentWidth,
         commonStyles.centerBlock,
+        commonStyles.mainContentWidth,
         styles.root
       )}
     >
