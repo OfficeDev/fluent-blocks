@@ -54,6 +54,7 @@ export type ButtonProps = z.infer<typeof buttonProps>
 const useButtonStyles = makeStyles({
   root: {
     margin: 'inherit',
+    flexShrink: 0,
   },
 })
 
@@ -83,7 +84,7 @@ export const Button = ({
 
   return (
     <FluentButton
-      block
+      {...(contextualVariant !== 'tabs' && { block: true })}
       aria-label={label}
       appearance={variant}
       className={styles.root}

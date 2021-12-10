@@ -136,6 +136,8 @@ that time `View` will call its interaction callback with the update.
 
 Here’s `View` rendering the Teams Toolkit tab boilerplate experience
 
+Also add {code: 'const credential = new TeamsUserCredential();\nconst user = await credential.getUserInfo();'}
+
 <Canvas>
   <Story
     name="Teams Toolkit tab"
@@ -144,6 +146,57 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
         title: [{ text: 'Congratulations!' }],
         abstract: [{ text: 'Your app is running in your local environment' }],
         message: { media: { illustration: 'thanks' } },
+        blocks: [
+          {
+            card: [
+              {
+                tabs: [
+                  {
+                    tab: { label: '1. Build your app locally' },
+                    panel: [
+                      { paragraph: [{ text: 'Change this code' }], level: 2 },
+                      {
+                        paragraph: [
+                          { text: 'The front end is a ' },
+                          { text: 'create-react-app', variant: 'code' },
+                          { text: '. The entry point is ' },
+                          { text: 'tabs/src/index.tsx', variant: 'code' },
+                          {
+                            text: '. Just save any file and this page will reload automatically.',
+                          },
+                        ],
+                      },
+                      {
+                        paragraph: [{ text: 'Get the current user' }],
+                        level: 2,
+                      },
+                      {
+                        paragraph: [
+                          {
+                            text: 'Access basic information about the user like this:',
+                          },
+                        ],
+                      },
+                      {
+                        paragraph: [{ text: 'Get the user’s profile photo' }],
+                        level: 2,
+                      },
+                      {
+                        paragraph: [
+                          {
+                            text: 'Click below to authorize this app to read your profile photo using Microsoft Graph.',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+                label: 'Steps to get started',
+                tabListVariant: 'center',
+              },
+            ],
+          },
+        ],
       },
     }}
   >

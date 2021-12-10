@@ -4,6 +4,6 @@ import { Main } from '../../surfaces'
 
 export const Tabs = ({ theme, ...props }: TabsProps & { theme: Theme }) => (
   <FluentPatternsProvider theme={theme}>
-    <Main title={[{ text: ' ' }]} blocks={[props]} />
+    <Main title={[{ text: ' ' }]} blocks={[{ card: [props] }]} />
   </FluentPatternsProvider>
 )
