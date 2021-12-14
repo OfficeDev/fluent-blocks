@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
 
-import { InlineContent, inlineSequence } from '../../inlines'
+import { InlineContent, inlineSequenceOrString } from '../../inlines'
 import {
   propsElementUnion,
   useCommonStyles,
@@ -11,7 +11,7 @@ import {
 
 export const paragraphProps = z
   .object({
-    paragraph: inlineSequence,
+    paragraph: inlineSequenceOrString,
   })
   .merge(
     z

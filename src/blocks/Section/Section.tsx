@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { createElement } from 'react'
 
 import { key, Sequence } from '../../lib'
-import { inlineSequence } from '../../inlines'
+import { inlineSequenceOrString } from '../../inlines'
 
 import { Block, BlockEntity, blockSequence } from '../Block/Block'
 import { Paragraph } from '../Paragraph/Paragraph'
@@ -10,8 +10,8 @@ import { Heading } from '../Heading/Heading'
 import { BigMessage, bigMessageProps } from '../BigMessage/BigMessage'
 
 const nonRecursiveSectionContentProps = {
-  title: inlineSequence,
-  abstract: inlineSequence.optional(),
+  title: inlineSequenceOrString,
+  abstract: inlineSequenceOrString.optional(),
   message: bigMessageProps.shape.message
     .omit({ title: true, variant: true, abstract: true })
     .optional(),

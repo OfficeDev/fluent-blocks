@@ -3,13 +3,13 @@ import uniqueId from 'lodash/uniqueId'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { inlineSequence, InlineContent } from '../../inlines'
+import { inlineSequenceOrString, InlineContent } from '../../inlines'
 import { mediaEntity, Media } from '../../media'
 import { propsElementUnion, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
   media: mediaEntity,
-  caption: inlineSequence.optional(),
+  caption: inlineSequenceOrString.optional(),
   captionHidden: z.boolean().optional(),
   variant: z
     .union([
