@@ -143,14 +143,14 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
       main: {
         title: 'Congratulations!',
         abstract: 'Your app is running in your local environment',
-        message: { media: { illustration: 'thanks' } },
+        message: { media: { illustration: 'hello' } },
         blocks: [
           {
             card: [
               {
                 tabs: [
                   {
-                    tab: { label: '1. Build your app locally' },
+                    tab: { label: '1. Build your app locally' },
                     panel: [
                       { paragraph: 'Change this code', level: 2 },
                       {
@@ -200,7 +200,7 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                     ],
                   },
                   {
-                    tab: { label: '2. Provision and deploy to the cloud' },
+                    tab: { label: '2. Provision & deploy to the cloud' },
                     panel: [
                       {
                         paragraph: 'Deploy to the cloud',
@@ -232,6 +232,29 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                             'https://i.ibb.co/LdW9rHH/deploy.png',
                           label:
                             'Screenshot of deploying in Visual Studio Code.',
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    tab: { label: '3. Publish to Teams' },
+                    panel: [
+                      {
+                        paragraph: 'Publish to Teams',
+                        level: 2,
+                      },
+                      {
+                        paragraph:
+                          'Your app’s resources and infrastructure are deployed and ready? Publish and register your app to Teams app catalog to share your app with others in your organization!',
+                      },
+                      {
+                        media: {
+                          light: 'https://i.ibb.co/pj5VzYQ/publish.png',
+                          dark: 'https://i.ibb.co/pj5VzYQ/publish.png',
+                          'high-contrast':
+                            'https://i.ibb.co/pj5VzYQ/publish.png',
+                          label:
+                            'Screenshot of publishing in Visual Studio Code.',
                         },
                       },
                     ],

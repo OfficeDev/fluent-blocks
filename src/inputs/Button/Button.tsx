@@ -61,17 +61,55 @@ const useButtonStyles = makeStyles({
     margin: 'inherit',
     flexShrink: 0,
   },
-  tabSelected: (theme) => ({
+  tab: (theme) => ({
     position: 'relative',
-    '&::after': {
+    fontWeight: theme.fontWeightRegular,
+    color: theme.colorNeutralForeground2,
+    transition: 'color .2s linear',
+    '&:after': {
       content: '""',
       position: 'absolute',
       insetBlockEnd: 0,
-      insetInlineStart: rem(8),
-      insetInlineEnd: rem(8),
+      insetInlineStart: rem(12),
+      insetInlineEnd: rem(12),
       height: rem(2),
       borderRadius: theme.borderRadiusCircular,
+      backgroundColor: theme.colorTransparentBackground,
+      transition:
+        'background-color .2s linear, inset-inline-start .2s ease-in-out, inset-inline-end .2s ease-in-out',
+    },
+    '&:hover': {
+      color: theme.colorNeutralForeground1,
+      '&:after': {
+        backgroundColor: theme.colorNeutralStroke1,
+      },
+    },
+    '&:active': {
+      color: 'inherit',
+      '&:after': {
+        backgroundColor: theme.colorBrandForeground1,
+      },
+    },
+  }),
+  tabSelected: (theme) => ({
+    fontWeight: theme.fontWeightSemibold,
+    '&:after': {
       backgroundColor: theme.colorBrandForeground1,
+    },
+    '&:hover': {
+      '&:after': {
+        backgroundColor: theme.colorBrandForeground1,
+        insetInlineStart: rem(4),
+        insetInlineEnd: rem(4),
+      },
+    },
+    '&:active': {
+      color: 'inherit',
+      '&:after': {
+        insetInlineStart: rem(4),
+        insetInlineEnd: rem(4),
+        backgroundColor: theme.colorCompoundBrandStrokePressed,
+      },
     },
   }),
 })
@@ -107,6 +145,7 @@ export const Button = ({
       appearance={variant}
       className={cx(
         buttonStyles.root,
+        contextualVariant === 'tabs' && buttonStyles.tab,
         contextualVariant === 'tabs' && selected && buttonStyles.tabSelected
       )}
       {...{ iconOnly, iconPosition }}
