@@ -10,15 +10,35 @@ export default {
 
 const ParagraphTemplate = (props: ParagraphProps) => <Paragraph {...props} />
 
-export const ParagraphJsonTest: typeof ParagraphTemplate & {
+export const ParagraphJson1Test: typeof ParagraphTemplate & {
   args?: ParagraphProps
   parameters?: Parameters
 } = ParagraphTemplate.bind({})
 
-ParagraphJsonTest.args = {
+ParagraphJson1Test.args = {
   paragraph: [{ text: '386b63ae-db03-41c3-b40b-bb4658cd1dfc' }],
 }
-ParagraphJsonTest.parameters = { chromatic: { disableSnapshot: true } }
+ParagraphJson1Test.parameters = { chromatic: { disableSnapshot: true } }
+
+export const ParagraphJson2Test: typeof ParagraphTemplate & {
+  args?: ParagraphProps
+  parameters?: Parameters
+} = ParagraphTemplate.bind({})
+
+ParagraphJson2Test.args = {
+  paragraph: ['0a874649-8283-4300-8b7e-3be36da8ae47'],
+}
+ParagraphJson2Test.parameters = { chromatic: { disableSnapshot: true } }
+
+export const ParagraphJson3Test: typeof ParagraphTemplate & {
+  args?: ParagraphProps
+  parameters?: Parameters
+} = ParagraphTemplate.bind({})
+
+ParagraphJson3Test.args = {
+  paragraph: 'e153a016-f0ce-4e1c-8f70-d2216c8de26f',
+}
+ParagraphJson3Test.parameters = { chromatic: { disableSnapshot: true } }
 
 export const ParagraphJsxTest: typeof ParagraphTemplate & {
   args?: ParagraphProps

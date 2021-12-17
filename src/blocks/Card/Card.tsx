@@ -3,6 +3,7 @@ import { ReactElement } from 'react'
 // todo: fix this import when Card is released directly from @fluentui/react-components
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Card as FluentCard } from '@fluentui/react-card'
+import { mergeClasses as cx } from '@fluentui/react-components'
 
 import {
   escapeElement,
@@ -10,18 +11,21 @@ import {
   propsElementUnion,
   renderIfEscape,
   Sequence,
+  useCommonStyles,
 } from '../../lib'
 import {
   paragraphPropsOrElement,
   renderIfParagraph,
 } from '../Paragraph/Paragraph'
-import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
 import { headingPropsOrElement, renderIfHeading } from '../Heading/Heading'
+import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
+import { tabsPropsOrElement, renderIfTabs } from '../Tabs/Tabs'
 
 export const cardContentItemEntity = z.union([
   headingPropsOrElement,
   paragraphPropsOrElement,
   figurePropsOrElement,
+  tabsPropsOrElement,
   escapeElement,
 ])
 export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>
@@ -29,25 +33,46 @@ export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>
 export const cardContentItemSequence = z.array(cardContentItemEntity)
 export type CardContentItemSequence = z.infer<typeof cardContentItemSequence>
 
-export const cardProps = z.object({
-  card: cardContentItemSequence,
-})
+export const cardProps = z
+  .object({
+    card: cardContentItemSequence,
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('block'), z.literal('layout')])
+          .default('block'),
+      })
+      .partial()
+  )
 export type CardProps = z.infer<typeof cardProps>
 
 const CardContentItem = (o: CardContentItemEntity) =>
   renderIfHeading(o) ||
   renderIfParagraph(o) ||
   renderIfFigure(o) ||
+  renderIfTabs(o) ||
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
-export const Card = ({ card }: CardProps) => (
-  <FluentCard>
-    {Sequence<CardContentItemEntity>(card, CardContentItem, {
-      contextualVariant: 'card',
-    })}
-  </FluentCard>
-)
+export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
+  const commonStyles = useCommonStyles()
+  return (
+    <FluentCard
+      className={cx(
+        contextualVariant === 'block' && commonStyles.mainContentWidth,
+        contextualVariant === 'block' && commonStyles.centerBlock
+      )}
+    >
+      <div className={commonStyles.elevatedSurface}>
+        {Sequence<CardContentItemEntity>(card, CardContentItem, {
+          contextualVariant: 'card',
+        })}
+      </div>
+    </FluentCard>
+  )
+}
 
 function isCardProps(o: any): o is CardProps {
   return 'card' in o

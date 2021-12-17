@@ -6,7 +6,6 @@ import {
   escapeElement,
   invalidLayoutItem,
   propsElementUnion,
-  rem,
   renderIfEscape,
   Sequence,
 } from '../../lib'
@@ -55,7 +54,13 @@ export const Layout = ({ layout: { variant, items } }: LayoutProps) => {
   const styles = useLayoutStyles()
   return (
     <section className={cx(styles.root, styles[variant])}>
-      {<>{Sequence<LayoutItemEntity>(items, LayoutItem)}</>}
+      {
+        <>
+          {Sequence<LayoutItemEntity>(items, LayoutItem, {
+            contextualVariant: 'layout',
+          })}
+        </>
+      }
     </section>
   )
 }

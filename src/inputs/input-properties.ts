@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { inlineSequence } from '../inlines'
+import { inlineSequenceOrString } from '../inlines'
 
 export const inputProps = z.object({
-  label: inlineSequence,
+  label: inlineSequenceOrString,
   actionId: z.string(),
   required: z.boolean().optional(),
 })
@@ -24,5 +24,5 @@ export const textInputProps = inputPropsWithInitialStringValue.merge(
 
 export const labeledValueProps = z.object({
   value: z.string().nonempty(),
-  label: inlineSequence,
+  label: inlineSequenceOrString,
 })

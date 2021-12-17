@@ -1,7 +1,7 @@
 import { LayoutProps } from './Layout'
 import { FluentPatternsProvider, Theme } from '../../lib'
 import { Main } from '../../surfaces'
-import { InlineSequence } from '../../inlines'
+import { InlineSequenceOrString } from '../../inlines'
 
 export const Layout = ({
   theme,
@@ -10,7 +10,7 @@ export const Layout = ({
   <FluentPatternsProvider theme={theme} dir="ltr">
     <Main
       blocks={[{ layout: props }]}
-      title={null as unknown as InlineSequence}
+      title={null as unknown as InlineSequenceOrString}
     />
   </FluentPatternsProvider>
 )

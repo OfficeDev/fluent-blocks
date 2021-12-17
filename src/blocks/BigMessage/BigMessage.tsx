@@ -4,7 +4,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { escaped, renderIfEscape, rem, propsElementUnion } from '../../lib'
 import { mediaEntity } from '../../media'
-import { inlineSequence } from '../../inlines'
+import { inlineSequenceOrString } from '../../inlines'
 import { ButtonProps, buttonProps } from '../../inputs'
 
 import { Figure } from '../Figure/Figure'
@@ -25,8 +25,8 @@ export const bigMessageProps = z.object({
   message: z.object({
     variant: z.literal('big'),
     media: mediaEntity.optional(),
-    title: inlineSequence,
-    abstract: inlineSequence.optional(),
+    title: inlineSequenceOrString,
+    abstract: inlineSequenceOrString.optional(),
     actions: escaped(actionsBlockProps).optional(),
     viewportHeight: z.boolean().optional(),
   }),

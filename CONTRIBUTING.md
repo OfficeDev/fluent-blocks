@@ -28,7 +28,18 @@ To run tests also starting Storybook as needed (this will fail if Storybook is a
 $ yarn test
 ```
 
-When implementing a new pattern, be sure to:
+## Notes on naming
+
+Zod types and TypeScript inferences should have the same name except for the case of the first letter, e.g.:
+
+```ts
+const fooProps = z.object({bar: z.number()})
+type FooProps = z.infer<typeof fooProps>
+```
+
+A union of specific `…PropsOrElement` types characterizing a certain class is called an `…Entity`, e.g. `InlineEntity` includes both text and icon elements. An ordered set of entities is called a `…Sequence`, e.g. `InlineSequence`.
+
+## When implementing a new pattern, be sure to:
 
 1. Create/update all relevant Zod schemas and TypeScript types.
    - The Zod schema and TypeScript types should be lowercase and uppercase respectively, e.g. `textPropsOrElement` and `TextPropsOrElement`.

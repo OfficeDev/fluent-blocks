@@ -1,14 +1,12 @@
-import { makeStyles } from '@fluentui/react-components'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { rem } from '../../lib'
+import { rem, useCommonStyles } from '../../lib'
 
 import { Section, SectionContentProps } from '../../blocks'
 
 const useMainSectionStyles = makeStyles({
   root: (theme) => ({
     overflow: 'hidden',
-    '--surface-background': theme.colorNeutralBackground3,
-    '--surface-foreground': theme.colorNeutralForeground3,
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     paddingBlockEnd: rem(44),
@@ -18,6 +16,14 @@ const useMainSectionStyles = makeStyles({
 })
 
 export const Main = (props: SectionContentProps) => {
-  const styles = useMainSectionStyles()
-  return <Section {...props} as="main" level={1} className={styles.root} />
+  const mainStyles = useMainSectionStyles()
+  const commonStyles = useCommonStyles()
+  return (
+    <Section
+      {...props}
+      as="main"
+      level={1}
+      className={cx(commonStyles.baseSurface, mainStyles.root)}
+    />
+  )
 }
