@@ -21,10 +21,14 @@ import {
   bigMessagePropsOrElement,
   renderIfBigMessage,
 } from '../BigMessage/BigMessage'
+import { layoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
+import { cardPropsOrElement, renderIfCard } from '../Card/Card'
 
 export const blockEntity = z.union([
   paragraphPropsOrElement,
+  layoutPropsOrElement,
   figurePropsOrElement,
+  cardPropsOrElement,
   shortInputsPropsOrElement,
   multilineTextInputPropsOrElement,
   radioGroupPropsOrElement,
@@ -41,7 +45,9 @@ export type BlockSequence = z.infer<typeof blockSequence>
  */
 export const Block = (o: BlockEntity) =>
   renderIfParagraph(o) ||
+  renderIfLayout(o) ||
   renderIfFigure(o) ||
+  renderIfCard(o) ||
   renderIfShortInputs(o) ||
   renderIfMultilineTextInput(o) ||
   renderIfRadioGroup(o) ||

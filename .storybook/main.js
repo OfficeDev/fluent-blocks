@@ -17,5 +17,11 @@ module.exports = {
       tsconfigPath: tsconfig,
     },
   },
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    '@storybook/addon-links',
+    {
+      name: '@storybook/addon-essentials',
+      options: { backgrounds: false, outline: false },
+    },
+  ],
 }

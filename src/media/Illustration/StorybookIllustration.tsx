@@ -1,16 +1,14 @@
-import { BigMessageProps } from './BigMessage'
+import { IllustrationProps } from './Illustration'
 import { FluentPatternsProvider, Theme } from '../../lib'
 import { Main } from '../../surfaces'
 
-export const BigMessage = ({
+export const Illustration = ({
   theme,
   ...props
-}: BigMessageProps['message'] & { theme: Theme }) => (
+}: IllustrationProps & { theme: Theme }) => (
   <FluentPatternsProvider theme={theme}>
     <Main
-      blocks={[
-        { message: { ...props, variant: 'big', viewportHeight: false } },
-      ]}
+      blocks={[{ media: props, variant: 'narrow' }]}
       title={[{ text: ' ' }]}
     />
   </FluentPatternsProvider>

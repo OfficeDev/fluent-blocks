@@ -1,7 +1,14 @@
-import { Meta, Canvas, Story } from '@storybook/addon-docs'
-import { Illustration } from './Illustration'
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
+import { Illustration } from './StorybookIllustration'
+import { themeArgType } from '../../lib'
 
-<Meta title="Media/Illustrations" component={Illustration} />
+<Meta
+  title="Media/Illustrations"
+  component={Illustration}
+  argTypes={{ ...themeArgType, illustration: { table: { disable: true } } }}
+/>
+
+export const IllustrationTemplate = (props) => <Illustration {...props} />
 
 # Illustration
 
@@ -9,40 +16,50 @@ This library comes with a set of built-in illustrations you can simply reference
 
 ### Default:
 
-<Canvas>
-  <Story name="Default">
-    <Illustration illustration="default" />
+<Canvas withSource="none">
+  <Story name="Default" args={{ theme: 'light', illustration: 'default' }}>
+    {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Default" />
 
 ### Empty:
 
-<Canvas>
-  <Story name="Empty">
-    <Illustration illustration="empty" />
+<Canvas withSource="none">
+  <Story name="Empty" args={{ theme: 'light', illustration: 'empty' }}>
+    {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Empty" />
 
 ### Error:
 
-<Canvas>
-  <Story name="Error">
-    <Illustration illustration="error" />
+<Canvas withSource="none">
+  <Story name="Error" args={{ theme: 'light', illustration: 'error' }}>
+    {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Error" />
 
 ### Hello:
 
-<Canvas>
-  <Story name="Hello">
-    <Illustration illustration="hello" />
+<Canvas withSource="none">
+  <Story name="Hello" args={{ theme: 'light', illustration: 'hello' }}>
+    {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Hello" />
 
 ### Thanks:
 
-<Canvas>
-  <Story name="Thanks">
-    <Illustration illustration="thanks" />
+<Canvas withSource="none">
+  <Story name="Thanks" args={{ theme: 'light', illustration: 'thanks' }}>
+    {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Thanks" />

@@ -25,7 +25,11 @@ export const MultilineTextInput = (props: MultilineTextInputProps) => {
   return (
     <Placeholder
       label="Multiline text input"
-      className={cx(commonStyles.mainContentWidth, styles.root)}
+      className={cx(
+        commonStyles.centerBlock,
+        commonStyles.mainContentWidth,
+        styles.root
+      )}
     />
   )
 }

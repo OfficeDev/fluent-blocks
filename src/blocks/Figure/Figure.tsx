@@ -1,14 +1,16 @@
 import { z } from 'zod'
+import uniqueId from 'lodash/uniqueId'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { inlineSequence, InlineContent } from '../../inlines'
+import { inlineSequenceOrString, InlineContent } from '../../inlines'
 import { mediaEntity, Media } from '../../media'
-import { propsElementUnion, rem, useCommonStyles } from '../../lib'
+import { propsElementUnion, useCommonStyles } from '../../lib'
 
 export const figureProps = z.object({
   media: mediaEntity,
-  caption: inlineSequence.optional(),
+  caption: inlineSequenceOrString.optional(),
+  captionHidden: z.boolean().optional(),
   variant: z
     .union([
       z.literal('viewportWidth'),
@@ -21,31 +23,40 @@ export const figureProps = z.object({
 export type FigureProps = z.infer<typeof figureProps>
 
 const useFigureStyles = makeStyles({
-  media: {
+  root: {
     marginInlineStart: 0,
     marginInlineEnd: 0,
-  },
-  mediaPlaceholder: {
-    minHeight: '8rem',
   },
 })
 
 export const Figure = (props: FigureProps) => {
-  const styles = useFigureStyles()
+  const figureStyles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption, variant = 'viewportWidth' } = props
+  const { caption, captionHidden, variant = 'viewportWidth' } = props
+  const labelId = caption && uniqueId('figcaption')
   return (
-    <figure>
+    <figure
+      className={cx(figureStyles.root)}
+      {...(caption && { 'aria-labelledby': labelId })}
+    >
       <div
         className={cx(
+          commonStyles.centerBlock,
           variant === 'textWidth' && commonStyles.mainContentWidth,
           variant === 'narrow' && commonStyles.narrowWidth
         )}
       >
-        <Media {...props.media} />
+        {Media(props.media)}
       </div>
       {caption && (
-        <figcaption className={commonStyles.mainContentWidth}>
+        <figcaption
+          id={labelId}
+          className={cx(
+            commonStyles.centerBlock,
+            commonStyles.mainContentWidth,
+            captionHidden && commonStyles.visuallyHidden
+          )}
+        >
           <InlineContent inlines={caption} />
         </figcaption>
       )}

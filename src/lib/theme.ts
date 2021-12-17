@@ -26,3 +26,14 @@ export const getTeamsTheme = (theme: Theme) =>
     dark: teamsDarkTheme,
     ['high-contrast']: teamsHighContrastTheme,
   }[theme] ?? teamsLightTheme)
+
+export const themeArgType = {
+  theme: {
+    name: 'Theme',
+    control: {
+      type: 'inline-radio',
+      labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
+    },
+    table: { type: { summary: 'Theme' } },
+  },
+}

@@ -119,7 +119,7 @@ const illustration = {
       />
       <path fill="#E0BB95" d="M228.6 87.4l3.3 1.2a1.8 1.8 0 00-3.3-1.2z" />
       <radialGradient
-        id="a"
+        id="b"
         cx="-768.2"
         cy="-34.5"
         r="6.6"
@@ -131,7 +131,7 @@ const illustration = {
         <stop offset="1" stopColor="#fff" stopOpacity="0" />
       </radialGradient>
       <path
-        fill="url(#a)"
+        fill="url(#b)"
         d="M235.3 79l-3.5 9.6 3.4 1.2a8 8 0 009 10.2c.1-.4-2-5.4.9-12.4l-9.8-8.5z"
       />
       <path fill="#E0BB95" d="M231.9 88.6l3.3 1.2a1.8 1.8 0 00-3.3-1.2z" />

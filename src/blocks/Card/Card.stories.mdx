@@ -1,0 +1,82 @@
+import { fake, seed } from 'faker/locale/en_US'
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+
+import { BlockCard, LayoutCard } from './StorybookCard'
+import { themeArgType } from '../../lib'
+
+<Meta
+  title="Blocks/Card"
+  component={BlockCard}
+  argTypes={{
+    ...themeArgType,
+    card: {
+      name: 'Card',
+      control: {
+        type: 'object',
+      },
+      table: {
+        type: {
+          summary: 'CardContentItemSequence',
+        },
+      },
+    },
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const CardBlockTemplate = (props) => <BlockCard {...props} />
+export const CardLayoutTemplate = (props) => <LayoutCard {...props} />
+
+# Card
+
+Cards are used to elevate and encapsulate related content.
+
+While `Card` elements are probably most often used as content items of a
+`Layout` element to goup content as items in a list, the pattern can also be
+used to group content as a regular Block element as well.
+
+### As a Block element
+
+<Canvas withSource="none">
+  <Story
+    name="Card as a Block"
+    args={{
+      theme: 'light',
+      card: [
+        {
+          paragraph: [{ text: 'This is a Card as a regular Block element.' }],
+          level: 1,
+        },
+        { paragraph: [{ text: fake('{{lorem.paragraph}}') }] },
+      ],
+    }}
+  >
+    {seed(1234) || CardBlockTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Card as a Block" />
+
+### As a Layout item
+
+<Canvas withSource="none">
+  <Story
+    name="Card as a Layout item"
+    args={{
+      theme: 'light',
+      card: [
+        {
+          paragraph: [{ text: 'This is a Card as a layout item.' }],
+          level: 1,
+        },
+        { paragraph: [{ text: fake('{{lorem.paragraph}}') }] },
+      ],
+    }}
+  >
+    {seed(1234) || CardLayoutTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Card as a Layout item" />

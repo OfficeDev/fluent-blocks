@@ -28,7 +28,11 @@ export const RadioGroup = (props: RadioGroupProps) => {
   return (
     <Placeholder
       label="Radio group"
-      className={cx(commonStyles.mainContentWidth, styles.root)}
+      className={cx(
+        commonStyles.centerBlock,
+        commonStyles.mainContentWidth,
+        styles.root
+      )}
     />
   )
 }

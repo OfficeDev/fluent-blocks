@@ -1,48 +1,42 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { mergeClasses as cx } from '@fluentui/react-components'
 
-import { InlineContent, inlineSequence } from '../../inlines'
-import { propsElementUnion, rem, useCommonStyles } from '../../lib'
+import { InlineContent, inlineSequenceOrString } from '../../inlines'
+import {
+  propsElementUnion,
+  useCommonStyles,
+  useTextBlockStyles,
+} from '../../lib'
 
-export const paragraphProps = z.object({
-  paragraph: inlineSequence,
-})
+export const paragraphProps = z
+  .object({
+    paragraph: inlineSequenceOrString,
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('card'), z.literal('block')])
+          .default('block'),
+      })
+      .partial()
+  )
 export type ParagraphProps = z.infer<typeof paragraphProps>
 
-export const useParagraphStyles = makeStyles({
-  root: {
-    lineHeight: 20 / 14,
-    marginBlockStart: rem(4),
-    marginBlockEnd: rem(4),
-  },
-  heading: (theme) => ({
-    color: theme.colorNeutralForeground1,
-    fontSize: 'inherit',
-    fontWeight: 600,
-    marginBlockStart: rem(24),
-    lineHeight: 24 / 18,
-  }),
-  h1: {
-    fontSize: rem(24),
-    lineHeight: 32 / 24,
-  },
-  h2: {
-    fontSize: rem(20),
-    lineHeight: 28 / 20,
-  },
-  h3: {
-    fontSize: rem(16),
-    lineHeight: 22 / 16,
-  },
-})
-
 export const Paragraph = (props: ParagraphProps) => {
-  const { paragraph } = props
-  const styles = useParagraphStyles()
+  const { paragraph, contextualVariant = 'block' } = props
+  const textStyles = useTextBlockStyles()
   const commonStyles = useCommonStyles()
   return (
-    <p className={cx(styles.root, commonStyles.mainContentWidth)}>
+    <p
+      className={cx(
+        textStyles.root,
+        commonStyles.centerBlock,
+        commonStyles.mainContentWidth,
+        contextualVariant === 'card' && textStyles.cardSpacing
+      )}
+    >
       <InlineContent inlines={paragraph} />
     </p>
   )
