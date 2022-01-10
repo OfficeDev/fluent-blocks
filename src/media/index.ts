@@ -9,9 +9,11 @@ import {
   renderIfThemedImage,
   themedImagePropsOrElement,
 } from './ThemedImage/ThemedImage'
+import { chartPropsOrElement, renderIfChart } from './Chart/Chart'
 
 export const mediaEntity = z.union([
   illustrationPropsOrElement,
+  chartPropsOrElement,
   codePropsOrElement,
   themedImagePropsOrElement,
   escapeElement,
@@ -20,6 +22,7 @@ export type MediaEntity = z.infer<typeof mediaEntity>
 
 export const Media = (o: MediaEntity) =>
   renderIfIllustration(o) ||
+  renderIfChart(o) ||
   renderIfCode(o) ||
   renderIfThemedImage(o) ||
   renderIfEscape(o) ||

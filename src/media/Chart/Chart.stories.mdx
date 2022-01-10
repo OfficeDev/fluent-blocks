@@ -1,0 +1,23 @@
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
+import { Chart } from './StorybookChart'
+import { themeArgType } from '../../lib'
+
+<Meta
+  title="Media/Charts"
+  component={Chart}
+  argTypes={{ ...themeArgType, illustration: { table: { disable: true } } }}
+/>
+
+export const ChartTemplate = (props) => <Chart {...props} />
+
+# Charts
+
+This library comes with a set of built-in accessible charts.
+
+### Dougnnut:
+
+<Canvas withSource="none">
+  <Story name="Doughnut" args={{ theme: 'light', chart: { type: 'doughnut' } }}>
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
