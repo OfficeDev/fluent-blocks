@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
-import { Theme } from '../../lib'
+import { ThemeName } from '../../lib'
+import { Theme } from '@fluentui/react-components'
 import {
   IChartPatterns,
   ILineChartPatterns,
@@ -23,39 +24,43 @@ export const lineChartPatterns: ILineChartPatterns[] = [
 
 export const legendLabels = ({
   canvasRef,
+  themeName,
   theme,
-  colorScheme,
   dataPointColor,
   index,
   patterns,
 }: {
   canvasRef: HTMLCanvasElement
+  themeName: ThemeName
   theme: Theme
-  colorScheme: any
   dataPointColor: string
   index: number
   patterns?: IChartPatterns
 }) => {
-  if (!canvasRef) {return}
+  if (!canvasRef) {
+    return
+  }
   const ctx: any = canvasRef.getContext('2d')
   ctx.save()
-  if (!ctx) {return}
-  if (theme === 'high-contrast') {
+  if (!ctx) {
+    return
+  }
+  if (themeName === 'high-contrast') {
     if (patterns) {
       ctx.setTransform(1.4, 0, 0, 1, 0, 0)
       ctx.scale(12, 10)
       ;(ctx.fillStyle as any) = buildPattern({
-        ...patterns(colorScheme)[index],
-        backgroundColor: colorScheme.default.background,
-        patternColor: colorScheme.brand.background,
+        ...patterns(theme)[index],
+        backgroundColor: theme.colorNeutralBackground1,
+        patternColor: theme.colorBrandBackground,
       })
       ctx.fillRect(-15, -15, canvasRef.width, canvasRef.height)
       ctx.restore()
     } else {
       ctx.scale(15, 15)
-      ctx.fillStyle = colorScheme.brand.shadow
+      ctx.fillStyle = theme.colorBrandShadowAmbient
       ctx.fillRect(-15, -15, canvasRef.width, canvasRef.height)
-      ctx.fillStyle = colorScheme.default.foreground3
+      ctx.fillStyle = theme.colorNeutralForeground3
       switch (lineChartPatterns[index].pointStyle) {
         case EPointStyles.Triangle:
           ctx.moveTo(9.5, 2.5)
@@ -79,7 +84,7 @@ export const legendLabels = ({
       ctx.fill()
 
       // Line Style
-      ctx.strokeStyle = colorScheme.default.foreground3
+      ctx.strokeStyle = theme.colorNeutralForeground3
       ctx.beginPath()
       ctx.setLineDash(
         lineChartPatterns[index].lineBorderDash.length ? [2, 2] : []
@@ -96,89 +101,87 @@ export const legendLabels = ({
 }
 
 export const chartLineStackedDataPointPatterns: IChartPatterns = (
-  colorScheme: any
+  theme: Theme
 ) => [
-    {
-      shapeType: EShapes.Square,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.DiagonalRightLeft,
-      size: 5,
-    },
-    {
-      shapeType: EShapes.Grid,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.VerticalLine,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.GridRightLeft,
-      size: 3,
-    },
-    {
-      shapeType: EShapes.Diagonal,
-      size: 5,
-    },
-  ]
+  {
+    shapeType: EShapes.Square,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.DiagonalRightLeft,
+    size: 5,
+  },
+  {
+    shapeType: EShapes.Grid,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.VerticalLine,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.GridRightLeft,
+    size: 3,
+  },
+  {
+    shapeType: EShapes.Diagonal,
+    size: 5,
+  },
+]
 
-export const chartBarDataPointPatterns: IChartPatterns = (colorScheme: any) => [
-    {
-      shapeType: EShapes.DiagonalRightLeft,
-      size: 5,
-    },
-    {
-      shapeType: EShapes.Square,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.Diagonal,
-      size: 5,
-    },
-    {
-      shapeType: EShapes.Grid,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.GridRightLeft,
-      size: 3,
-    },
-    {
-      shapeType: EShapes.VerticalLine,
-      size: 7,
-    },
-  ]
+export const chartBarDataPointPatterns: IChartPatterns = (theme: Theme) => [
+  {
+    shapeType: EShapes.DiagonalRightLeft,
+    size: 5,
+  },
+  {
+    shapeType: EShapes.Square,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.Diagonal,
+    size: 5,
+  },
+  {
+    shapeType: EShapes.Grid,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.GridRightLeft,
+    size: 3,
+  },
+  {
+    shapeType: EShapes.VerticalLine,
+    size: 7,
+  },
+]
 
-export const chartBubbleDataPointPatterns: IChartPatterns = (
-  colorScheme: any
-) => [
-    {
-      shapeType: EShapes.DiagonalRightLeft,
-      size: 5,
-    },
-    {
-      shapeType: EShapes.Square,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.Diagonal,
-      size: 5,
-    },
-    {
-      shapeType: EShapes.Grid,
-      size: 10,
-    },
-    {
-      shapeType: EShapes.GridRightLeft,
-      size: 3,
-    },
-    {
-      shapeType: EShapes.VerticalLine,
-      size: 7,
-    },
-  ]
+export const chartBubbleDataPointPatterns: IChartPatterns = (theme: Theme) => [
+  {
+    shapeType: EShapes.DiagonalRightLeft,
+    size: 5,
+  },
+  {
+    shapeType: EShapes.Square,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.Diagonal,
+    size: 5,
+  },
+  {
+    shapeType: EShapes.Grid,
+    size: 10,
+  },
+  {
+    shapeType: EShapes.GridRightLeft,
+    size: 3,
+  },
+  {
+    shapeType: EShapes.VerticalLine,
+    size: 7,
+  },
+]
 
 export class Entity {
   public constructor(fields?: any) {

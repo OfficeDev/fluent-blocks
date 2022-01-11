@@ -2,6 +2,8 @@
  * The data to display in this Chart.
  * @public
  */
+import { Theme } from '@fluentui/react-components'
+
 export interface IChartData {
   /**
    * How the x-axis or pie slices should be labeled on the chart, if relevant. Some chart types will
@@ -69,7 +71,7 @@ export interface IDraw {
   size: number
 }
 
-export type IChartPatterns = (colorScheme: any) => IDraw[]
+export type IChartPatterns = (theme: Theme) => IDraw[]
 
 export interface ILegendItem {
   key: number

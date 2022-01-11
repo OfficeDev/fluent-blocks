@@ -1,6 +1,6 @@
 import Chart from 'chart.js'
-import { Theme } from '../../lib'
-import { Theme as ColorScheme } from '@fluentui/react-components'
+import { ThemeName } from '../../lib'
+import { Theme } from '@fluentui/react-components'
 import { IChartData, IChartDataSet, IChartPatterns, IDraw } from './chart-types'
 import { buildPattern } from './chart-patterns'
 import { ChartData, ChartDataset } from './Chart'
@@ -23,9 +23,9 @@ export const chartAxisCallback = (value: number | string): string => {
     // add an additional spaces depends on label length
     switch (value.length) {
       case 2:
-        return `${value  }  `
+        return `${value}  `
       case 1:
-        return `${value  }   `
+        return `${value}   `
       case 3:
       default:
         return value
@@ -64,8 +64,8 @@ export function tooltipTrigger({
   data,
   set,
   index,
+  themeName,
   theme,
-  colorScheme,
   mergeDuplicates,
   patterns,
 }: {
@@ -73,8 +73,8 @@ export function tooltipTrigger({
   data: ChartData
   set: number
   index: number
+  themeName: ThemeName
   theme: Theme
-  colorScheme: ColorScheme
   mergeDuplicates?: boolean
   patterns?: (colorSheme: any) => IDraw[]
 }) {
@@ -86,45 +86,44 @@ export function tooltipTrigger({
       if (dataset.data[index] === data.datasets[set].data[index]) {
         duplicates.push(i)
       }
-      if (theme === 'high-contrast') {
-        chart.data.datasets[i].borderColor = colorScheme.colorNeutralStroke1
+      if (themeName === 'high-contrast') {
+        chart.data.datasets[i].borderColor = theme.colorNeutralStroke1
         chart.data.datasets[i].borderWidth = 2
       }
     })
     duplicates.forEach((segmentId) => {
       segments.push(chart.getDatasetMeta(segmentId).data[index])
-      if (theme === 'high-contrast') {
+      if (themeName === 'high-contrast') {
         chart.data.datasets[segmentId].borderColor =
-          colorScheme.colorNeutralStroke1Hover
+          theme.colorNeutralStroke1Hover
         chart.data.datasets[segmentId].borderWidth = 4
       }
     })
-    if (theme === 'high-contrast') {
+    if (themeName === 'high-contrast') {
       chart.update()
     }
     chart.tooltip._active = segments
   } else {
     const segment = chart.getDatasetMeta(set).data[index]
     chart.tooltip._active = [segment]
-    if (theme === 'high-contrast' && patterns) {
+    if (themeName === 'high-contrast' && patterns) {
       chart.data.datasets.map((dataset: any, i: number) => {
-        dataset.borderColor = colorScheme.colorNeutralStroke1
+        dataset.borderColor = theme.colorNeutralStroke1
         dataset.borderWidth = 2
         dataset.backgroundColor = buildPattern({
-          ...patterns(colorScheme)[index],
-          backgroundColor: colorScheme.colorNeutralBackground1,
-          patternColor: colorScheme.colorBrandBackground,
+          ...patterns(theme)[index],
+          backgroundColor: theme.colorNeutralBackground1,
+          patternColor: theme.colorBrandBackground,
         })
       })
-      chart.data.datasets[set].borderColor =
-        colorScheme.colorNeutralStroke1Hover
+      chart.data.datasets[set].borderColor = theme.colorNeutralStroke1Hover
       chart.data.datasets[set].borderWidth = 4
       chart.data.datasets[set].backgroundColor = chart.data.datasets[
         set
       ].backgroundColor = buildPattern({
-        ...patterns(colorScheme)[set],
-        backgroundColor: colorScheme.colorNeutralBackground1,
-        patternColor: colorScheme.colorNeutralStroke1Hover,
+        ...patterns(theme)[set],
+        backgroundColor: theme.colorNeutralBackground1,
+        patternColor: theme.colorNeutralStroke1Hover,
       })
       chart.update()
     }
@@ -135,12 +134,12 @@ export function tooltipTrigger({
 
 export const tooltipAxisYLine = ({ chart, ctx, tooltip }: any) => {
   if (tooltip._active && tooltip._active.length) {
-    const activePoint = tooltip._active[0];
-      const y = activePoint.tooltipPosition().y;
-      const x = activePoint.tooltipPosition().x;
-      const y_axis = chart.scales['y-axis-0'];
-      const topY = y_axis.top;
-      const bottomY = y_axis.bottom
+    const activePoint = tooltip._active[0]
+    const y = activePoint.tooltipPosition().y
+    const x = activePoint.tooltipPosition().x
+    const y_axis = chart.scales['y-axis-0']
+    const topY = y_axis.top
+    const bottomY = y_axis.bottom
 
     ctx.save()
     // Line
@@ -168,12 +167,12 @@ export const tooltipAxisYLine = ({ chart, ctx, tooltip }: any) => {
 
 export const tooltipAxisXLine = ({ chart, ctx, tooltip }: any) => {
   if (tooltip._active && tooltip._active.length) {
-    const activePoint = tooltip._active[0];
-      const y = activePoint.tooltipPosition().y;
-      const x = activePoint.tooltipPosition().x;
-      const x_axis = chart.scales['x-axis-0'];
-      const leftX = x_axis.left;
-      const rightX = x_axis.right
+    const activePoint = tooltip._active[0]
+    const y = activePoint.tooltipPosition().y
+    const x = activePoint.tooltipPosition().x
+    const x_axis = chart.scales['x-axis-0']
+    const leftX = x_axis.left
+    const rightX = x_axis.right
 
     ctx.save()
     // Line
@@ -291,18 +290,18 @@ export const chartConfig = ({
 export const axesConfig = ({
   chart,
   ctx,
-  colorScheme,
+  theme,
 }: {
   chart: Chart
   ctx: CanvasRenderingContext2D
-  colorScheme: ColorScheme
+  theme: Theme
 }) => {
   const axesXGridLines = ctx!.createLinearGradient(100, 100, 100, 0)
-  axesXGridLines.addColorStop(0.01, colorScheme.colorNeutralStroke1)
+  axesXGridLines.addColorStop(0.01, theme.colorNeutralStroke1)
   axesXGridLines.addColorStop(0.01, 'transparent')
 
   chart.options.scales?.xAxes?.forEach((xAxes: any, index: number) => {
-    xAxes.ticks.fontColor = colorScheme.colorNeutralForeground2
+    xAxes.ticks.fontColor = theme.colorNeutralForeground2
     if (index < 1) {
       xAxes.gridLines.color = axesXGridLines
       xAxes.gridLines.zeroLineColor = axesXGridLines
@@ -311,10 +310,10 @@ export const axesConfig = ({
     }
   })
   chart.options.scales?.yAxes?.forEach((yAxes: any, index: number) => {
-    yAxes.ticks.fontColor = colorScheme.colorNeutralForeground2
+    yAxes.ticks.fontColor = theme.colorNeutralForeground2
     if (index < 1) {
-      yAxes.gridLines.color = colorScheme.colorNeutralStroke1
-      yAxes.gridLines.zeroLineColor = colorScheme.colorNeutralStroke1
+      yAxes.gridLines.color = theme.colorNeutralStroke1
+      yAxes.gridLines.zeroLineColor = theme.colorNeutralStroke1
     } else {
       yAxes.gridLines.color = 'transparent'
     }
@@ -323,15 +322,15 @@ export const axesConfig = ({
 
 export const setTooltipColorScheme = ({
   chart,
+  themeName,
   theme,
-  colorScheme,
   chartDataPointColors,
   patterns,
   verticalDataAlignment,
 }: {
   chart: Chart
+  themeName: ThemeName
   theme: Theme
-  colorScheme: ColorScheme
   chartDataPointColors: string[]
   patterns?: IChartPatterns
   verticalDataAlignment?: boolean
@@ -339,29 +338,29 @@ export const setTooltipColorScheme = ({
   chart.options.tooltips = {
     ...chart.options.tooltips,
     backgroundColor:
-      theme === 'dark'
-        ? colorScheme.colorNeutralBackground2
-        : colorScheme.colorNeutralBackground1,
-    borderColor: colorScheme.colorNeutralStroke1Hover,
-    multiKeyBackground: colorScheme.colorNeutralBackground1,
-    titleFontColor: colorScheme.colorNeutralForeground3,
-    bodyFontColor: colorScheme.colorNeutralForeground3,
-    footerFontColor: colorScheme.colorNeutralForeground3,
-    borderWidth: theme === 'high-contrast' ? 2 : 0,
+      themeName === 'dark'
+        ? theme.colorNeutralBackground2
+        : theme.colorNeutralBackground1,
+    borderColor: theme.colorNeutralStroke1Hover,
+    multiKeyBackground: theme.colorNeutralBackground1,
+    titleFontColor: theme.colorNeutralForeground3,
+    bodyFontColor: theme.colorNeutralForeground3,
+    footerFontColor: theme.colorNeutralForeground3,
+    borderWidth: themeName === 'high-contrast' ? 2 : 0,
     callbacks: {
       ...chart.options.tooltips?.callbacks,
       labelColor:
-        patterns && theme === 'high-contrast'
+        patterns && themeName === 'high-contrast'
           ? (tooltipItem: any) => ({
               borderColor: 'transparent',
               backgroundColor: buildPattern({
-                ...patterns(colorScheme)[
+                ...patterns(theme)[
                   verticalDataAlignment
                     ? tooltipItem.index
                     : tooltipItem.datasetIndex
                 ],
-                backgroundColor: colorScheme.colorNeutralBackground1,
-                patternColor: colorScheme.colorNeutralStroke1Hover,
+                backgroundColor: theme.colorNeutralBackground1,
+                patternColor: theme.colorNeutralStroke1Hover,
               }) as any,
             })
           : (tooltipItem: any) => ({
@@ -375,7 +374,7 @@ export const setTooltipColorScheme = ({
             }),
     },
   }
-  if (theme === 'high-contrast') {
+  if (themeName === 'high-contrast') {
     ;(chart as any).options.scales.yAxes[0].gridLines.lineWidth = 0.25
   } else {
     ;(chart as any).options.scales.yAxes[0].gridLines.lineWidth = 1

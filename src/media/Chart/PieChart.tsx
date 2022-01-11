@@ -11,12 +11,15 @@ import {
 import { buildPattern, chartBarDataPointPatterns } from './chart-patterns'
 import { ChartData } from './Chart'
 import { makeStyles } from '@fluentui/react-components'
+import { Legend } from './Legend'
 
 const usePieChartStyles = makeStyles({
-  root: {
+  root: {},
+  chartContainer: {
     width: '100%',
     aspectRatio: '1',
   },
+  legend: {},
 })
 
 // eslint-disable-next-line max-lines-per-function
@@ -38,33 +41,33 @@ export const PieChart = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const chartRef = useRef<Chart | undefined>()
   const chartId = useMemo(() => Math.random().toString(36).substr(2, 9), [])
-  const { theme, fluentTheme } = useContext(FluentPatternsContext)
+  const { themeName, theme } = useContext(FluentPatternsContext)
   const chartDataPointColors = useMemo(
     () => [
-      fluentTheme.colorBrandBackground2,
-      fluentTheme.colorBrandForeground2,
-      fluentTheme.colorBrandBackground,
-      fluentTheme.colorNeutralStroke1Hover,
-      fluentTheme.colorNeutralForeground2,
-      fluentTheme.colorNeutralForeground1,
+      theme.colorBrandBackground2,
+      theme.colorBrandForeground2,
+      theme.colorBrandBackground,
+      theme.colorNeutralStroke1Hover,
+      theme.colorNeutralForeground2,
+      theme.colorNeutralForeground1,
     ],
-    [theme]
+    [themeName]
   )
   const translate = useTranslations()
 
   const pieChartPatterns = Array.from({ length: 6 }, (v, i) =>
     buildPattern({
-      ...chartBarDataPointPatterns(fluentTheme)[i],
-      backgroundColor: fluentTheme.colorNeutralBackground1,
-      patternColor: fluentTheme.colorBrandForeground1,
+      ...chartBarDataPointPatterns(theme)[i],
+      backgroundColor: theme.colorNeutralBackground1,
+      patternColor: theme.colorBrandForeground1,
     })
   )
 
   const pieChartHoverPatterns = Array.from({ length: 6 }, (v, i) =>
     buildPattern({
-      ...chartBarDataPointPatterns(fluentTheme)[i],
-      backgroundColor: fluentTheme.colorNeutralBackground1,
-      patternColor: fluentTheme.colorNeutralStroke1Hover,
+      ...chartBarDataPointPatterns(theme)[i],
+      backgroundColor: theme.colorNeutralBackground1,
+      patternColor: theme.colorNeutralStroke1Hover,
     })
   )
 
@@ -73,17 +76,17 @@ export const PieChart = ({
       label: translate(data.datasets[0].label),
       data: data.datasets[0].data,
       borderWidth: 2,
-      borderColor: fluentTheme.colorNeutralBackground1,
-      hoverBorderColor: fluentTheme.colorNeutralBackground1,
+      borderColor: theme.colorNeutralBackground1,
+      hoverBorderColor: theme.colorNeutralBackground1,
       backgroundColor: chartDataPointColors,
       hoverBackgroundColor: chartDataPointColors,
     }
-    if (theme === 'high-contrast') {
+    if (themeName === 'high-contrast') {
       dataPointConfig = {
         ...dataPointConfig,
         borderWidth: 3,
-        hoverBorderColor: fluentTheme.colorNeutralStroke1Hover,
-        borderColor: fluentTheme.colorBrandBackground,
+        hoverBorderColor: theme.colorNeutralStroke1Hover,
+        borderColor: theme.colorBrandBackground,
         backgroundColor: pieChartPatterns as unknown as string[],
         hoverBackgroundColor: pieChartHoverPatterns as unknown as string[],
       }
@@ -186,8 +189,8 @@ export const PieChart = ({
         data,
         set: selectedDataSet,
         index: selectedIndex,
+        themeName,
         theme,
-        colorScheme: fluentTheme,
       })
       document
         .getElementById(
@@ -214,15 +217,15 @@ export const PieChart = ({
           break
         }
       }
-      if (theme === 'high-contrast') {
+      if (themeName === 'high-contrast') {
         ;(chartRef.current as any).data.datasets.map(
           (dataset: any, i: number) => {
-            dataset.borderColor = fluentTheme.colorNeutralStroke1Hover
+            dataset.borderColor = theme.colorNeutralStroke1Hover
             dataset.borderWidth = 2
             dataset.backgroundColor = buildPattern({
-              ...chartBarDataPointPatterns(fluentTheme)[i],
-              backgroundColor: fluentTheme.colorNeutralBackground1,
-              patternColor: fluentTheme.colorBrandBackground,
+              ...chartBarDataPointPatterns(theme)[i],
+              backgroundColor: theme.colorNeutralBackground1,
+              patternColor: theme.colorBrandBackground,
             })
           }
         )
@@ -286,19 +289,20 @@ export const PieChart = ({
     // Update tooltip colors scheme
     setTooltipColorScheme({
       chart: chartRef.current,
+      themeName,
       theme,
-      colorScheme: fluentTheme,
       chartDataPointColors,
       patterns: chartBarDataPointPatterns,
       verticalDataAlignment: true,
     })
-    // Update axeses
-    axesConfig({ chart: chartRef.current, ctx, colorScheme: fluentTheme })
+    // Update axes
+    axesConfig({ chart: chartRef.current, ctx, theme })
 
     chartRef.current.update()
-  }, [theme])
+  }, [themeName])
 
   function onLegendClick(datasetIndex: number) {
+    console.log('[on legend click]', datasetIndex)
     if (!chartRef.current) {
       return
     }
@@ -311,28 +315,35 @@ export const PieChart = ({
 
   return (
     <div className={pieChartStyles.root}>
-      <canvas
-        id={chartId}
-        ref={canvasRef}
-        tabIndex={0}
-        style={{ userSelect: 'none' }}
-        aria-label={title}
-      >
-        {data.datasets.map((set, setKey) =>
-          (set.data as number[]).forEach((item: number, itemKey: number) => (
-            // Generated tooltips for screen readers
-            <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
-              <p>{item}</p>
-              <span>
-                {data.labels && Array.isArray(data.labels)
-                  ? translate(data.labels[setKey])
-                  : translate(data.labels)}
-                : {set.data[itemKey]}
-              </span>
-            </div>
-          ))
-        )}
-      </canvas>
+      <div className={pieChartStyles.chartContainer}>
+        <canvas
+          id={chartId}
+          ref={canvasRef}
+          tabIndex={0}
+          style={{ userSelect: 'none' }}
+          aria-label={title}
+        >
+          {data.datasets.map((set, setKey) =>
+            (set.data as number[]).forEach((item: number, itemKey: number) => (
+              // Generated tooltips for screen readers
+              <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
+                <p>{item}</p>
+                <span>
+                  {data.labels && Array.isArray(data.labels)
+                    ? translate(data.labels[setKey])
+                    : translate(data.labels)}
+                  : {set.data[itemKey]}
+                </span>
+              </div>
+            ))
+          )}
+        </canvas>
+      </div>
+      <Legend
+        {...{ data, chartDataPointColors, themeName, theme, onLegendClick }}
+        patterns={chartBarDataPointPatterns}
+        verticalDataAlignment
+      />
     </div>
   )
 }
