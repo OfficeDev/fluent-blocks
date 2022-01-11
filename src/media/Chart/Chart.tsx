@@ -1,7 +1,13 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
+import { Chart as ChartJS } from 'chart.js'
 import { propsElementUnion } from '../../lib'
 import { PieChart } from './PieChart'
+
+;(ChartJS as any).defaults.global.legend.display = false
+;(
+  ChartJS as any
+).defaults.global.defaultFontFamily = `Segoe UI, system-ui, sans-serif`
 
 const chartTypes = z.union([
   z.literal('line'),

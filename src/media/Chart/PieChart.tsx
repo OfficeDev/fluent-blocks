@@ -10,6 +10,14 @@ import {
 } from './chart-utils'
 import { buildPattern, chartBarDataPointPatterns } from './chart-patterns'
 import { ChartData } from './Chart'
+import { makeStyles } from '@fluentui/react-components'
+
+const usePieChartStyles = makeStyles({
+  root: {
+    width: '100%',
+    aspectRatio: '1',
+  },
+})
 
 // eslint-disable-next-line max-lines-per-function
 export const PieChart = ({
@@ -88,9 +96,13 @@ export const PieChart = ({
     let selectedIndex = -1
     const selectedDataSet = 0
 
-    if (!canvasRef.current) {return}
+    if (!canvasRef.current) {
+      return
+    }
     const ctx = canvasRef.current.getContext('2d')
-    if (!ctx) {return}
+    if (!ctx) {
+      return
+    }
     const config: any = chartConfig({ type: 'pie' })
     config.options.hover.mode = 'point'
 
@@ -115,7 +127,8 @@ export const PieChart = ({
       backgroundColor: chartDataPointColors[tooltipItem.index],
     })
 
-    config.options.tooltips.callbacks.title = (tooltipItems: any) => `${(
+    config.options.tooltips.callbacks.title = (tooltipItems: any) =>
+      `${(
         (Number(data.datasets[0].data[tooltipItems[0].index]) /
           (data.datasets[0].data as number[]).reduce((a, b) => a + b)) *
         100
@@ -242,7 +255,9 @@ export const PieChart = ({
     canvasRef.current.addEventListener('keydown', changeFocus)
     canvasRef.current.addEventListener('focusout', resetChartStates)
     return () => {
-      if (!chartRef.current) {return}
+      if (!chartRef.current) {
+        return
+      }
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('click', removeFocusStyleOnClick)
         canvasRef.current.removeEventListener('keydown', changeFocus)
@@ -256,10 +271,16 @@ export const PieChart = ({
    * Theme updates
    */
   useEffect(() => {
-    if (!chartRef.current) {return}
-    if (!canvasRef.current) {return}
+    if (!chartRef.current) {
+      return
+    }
+    if (!canvasRef.current) {
+      return
+    }
     const ctx = canvasRef.current.getContext('2d')
-    if (!ctx) {return}
+    if (!ctx) {
+      return
+    }
     // Apply new colors scheme for data points
     chartRef.current.data.datasets = createDataPoints()
     // Update tooltip colors scheme
@@ -278,34 +299,40 @@ export const PieChart = ({
   }, [theme])
 
   function onLegendClick(datasetIndex: number) {
-    if (!chartRef.current) {return}
+    if (!chartRef.current) {
+      return
+    }
     // chartRef.current.data.datasets![0].data![datasetIndex].hidden = !chartRef
     //   .current.data.datasets![0].data![datasetIndex].hidden;
     chartRef.current.update()
   }
 
+  const pieChartStyles = usePieChartStyles()
+
   return (
-    <canvas
-      id={chartId}
-      ref={canvasRef}
-      tabIndex={0}
-      style={{ userSelect: 'none' }}
-      aria-label={title}
-    >
-      {data.datasets.map((set, setKey) =>
-        (set.data as number[]).forEach((item: number, itemKey: number) => (
-          // Generated tooltips for screen readers
-          <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
-            <p>{item}</p>
-            <span>
-              {data.labels && Array.isArray(data.labels)
-                ? translate(data.labels[setKey])
-                : translate(data.labels)}
-              : {set.data[itemKey]}
-            </span>
-          </div>
-        ))
-      )}
-    </canvas>
+    <div className={pieChartStyles.root}>
+      <canvas
+        id={chartId}
+        ref={canvasRef}
+        tabIndex={0}
+        style={{ userSelect: 'none' }}
+        aria-label={title}
+      >
+        {data.datasets.map((set, setKey) =>
+          (set.data as number[]).forEach((item: number, itemKey: number) => (
+            // Generated tooltips for screen readers
+            <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
+              <p>{item}</p>
+              <span>
+                {data.labels && Array.isArray(data.labels)
+                  ? translate(data.labels[setKey])
+                  : translate(data.labels)}
+                : {set.data[itemKey]}
+              </span>
+            </div>
+          ))
+        )}
+      </canvas>
+    </div>
   )
 }
