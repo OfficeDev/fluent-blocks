@@ -12,12 +12,29 @@ export const ChartTemplate = (props) => <Chart {...props} />
 
 # Charts
 
-This library comes with a set of built-in accessible charts.
+This library comes with a set of built-in accessible charts. These charts expose most of the options made available from [Chart.js](https://www.chartjs.org/) and automate the options that have an impact on accessibility.
 
-### Dougnnut:
+### Pie
 
 <Canvas withSource="none">
-  <Story name="Doughnut" args={{ theme: 'light', chart: { type: 'doughnut' } }}>
+  <Story
+    name="Pie"
+    args={{
+      theme: 'light',
+      chart: {
+        type: 'pie',
+        data: {
+          labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+          datasets: [
+            {
+              label: 'Laptops',
+              data: [1860, 7700, 4100, 3012, 2930],
+            },
+          ],
+        },
+      },
+    }}
+  >
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>

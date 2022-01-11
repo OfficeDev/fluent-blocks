@@ -7,7 +7,7 @@ export const Layout = ({
   theme,
   ...props
 }: LayoutProps['layout'] & { theme: Theme }) => (
-  <FluentPatternsProvider theme={theme} dir="ltr">
+  <FluentPatternsProvider theme={theme}>
     <Main
       blocks={[{ layout: props }]}
       title={null as unknown as InlineSequenceOrString}

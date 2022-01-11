@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { propsElementUnion } from '../../lib'
+import { PieChart } from './PieChart'
 
 const chartTypes = z.union([
   z.literal('line'),
@@ -15,9 +16,29 @@ const chartTypes = z.union([
   z.literal('bubble'),
 ])
 
+const chartDataset = z.object({
+  label: z.string(),
+  data: z.union([
+    z.array(z.number()),
+    z.array(z.object({ x: z.number(), y: z.number(), z: z.number() })),
+  ]),
+  hidden: z.boolean().optional(),
+})
+
+export type ChartDataset = z.infer<typeof chartDataset>
+
+const chartData = z.object({
+  labels: z.array(z.string()),
+  datasets: z.array(chartDataset),
+})
+
+export type ChartData = z.infer<typeof chartData>
+
 export const chartProps = z.object({
   chart: z.object({
     type: chartTypes,
+    title: z.string(),
+    data: chartData,
   }),
 })
 
@@ -25,7 +46,12 @@ export type ChartProps = z.infer<typeof chartProps>
 
 export function Chart(props: ChartProps) {
   const { chart } = props
-  return <div>This is a chart of type {chart.type}</div>
+  switch (chart.type) {
+    case 'pie':
+      return <PieChart {...chart} />
+    default:
+      return null
+  }
 }
 
 function isChartProps(o: any): o is ChartProps {
