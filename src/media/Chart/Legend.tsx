@@ -106,7 +106,6 @@ const ColorValue = ({
     >
       <canvas
         ref={labelColorValueRef}
-        tabIndex={0}
         className={cx(
           colorValueStyles.canvas,
           patterns && themeName === 'high-contrast' && colorValueStyles.canvasHc

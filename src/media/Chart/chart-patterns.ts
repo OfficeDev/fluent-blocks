@@ -37,12 +37,13 @@ const SIZE = 20
 type ChartColorsProps = { theme: Theme; themeName: ThemeName }
 
 export const chartColors = ({ theme, themeName }: ChartColorsProps) => [
-  theme.colorBrandForeground2,
-  theme.colorBrandBackground2,
-  theme.colorNeutralForeground2,
-  theme.colorBrandBackground,
-  theme.colorNeutralStroke1Hover,
+  theme.colorBrandForeground1,
   theme.colorNeutralForeground1,
+  theme.colorBrandForeground2,
+  theme.colorNeutralForeground2,
+  theme.colorBrandStroke2,
+  theme.colorNeutralForeground3,
+  theme.colorBrandBackground2,
 ]
 
 export const useChartColors = ({ theme, themeName }: ChartColorsProps) =>

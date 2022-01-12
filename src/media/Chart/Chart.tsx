@@ -38,6 +38,8 @@ export function Chart(props: ChartProps) {
       return <PieChart {...chart} {...{ label }} cutoutPercentage={70} />
     case 'bar':
       return <BarChart {...chart} {...{ label }} />
+    case 'bar-stacked':
+      return <BarChart {...chart} {...{ label }} stacked />
     default:
       return null
   }

@@ -1,5 +1,9 @@
 import { useEffect, useRef, useMemo, useContext } from 'react'
 import Chart from 'chart.js'
+import update from 'lodash/update'
+import isNumber from 'lodash/isNumber'
+import cloneDeep from 'lodash/cloneDeep'
+
 import { FluentPatternsContext, useTranslations } from '../../lib'
 import {
   tooltipTrigger,
@@ -14,7 +18,6 @@ import {
   useChartColors,
 } from './chart-patterns'
 import { ChartData } from './chart-types'
-import { makeStyles } from '@fluentui/react-components'
 import { Legend } from './Legend'
 import { useChartStyles } from './chart-styles'
 
@@ -58,7 +61,7 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
   const createDataPoints = (): Chart.ChartDataSets[] => {
     let dataPointConfig = {
       label: translate(data.datasets[0].label),
-      data: data.datasets[0].data,
+      data: cloneDeep(data.datasets[0].data),
       borderWidth: 2,
       borderColor: theme.colorNeutralBackground1,
       hoverBorderColor: theme.colorNeutralBackground1,
@@ -290,8 +293,9 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
     if (!chartRef.current) {
       return
     }
-    // chartRef.current.data.datasets![0].data![datasetIndex].hidden = !chartRef
-    //   .current.data.datasets![0].data![datasetIndex].hidden;
+    update(chartRef.current.data, `datasets[0].data[${datasetIndex}]`, (val) =>
+      isNumber(val) ? { hidden: true } : data.datasets[0].data[datasetIndex]
+    )
     chartRef.current.update()
   }
 
