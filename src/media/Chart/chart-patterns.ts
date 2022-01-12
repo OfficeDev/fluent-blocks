@@ -42,6 +42,7 @@ export const lineChartPatterns: LineChartPattern[] = [
   { lineBorderDash: [5, 5], pointStyle: PointStyles.Triangle },
 ]
 
+// eslint-disable-next-line max-lines-per-function
 export const legendLabels = ({
   canvasRef,
   themeName,
@@ -60,20 +61,23 @@ export const legendLabels = ({
   if (!canvasRef) {
     return
   }
-  const ctx: any = canvasRef.getContext('2d')
-  ctx.save()
+  const ctx = canvasRef.getContext('2d')
   if (!ctx) {
     return
   }
+  ctx.save()
   if (themeName === 'high-contrast') {
     if (patterns) {
       ctx.setTransform(1.4, 0, 0, 1, 0, 0)
       ctx.scale(12, 10)
-      ;(ctx.fillStyle as any) = buildPattern({
+      const pattern = buildPattern({
         ...patterns[index],
         backgroundColor: theme.colorNeutralBackground1,
         patternColor: theme.colorBrandBackground,
       })
+      if (pattern) {
+        ctx.fillStyle = pattern
+      }
       ctx.fillRect(-15, -15, canvasRef.width, canvasRef.height)
       ctx.restore()
     } else {
@@ -451,19 +455,19 @@ export function buildPattern({
   patternColor: string
 }) {
   const patternCanvas = document.createElement('canvas')
-  const patternContext = patternCanvas.getContext('2d')
   const outerSize = size * 2
+
+  patternCanvas.width = outerSize
+  patternCanvas.height = outerSize
+
+  const patternContext = patternCanvas.getContext('2d')
 
   const Shape = shapes[shapeType]
   const shape = new Shape({ size, backgroundColor, patternColor })
 
-  const pattern: CanvasPattern | null = patternContext!.createPattern(
-    shape.drawTile()!,
-    'repeat'
-  )
-
-  patternCanvas.width = outerSize
-  patternCanvas.height = outerSize
+  const pattern = patternContext
+    ? patternContext.createPattern(shape.drawTile()!, 'repeat')
+    : null
 
   return pattern
 }

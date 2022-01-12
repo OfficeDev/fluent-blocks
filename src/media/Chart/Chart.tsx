@@ -1,15 +1,19 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
+import set from 'lodash/set'
 
 import { propsElementUnion } from '../../lib'
 
 import { PieChart } from './PieChart'
 import { chartTypes, chartData } from './chart-types'
-;(ChartJS as any).defaults.global.legend.display = false
-;(
-  ChartJS as any
-).defaults.global.defaultFontFamily = `Segoe UI, system-ui, sans-serif`
+
+set(ChartJS, 'defaults.global.legend.display', false)
+set(
+  ChartJS,
+  'defaults.global.defaultFontFamily',
+  `Segoe UI, system-ui, sans-serif`
+)
 
 export const chartProps = z.object({
   chart: z.object({

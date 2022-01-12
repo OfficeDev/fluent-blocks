@@ -6,14 +6,17 @@ import {
   Text,
   mergeClasses as cx,
 } from '@fluentui/react-components'
+
 import { ThemeName, useTranslations } from '../../lib'
+
 import { legendLabels, Pattern } from './chart-patterns'
+import { ChartData, ChartDataset } from './chart-types'
 
 export type LegendProps = {
-  data: any
+  data: ChartData
   themeName: ThemeName
   theme: Theme
-  chartDataPointColors: any
+  chartDataPointColors: string[]
   onLegendClick: (index: number) => void
   verticalDataAlignment?: boolean
   patterns?: Pattern[]
@@ -127,7 +130,7 @@ const LegendItem = ({
   value: string
   themeName: ThemeName
   theme: Theme
-  chartDataPointColors: any
+  chartDataPointColors: string[]
   onClick: MouseEventHandler
   hidden?: boolean
   patterns?: Pattern[]
@@ -154,7 +157,7 @@ const LegendItem = ({
 
 const LegendItems = (props: LegendProps) =>
   props.verticalDataAlignment
-    ? Array.from(props.data.labels, (label: any, index) => (
+    ? Array.from(props.data.labels, (label: string, index) => (
         <LegendItem
           {...props}
           index={index}
@@ -163,7 +166,7 @@ const LegendItems = (props: LegendProps) =>
           onClick={() => props.onLegendClick(index)}
         />
       ))
-    : Array.from(props.data.datasets, (dataset: any, index) => (
+    : Array.from(props.data.datasets, (dataset: ChartDataset, index) => (
         <LegendItem
           {...props}
           index={index}
