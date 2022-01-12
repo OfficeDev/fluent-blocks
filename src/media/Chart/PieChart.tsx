@@ -22,16 +22,14 @@ const usePieChartStyles = makeStyles({
   legend: {},
 })
 
-// eslint-disable-next-line max-lines-per-function
-export const PieChart = ({
-  title,
-  data,
-  cutoutPercentage,
-}: {
-  title: string
+export type PieChartProps = {
   data: ChartData
+  label?: string
   cutoutPercentage?: number
-}) => {
+}
+
+// eslint-disable-next-line max-lines-per-function
+export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
   if (data && data.datasets && data.datasets[0].data.length > 6) {
     data.datasets[0].data = data.datasets[0].data.slice(0, 6)
     console.warn(
@@ -319,9 +317,11 @@ export const PieChart = ({
         <canvas
           id={chartId}
           ref={canvasRef}
-          tabIndex={0}
           style={{ userSelect: 'none' }}
-          aria-label={title}
+          {...(label && {
+            tabIndex: 0,
+            'aria-label': label,
+          })}
         >
           {data.datasets.map((set, setKey) =>
             (set.data as number[]).forEach((item: number, itemKey: number) => (

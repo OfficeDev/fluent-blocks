@@ -5,6 +5,7 @@ import set from 'lodash/set'
 
 import { propsElementUnion } from '../../lib'
 
+import { mediaProps } from '../media-properties'
 import { PieChart } from './PieChart'
 import { chartTypes, chartData } from './chart-types'
 
@@ -15,21 +16,25 @@ set(
   `Segoe UI, system-ui, sans-serif`
 )
 
-export const chartProps = z.object({
-  chart: z.object({
-    type: chartTypes,
-    title: z.string(),
-    data: chartData,
-  }),
-})
+export const chartProps = mediaProps.merge(
+  z.object({
+    chart: z.object({
+      type: chartTypes,
+      title: z.string(),
+      data: chartData,
+    }),
+  })
+)
 
 export type ChartProps = z.infer<typeof chartProps>
 
 export function Chart(props: ChartProps) {
-  const { chart } = props
+  const { chart, label } = props
   switch (chart.type) {
     case 'pie':
-      return <PieChart {...chart} />
+      return <PieChart {...chart} {...{ label }} />
+    case 'doughnut':
+      return <PieChart {...chart} {...{ label }} cutoutPercentage={70} />
     default:
       return null
   }
