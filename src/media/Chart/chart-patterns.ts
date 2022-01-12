@@ -38,9 +38,9 @@ type ChartColorsProps = { theme: Theme; themeName: ThemeName }
 
 export const chartColors = ({ theme, themeName }: ChartColorsProps) => [
   theme.colorBrandForeground1,
-  theme.colorNeutralForeground1,
-  theme.colorBrandForeground2,
   theme.colorNeutralForeground2,
+  theme.colorBrandForeground2,
+  theme.colorNeutralForeground1,
   theme.colorBrandStroke2,
   theme.colorNeutralForeground3,
   theme.colorBrandBackground2,

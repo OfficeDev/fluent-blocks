@@ -6,9 +6,10 @@ import set from 'lodash/set'
 import { propsElementUnion } from '../../lib'
 
 import { mediaProps } from '../media-properties'
-import { PieChart } from './PieChart'
 import { chartTypes, chartData } from './chart-types'
-import { BarChart } from './BarChart'
+import { PieChart } from './variants/PieChart'
+import { VerticalBarChart } from './variants/VerticalBarChart'
+import { HorizontalBarChart } from './variants/HorizontalBarChart'
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(
@@ -37,9 +38,13 @@ export function Chart(props: ChartProps) {
     case 'doughnut':
       return <PieChart {...chart} {...{ label }} cutoutPercentage={70} />
     case 'bar':
-      return <BarChart {...chart} {...{ label }} />
+      return <VerticalBarChart {...chart} {...{ label }} />
     case 'bar-stacked':
-      return <BarChart {...chart} {...{ label }} stacked />
+      return <VerticalBarChart {...chart} {...{ label }} stacked />
+    case 'bar-horizontal':
+      return <HorizontalBarChart {...chart} {...{ label }} />
+    case 'bar-horizontal-stacked':
+      return <HorizontalBarChart {...chart} {...{ label }} stacked />
     default:
       return null
   }

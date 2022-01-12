@@ -3,11 +3,11 @@ import { ReactElement } from 'react'
 
 import { propsElementUnion } from '../../lib'
 
-import dfault from './Default'
-import error from './Error'
-import empty from './Empty'
-import hello from './Hello'
-import thanks from './Thanks'
+import dfault from './variants/Default'
+import error from './variants/Error'
+import empty from './variants/Empty'
+import hello from './variants/Hello'
+import thanks from './variants/Thanks'
 
 import { ThemedImage } from '../ThemedImage/ThemedImage'
 import { mediaProps } from '../media-properties'

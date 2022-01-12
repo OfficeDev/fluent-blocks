@@ -64,11 +64,11 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
-### Bar
+### Vertical bars
 
 <Canvas withSource="none">
   <Story
-    name="Bar"
+    name="Vertical bars"
     args={{
       theme: 'light',
       label: 'Demo data',
@@ -82,16 +82,52 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
-### Bar, stacked
+### Vertical bars, stacked
 
 <Canvas withSource="none">
   <Story
-    name="Bar, stacked"
+    name="Vertical bars, stacked"
     args={{
       theme: 'light',
       label: 'Demo data',
       chart: {
         type: 'bar-stacked',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Horizontal bars
+
+<Canvas withSource="none">
+  <Story
+    name="Horizontal bars"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar-horizontal',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Horizontal bars, stacked
+
+<Canvas withSource="none">
+  <Story
+    name="Horizontal bars, stacked"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar-horizontal-stacked',
         data: demoData,
       },
     }}

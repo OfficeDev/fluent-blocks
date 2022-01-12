@@ -3,6 +3,7 @@ import { ThemeName } from '../../lib'
 import { Theme } from '@fluentui/react-components'
 import { buildPattern, Pattern } from './chart-patterns'
 import { ChartDataset, ChartData } from './chart-types'
+import { useMemo } from 'react'
 
 export const random = (min: number, max: number): number =>
   Math.round(Math.random() * (max - min) + min)
@@ -33,6 +34,9 @@ export const chartAxisCallback = (value: number | string): string => {
     return value
   }
 }
+
+export const useChartId = () =>
+  useMemo(() => Math.random().toString(36).substr(2, 9), [])
 
 export const hexToRgb = (hex: string) => {
   if (hex.length < 6) {
@@ -187,7 +191,6 @@ export const tooltipAxisXLine = ({ chart, ctx, tooltip }: any) => {
 }
 
 export const horizontalBarValue = ({ chart, ctx, stacked }: any) => {
-  ctx.font = 'bold 11px Segoe UI'
   ctx.textAlign = 'left'
   ctx.textBaseline = 'middle'
   ctx.fillStyle = chart.options.defaultColor

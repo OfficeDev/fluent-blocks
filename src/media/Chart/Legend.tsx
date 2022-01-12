@@ -24,13 +24,13 @@ export type LegendProps = {
 
 const useColorValueStyles = makeStyles({
   root: {
-    marginTop: '-3px',
+    marginTop: '-5px',
     width: '.75rem',
     minWidth: '.75rem',
     height: '.75rem',
   },
   hc: {
-    marginTop: '-3px',
+    marginTop: '-5px',
     width: '1.25rem',
     minWidth: '1.25rem',
     height: '1rem',
@@ -149,7 +149,7 @@ const LegendItem = ({
         dataPointColor={chartDataPointColors[index]}
         patterns={patterns}
       />
-      <Text>{translate(value)}</Text>
+      <Text size={200}>{translate(value)}</Text>
     </Button>
   )
 }
