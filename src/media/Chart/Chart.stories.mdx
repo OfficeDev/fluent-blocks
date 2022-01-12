@@ -10,6 +10,16 @@ import { themeArgType } from '../../lib'
 
 export const ChartTemplate = (props) => <Chart {...props} />
 
+export const demoData = {
+  labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+  datasets: [
+    {
+      label: 'Laptops',
+      data: [1860, 7700, 4100, 3012, 2930],
+    },
+  ],
+}
+
 # Charts
 
 This library comes with a set of built-in accessible charts. These charts expose most of the options made available from [Chart.js](https://www.chartjs.org/) and automate the options that have an impact on accessibility.
@@ -24,15 +34,7 @@ This library comes with a set of built-in accessible charts. These charts expose
       label: 'Demo data',
       chart: {
         type: 'pie',
-        data: {
-          labels: ['Jan', 'Feb', 'March', 'April', 'May'],
-          datasets: [
-            {
-              label: 'Laptops',
-              data: [1860, 7700, 4100, 3012, 2930],
-            },
-          ],
-        },
+        data: demoData,
       },
     }}
   >
@@ -50,15 +52,25 @@ This library comes with a set of built-in accessible charts. These charts expose
       label: 'Demo data',
       chart: {
         type: 'doughnut',
-        data: {
-          labels: ['Jan', 'Feb', 'March', 'April', 'May'],
-          datasets: [
-            {
-              label: 'Laptops',
-              data: [1860, 7700, 4100, 3012, 2930],
-            },
-          ],
-        },
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Bar
+
+<Canvas withSource="none">
+  <Story
+    name="Bar"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar',
+        data: demoData,
       },
     }}
   >

@@ -8,6 +8,7 @@ import { propsElementUnion } from '../../lib'
 import { mediaProps } from '../media-properties'
 import { PieChart } from './PieChart'
 import { chartTypes, chartData } from './chart-types'
+import { BarChart } from './BarChart'
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(
@@ -35,6 +36,8 @@ export function Chart(props: ChartProps) {
       return <PieChart {...chart} {...{ label }} />
     case 'doughnut':
       return <PieChart {...chart} {...{ label }} cutoutPercentage={70} />
+    case 'bar':
+      return <BarChart {...chart} {...{ label }} />
     default:
       return null
   }

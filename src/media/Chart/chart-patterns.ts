@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 import { ThemeName } from '../../lib'
 import { Theme } from '@fluentui/react-components'
+import { useMemo } from 'react'
 
 export enum PointStyles {
   Circle = 'circle',
@@ -32,6 +33,20 @@ const BACKGROUND_COLOR = 'transparent'
 const PATTERN_COLOR = 'rgba(0, 0, 0, 0.8)'
 const POINT_STYLE = 'round'
 const SIZE = 20
+
+type ChartColorsProps = { theme: Theme; themeName: ThemeName }
+
+export const chartColors = ({ theme, themeName }: ChartColorsProps) => [
+  theme.colorBrandForeground2,
+  theme.colorBrandBackground2,
+  theme.colorNeutralForeground2,
+  theme.colorBrandBackground,
+  theme.colorNeutralStroke1Hover,
+  theme.colorNeutralForeground1,
+]
+
+export const useChartColors = ({ theme, themeName }: ChartColorsProps) =>
+  useMemo(() => chartColors({ theme, themeName }), [themeName])
 
 export const lineChartPatterns: LineChartPattern[] = [
   { lineBorderDash: [], pointStyle: PointStyles.Circle },
