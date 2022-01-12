@@ -7,8 +7,7 @@ import {
   mergeClasses as cx,
 } from '@fluentui/react-components'
 import { ThemeName, useTranslations } from '../../lib'
-import { IChartPatterns } from './chart-types'
-import { legendLabels } from './chart-patterns'
+import { legendLabels, Pattern } from './chart-patterns'
 
 export type LegendProps = {
   data: any
@@ -17,7 +16,7 @@ export type LegendProps = {
   chartDataPointColors: any
   onLegendClick: (index: number) => void
   verticalDataAlignment?: boolean
-  patterns?: IChartPatterns
+  patterns?: Pattern[]
 }
 
 const useColorValueStyles = makeStyles({
@@ -76,12 +75,14 @@ const ColorValue = ({
   themeName: ThemeName
   theme: Theme
   dataPointColor: string
-  patterns?: IChartPatterns
+  patterns?: Pattern[]
 }) => {
   const colorValueStyles = useColorValueStyles()
   const labelColorValueRef = useRef<HTMLCanvasElement | null>(null)
   useEffect(() => {
-    if (!labelColorValueRef.current) {return}
+    if (!labelColorValueRef.current) {
+      return
+    }
     const canvasRef: HTMLCanvasElement = labelColorValueRef.current
     legendLabels({
       canvasRef,
@@ -129,7 +130,7 @@ const LegendItem = ({
   chartDataPointColors: any
   onClick: MouseEventHandler
   hidden?: boolean
-  patterns?: IChartPatterns
+  patterns?: Pattern[]
 }) => {
   const legendItemStyles = useLegendItemStyles()
   const translate = useTranslations()

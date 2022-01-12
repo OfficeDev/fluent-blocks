@@ -1,44 +1,15 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
-import { propsElementUnion } from '../../lib'
-import { PieChart } from './PieChart'
 
+import { propsElementUnion } from '../../lib'
+
+import { PieChart } from './PieChart'
+import { chartTypes, chartData } from './chart-types'
 ;(ChartJS as any).defaults.global.legend.display = false
 ;(
   ChartJS as any
 ).defaults.global.defaultFontFamily = `Segoe UI, system-ui, sans-serif`
-
-const chartTypes = z.union([
-  z.literal('line'),
-  z.literal('line-stacked'),
-  z.literal('line-area'),
-  z.literal('bar'),
-  z.literal('bar-stacked'),
-  z.literal('bar-horizontal'),
-  z.literal('bar-horizontal-stacked'),
-  z.literal('pie'),
-  z.literal('doughnut'),
-  z.literal('bubble'),
-])
-
-const chartDataset = z.object({
-  label: z.string(),
-  data: z.union([
-    z.array(z.number()),
-    z.array(z.object({ x: z.number(), y: z.number(), z: z.number() })),
-  ]),
-  hidden: z.boolean().optional(),
-})
-
-export type ChartDataset = z.infer<typeof chartDataset>
-
-const chartData = z.object({
-  labels: z.array(z.string()),
-  datasets: z.array(chartDataset),
-})
-
-export type ChartData = z.infer<typeof chartData>
 
 export const chartProps = z.object({
   chart: z.object({

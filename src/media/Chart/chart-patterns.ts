@@ -1,25 +1,45 @@
 // eslint-disable-next-line max-classes-per-file
 import { ThemeName } from '../../lib'
 import { Theme } from '@fluentui/react-components'
-import {
-  IChartPatterns,
-  ILineChartPatterns,
-  EPointStyles,
-  EShapes,
-} from './chart-types'
+
+export enum PointStyles {
+  Circle = 'circle',
+  Rectangle = 'rect',
+  Triangle = 'triangle',
+  RectangleRotated = 'rectRot',
+}
+
+export enum Shapes {
+  Square = 'square',
+  DiagonalRightLeft = 'diagonalRightLeft',
+  Grid = 'grid',
+  Diagonal = 'diagonal',
+  VerticalLine = 'verticalLine',
+  GridRightLeft = 'gridRightLeft',
+}
+
+export type LineChartPattern = {
+  lineBorderDash: number[]
+  pointStyle: PointStyles
+}
+
+export type Pattern = {
+  shapeType: Shapes
+  size: number
+}
 
 const BACKGROUND_COLOR = 'transparent'
 const PATTERN_COLOR = 'rgba(0, 0, 0, 0.8)'
 const POINT_STYLE = 'round'
 const SIZE = 20
 
-export const lineChartPatterns: ILineChartPatterns[] = [
-  { lineBorderDash: [], pointStyle: EPointStyles.Circle },
-  { lineBorderDash: [], pointStyle: EPointStyles.Rectangle },
-  { lineBorderDash: [], pointStyle: EPointStyles.Triangle },
-  { lineBorderDash: [5, 5], pointStyle: EPointStyles.Circle },
-  { lineBorderDash: [5, 5], pointStyle: EPointStyles.RectangleRotated },
-  { lineBorderDash: [5, 5], pointStyle: EPointStyles.Triangle },
+export const lineChartPatterns: LineChartPattern[] = [
+  { lineBorderDash: [], pointStyle: PointStyles.Circle },
+  { lineBorderDash: [], pointStyle: PointStyles.Rectangle },
+  { lineBorderDash: [], pointStyle: PointStyles.Triangle },
+  { lineBorderDash: [5, 5], pointStyle: PointStyles.Circle },
+  { lineBorderDash: [5, 5], pointStyle: PointStyles.RectangleRotated },
+  { lineBorderDash: [5, 5], pointStyle: PointStyles.Triangle },
 ]
 
 export const legendLabels = ({
@@ -35,7 +55,7 @@ export const legendLabels = ({
   theme: Theme
   dataPointColor: string
   index: number
-  patterns?: IChartPatterns
+  patterns?: Pattern[]
 }) => {
   if (!canvasRef) {
     return
@@ -50,7 +70,7 @@ export const legendLabels = ({
       ctx.setTransform(1.4, 0, 0, 1, 0, 0)
       ctx.scale(12, 10)
       ;(ctx.fillStyle as any) = buildPattern({
-        ...patterns(theme)[index],
+        ...patterns[index],
         backgroundColor: theme.colorNeutralBackground1,
         patternColor: theme.colorBrandBackground,
       })
@@ -62,21 +82,21 @@ export const legendLabels = ({
       ctx.fillRect(-15, -15, canvasRef.width, canvasRef.height)
       ctx.fillStyle = theme.colorNeutralForeground3
       switch (lineChartPatterns[index].pointStyle) {
-        case EPointStyles.Triangle:
+        case PointStyles.Triangle:
           ctx.moveTo(9.5, 2.5)
           ctx.lineTo(5.5, 7.5)
           ctx.lineTo(13.5, 7.5)
           break
-        case EPointStyles.Rectangle:
+        case PointStyles.Rectangle:
           ctx.rect(6.5, 2.5, 8, 5)
           break
-        case EPointStyles.RectangleRotated:
+        case PointStyles.RectangleRotated:
           ctx.moveTo(10, 2)
           ctx.lineTo(14.5, 5)
           ctx.lineTo(10, 8)
           ctx.lineTo(5.5, 5)
           break
-        case EPointStyles.Circle:
+        case PointStyles.Circle:
         default:
           ctx.ellipse(10, 5, 3.5, 2.5, 0, 0, 2 * Math.PI)
           break
@@ -100,85 +120,83 @@ export const legendLabels = ({
   }
 }
 
-export const chartLineStackedDataPointPatterns: IChartPatterns = (
-  theme: Theme
-) => [
+export const chartLineStackedDataPointPatterns = [
   {
-    shapeType: EShapes.Square,
+    shapeType: Shapes.Square,
     size: 10,
   },
   {
-    shapeType: EShapes.DiagonalRightLeft,
+    shapeType: Shapes.DiagonalRightLeft,
     size: 5,
   },
   {
-    shapeType: EShapes.Grid,
+    shapeType: Shapes.Grid,
     size: 10,
   },
   {
-    shapeType: EShapes.VerticalLine,
+    shapeType: Shapes.VerticalLine,
     size: 10,
   },
   {
-    shapeType: EShapes.GridRightLeft,
+    shapeType: Shapes.GridRightLeft,
     size: 3,
   },
   {
-    shapeType: EShapes.Diagonal,
+    shapeType: Shapes.Diagonal,
     size: 5,
   },
 ]
 
-export const chartBarDataPointPatterns: IChartPatterns = (theme: Theme) => [
+export const chartBarDataPointPatterns = [
   {
-    shapeType: EShapes.DiagonalRightLeft,
+    shapeType: Shapes.DiagonalRightLeft,
     size: 5,
   },
   {
-    shapeType: EShapes.Square,
+    shapeType: Shapes.Square,
     size: 10,
   },
   {
-    shapeType: EShapes.Diagonal,
+    shapeType: Shapes.Diagonal,
     size: 5,
   },
   {
-    shapeType: EShapes.Grid,
+    shapeType: Shapes.Grid,
     size: 10,
   },
   {
-    shapeType: EShapes.GridRightLeft,
+    shapeType: Shapes.GridRightLeft,
     size: 3,
   },
   {
-    shapeType: EShapes.VerticalLine,
+    shapeType: Shapes.VerticalLine,
     size: 7,
   },
 ]
 
-export const chartBubbleDataPointPatterns: IChartPatterns = (theme: Theme) => [
+export const chartBubbleDataPointPatterns = [
   {
-    shapeType: EShapes.DiagonalRightLeft,
+    shapeType: Shapes.DiagonalRightLeft,
     size: 5,
   },
   {
-    shapeType: EShapes.Square,
+    shapeType: Shapes.Square,
     size: 10,
   },
   {
-    shapeType: EShapes.Diagonal,
+    shapeType: Shapes.Diagonal,
     size: 5,
   },
   {
-    shapeType: EShapes.Grid,
+    shapeType: Shapes.Grid,
     size: 10,
   },
   {
-    shapeType: EShapes.GridRightLeft,
+    shapeType: Shapes.GridRightLeft,
     size: 3,
   },
   {
-    shapeType: EShapes.VerticalLine,
+    shapeType: Shapes.VerticalLine,
     size: 7,
   },
 ]
@@ -413,12 +431,12 @@ class GridRightLeft extends Grid {
 }
 
 const shapes = {
-  [EShapes.Square]: Square,
-  [EShapes.DiagonalRightLeft]: DiagonalRightLeft,
-  [EShapes.Grid]: Grid,
-  [EShapes.Diagonal]: Diagonal,
-  [EShapes.VerticalLine]: VerticalLine,
-  [EShapes.GridRightLeft]: GridRightLeft,
+  [Shapes.Square]: Square,
+  [Shapes.DiagonalRightLeft]: DiagonalRightLeft,
+  [Shapes.Grid]: Grid,
+  [Shapes.Diagonal]: Diagonal,
+  [Shapes.VerticalLine]: VerticalLine,
+  [Shapes.GridRightLeft]: GridRightLeft,
 }
 
 export function buildPattern({
@@ -427,7 +445,7 @@ export function buildPattern({
   patternColor,
   size,
 }: {
-  shapeType: EShapes
+  shapeType: Shapes
   size: number
   backgroundColor: string
   patternColor: string
@@ -446,10 +464,6 @@ export function buildPattern({
 
   patternCanvas.width = outerSize
   patternCanvas.height = outerSize
-
-  if (pattern) {
-    ;(pattern as any).shapeType = shapeType
-  }
 
   return pattern
 }

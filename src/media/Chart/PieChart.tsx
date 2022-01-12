@@ -9,7 +9,7 @@ import {
   usNumberFormat,
 } from './chart-utils'
 import { buildPattern, chartBarDataPointPatterns } from './chart-patterns'
-import { ChartData } from './Chart'
+import { ChartData } from './chart-types'
 import { makeStyles } from '@fluentui/react-components'
 import { Legend } from './Legend'
 
@@ -57,7 +57,7 @@ export const PieChart = ({
 
   const pieChartPatterns = Array.from({ length: 6 }, (v, i) =>
     buildPattern({
-      ...chartBarDataPointPatterns(theme)[i],
+      ...chartBarDataPointPatterns[i],
       backgroundColor: theme.colorNeutralBackground1,
       patternColor: theme.colorBrandForeground1,
     })
@@ -65,7 +65,7 @@ export const PieChart = ({
 
   const pieChartHoverPatterns = Array.from({ length: 6 }, (v, i) =>
     buildPattern({
-      ...chartBarDataPointPatterns(theme)[i],
+      ...chartBarDataPointPatterns[i],
       backgroundColor: theme.colorNeutralBackground1,
       patternColor: theme.colorNeutralStroke1Hover,
     })
@@ -223,7 +223,7 @@ export const PieChart = ({
             dataset.borderColor = theme.colorNeutralStroke1Hover
             dataset.borderWidth = 2
             dataset.backgroundColor = buildPattern({
-              ...chartBarDataPointPatterns(theme)[i],
+              ...chartBarDataPointPatterns[i],
               backgroundColor: theme.colorNeutralBackground1,
               patternColor: theme.colorBrandBackground,
             })

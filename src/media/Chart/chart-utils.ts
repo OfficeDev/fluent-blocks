@@ -1,9 +1,8 @@
 import Chart from 'chart.js'
 import { ThemeName } from '../../lib'
 import { Theme } from '@fluentui/react-components'
-import { IChartData, IChartDataSet, IChartPatterns, IDraw } from './chart-types'
-import { buildPattern } from './chart-patterns'
-import { ChartData, ChartDataset } from './Chart'
+import { buildPattern, Pattern } from './chart-patterns'
+import { ChartDataset, ChartData } from './chart-types'
 
 export const random = (min: number, max: number): number =>
   Math.round(Math.random() * (max - min) + min)
@@ -76,7 +75,7 @@ export function tooltipTrigger({
   themeName: ThemeName
   theme: Theme
   mergeDuplicates?: boolean
-  patterns?: (colorSheme: any) => IDraw[]
+  patterns?: Pattern[]
 }) {
   if (mergeDuplicates) {
     const duplicates: number[] = []
@@ -111,7 +110,7 @@ export function tooltipTrigger({
         dataset.borderColor = theme.colorNeutralStroke1
         dataset.borderWidth = 2
         dataset.backgroundColor = buildPattern({
-          ...patterns(theme)[index],
+          ...patterns[index],
           backgroundColor: theme.colorNeutralBackground1,
           patternColor: theme.colorBrandBackground,
         })
@@ -121,7 +120,7 @@ export function tooltipTrigger({
       chart.data.datasets[set].backgroundColor = chart.data.datasets[
         set
       ].backgroundColor = buildPattern({
-        ...patterns(theme)[set],
+        ...patterns[set],
         backgroundColor: theme.colorNeutralBackground1,
         patternColor: theme.colorNeutralStroke1Hover,
       })
@@ -196,7 +195,7 @@ export const horizontalBarValue = ({ chart, ctx, stacked }: any) => {
     const meta = chart.controller.getDatasetMeta(chart.data.datasets.length - 1)
     meta.data.forEach((bar: any, index: number) => {
       let data = 0
-      chart.data.datasets.map((dataset: IChartDataSet) => {
+      chart.data.datasets.map((dataset: ChartDataset) => {
         const value = dataset.data[index]
         if (typeof value === 'number') {
           return (data += value)
@@ -332,7 +331,7 @@ export const setTooltipColorScheme = ({
   themeName: ThemeName
   theme: Theme
   chartDataPointColors: string[]
-  patterns?: IChartPatterns
+  patterns?: Pattern[]
   verticalDataAlignment?: boolean
 }) => {
   chart.options.tooltips = {
@@ -354,7 +353,7 @@ export const setTooltipColorScheme = ({
           ? (tooltipItem: any) => ({
               borderColor: 'transparent',
               backgroundColor: buildPattern({
-                ...patterns(theme)[
+                ...patterns[
                   verticalDataAlignment
                     ? tooltipItem.index
                     : tooltipItem.datasetIndex
