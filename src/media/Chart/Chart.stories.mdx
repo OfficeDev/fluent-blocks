@@ -171,3 +171,21 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+### Lines, stacked
+
+<Canvas withSource="none">
+  <Story
+    name="Lines, stacked"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'line-stacked',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>

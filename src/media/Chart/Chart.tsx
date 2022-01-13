@@ -11,6 +11,7 @@ import { PieChart } from './variants/PieChart'
 import { VerticalBarChart } from './variants/VerticalBarChart'
 import { HorizontalBarChart } from './variants/HorizontalBarChart'
 import { LineChart } from './variants/LineChart'
+import { StackedLineChart } from './variants/StackedLineChart'
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(
@@ -50,6 +51,8 @@ export function Chart(props: ChartProps) {
       return <LineChart {...chart} {...{ label }} />
     case 'line-area':
       return <LineChart {...chart} {...{ label }} gradients />
+    case 'line-stacked':
+      return <StackedLineChart {...chart} {...{ label }} />
     default:
       return null
   }
