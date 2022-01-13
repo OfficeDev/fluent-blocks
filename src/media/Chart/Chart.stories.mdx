@@ -135,3 +135,39 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+### Lines
+
+<Canvas withSource="none">
+  <Story
+    name="Lines"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'line',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Lines, shaded
+
+<Canvas withSource="none">
+  <Story
+    name="Lines, shaded"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'line-area',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>

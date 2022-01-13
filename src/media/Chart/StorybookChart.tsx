@@ -7,6 +7,6 @@ export const Chart = ({
   ...props
 }: ChartProps & { theme: ThemeName }) => (
   <FluentPatternsProvider themeName={theme}>
-    <Main blocks={[{ media: props, variant: 'narrow' }]} title={[' ']} />
+    <Main blocks={[{ media: props, variant: 'textWidth' }]} title={[' ']} />
   </FluentPatternsProvider>
 )

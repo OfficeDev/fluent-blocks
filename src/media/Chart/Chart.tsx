@@ -10,6 +10,7 @@ import { chartTypes, chartData } from './chart-types'
 import { PieChart } from './variants/PieChart'
 import { VerticalBarChart } from './variants/VerticalBarChart'
 import { HorizontalBarChart } from './variants/HorizontalBarChart'
+import { LineChart } from './variants/LineChart'
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(
@@ -45,6 +46,10 @@ export function Chart(props: ChartProps) {
       return <HorizontalBarChart {...chart} {...{ label }} />
     case 'bar-horizontal-stacked':
       return <HorizontalBarChart {...chart} {...{ label }} stacked />
+    case 'line':
+      return <LineChart {...chart} {...{ label }} />
+    case 'line-area':
+      return <LineChart {...chart} {...{ label }} gradients />
     default:
       return null
   }
