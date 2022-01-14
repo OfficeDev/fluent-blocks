@@ -12,6 +12,7 @@ import { VerticalBarChart } from './variants/VerticalBarChart'
 import { HorizontalBarChart } from './variants/HorizontalBarChart'
 import { LineChart } from './variants/LineChart'
 import { StackedLineChart } from './variants/StackedLineChart'
+import { BubbleChart } from './variants/BubbleChart'
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(
@@ -53,6 +54,8 @@ export function Chart(props: ChartProps) {
       return <LineChart {...chart} {...{ label }} gradients />
     case 'line-stacked':
       return <StackedLineChart {...chart} {...{ label }} />
+    case 'bubble':
+      return <BubbleChart {...chart} {...{ label }} />
     default:
       return null
   }

@@ -24,6 +24,62 @@ export const demoData = {
   ],
 }
 
+export const demoBubbleData = {
+  labels: 'Countries',
+  datasets: [
+    {
+      label: 'China',
+      data: [
+        {
+          x: 21269017,
+          y: 5.245,
+          r: 25,
+        },
+      ],
+    },
+    {
+      label: 'Denmark',
+      data: [
+        {
+          x: 258702,
+          y: 7.526,
+          r: 10,
+        },
+      ],
+    },
+    {
+      label: 'Germany',
+      data: [
+        {
+          x: 3979083,
+          y: 6.994,
+          r: 15,
+        },
+      ],
+    },
+    {
+      label: 'Japan',
+      data: [
+        {
+          x: 11931877,
+          y: 5.921,
+          r: 40,
+        },
+      ],
+    },
+    {
+      label: 'France',
+      data: [
+        {
+          x: 17269017,
+          y: 6.921,
+          r: 20,
+        },
+      ],
+    },
+  ],
+}
+
 # Charts
 
 This library comes with a set of built-in accessible charts. These charts expose most of the options made available from [Chart.js](https://www.chartjs.org/) and automate the options that have an impact on accessibility.
@@ -183,6 +239,24 @@ This library comes with a set of built-in accessible charts. These charts expose
       chart: {
         type: 'line-stacked',
         data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### Bubble
+
+<Canvas withSource="none">
+  <Story
+    name="Bubble"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bubble',
+        data: demoBubbleData,
       },
     }}
   >

@@ -1,131 +1,105 @@
 import { useEffect, useRef, useContext } from 'react'
-import Chart from 'chart.js'
-import update from 'lodash/update'
-import isNumber from 'lodash/isNumber'
-import cloneDeep from 'lodash/cloneDeep'
-
+import { Chart } from 'chart.js'
 import { FluentPatternsContext, useTranslations } from '../../../lib'
+
 import {
   tooltipTrigger,
   chartConfig,
   axesConfig,
   setTooltipColorScheme,
-  usNumberFormat,
   useChartId,
 } from '../chart-utils'
 import {
   buildPattern,
   chartBarDataPointPatterns,
+  chartBubbleDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { ChartData } from '../chart-types'
+import { BubbleChartDatum, ChartData } from '../chart-types'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
 
-export type PieChartProps = {
-  data: ChartData
-  label?: string
-  cutoutPercentage?: number
-}
-
 // eslint-disable-next-line max-lines-per-function
-export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
-  if (data && data.datasets && data.datasets[0].data.length > 6) {
-    data.datasets[0].data = data.datasets[0].data.slice(0, 6)
-    console.warn(
-      'Please follow design guidance and apply 6 or fewer data points per chart.'
-    )
-  }
+export const BubbleChart = ({
+  title,
+  data,
+}: {
+  title: string
+  data: ChartData
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const chartRef = useRef<Chart | undefined>()
   const chartId = useChartId()
   const { themeName, theme } = useContext(FluentPatternsContext)
+
   const chartDataPointColors = useChartColors({ theme, themeName })
   const translate = useTranslations()
 
-  const pieChartPatterns = Array.from({ length: 6 }, (v, i) =>
-    buildPattern({
-      ...chartBarDataPointPatterns[i],
-      backgroundColor: theme.colorNeutralBackground1,
-      patternColor: theme.colorBrandForeground1,
-    })
-  )
+  // Sort for kayboard access
+  data.datasets.map((dataset) => {
+    dataset.data.sort((a: any, b: any) => a.x - b.x)
+  })
 
-  const pieChartHoverPatterns = Array.from({ length: 6 }, (v, i) =>
-    buildPattern({
-      ...chartBarDataPointPatterns[i],
-      backgroundColor: theme.colorNeutralBackground1,
-      patternColor: theme.colorNeutralStroke1Hover,
-    })
-  )
-
-  const createDataPoints = (): Chart.ChartDataSets[] => {
-    let dataPointConfig = {
-      label: translate(data.datasets[0].label),
-      data: cloneDeep(data.datasets[0].data),
-      borderWidth: 2,
-      borderColor: theme.colorNeutralBackground1,
-      hoverBorderColor: theme.colorNeutralBackground1,
-      backgroundColor: chartDataPointColors,
-      hoverBackgroundColor: chartDataPointColors,
-    }
-    if (themeName === 'high-contrast') {
-      dataPointConfig = {
-        ...dataPointConfig,
-        borderWidth: 3,
-        hoverBorderColor: theme.colorNeutralStroke1Hover,
-        borderColor: theme.colorBrandBackground,
-        backgroundColor: pieChartPatterns as unknown as string[],
-        hoverBackgroundColor: pieChartHoverPatterns as unknown as string[],
+  const createDataPoints = (): Chart.ChartDataSets[] =>
+    Array.from(data.datasets, (set, i) => {
+      let dataPointConfig = {
+        label: translate(set.label),
+        data: set.data,
+        borderWidth: 0,
+        borderSkipped: false,
+        borderColor: theme.colorNeutralBackground1,
+        hoverBorderColor: chartDataPointColors[i],
+        backgroundColor: chartDataPointColors[i],
+        hoverBorderWidth: 0,
+        hoverBackgroundColor: chartDataPointColors[i],
+        pointBorderColor: theme.colorNeutralBackground1,
+        pointBackgroundColor: theme.colorNeutralForeground2,
+        pointHoverBackgroundColor: theme.colorNeutralForeground2,
+        pointHoverBorderColor: chartDataPointColors[i],
+        pointHoverBorderWidth: 0,
+        borderCapStyle: 'round',
+        borderJoinStyle: 'round',
+        pointBorderWidth: 0,
+        pointRadius: 0,
+        pointHoverRadius: 0,
       }
-    }
-    return [dataPointConfig]
-  }
+      if (themeName === 'high-contrast') {
+        const backgroundPattern = buildPattern({
+          ...chartBubbleDataPointPatterns[i],
+          backgroundColor: theme.colorNeutralBackground1,
+          patternColor: theme.colorBrandBackground,
+        })
+        const backgroundPatternHover = buildPattern({
+          ...chartBubbleDataPointPatterns[i],
+          backgroundColor: theme.colorNeutralBackground1,
+          patternColor: theme.colorNeutralStroke1Hover,
+        })
+        dataPointConfig = {
+          ...dataPointConfig,
+          borderWidth: 1,
+          hoverBorderColor: theme.colorNeutralStroke1Hover,
+          hoverBorderWidth: 3,
+          pointBorderColor: theme.colorNeutralStroke1,
+          pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+          pointHoverRadius: 0,
+          borderColor: theme.colorBrandBackground,
+          backgroundColor: backgroundPattern as unknown as string,
+          hoverBackgroundColor: backgroundPatternHover as unknown as string,
+        }
+      }
+      return dataPointConfig as any
+    })
 
   // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
     let selectedIndex = -1
-    const selectedDataSet = 0
+    let selectedDataSet = 0
 
-    if (!canvasRef.current) {
-      return
-    }
+    if (!canvasRef.current) {return}
     const ctx = canvasRef.current.getContext('2d')
-    if (!ctx) {
-      return
-    }
-    const config: any = chartConfig({ type: 'pie' })
-    config.options.hover.mode = 'point'
-
-    config.options.layout.padding.top = 32
-    config.options.layout.padding.left = -16
-    config.options.layout.padding.right = 32
-    config.options.layout.padding.bottom = 32
-
-    config.options.scales.xAxes[0].ticks.display = false
-    config.options.scales.xAxes[0].gridLines.display = false
-
-    config.options.scales.yAxes[0].ticks.display = false
-    config.options.scales.yAxes[0].gridLines.display = false
-
-    if (cutoutPercentage) {
-      config.options.cutoutPercentage = cutoutPercentage
-    }
-    // Pie chart custom settings
-    config.options.tooltips.callbacks.label = (tooltipItem: any, data: any) =>
-      translate(data.labels[tooltipItem.index])
-    config.options.tooltips.callbacks.labelColor = (tooltipItem: any) => ({
-      backgroundColor: chartDataPointColors[tooltipItem.index],
-    })
-
-    config.options.tooltips.callbacks.title = (tooltipItems: any) =>
-      `${(
-        (Number(data.datasets[0].data[tooltipItems[0].index]) /
-          (data.datasets[0].data as number[]).reduce((a, b) => a + b)) *
-        100
-      ).toPrecision(2)}% (${usNumberFormat(
-        Number(data.datasets[0].data[tooltipItems[0].index])
-      )})`
+    if (!ctx) {return}
+    const config: any = chartConfig({ type: 'bubble' })
+    config.options.hover.mode = 'nearest'
 
     chartRef.current = new Chart(ctx, {
       ...(config as any),
@@ -208,10 +182,10 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
       if (themeName === 'high-contrast') {
         ;(chartRef.current as any).data.datasets.map(
           (dataset: any, i: number) => {
-            dataset.borderColor = theme.colorNeutralStroke1Hover
+            dataset.borderColor = theme.colorNeutralStroke1
             dataset.borderWidth = 2
             dataset.backgroundColor = buildPattern({
-              ...chartBarDataPointPatterns[i],
+              ...chartBubbleDataPointPatterns[i],
               backgroundColor: theme.colorNeutralBackground1,
               patternColor: theme.colorBrandBackground,
             })
@@ -228,14 +202,45 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
       removeDataPointsHoverStates()
       switch (e.key) {
         case 'ArrowRight':
-        case 'ArrowUp':
           e.preventDefault()
           selectedIndex = (selectedIndex + 1) % meta().data.length
           break
         case 'ArrowLeft':
-        case 'ArrowDown':
           e.preventDefault()
           selectedIndex = (selectedIndex || meta().data.length) - 1
+          break
+        case 'ArrowUp':
+        case 'ArrowDown':
+          e.preventDefault()
+          if (data.datasets.length > 1) {
+            // Get all values for the current data point
+            const values = data.datasets.map(
+              (dataset) => dataset.data[selectedIndex]
+            )
+            // Sort an array to define next available number
+            const sorted = (
+              [...Array.from(new Set(values))] as BubbleChartDatum[]
+            ).sort((a: BubbleChartDatum, b: BubbleChartDatum) => a.y - b.y)
+            const nextValue =
+              sorted[
+                sorted.findIndex((v) => v === values[selectedDataSet]) +
+                  (e.key === 'ArrowUp' ? 1 : -1)
+              ]
+
+            // Find dataset ID by the next higher number after current
+            let nextDataSet = values.findIndex((v) => v === nextValue)
+
+            // If there is no next number that could selected, get number from oposite side
+            if (nextDataSet < 0) {
+              nextDataSet = values.findIndex(
+                (v) =>
+                  v ===
+                  sorted[e.key === 'ArrowUp' ? 0 : data.datasets.length - 1]
+              )
+            }
+            selectedDataSet = nextDataSet
+            selectedIndex = selectedIndex % meta().data.length
+          }
           break
       }
 
@@ -246,9 +251,7 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
     canvasRef.current.addEventListener('keydown', changeFocus)
     canvasRef.current.addEventListener('focusout', resetChartStates)
     return () => {
-      if (!chartRef.current) {
-        return
-      }
+      if (!chartRef.current) {return}
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('click', removeFocusStyleOnClick)
         canvasRef.current.removeEventListener('keydown', changeFocus)
@@ -262,16 +265,10 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
    * Theme updates
    */
   useEffect(() => {
-    if (!chartRef.current) {
-      return
-    }
-    if (!canvasRef.current) {
-      return
-    }
+    if (!chartRef.current) {return}
+    if (!canvasRef.current) {return}
     const ctx = canvasRef.current.getContext('2d')
-    if (!ctx) {
-      return
-    }
+    if (!ctx) {return}
     // Apply new colors scheme for data points
     chartRef.current.data.datasets = createDataPoints()
     // Update tooltip colors scheme
@@ -280,57 +277,57 @@ export const PieChart = ({ label, data, cutoutPercentage }: PieChartProps) => {
       themeName,
       theme,
       chartDataPointColors,
-      patterns: chartBarDataPointPatterns,
-      verticalDataAlignment: true,
+      patterns: chartBubbleDataPointPatterns,
     })
-    // Update axes
+    // Update axeses
     axesConfig({ chart: chartRef.current, ctx, theme })
 
     chartRef.current.update()
   }, [themeName])
 
   function onLegendClick(datasetIndex: number) {
-    if (!chartRef.current) {
-      return
-    }
-    update(chartRef.current.data, `datasets[0].data[${datasetIndex}]`, (val) =>
-      isNumber(val) ? { hidden: true } : data.datasets[0].data[datasetIndex]
-    )
+    if (!chartRef.current) {return}
+    chartRef.current.data.datasets![datasetIndex].hidden =
+      !chartRef.current.data.datasets![datasetIndex].hidden
     chartRef.current.update()
   }
 
   const chartStyles = useChartStyles()
 
+  // patterns={chartBubbleDataPointPatterns}
+
   return (
     <div>
-      <div className={chartStyles.squareChartContainer}>
+      <div className={chartStyles.landscapeChartContainer}>
         <canvas
           id={chartId}
           ref={canvasRef}
           style={{ userSelect: 'none' }}
           tabIndex={0}
-          aria-label={label}
+          aria-label={title}
         >
           {data.datasets.map((set, setKey) =>
-            (set.data as number[]).forEach((item: number, itemKey: number) => (
-              // Generated tooltips for screen readers
-              <div key={itemKey} id={`${chartId}-tooltip-${setKey}-${itemKey}`}>
-                <p>{item}</p>
-                <span>
-                  {data.labels && Array.isArray(data.labels)
-                    ? translate(data.labels[setKey])
-                    : translate(data.labels)}
-                  : {set.data[itemKey]}
-                </span>
-              </div>
-            ))
+            (set.data as BubbleChartDatum[]).forEach(
+              (item: BubbleChartDatum, itemKey: number) => (
+                // Generated tooltips for screen readers
+                <div
+                  key={itemKey}
+                  id={`${chartId}-tooltip-${setKey}-${itemKey}`}
+                >
+                  <p>{item.x}</p>
+                  <span>
+                    {translate(set.label)}:{' '}
+                    {(set.data as BubbleChartDatum[])[itemKey].y}
+                  </span>
+                </div>
+              )
+            )
           )}
         </canvas>
       </div>
       <Legend
         {...{ data, chartDataPointColors, themeName, theme, onLegendClick }}
-        patterns={chartBarDataPointPatterns}
-        verticalDataAlignment
+        patterns={chartBubbleDataPointPatterns}
       />
     </div>
   )

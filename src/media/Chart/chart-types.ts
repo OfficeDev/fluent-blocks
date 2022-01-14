@@ -14,12 +14,16 @@ export const chartTypes = z.union([
 ])
 export type ChartTypes = z.infer<typeof chartTypes>
 
+const bubbleChartDatum = z.object({
+  x: z.number(),
+  y: z.number(),
+  z: z.number(),
+})
+export type BubbleChartDatum = z.infer<typeof bubbleChartDatum>
+
 export const chartDataset = z.object({
   label: z.string(),
-  data: z.union([
-    z.array(z.number()),
-    z.array(z.object({ x: z.number(), y: z.number(), z: z.number() })),
-  ]),
+  data: z.union([z.array(z.number()), z.array(bubbleChartDatum)]),
   hidden: z.boolean().optional(),
 })
 export type ChartDataset = z.infer<typeof chartDataset>
