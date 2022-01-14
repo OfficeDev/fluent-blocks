@@ -1771,7 +1771,7 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@storybook/addon-actions@6.4.12":
+"@storybook/addon-actions@6.4.12", "@storybook/addon-actions@latest":
   version "6.4.12"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.4.12.tgz#0b25b67e4f0bf1fdcb2812d053efda5832b26889"
   integrity sha512-R3Ia2dvaPiwJmXcPra8e/gmpU84YovROBdpDttUzZEXMNEbfwHj00aRjZvH9nTKqHUSzrx8ZzGEDDqCMTqVcTg==
@@ -1884,7 +1884,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/addon-essentials@6.4.12":
+"@storybook/addon-essentials@latest":
   version "6.4.12"
   resolved "https://registry.yarnpkg.com/@storybook/addon-essentials/-/addon-essentials-6.4.12.tgz#fb4a2053a1d828655555024af3e07c811421c650"
   integrity sha512-UvHiW7Lz730ATdd2AVCbShiJ459AefGebvp1E2fRfgIJksMgFtYFYRC8E4gmuKtqEfUVCbCm/5oNh5XPhR70+g==
@@ -1904,7 +1904,7 @@
     regenerator-runtime "^0.13.7"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-links@6.4.12":
+"@storybook/addon-links@latest":
   version "6.4.12"
   resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-6.4.12.tgz#7781e6d29ba72623dc6cf8e7aeeb23af16a17af1"
   integrity sha512-4azfzgcI/3FuVG5jdatCZ2uAHwT8Ic1NIshqhTw1OI4SGATgKvaF/bY6TnRPAZfp6dikgachViIlgcO7mQSl0g==
@@ -1981,7 +1981,7 @@
     prop-types "^15.7.2"
     regenerator-runtime "^0.13.7"
 
-"@storybook/addons@6.4.12":
+"@storybook/addons@6.4.12", "@storybook/addons@latest":
   version "6.4.12"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-6.4.12.tgz#87e5d37d54478582708b2b4cce57b4cf0abb952f"
   integrity sha512-oxRE9cKq104sCPmII9xCZwZb7WevzoXnW7o4/v/a+uhzRCDNSGimh5GDCWQtMViRgw8JuFWKwCxGDSvlhueLOg==
@@ -2463,7 +2463,7 @@
     react-docgen-typescript "^2.0.0"
     tslib "^2.0.0"
 
-"@storybook/react@6.4.12":
+"@storybook/react@latest":
   version "6.4.12"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-6.4.12.tgz#6451dd8f553f09b1f71d901663030da0a47ffb8a"
   integrity sha512-+o/Gb6QvQlMs6pPSElW86ebIB1maditHEXADNvm3VwKfz7SrLKB7rbZuE2WmhxzlW6NI11xGVImUv19QG3SH7g==
@@ -2556,7 +2556,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/theming@6.4.12":
+"@storybook/theming@6.4.12", "@storybook/theming@latest":
   version "6.4.12"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-6.4.12.tgz#a6f15284ffe9c03d91335203903c38883855c8f3"
   integrity sha512-f40OgKpI0ymnCiXaY2KeDqYUrHBVxxYYww1WfyQXMv8tv5Mx64nqD8IL/Vyf6t/Wdl5jLdgbgLITwqIij9WJPg==
