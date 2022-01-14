@@ -10,11 +10,7 @@ import {
   hexToRgb,
   useChartId,
 } from '../chart-utils'
-import {
-  chartBarDataPointPatterns,
-  lineChartPatterns,
-  useChartColors,
-} from '../chart-patterns'
+import { lineChartPatterns, useChartColors } from '../chart-patterns'
 import { FluentPatternsContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'

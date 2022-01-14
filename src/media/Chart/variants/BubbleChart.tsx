@@ -11,7 +11,6 @@ import {
 } from '../chart-utils'
 import {
   buildPattern,
-  chartBarDataPointPatterns,
   chartBubbleDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
@@ -95,9 +94,13 @@ export const BubbleChart = ({
     let selectedIndex = -1
     let selectedDataSet = 0
 
-    if (!canvasRef.current) {return}
+    if (!canvasRef.current) {
+      return
+    }
     const ctx = canvasRef.current.getContext('2d')
-    if (!ctx) {return}
+    if (!ctx) {
+      return
+    }
     const config: any = chartConfig({ type: 'bubble' })
     config.options.hover.mode = 'nearest'
 
@@ -251,7 +254,9 @@ export const BubbleChart = ({
     canvasRef.current.addEventListener('keydown', changeFocus)
     canvasRef.current.addEventListener('focusout', resetChartStates)
     return () => {
-      if (!chartRef.current) {return}
+      if (!chartRef.current) {
+        return
+      }
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('click', removeFocusStyleOnClick)
         canvasRef.current.removeEventListener('keydown', changeFocus)
@@ -265,10 +270,16 @@ export const BubbleChart = ({
    * Theme updates
    */
   useEffect(() => {
-    if (!chartRef.current) {return}
-    if (!canvasRef.current) {return}
+    if (!chartRef.current) {
+      return
+    }
+    if (!canvasRef.current) {
+      return
+    }
     const ctx = canvasRef.current.getContext('2d')
-    if (!ctx) {return}
+    if (!ctx) {
+      return
+    }
     // Apply new colors scheme for data points
     chartRef.current.data.datasets = createDataPoints()
     // Update tooltip colors scheme
@@ -286,7 +297,9 @@ export const BubbleChart = ({
   }, [themeName])
 
   function onLegendClick(datasetIndex: number) {
-    if (!chartRef.current) {return}
+    if (!chartRef.current) {
+      return
+    }
     chartRef.current.data.datasets![datasetIndex].hidden =
       !chartRef.current.data.datasets![datasetIndex].hidden
     chartRef.current.update()
