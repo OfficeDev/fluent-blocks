@@ -4281,9 +4281,9 @@ chownr@^2.0.0:
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
 chromatic@latest:
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-6.3.3.tgz#da7dd3502ac2fc9387eac5fc7b9e050716e001a3"
-  integrity sha512-d2l/jkD2VCxNXT69qRxuv/+7cEl5ZNR169GCG2D6HuiuyplbEF0NR/0Da2KGmAvu8KEWVJDR/HjEg0/OYCC9aQ==
+  version "6.3.4"
+  resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-6.3.4.tgz#30cd30a780b8abd2d00965a04cce205b504103a9"
+  integrity sha512-L3Pkz+fhl4v4dlmE2Nd6HdosoPHZ8iASKjcu3NW8sPBu9CVwq/EBOzaGrq8zEaF5sLjCOndJjaUFgHHlE1b8xQ==
 
 chrome-trace-event@^1.0.2:
   version "1.0.3"
@@ -5949,9 +5949,9 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.3.6"
 
 follow-redirects@^1.0.0, follow-redirects@^1.14.0:
-  version "1.14.4"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
-  integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
+  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -8151,9 +8151,9 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
 mocha@latest:
-  version "9.1.3"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-9.1.3.tgz#8a623be6b323810493d8c8f6f7667440fa469fdb"
-  integrity sha512-Xcpl9FqXOAYqI3j79pEtHBBnQgVXIhpULjGQa7DVb0Po+VzmSIK9kanAiWLHoRR/dbZ2qpdPshuXr8l1VaHCzw==
+  version "9.1.4"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-9.1.4.tgz#5a332d6ade6345b975fd97b5b39139854c8e1b32"
+  integrity sha512-+q2aV5VlJZuLgCWoBvGI5zEwPF9eEI0kr/sAA9Jm4xMND7RfIEyF8JE7C0JIg8WXRG+P1sdIAb5ccoHPlXLzcw==
   dependencies:
     "@ungap/promise-all-settled" "1.1.2"
     ansi-colors "4.1.1"
@@ -8947,16 +8947,16 @@ pkg-up@^2.0.0:
     find-up "^2.1.0"
 
 playwright-chromium@latest:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/playwright-chromium/-/playwright-chromium-1.17.1.tgz#82e0e0e1af61d004fcdb33df9527ece52f5f4b76"
-  integrity sha512-EnCtsP/QTWWoQV/cFYpt2wgKwcOdoa2iHBlBaldHB8gobtynMKwk96rzldaRS4YimFibIzREFkWCNMrrb3LRMQ==
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/playwright-chromium/-/playwright-chromium-1.17.2.tgz#25f6000effc9297b298c356d984963e67f47150d"
+  integrity sha512-afht0lopmJJPOGsffqTthL2MsPDm4tTGeTJWRE7jcrMD7OX9v4EtzBDzvKvs45HHzct3lBKrtVneFJab1Uo6vA==
   dependencies:
-    playwright-core "=1.17.1"
+    playwright-core "=1.17.2"
 
-playwright-core@=1.17.1:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.17.1.tgz#a16e0f89284a0ed8ae6d77e1c905c84b8a2ba022"
-  integrity sha512-C3c8RpPiC3qr15fRDN6dx6WnUkPLFmST37gms2aoHPDRvp7EaGDPMMZPpqIm/QWB5J40xDrQCD4YYHz2nBTojQ==
+playwright-core@=1.17.2:
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.17.2.tgz#916254fa8fb3eb76c160b5c2e06bc979d6ec2cf8"
+  integrity sha512-TCYIt2UNHvqGxvD79bBjBv9osDLAH1gn7AZD5kRpMNQJG6BAmJt8B4Ek8fzdKmCQOnHf9ASJmcYRszoIZxcdVA==
   dependencies:
     commander "^8.2.0"
     debug "^4.1.1"
@@ -9970,9 +9970,9 @@ rxjs@^7.1.0:
     tslib "~2.1.0"
 
 rxjs@^7.5.1:
-  version "7.5.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.1.tgz#af73df343cbcab37628197f43ea0c8256f54b157"
-  integrity sha512-KExVEeZWxMZnZhUZtsJcFwz8IvPvgu4G2Z2QyqjZQzUGr32KDYuSxrEYO4w3tFFNbfLozcrKUTvTPi+E9ywJkQ==
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.2.tgz#11e4a3a1dfad85dbf7fb6e33cbba17668497490b"
+  integrity sha512-PwDt186XaL3QN5qXj/H9DGyHhP3/RYYgZZwqBv9Tv8rsAaiwFH1IsJJlcgD37J7UW5a6O67qX0KWKS3/pu0m4w==
   dependencies:
     tslib "^2.1.0"
 
@@ -11487,10 +11487,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
