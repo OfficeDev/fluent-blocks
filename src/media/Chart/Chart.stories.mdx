@@ -5,7 +5,21 @@ import { themeArgType } from '../../lib'
 <Meta
   title="Media/Charts"
   component={Chart}
-  argTypes={{ ...themeArgType, illustration: { table: { disable: true } } }}
+  parameters={{ chromatic: { delay: 2000 } }}
+  argTypes={{
+    ...themeArgType,
+    label: { table: { disable: true } },
+    chart: {
+      name: 'Chart data',
+      abstract: 'The data and options to pass to ChartJS',
+      control: { type: 'object' },
+      table: {
+        type: {
+          summary: 'ChartData',
+        },
+      },
+    },
+  }}
 />
 
 export const ChartTemplate = (props) => <Chart {...props} />
@@ -102,6 +116,8 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
+<ArgsTable story="Pie" />
+
 ### Doughnut
 
 <Canvas withSource="none">
@@ -119,6 +135,8 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Doughnut" />
 
 ### Vertical bars
 
@@ -138,6 +156,8 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
+<ArgsTable story="Vertical bars" />
+
 ### Vertical bars, stacked
 
 <Canvas withSource="none">
@@ -155,6 +175,8 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Vertical bars, stacked" />
 
 ### Horizontal bars
 
@@ -174,6 +196,8 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
+<ArgsTable story="Horizontal bars" />
+
 ### Horizontal bars, stacked
 
 <Canvas withSource="none">
@@ -191,6 +215,8 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Horizontal bars, stacked" />
 
 ### Lines
 
@@ -210,6 +236,8 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
+<ArgsTable story="Lines" />
+
 ### Lines, shaded
 
 <Canvas withSource="none">
@@ -227,6 +255,8 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Lines, shaded" />
 
 ### Lines, stacked
 
@@ -246,6 +276,8 @@ This library comes with a set of built-in accessible charts. These charts expose
   </Story>
 </Canvas>
 
+<ArgsTable story="Lines, stacked" />
+
 ### Bubble
 
 <Canvas withSource="none">
@@ -263,3 +295,5 @@ This library comes with a set of built-in accessible charts. These charts expose
     {ChartTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Bubble" />

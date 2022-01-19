@@ -30,10 +30,13 @@ export const getTeamsTheme = (theme: ThemeName) =>
 export const themeArgType = {
   theme: {
     name: 'Theme',
+    defaultValue: 'light',
     control: {
       type: 'inline-radio',
+      options: ['light', 'dark', 'high-contrast'],
       labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
+      defaultValue: 'light',
     },
-    table: { type: { summary: 'Theme' } },
+    table: { type: { summary: 'Theme' }, defaultValue: { summary: 'light' } },
   },
 }
