@@ -25,7 +25,6 @@ export const chartProps = mediaProps.merge(
   z.object({
     chart: z.object({
       type: chartTypes,
-      title: z.string(),
       data: chartData,
     }),
   })

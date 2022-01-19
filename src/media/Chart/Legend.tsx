@@ -141,6 +141,7 @@ const LegendItem = ({
       appearance="subtle"
       className={legendItemStyles.root}
       onClick={onClick}
+      aria-label={translate(value)}
     >
       <ColorValue
         index={index}

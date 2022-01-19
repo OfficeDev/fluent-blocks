@@ -20,7 +20,7 @@ import { useChartStyles } from '../chart-styles'
 
 export const BubbleChart = memo(
   // eslint-disable-next-line max-lines-per-function
-  ({ title, data }: { title: string; data: ChartData }) => {
+  ({ label, data }: { label: string; data: ChartData }) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()
@@ -313,7 +313,7 @@ export const BubbleChart = memo(
             ref={canvasRef}
             style={{ userSelect: 'none' }}
             tabIndex={0}
-            aria-label={title}
+            aria-label={label}
           >
             {data.datasets.map((set, setKey) =>
               (set.data as BubbleChartDatum[]).forEach(
