@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
 import set from 'lodash/set'
 
-import { propsElementUnion } from '../../lib'
+import { invalidChart, propsElementUnion } from '../../lib'
 
 import { mediaProps } from '../media-properties'
 import { chartTypes, chartData } from './chart-types'
@@ -57,7 +57,7 @@ export function Chart(props: ChartProps) {
     case 'bubble':
       return <BubbleChart {...chart} {...{ label }} />
     default:
-      return null
+      return invalidChart(props)
   }
 }
 
