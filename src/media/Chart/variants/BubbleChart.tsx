@@ -305,8 +305,6 @@ export const BubbleChart = memo(
 
     const chartStyles = useChartStyles()
 
-    // patterns={chartBubbleDataPointPatterns}
-
     return (
       <div>
         <div className={chartStyles.landscapeChartContainer}>
