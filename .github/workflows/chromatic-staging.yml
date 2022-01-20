@@ -1,8 +1,8 @@
-name: 'Deploy staging to Chromatic'
+name: 'Deploy main to Chromatic'
 
 on:
   push:
-    branches: [ 'staging', '!dependabot' ]
+    branches: [ 'main', '!dependabot' ]
 
 jobs:
   deploy:
