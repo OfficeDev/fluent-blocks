@@ -94,7 +94,7 @@ In your own project, we recommend serving just the sprites you need locally if p
 [fluent-icons]: https://github.com/microsoft/fluentui-system-icons
 [fluentui-v9]: https://www.npmjs.com/package/@fluentui/react-components
 [react-teams]: https://www.npmjs.com/package/@fluentui/react-teams
-[storybook]: https://aka.ms/fluent-patterns
+[storybook]: https://aka.ms/fluent-patterns-storybook
 [wcag]: https://www.w3.org/TR/WCAG21
 [contributing]: /blob/main/CONTRIBUTING.md
 [fmtctx]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flow_Layout/Block_and_Inline_Layout_in_Normal_Flow
