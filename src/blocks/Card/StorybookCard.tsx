@@ -1,12 +1,12 @@
 import { Main } from '../../surfaces'
-import { FluentPatternsProvider, Theme } from '../../lib'
+import { FluentPatternsProvider, ThemeName } from '../../lib'
 import { CardProps } from './Card'
 
 export const BlockCard = ({
   theme,
   ...props
-}: CardProps & { theme: Theme }) => (
-  <FluentPatternsProvider theme={theme}>
+}: CardProps & { theme: ThemeName }) => (
+  <FluentPatternsProvider themeName={theme}>
     <Main blocks={[props]} title={[{ text: ' ' }]} />
   </FluentPatternsProvider>
 )
@@ -14,8 +14,8 @@ export const BlockCard = ({
 export const LayoutCard = ({
   theme,
   ...props
-}: CardProps & { theme: Theme }) => (
-  <FluentPatternsProvider theme={theme}>
+}: CardProps & { theme: ThemeName }) => (
+  <FluentPatternsProvider themeName={theme}>
     <Main
       blocks={[
         {

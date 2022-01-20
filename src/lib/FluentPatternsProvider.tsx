@@ -1,36 +1,36 @@
 import { PropsWithChildren } from 'react'
 import { FluentProvider } from '@fluentui/react-components'
-import { Dir } from './readingDirection'
-import { getTeamsTheme, Theme } from './theme'
+import { getTeamsTheme, ThemeName } from './theme'
 import {
   FluentPatternsContext,
   FluentPatternsContextData,
 } from './FluentPatternsContext'
 import { ActionHandler } from './actions'
+import { Translations, defaultTranslations } from './translations'
 
 export const FluentPatternsProvider = ({
-  dir = 'ltr',
-  theme = 'light',
+  themeName = 'light',
+  translations = defaultTranslations,
   onAction = () => {},
   children,
 }: PropsWithChildren<{
-  theme?: Theme
-  dir?: Dir
+  themeName?: ThemeName
+  translations?: Translations
   onAction?: ActionHandler
 }>) => {
-  const fluentTheme = getTeamsTheme(theme)
+  const theme = getTeamsTheme(themeName)
   const context: FluentPatternsContextData = {
-    dir,
-    theme,
+    translations,
+    themeName,
     onAction,
-    fluentTheme,
+    theme,
   }
   return (
     <FluentProvider
       {...{
-        theme: fluentTheme,
+        theme,
         targetDocument: typeof document === 'undefined' ? void 0 : document,
-        dir,
+        dir: translations.dir,
       }}
     >
       <FluentPatternsContext.Provider value={context}>

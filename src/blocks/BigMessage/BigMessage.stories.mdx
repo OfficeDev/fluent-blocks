@@ -33,7 +33,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
     name="Welcome variant 1"
     args={{
       theme: 'light',
-      media: { illustration: 'hello' },
+      media: { label: 'Hello', illustration: 'hello' },
       title: [{ text: 'Welcome to Contoso! Your opinion counts.' }],
       abstract: [
         { text: 'Contoso is your tool to create, take, and manage polls.' },
@@ -56,7 +56,7 @@ For a welcome screen on a first-run experience, use an inviting illustration or 
     name="Welcome variant 2"
     args={{
       theme: 'light',
-      media: { illustration: 'hello' },
+      media: { label: 'Hello', illustration: 'hello' },
       title: [{ text: 'Welcome to your workspace, Daniela' }],
       abstract: [
         {
@@ -94,7 +94,7 @@ An empty state should provide clear direction on what the user can do to begin w
     name="Empty with Actions"
     args={{
       theme: 'light',
-      media: { illustration: 'empty' },
+      media: { label: 'Empty', illustration: 'empty' },
       actions: {
         primary: {
           actionId: 'a1',
@@ -122,7 +122,7 @@ An empty state should provide clear direction on what the user can do to begin w
     name="Empty"
     args={{
       theme: 'light',
-      media: { illustration: 'empty' },
+      media: { label: 'Empty', illustration: 'empty' },
       title: [{ text: "Once you're assigned a task, you'll find it here" }],
       abstract: [{ text: 'Until then, enjoy your time off.' }],
     }}
@@ -142,7 +142,7 @@ Error states come in many forms. Consider an appropriate illustration to ease th
     name="Error"
     args={{
       theme: 'light',
-      media: { illustration: 'error' },
+      media: { label: 'Error', illustration: 'error' },
       title: [{ text: 'Something went wrong' }],
       actions: {
         secondary: {

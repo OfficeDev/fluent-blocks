@@ -21,7 +21,7 @@ BigMessageJsonTest.args = {
     variant: 'big',
     title: [{ text: '9bd4bf8e-6747-440f-bba2-fe419a17bbc5' }],
     abstract: [{ text: '11d3f07b-e9a4-4186-bcbc-88f05f8c8b74' }],
-    media: { illustration: 'hello' },
+    media: { label: 'Hello', illustration: 'hello' },
     actions: {
       primary: {
         actionId: 'c46cc54b-505b-4f17-9594-9eb019e2b507',
@@ -50,7 +50,7 @@ BigMessageJsxTest.args = {
     variant: 'big',
     title: [<Text key="t1" text={'13ec92f2-57b6-4e50-9e5b-eb3924f4da88'} />],
     abstract: [<Text key="t1" text={'24b5f53d-38d4-4895-b655-c79bbd74bc19'} />],
-    media: <Illustration illustration="hello" />,
+    media: <Illustration label="Hello" illustration="hello" />,
     // `actions` only accepts JSON since props are omitted/inferred
   },
 }

@@ -5,12 +5,12 @@ import {
   teamsHighContrastTheme,
 } from '@fluentui/react-components'
 
-export const theme = z.union([
+export const themeName = z.union([
   z.literal('light'),
   z.literal('dark'),
   z.literal('high-contrast'),
 ])
-export type Theme = z.infer<typeof theme>
+export type ThemeName = z.infer<typeof themeName>
 
 export function themedMap<T extends ZodTypeAny>(valueSchema: T) {
   return z.object({
@@ -20,7 +20,7 @@ export function themedMap<T extends ZodTypeAny>(valueSchema: T) {
   })
 }
 
-export const getTeamsTheme = (theme: Theme) =>
+export const getTeamsTheme = (theme: ThemeName) =>
   ({
     light: teamsLightTheme,
     dark: teamsDarkTheme,
@@ -30,10 +30,13 @@ export const getTeamsTheme = (theme: Theme) =>
 export const themeArgType = {
   theme: {
     name: 'Theme',
+    defaultValue: 'light',
     control: {
       type: 'inline-radio',
+      options: ['light', 'dark', 'high-contrast'],
       labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
+      defaultValue: 'light',
     },
-    table: { type: { summary: 'Theme' } },
+    table: { type: { summary: 'Theme' }, defaultValue: { summary: 'light' } },
   },
 }

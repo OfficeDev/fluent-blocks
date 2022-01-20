@@ -3,23 +3,26 @@ import { ReactElement } from 'react'
 
 import { propsElementUnion } from '../../lib'
 
-import dfault from './Default'
-import error from './Error'
-import empty from './Empty'
-import hello from './Hello'
-import thanks from './Thanks'
+import dfault from './variants/Default'
+import error from './variants/Error'
+import empty from './variants/Empty'
+import hello from './variants/Hello'
+import thanks from './variants/Thanks'
 
 import { ThemedImage } from '../ThemedImage/ThemedImage'
+import { mediaProps } from '../media-properties'
 
-export const illustrationProps = z.object({
-  illustration: z.union([
-    z.literal('default'),
-    z.literal('empty'),
-    z.literal('error'),
-    z.literal('hello'),
-    z.literal('thanks'),
-  ]),
-})
+export const illustrationProps = mediaProps.merge(
+  z.object({
+    illustration: z.union([
+      z.literal('default'),
+      z.literal('empty'),
+      z.literal('error'),
+      z.literal('hello'),
+      z.literal('thanks'),
+    ]),
+  })
+)
 export type IllustrationProps = z.infer<typeof illustrationProps>
 
 const illustrations = { default: dfault, thanks, hello, empty, error }
@@ -27,7 +30,7 @@ const illustrations = { default: dfault, thanks, hello, empty, error }
 export function Illustration(props: IllustrationProps) {
   const { illustration } = props
   const image = illustrations[illustration] ?? illustrations.error
-  return <ThemedImage {...image} />
+  return <ThemedImage {...props} {...image} />
 }
 
 function isIllustrationProps(o: any): o is IllustrationProps {

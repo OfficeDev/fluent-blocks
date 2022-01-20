@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import {
   FluentPatternsProvider,
-  theme,
+  themeName,
   dir,
   ParseBoundary,
   withActionHandler,
@@ -17,7 +17,7 @@ export const viewProps = z.object({
   toolbar: z.object({}).optional(),
   modal: z.object({}).optional(),
   main: sectionContentProps,
-  theme: theme.optional(),
+  theme: themeName.optional(),
   dir: dir.optional(),
   ...withActionHandler(anyActionPayload),
 })

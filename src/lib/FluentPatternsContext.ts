@@ -1,19 +1,19 @@
-import { getTeamsTheme, Theme } from './theme'
+import { getTeamsTheme, ThemeName } from './theme'
 import { createContext, useContext } from 'react'
-import { Dir } from './readingDirection'
 import { ActionHandler } from './actions'
+import { Translations, defaultTranslations } from './translations'
 
 export type FluentPatternsContextData = {
-  dir: Dir
-  theme: Theme
-  fluentTheme: ReturnType<typeof getTeamsTheme>
+  translations: Translations
+  themeName: ThemeName
+  theme: ReturnType<typeof getTeamsTheme>
   onAction: ActionHandler
 }
 
 export const FluentPatternsContext = createContext<FluentPatternsContextData>({
-  dir: 'ltr',
-  theme: 'light',
-  fluentTheme: getTeamsTheme('light'),
+  translations: defaultTranslations,
+  themeName: 'light',
+  theme: getTeamsTheme('light'),
   onAction: () => {},
 })
 

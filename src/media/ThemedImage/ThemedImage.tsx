@@ -24,8 +24,8 @@ const useThemedImageStyles = makeStyles({
 })
 
 export function ThemedImage(props: ThemedImageProps) {
-  const { theme } = useFluentPatternsContext()
-  const value = props[theme]
+  const { themeName } = useFluentPatternsContext()
+  const value = props[themeName]
   const themedImageStyles = useThemedImageStyles()
   return typeof value == 'string' ? (
     <img
