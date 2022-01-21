@@ -8,6 +8,7 @@
   "private": true,
   "types": "types/view.d.ts",
   "scripts": {
+    "storybook:upgrade": "yarn upgrade --scope @storybook",
     "storybook:build": "build-storybook",
     "storybook:start": "start-storybook -p 4000",
     "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
@@ -23,7 +24,7 @@
     "node": ">=10.0.0"
   },
   "peerDependencies": {
-    "@fluentui/react-components": "alpha",
+    "@fluentui/react-components": "beta",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "chart.js": "^2.9.4",
@@ -32,7 +33,7 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-components": "^9.0.0-alpha.124",
+    "@fluentui/react-components": "beta",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
