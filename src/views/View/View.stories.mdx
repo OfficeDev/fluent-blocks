@@ -11,10 +11,6 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
       name: 'Main',
       control: { type: 'object' },
     },
-    dir: {
-      name: 'Text direction',
-      control: { type: 'inline-radio', labels: { ltr: '→', rtl: '←' } },
-    },
     theme: {
       name: 'Theme variant',
       control: {
@@ -122,7 +118,6 @@ that time `View` will call its interaction callback with the update.
           }),
         })),
       },
-      dir: 'ltr',
       theme: 'light',
     }}
   >

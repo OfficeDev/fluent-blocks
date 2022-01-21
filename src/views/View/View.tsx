@@ -3,10 +3,11 @@ import { z } from 'zod'
 import {
   FluentPatternsProvider,
   themeName,
-  dir,
   ParseBoundary,
   withActionHandler,
   anyActionPayload,
+  translations,
+  defaultTranslations,
 } from '../../lib'
 
 import { Main } from '../../surfaces'
@@ -18,7 +19,7 @@ export const viewProps = z.object({
   modal: z.object({}).optional(),
   main: sectionContentProps,
   theme: themeName.optional(),
-  dir: dir.optional(),
+  translations: translations.optional(),
   ...withActionHandler(anyActionPayload),
 })
 
@@ -29,8 +30,13 @@ export const View = (data: ViewProps) => (
   <ParseBoundary<ViewProps>
     schema={viewProps}
     data={data}
-    children={({ main, theme = 'light', dir = 'ltr', onAction }) => (
-      <FluentPatternsProvider {...{ theme, dir, onAction }}>
+    children={({
+      main,
+      theme = 'light',
+      translations = defaultTranslations,
+      onAction,
+    }) => (
+      <FluentPatternsProvider {...{ theme, translations, onAction }}>
         <Main {...main} />
       </FluentPatternsProvider>
     )}
