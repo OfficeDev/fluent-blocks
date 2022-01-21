@@ -8,6 +8,7 @@
   "private": true,
   "types": "types/view.d.ts",
   "scripts": {
+    "storybook:upgrade": "yarn upgrade --scope @storybook",
     "storybook:build": "build-storybook",
     "storybook:start": "start-storybook -p 4000",
     "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
