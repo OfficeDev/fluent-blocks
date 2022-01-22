@@ -43,6 +43,7 @@ export const cardProps = z
         contextualVariant: z
           .union([z.literal('block'), z.literal('layout')])
           .default('block'),
+        contextualClassName: z.string(),
       })
       .partial()
   )
@@ -56,13 +57,18 @@ const CardContentItem = (o: CardContentItemEntity) =>
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
-export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
+export const Card = ({
+  card,
+  contextualVariant = 'block',
+  contextualClassName,
+}: CardProps) => {
   const commonStyles = useCommonStyles()
   return (
     <FluentCard
       className={cx(
         contextualVariant === 'block' && commonStyles.mainContentWidth,
-        contextualVariant === 'block' && commonStyles.centerBlock
+        contextualVariant === 'block' && commonStyles.centerBlock,
+        contextualClassName
       )}
     >
       <div className={commonStyles.elevatedSurface}>
