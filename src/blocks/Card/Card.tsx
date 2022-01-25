@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 // todo: fix this import when Card is released directly from @fluentui/react-components
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Card as FluentCard } from '@fluentui/react-card'
-import { mergeClasses as cx } from '@fluentui/react-components'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import {
   escapeElement,
@@ -43,7 +43,6 @@ export const cardProps = z
         contextualVariant: z
           .union([z.literal('block'), z.literal('layout')])
           .default('block'),
-        contextualClassName: z.string(),
       })
       .partial()
   )
@@ -57,18 +56,22 @@ const CardContentItem = (o: CardContentItemEntity) =>
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
-export const Card = ({
-  card,
-  contextualVariant = 'block',
-  contextualClassName,
-}: CardProps) => {
+const useCardStyles = makeStyles({
+  layoutItemCard: {
+    minHeight: '100%',
+    boxSizing: 'border-box',
+  },
+})
+
+export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   const commonStyles = useCommonStyles()
+  const cardStyles = useCardStyles()
   return (
     <FluentCard
       className={cx(
         contextualVariant === 'block' && commonStyles.mainContentWidth,
         contextualVariant === 'block' && commonStyles.centerBlock,
-        contextualClassName
+        contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}
     >
       <div className={commonStyles.elevatedSurface}>

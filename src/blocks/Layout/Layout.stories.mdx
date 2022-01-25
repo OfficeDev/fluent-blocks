@@ -46,10 +46,12 @@ The `Layout` component is a block which can arrange its content items such that 
     args={{
       theme: 'light',
       variant: 'grid',
-      items: range(7).map(() => ({
-        card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
+      items: range(7).map((i) => ({
+        item: {
+          card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
+        },
+        ...(i === 0 && { inlineSizeFactor: 2 }),
       })),
-      itemOptions: [{ inlineSizeFactor: 2 }],
     }}
   >
     {seed(1234) || LayoutTemplate.bind({})}
