@@ -18,6 +18,9 @@ import { BubbleChartDatum, ChartData } from '../chart-types'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
 
+/**
+ * @internal
+ */
 export const BubbleChart = memo(
   // eslint-disable-next-line max-lines-per-function
   ({ label, data }: { label: string; data: ChartData }) => {

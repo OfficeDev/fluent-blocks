@@ -15,6 +15,9 @@ import { FluentPatternsContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
 
+/**
+ * @internal
+ */
 export const LineChart = memo(
   // eslint-disable-next-line max-lines-per-function
   ({
