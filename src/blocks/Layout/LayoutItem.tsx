@@ -1,5 +1,7 @@
 import { z } from 'zod'
-import { cardPropsOrElement, renderIfCard } from '../Card/Card'
+import { cloneElement, ReactElement } from 'react'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import {
   escapeElement,
   invalidLayoutItem,
@@ -7,9 +9,9 @@ import {
   propsElementUnion,
   renderIfEscape,
 } from '../../lib'
-import { makeStyles } from '@fluentui/react-components'
+
+import { cardPropsOrElement, renderIfCard } from '../Card/Card'
 import { layoutVariant } from './layout-types'
-import { cloneElement, ReactElement } from 'react'
 
 export const layoutItemEntity = z.union([cardPropsOrElement, escapeElement])
 export type LayoutItemEntity = z.infer<typeof layoutItemEntity>
@@ -17,7 +19,14 @@ export type LayoutItemEntity = z.infer<typeof layoutItemEntity>
 export const layoutItemProps = z
   .object({
     item: layoutItemEntity,
-    inlineSizeFactor: z.number().int().gte(1).lte(2).default(1).optional(),
+    inlineSizeFactor: z
+      .union([z.literal(1), z.literal(2)])
+      .default(1)
+      .optional(),
+    blockSizeFactor: z
+      .union([z.literal(1), z.literal(2)])
+      .default(1)
+      .optional(),
   })
   .merge(
     z
@@ -39,18 +48,25 @@ const useLayoutItemStyles = makeStyles({
     marginInlineEnd: '.5rem',
     marginBlockEnd: '.5rem',
   },
+  flexBlockSizeFactor1: {},
+  flexBlockSizeFactor2: {},
   gridInlineSizeFactor1: {},
   gridInlineSizeFactor2: {
     '@media screen and (min-width: 600px)': {
       gridColumnEnd: 'span 2',
     },
   },
+  gridBlockSizeFactor1: {},
+  gridBlockSizeFactor2: {
+    gridRowEnd: 'span 2',
+  },
 })
 
 export const LayoutItem = ({
   item,
   contextualVariant = 'grid',
-  inlineSizeFactor,
+  inlineSizeFactor = 1,
+  blockSizeFactor = 1,
 }: LayoutItemProps) => {
   const styles = useLayoutItemStyles()
 
@@ -60,13 +76,18 @@ export const LayoutItem = ({
   return (
     contentElement && (
       <div
-        className={
+        className={cx(
           styles[
             `${contextualVariant}InlineSizeFactor${
-              (inlineSizeFactor || 1).toString() as '1' | '2'
+              inlineSizeFactor.toString() as '1' | '2'
+            }`
+          ],
+          styles[
+            `${contextualVariant}BlockSizeFactor${
+              blockSizeFactor.toString() as '1' | '2'
             }`
           ]
-        }
+        )}
       >
         {cloneElement(contentElement, { contextualVariant: 'layout' })}
       </div>

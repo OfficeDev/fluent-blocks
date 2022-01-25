@@ -50,7 +50,7 @@ The `Layout` component is a block which can arrange its content items such that 
         item: {
           card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
         },
-        ...(i === 0 && { inlineSizeFactor: 2 }),
+        ...(i === 0 && { inlineSizeFactor: 2, blockSizeFactor: 2 }),
       })),
     }}
   >
