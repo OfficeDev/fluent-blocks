@@ -93,6 +93,7 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         contextualVariant === 'block' && commonStyles.centerBlock,
         contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}
+      tabIndex={0}
     >
       <div className={commonStyles.elevatedSurface}>
         {Sequence<CardContentItemEntity>(card, CardContentItem, {
