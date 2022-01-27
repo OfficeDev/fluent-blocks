@@ -105,11 +105,22 @@ that time `View` will call its interaction callback with the update.
             ],
             sections: range(2).map(() => ({
               title: [{ text: fakeTitle(fake) }],
-              blocks: range(3).map(() => ({
-                paragraph: range(3).map(() => ({
-                  text: fake('{{lorem.sentence}} '),
+              blocks: [
+                ...range(3).map(() => ({
+                  paragraph: range(3).map(() => ({
+                    text: fake('{{lorem.sentence}} '),
+                  })),
                 })),
-              })),
+                {
+                  card: [
+                    {
+                      paragraph: fakeTitle(fake),
+                      level: 3,
+                    },
+                    { paragraph: fake('{{lorem.paragraph}}') },
+                  ],
+                },
+              ],
             })),
           }),
         })),

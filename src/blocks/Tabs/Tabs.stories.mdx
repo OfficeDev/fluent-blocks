@@ -24,10 +24,10 @@ export const TabsTemplate = (props) => <Tabs {...props} />
     args={{
       theme: 'light',
       tabs: range(4).map(() => ({
-        tab: { label: fakeTitle() },
+        tab: { label: fakeTitle(fake) },
         panel: [{ paragraph: [{ text: fake('{{lorem.paragraph}}') }] }],
       })),
-      label: fakeTitle(),
+      label: fakeTitle(fake),
     }}
   >
     {seed(1234) || TabsTemplate.bind({})}

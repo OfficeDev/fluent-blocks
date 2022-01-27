@@ -35,20 +35,23 @@ const CardContentItem = (o: CardContentItemEntity) =>
 
 const useCardStyles = makeStyles({
   root: {
+    boxSizing: 'border-box',
     padding: rem(20),
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'transparent',
   },
   hc: (theme) => ({
     borderColor: theme.colorNeutralForeground1,
-    borderWidth: '1px',
-    borderStyle: 'solid',
   }),
   layoutItemCard: {
     minHeight: '100%',
-    boxSizing: 'border-box',
   },
   blockCard: {
     marginInlineStart: 'auto',
     marginInlineEnd: 'auto',
+    marginBlockStart: rem(20),
+    marginBlockEnd: rem(20),
   },
 })
 
@@ -62,7 +65,8 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         cardStyles.root,
         commonStyles.elevatedSurface,
         themeName === 'high-contrast' && cardStyles.hc,
-        contextualVariant === 'block' && commonStyles.mainContentWidth,
+        contextualVariant === 'block' &&
+          commonStyles.mainContentWidthEncapsulated,
         contextualVariant === 'block' && cardStyles.blockCard,
         contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}

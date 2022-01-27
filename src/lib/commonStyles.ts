@@ -5,6 +5,9 @@ export const useCommonStyles = makeStyles({
   mainContentWidth: {
     maxWidth: rem(572),
   },
+  mainContentWidthEncapsulated: {
+    maxWidth: rem(572 + 40),
+  },
   narrowWidth: {
     maxWidth: rem(280),
   },

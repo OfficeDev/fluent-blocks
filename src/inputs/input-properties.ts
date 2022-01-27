@@ -33,6 +33,7 @@ export const shortInputContextualVariants = z
       .union([
         z.literal('block-inputs'),
         z.literal('card-inputs'),
+        z.literal('narrow-inputs'),
         z.literal('tabs'),
       ])
       .default('block-inputs'),

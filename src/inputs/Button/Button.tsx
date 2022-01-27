@@ -55,6 +55,9 @@ const useButtonStyles = makeStyles({
     margin: 0,
     flexShrink: 0,
   },
+  fill: {
+    width: '100%',
+  },
   tab: (theme) => ({
     position: 'relative',
     fontWeight: theme.fontWeightRegular,
@@ -145,6 +148,7 @@ export const Button = ({
       size={derivedSize}
       className={cx(
         buttonStyles.root,
+        contextualVariant === 'narrow-inputs' && buttonStyles.fill,
         contextualVariant === 'tabs' && buttonStyles.tab,
         contextualVariant === 'tabs' && selected && buttonStyles.tabSelected
       )}

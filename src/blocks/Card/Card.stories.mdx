@@ -95,11 +95,11 @@ used to group content as a regular Block element as well.
     args={{
       theme: 'light',
       widget: {
-        title: [{ text: fakeTitle() }],
+        title: [{ text: fakeTitle(fake) }],
         label: 'Demo Widget',
-        abstract: [{ text: fakeTitle() }],
+        abstract: [{ text: fakeTitle(fake) }],
         tabs: range(2).map((i) => ({
-          tab: { label: fakeTitle() },
+          tab: { label: fakeTitle(fake) },
           panel: [
             {
               media: {
@@ -125,7 +125,7 @@ used to group content as a regular Block element as well.
           ],
         })),
         footerAction: {
-          label: fakeTitle(),
+          label: fakeTitle(fake),
           icon: 'arrow_right',
           iconPosition: 'after',
         },
