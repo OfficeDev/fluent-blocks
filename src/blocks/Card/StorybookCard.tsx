@@ -3,7 +3,7 @@ import range from 'lodash/range'
 import { FluentPatternsProvider, ThemeName } from '../../lib'
 
 import { Main } from '../../surfaces'
-import { CardProps } from './Card'
+import { CardProps } from './card-properties'
 
 export const BlockCard = ({
   theme,

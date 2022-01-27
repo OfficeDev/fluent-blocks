@@ -1,3 +1,4 @@
+import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
 import fakeTitle from '../../lib/fakeTitle'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
@@ -97,34 +98,32 @@ used to group content as a regular Block element as well.
         title: [{ text: fakeTitle() }],
         label: 'Demo Widget',
         abstract: [{ text: fakeTitle() }],
-        tabs: [
-          {
-            tab: { label: 'Main demo content' },
-            panel: [
-              {
-                media: {
-                  label: 'Demo chart',
-                  chart: {
-                    type: 'doughnut',
-                    data: {
-                      labels: ['Jan', 'Feb', 'March', 'April', 'May'],
-                      datasets: [
-                        {
-                          label: 'Laptops',
-                          data: [1860, 7700, 4100, 3012, 2930],
-                        },
-                        {
-                          label: 'Watches',
-                          data: [1200, 3600, 2480, 5049, 4596],
-                        },
-                      ],
-                    },
+        tabs: range(2).map((i) => ({
+          tab: { label: fakeTitle() },
+          panel: [
+            {
+              media: {
+                label: 'Demo chart',
+                chart: {
+                  type: ['doughnut', 'line'][i],
+                  data: {
+                    labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+                    datasets: [
+                      {
+                        label: 'Laptops',
+                        data: [1860, 7700, 4100, 3012, 2930],
+                      },
+                      {
+                        label: 'Watches',
+                        data: [1200, 3600, 2480, 5049, 4596],
+                      },
+                    ],
                   },
                 },
               },
-            ],
-          },
-        ],
+            },
+          ],
+        })),
         footerAction: {
           label: fakeTitle(),
           icon: 'arrow_right',

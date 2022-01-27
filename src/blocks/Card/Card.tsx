@@ -6,7 +6,6 @@ import { Card as FluentCard } from '@fluentui/react-card'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import {
-  escapeElement,
   invalidCardContentItem,
   propsElementUnion,
   rem,
@@ -15,46 +14,13 @@ import {
   useCommonStyles,
   useFluentPatternsContext,
 } from '../../lib'
-import {
-  paragraphPropsOrElement,
-  renderIfParagraph,
-} from '../Paragraph/Paragraph'
-import { headingPropsOrElement, renderIfHeading } from '../Heading/Heading'
-import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
-import { tabsPropsOrElement, renderIfTabs } from '../Tabs/Tabs'
-import {
-  renderIfShortInputs,
-  shortInputsPropsOrElement,
-} from '../ShortInputs/ShortInputs'
+import { renderIfParagraph } from '../Paragraph/Paragraph'
+import { renderIfHeading } from '../Heading/Heading'
+import { renderIfFigure } from '../Figure/Figure'
+import { renderIfTabs } from '../Tabs/Tabs'
+import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
 import { renderIfWidget, widgetPropsOrElement } from './exemplars/Widget'
-
-export const cardContentItemEntity = z.union([
-  headingPropsOrElement,
-  paragraphPropsOrElement,
-  figurePropsOrElement,
-  tabsPropsOrElement,
-  shortInputsPropsOrElement,
-  escapeElement,
-])
-export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>
-
-export const cardContentItemSequence = z.array(cardContentItemEntity)
-export type CardContentItemSequence = z.infer<typeof cardContentItemSequence>
-
-export const cardProps = z
-  .object({
-    card: cardContentItemSequence,
-  })
-  .merge(
-    z
-      .object({
-        contextualVariant: z
-          .union([z.literal('block'), z.literal('layout')])
-          .default('block'),
-      })
-      .partial()
-  )
-export type CardProps = z.infer<typeof cardProps>
+import { CardContentItemEntity, CardProps, cardProps } from './card-properties'
 
 const CardContentItem = (o: CardContentItemEntity) =>
   renderIfHeading(o) ||
@@ -88,6 +54,7 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
     <FluentCard
       className={cx(
         cardStyles.root,
+        commonStyles.elevatedSurface,
         themeName === 'high-contrast' && cardStyles.hc,
         contextualVariant === 'block' && commonStyles.mainContentWidth,
         contextualVariant === 'block' && commonStyles.centerBlock,
@@ -95,11 +62,9 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
       )}
       tabIndex={0}
     >
-      <div className={commonStyles.elevatedSurface}>
-        {Sequence<CardContentItemEntity>(card, CardContentItem, {
-          contextualVariant: 'card',
-        })}
-      </div>
+      {Sequence<CardContentItemEntity>(card, CardContentItem, {
+        contextualVariant: 'card',
+      })}
     </FluentCard>
   )
 }

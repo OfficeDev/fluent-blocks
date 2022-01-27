@@ -59,10 +59,7 @@ const useShortInputsStyles = makeStyles({
     flexFlow: 'row wrap',
     marginInlineEnd: '-.5rem',
     marginBlockEnd: '-.5rem',
-    '& > *': {
-      marginInlineEnd: '.5rem',
-      marginBlockEnd: '.5rem',
-    },
+    gap: '.5rem',
   },
   'shortInputSequence--narrow-block': {
     marginBlockStart: '.5rem',

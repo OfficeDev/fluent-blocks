@@ -1,26 +1,31 @@
 import { z } from 'zod'
-import { inlineSequenceOrString } from '../../../inlines'
-import { tabsProps } from '../../Tabs/Tabs'
-import { buttonProps } from '../../../inputs'
-import { Card, CardProps } from '../Card'
 import { ReactElement } from 'react'
-import { propsElementUnion } from '../../../lib'
 
-export const widgetProps = z.object({
-  widget: tabsProps.omit({ tabVariant: true, tabListVariant: true }).merge(
-    z.object({
-      title: inlineSequenceOrString.optional(),
-      abstract: inlineSequenceOrString.optional(),
-      footerAction: buttonProps
-        .omit({
-          type: true,
-          variant: true,
-          iconOnly: true,
-        })
-        .optional(),
-    })
-  ),
-})
+import { inlineSequenceOrString } from '../../../inlines'
+import { propsElementUnion } from '../../../lib'
+import { buttonProps } from '../../../inputs'
+
+import { tabsProps } from '../../Tabs/Tabs'
+import { Card } from '../Card'
+import { cardContextualVariants, CardProps } from '../card-properties'
+
+export const widgetProps = z
+  .object({
+    widget: tabsProps.omit({ tabVariant: true, tabListVariant: true }).merge(
+      z.object({
+        title: inlineSequenceOrString.optional(),
+        abstract: inlineSequenceOrString.optional(),
+        footerAction: buttonProps
+          .omit({
+            type: true,
+            variant: true,
+            iconOnly: true,
+          })
+          .optional(),
+      })
+    ),
+  })
+  .merge(cardContextualVariants)
 export type WidgetProps = z.infer<typeof widgetProps>
 
 const widgetFooterActionProps = {
@@ -30,6 +35,7 @@ const widgetFooterActionProps = {
 
 export const widgetCard = ({
   widget: { title, abstract, label, tabs, footerAction },
+  contextualVariant,
 }: WidgetProps): CardProps => ({
   card: [
     ...(title ? [{ paragraph: title, level: 3 }] : []),
@@ -39,6 +45,7 @@ export const widgetCard = ({
       ? [{ inputs: [{ ...footerAction, ...widgetFooterActionProps }] }]
       : []),
   ],
+  contextualVariant,
 })
 
 export const Widget = (props: WidgetProps) => <Card {...widgetCard(props)} />

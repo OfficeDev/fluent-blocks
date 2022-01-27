@@ -56,11 +56,7 @@ export const useTextBlockStyles = makeStyles({
     lineHeight: 24 / 18,
   }),
   cardSpacing: {
-    marginBlockStart: 0,
-    marginInlineStart: 0,
-    marginInlineEnd: 0,
-    marginBlockEnd: rem(12),
-    '&:last-child': { marginBlockEnd: 0 },
+    margin: 0,
   },
   h1: {
     fontSize: rem(24),

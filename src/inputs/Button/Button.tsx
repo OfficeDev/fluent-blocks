@@ -52,7 +52,7 @@ export type ButtonProps = z.infer<typeof buttonProps>
 
 const useButtonStyles = makeStyles({
   root: {
-    margin: 'inherit',
+    margin: 0,
     flexShrink: 0,
   },
   tab: (theme) => ({
