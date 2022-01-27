@@ -2,21 +2,20 @@ import { z } from 'zod'
 import { InlineContent, inlineSequenceOrString } from '../../inlines'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
+  key,
   propsElementUnion,
-  Sequence,
   useCommonStyles,
   useTextBlockStyles,
 } from '../../lib'
 import { ReactElement } from 'react'
 
-const descriptionListItemProps = z.object({
-  title: inlineSequenceOrString,
-  description: inlineSequenceOrString,
-})
-type DescriptionListItemProps = z.infer<typeof descriptionListItemProps>
-
 export const descriptionListProps = z.object({
-  descriptionList: z.array(descriptionListItemProps),
+  descriptionList: z.array(
+    z.object({
+      title: inlineSequenceOrString,
+      description: inlineSequenceOrString,
+    })
+  ),
 })
 export type DescriptionListProps = z.infer<typeof descriptionListProps>
 
@@ -40,26 +39,10 @@ const useDescriptionListStyles = makeStyles({
   },
 })
 
-const DescriptionListItem = ({
-  title,
-  description,
-}: DescriptionListItemProps) => {
-  const descriptionListStyles = useDescriptionListStyles()
-  return (
-    <div className={descriptionListStyles.listItem}>
-      <dt className={descriptionListStyles.itemTitle}>
-        <InlineContent inlines={title} />
-      </dt>
-      <dd className={descriptionListStyles.itemDescription}>
-        <InlineContent inlines={description} />
-      </dd>
-    </div>
-  )
-}
-
 export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
+  const descriptionListStyles = useDescriptionListStyles()
   return (
     <dl
       className={cx(
@@ -68,7 +51,16 @@ export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
         textBlockStyles.root
       )}
     >
-      {Sequence<DescriptionListItemProps>(descriptionList, DescriptionListItem)}
+      {descriptionList.map((item) => (
+        <div key={key(item)} className={descriptionListStyles.listItem}>
+          <dt className={descriptionListStyles.itemTitle}>
+            <InlineContent inlines={item.title} />
+          </dt>
+          <dd className={descriptionListStyles.itemDescription}>
+            <InlineContent inlines={item.description} />
+          </dd>
+        </div>
+      ))}
     </dl>
   )
 }
