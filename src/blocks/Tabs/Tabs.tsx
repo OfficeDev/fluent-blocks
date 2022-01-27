@@ -44,6 +44,7 @@ export const tabPanelItemEntity = z.union([
 export type TabPanelItemEntity = z.infer<typeof tabPanelItemEntity>
 
 export const tabPanelItemSequence = z.array(tabPanelItemEntity)
+export type TabPanelItemSequence = z.infer<typeof tabPanelItemSequence>
 
 const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfHeading(o) ||

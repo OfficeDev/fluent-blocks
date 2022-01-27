@@ -27,18 +27,32 @@ export type ShortInputEntity = z.infer<typeof shortInputEntity>
 export const shortInputSequence = z.array(shortInputEntity)
 export type ShortInputSequence = z.infer<typeof shortInputSequence>
 
-const shortInputsProps = z.object({
-  inputs: shortInputSequence,
-  variant: z
-    .union([z.literal('flex'), z.literal('narrow-block')])
-    .default('flex')
-    .optional(),
-})
+const shortInputsProps = z
+  .object({
+    inputs: shortInputSequence,
+    variant: z
+      .union([z.literal('flex'), z.literal('narrow-block')])
+      .default('flex')
+      .optional(),
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('card'), z.literal('block')])
+          .default('block'),
+      })
+      .partial()
+  )
 export type ShortInputsProps = z.infer<typeof shortInputsProps>
 
 const useShortInputsStyles = makeStyles({
   root: {
     marginBlockEnd: '.5rem',
+  },
+  cardContext: {
+    marginInlineStart: '-.5rem',
+    marginInlineEnd: '-.5rem',
   },
   'shortInputSequence--flex': {
     display: 'flex',
@@ -65,26 +79,29 @@ const ShortInput = (o: ShortInputEntity) =>
   invalidShortInput(o)
 
 export const ShortInputs = (props: ShortInputsProps) => {
-  const { inputs, variant = 'flex' } = props
-  const styles = useShortInputsStyles()
+  const { inputs, variant = 'flex', contextualVariant = 'block' } = props
+  const shortInputsStyles = useShortInputsStyles()
   const commonStyles = useCommonStyles()
   return (
     <div
       className={cx(
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        styles.root
+        shortInputsStyles.root,
+        contextualVariant === 'card' && shortInputsStyles.cardContext
       )}
     >
       <div
         className={cx.apply(this, [
-          styles[`shortInputSequence--${variant}`],
+          shortInputsStyles[`shortInputSequence--${variant}`],
           ...(variant === 'narrow-block'
             ? [commonStyles.narrowWidth, commonStyles.centerBlock]
             : []),
         ])}
       >
-        {Sequence<ShortInputEntity>(inputs, ShortInput)}
+        {Sequence<ShortInputEntity>(inputs, ShortInput, {
+          contextualVariant: `${contextualVariant}-inputs`,
+        })}
       </div>
     </div>
   )

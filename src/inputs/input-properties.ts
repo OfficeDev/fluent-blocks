@@ -26,3 +26,17 @@ export const labeledValueProps = z.object({
   value: z.string().nonempty(),
   label: inlineSequenceOrString,
 })
+
+export const shortInputContextualVariants = z
+  .object({
+    contextualVariant: z
+      .union([
+        z.literal('block-inputs'),
+        z.literal('card-inputs'),
+        z.literal('tabs'),
+      ])
+      .default('block-inputs'),
+    selected: z.boolean().default(false),
+    controls: z.string(),
+  })
+  .partial()

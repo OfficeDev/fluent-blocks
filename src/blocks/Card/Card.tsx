@@ -9,9 +9,11 @@ import {
   escapeElement,
   invalidCardContentItem,
   propsElementUnion,
+  rem,
   renderIfEscape,
   Sequence,
   useCommonStyles,
+  useFluentPatternsContext,
 } from '../../lib'
 import {
   paragraphPropsOrElement,
@@ -20,12 +22,18 @@ import {
 import { headingPropsOrElement, renderIfHeading } from '../Heading/Heading'
 import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
 import { tabsPropsOrElement, renderIfTabs } from '../Tabs/Tabs'
+import {
+  renderIfShortInputs,
+  shortInputsPropsOrElement,
+} from '../ShortInputs/ShortInputs'
+import { renderIfWidget, widgetPropsOrElement } from './exemplars/Widget'
 
 export const cardContentItemEntity = z.union([
   headingPropsOrElement,
   paragraphPropsOrElement,
   figurePropsOrElement,
   tabsPropsOrElement,
+  shortInputsPropsOrElement,
   escapeElement,
 ])
 export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>
@@ -53,10 +61,19 @@ const CardContentItem = (o: CardContentItemEntity) =>
   renderIfParagraph(o) ||
   renderIfFigure(o) ||
   renderIfTabs(o) ||
+  renderIfShortInputs(o) ||
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
 const useCardStyles = makeStyles({
+  root: {
+    padding: rem(20),
+  },
+  hc: (theme) => ({
+    borderColor: theme.colorNeutralForeground1,
+    borderWidth: '1px',
+    borderStyle: 'solid',
+  }),
   layoutItemCard: {
     minHeight: '100%',
     boxSizing: 'border-box',
@@ -66,9 +83,12 @@ const useCardStyles = makeStyles({
 export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   const commonStyles = useCommonStyles()
   const cardStyles = useCardStyles()
+  const { themeName } = useFluentPatternsContext()
   return (
     <FluentCard
       className={cx(
+        cardStyles.root,
+        themeName === 'high-contrast' && cardStyles.hc,
         contextualVariant === 'block' && commonStyles.mainContentWidth,
         contextualVariant === 'block' && commonStyles.centerBlock,
         contextualVariant === 'layout' && cardStyles.layoutItemCard
@@ -91,12 +111,22 @@ function isCardElement(o: any): o is ReactElement<CardProps, typeof Card> {
   return o?.type === Card
 }
 
-export const cardPropsOrElement = propsElementUnion<
+export const cardPropsOrElementExact = propsElementUnion<
   typeof cardProps,
   typeof Card
 >(cardProps)
+export type CardPropsOrElementExact = z.infer<typeof cardPropsOrElementExact>
+
+export function renderIfCardExact(o: any) {
+  return isCardProps(o) ? <Card {...o} /> : isCardElement(o) ? o : null
+}
+
+export const cardPropsOrElement = z.union([
+  cardPropsOrElementExact,
+  widgetPropsOrElement,
+])
 export type CardPropsOrElement = z.infer<typeof cardPropsOrElement>
 
 export function renderIfCard(o: any) {
-  return isCardProps(o) ? <Card {...o} /> : isCardElement(o) ? o : null
+  return renderIfCardExact(o) || renderIfWidget(o)
 }

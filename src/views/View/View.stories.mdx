@@ -1,5 +1,6 @@
 import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
+import fakeTitle from '../../lib/fakeTitle'
 import { View } from './View'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
@@ -27,11 +28,6 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
     viewMode: 'docs',
   }}
 />
-
-export const fakeTitle = () => {
-  const lowercase = fake('{{lorem.words}}')
-  return lowercase.charAt(0).toUpperCase() + lowercase.slice(1)
-}
 
 export const ViewTemplate = (props) => <View {...props} />
 

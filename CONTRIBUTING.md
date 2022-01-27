@@ -61,7 +61,14 @@ A union of specific `…PropsOrElement` types characterizing a certain class is 
 4. Component implementation
    - Use [CSS logical properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties) (instead of left/rigt), e.g. `marginInlineStart`.
    - Always use theme color aliases; _never_ use CSS color literals.
-   - If a slot in the component should support `Escape`, only do so for its JSX syntax style.
+   - If a slot in the component should support `Escape`, 
+     - only do so for its JSX syntax style and
+     - only outside of tightly-bound parent-child relations (e.g. `Layout` refuses to render `Escape` if it is in its `items` prop since only `LayoutItem` is allowed there).
+   - All components should export:
+     - `{componentName}Props` and `{componentName}PropsOrElement` zod schema
+     - `{ComponentName}Props` and `{ComponentName}PropsOrElement` types based on the zod schemas
+     - a `{ComponentName}` functional component (`React.FC`)
+     - a `renderIf{ComponentName}` function that renders with either props or an element (if the component has exemplars, renders any props or elements for its exact form _or its exemplars_)
 5. Recommended but unenforced code styles
    - `import` statements should occur in the following order with a line break in between:
      1. External dependencies
