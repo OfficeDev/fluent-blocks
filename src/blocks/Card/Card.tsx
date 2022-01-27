@@ -44,6 +44,10 @@ const useCardStyles = makeStyles({
     minHeight: '100%',
     boxSizing: 'border-box',
   },
+  blockCard: {
+    marginInlineStart: 'auto',
+    marginInlineEnd: 'auto',
+  },
 })
 
 export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
@@ -57,7 +61,7 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         commonStyles.elevatedSurface,
         themeName === 'high-contrast' && cardStyles.hc,
         contextualVariant === 'block' && commonStyles.mainContentWidth,
-        contextualVariant === 'block' && commonStyles.centerBlock,
+        contextualVariant === 'block' && cardStyles.blockCard,
         contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}
       tabIndex={0}
