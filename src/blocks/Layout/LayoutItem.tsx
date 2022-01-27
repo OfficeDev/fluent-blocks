@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 
 import { cardPropsOrElement, renderIfCard } from '../Card/Card'
-import { layoutVariant } from './layout-types'
+import { layoutVariant } from './layout-properties'
 
 export const layoutItemEntity = z.union([cardPropsOrElement, escapeElement])
 export type LayoutItemEntity = z.infer<typeof layoutItemEntity>

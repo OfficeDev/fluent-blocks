@@ -53,6 +53,7 @@ const useShortInputsStyles = makeStyles({
   cardContext: {
     marginInlineStart: '-.5rem',
     marginInlineEnd: '-.5rem',
+    marginBlockEnd: 0,
   },
   'shortInputSequence--flex': {
     display: 'flex',

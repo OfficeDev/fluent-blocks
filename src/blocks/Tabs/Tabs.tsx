@@ -24,6 +24,10 @@ import {
   renderIfShortInputs,
   shortInputsPropsOrElement,
 } from '../ShortInputs/ShortInputs'
+import {
+  descriptionListPropsOrElement,
+  renderIfDescriptionList,
+} from '../DescriptionList/DescriptionList'
 
 export const tabProps = buttonProps.omit({
   type: true,
@@ -39,6 +43,7 @@ export const tabPanelItemEntity = z.union([
   paragraphPropsOrElement,
   figurePropsOrElement,
   shortInputsPropsOrElement,
+  descriptionListPropsOrElement,
   escapeElement,
 ])
 export type TabPanelItemEntity = z.infer<typeof tabPanelItemEntity>
@@ -51,6 +56,7 @@ const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfParagraph(o) ||
   renderIfFigure(o) ||
   renderIfShortInputs(o) ||
+  renderIfDescriptionList(o) ||
   renderIfEscape(o) ||
   invalidTabPanelItem(o)
 

@@ -1,4 +1,4 @@
-import { LayoutProps } from './Layout'
+import { LayoutProps } from './layout-properties'
 import { FluentPatternsProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 import { InlineSequenceOrString } from '../../inlines'
@@ -6,10 +6,10 @@ import { InlineSequenceOrString } from '../../inlines'
 export const Layout = ({
   theme,
   ...props
-}: LayoutProps['layout'] & { theme: ThemeName }) => (
+}: LayoutProps & { theme: ThemeName }) => (
   <FluentPatternsProvider themeName={theme}>
     <Main
-      blocks={[{ layout: props }]}
+      blocks={[{ ...props }]}
       title={null as unknown as InlineSequenceOrString}
     />
   </FluentPatternsProvider>

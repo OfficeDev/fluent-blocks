@@ -4,21 +4,13 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { propsElementUnion, Sequence } from '../../lib'
 
+import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
+
+import { layoutProps, LayoutProps } from './layout-properties'
 import {
-  LayoutItemPropsOrElement,
-  layoutItemPropsOrElement,
-  renderIfLayoutItem,
-} from './LayoutItem'
-
-import { layoutVariant } from './layout-types'
-
-export const layoutProps = z.object({
-  layout: z.object({
-    variant: layoutVariant,
-    items: z.array(layoutItemPropsOrElement),
-  }),
-})
-export type LayoutProps = z.infer<typeof layoutProps>
+  dashboardPropsOrElement,
+  renderIfDashboard,
+} from './exemplars/Dashboard/Dashboard'
 
 const useLayoutStyles = makeStyles({
   root: {
@@ -67,12 +59,24 @@ function isLayoutElement(
   return o?.type === Layout
 }
 
-export const layoutPropsOrElement = propsElementUnion<
+export const layoutPropsOrElementExact = propsElementUnion<
   typeof layoutProps,
   typeof Layout
 >(layoutProps)
+export type LayoutPropsOrElementExact = z.infer<
+  typeof layoutPropsOrElementExact
+>
+
+export function renderIfLayoutExact(o: any) {
+  return isLayoutProps(o) ? <Layout {...o} /> : isLayoutElement(o) ? o : null
+}
+
+export const layoutPropsOrElement = z.union([
+  layoutPropsOrElementExact,
+  dashboardPropsOrElement,
+])
 export type LayoutPropsOrElement = z.infer<typeof layoutPropsOrElement>
 
 export function renderIfLayout(o: any) {
-  return isLayoutProps(o) ? <Layout {...o} /> : isLayoutElement(o) ? o : null
+  return renderIfLayoutExact(o) || renderIfDashboard(o)
 }

@@ -1,5 +1,6 @@
 import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
+import fakeTitle from '../../lib/fakeTitle'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
 import { Layout } from './StorybookLayout'
@@ -10,21 +11,23 @@ import { themeArgType } from '../../lib'
   component={Layout}
   argTypes={{
     ...themeArgType,
-    variant: {
-      name: 'variant',
-      abstract: 'Which layout strategy to use.',
-      control: {
-        type: 'inline-radio',
-        labels: { grid: 'Grid', flex: 'Flexbox' },
-      },
-    },
-    items: {
-      name: 'Items',
-      abstract: 'The items to arrange.',
+    layout: {
+      name: 'Layout',
+      abstract: 'The layout configuration.',
       control: { type: 'object' },
       table: {
         type: {
-          summary: 'LayoutItemSequence',
+          summary: 'LayoutProps',
+        },
+      },
+    },
+    dashboard: {
+      name: 'Dashboard',
+      abstract: 'The dashboard alternative API surface for Layout.',
+      control: { type: 'object' },
+      table: {
+        type: {
+          summary: 'DashboardProps',
         },
       },
     },
@@ -45,13 +48,15 @@ The `Layout` component is a block which can arrange its content items such that 
     name="Layout"
     args={{
       theme: 'light',
-      variant: 'grid',
-      items: range(7).map((i) => ({
-        item: {
-          card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
-        },
-        ...(i === 0 && { inlineSizeFactor: 2, blockSizeFactor: 2 }),
-      })),
+      layout: {
+        variant: 'grid',
+        items: range(7).map((i) => ({
+          item: {
+            card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
+          },
+          ...(i === 0 && { inlineSizeFactor: 2, blockSizeFactor: 2 }),
+        })),
+      },
     }}
   >
     {seed(1234) || LayoutTemplate.bind({})}
@@ -59,3 +64,94 @@ The `Layout` component is a block which can arrange its content items such that 
 </Canvas>
 
 <ArgsTable story="Layout" />
+
+## Exemplars
+
+### Dashboard
+
+**Dashboards** are grid-variant Layouts that expect Widgets (an exemplar of Card) as their items.
+
+<Canvas withSource="none">
+  <Story
+    name="Dashboard"
+    args={{
+      theme: 'light',
+      dashboard: {
+        items: [
+          ...range(5).map((i) => ({
+            item: {
+              widget: {
+                title: [{ text: fakeTitle(fake) }],
+                label: 'Demo Widget',
+                abstract: [{ text: fakeTitle(fake) }],
+                tabs: range(2).map((j) => ({
+                  tab: { label: fakeTitle(fake) },
+                  panel: [
+                    {
+                      media: {
+                        label: 'Demo chart',
+                        chart: {
+                          type: ['line', 'doughnut'][i === 0 ? 1 : j],
+                          data: {
+                            labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+                            datasets: [
+                              {
+                                label: 'Laptops',
+                                data: [1860, 7700, 4100, 3012, 2930],
+                              },
+                              {
+                                label: 'Watches',
+                                data: [1200, 3600, 2480, 5049, 4596],
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  ],
+                })),
+                footerAction: {
+                  label: fakeTitle(fake),
+                  icon: 'arrow_right',
+                  iconPosition: 'after',
+                },
+              },
+            },
+            ...(i === 0 && { inlineSizeFactor: 2, blockSizeFactor: 2 }),
+          })),
+          {
+            item: {
+              widget: {
+                title: [{ text: fakeTitle(fake) }],
+                label: 'Demo Widget',
+                abstract: [{ text: fakeTitle(fake) }],
+                tabs: [
+                  {
+                    tab: { label: fakeTitle(fake) },
+                    panel: [
+                      {
+                        descriptionList: range(4).map((i) => ({
+                          title: fakeTitle(fake),
+                          description: Math.floor(Math.pow(Math.PI, i)) + '%',
+                        })),
+                      },
+                    ],
+                  },
+                ],
+                footerAction: {
+                  label: fakeTitle(fake),
+                  icon: 'arrow_right',
+                  iconPosition: 'after',
+                },
+              },
+            },
+          },
+        ],
+      },
+    }}
+  >
+    {seed(1234) || LayoutTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Dashboard" />
