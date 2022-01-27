@@ -4,6 +4,7 @@ import { paragraphPropsOrElement } from '../Paragraph/Paragraph'
 import { figurePropsOrElement } from '../Figure/Figure'
 import { tabsPropsOrElement } from '../Tabs/Tabs'
 import { shortInputsPropsOrElement } from '../ShortInputs/ShortInputs'
+import { descriptionListPropsOrElement } from '../DescriptionList/DescriptionList'
 import { escapeElement } from '../../lib'
 
 export const cardContentItemEntity = z.union([
@@ -12,6 +13,7 @@ export const cardContentItemEntity = z.union([
   figurePropsOrElement,
   tabsPropsOrElement,
   shortInputsPropsOrElement,
+  descriptionListPropsOrElement,
   escapeElement,
 ])
 export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>

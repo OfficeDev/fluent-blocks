@@ -19,6 +19,7 @@ import { renderIfHeading } from '../Heading/Heading'
 import { renderIfFigure } from '../Figure/Figure'
 import { renderIfTabs } from '../Tabs/Tabs'
 import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
+import { renderIfDescriptionList } from '../DescriptionList/DescriptionList'
 import { renderIfWidget, widgetPropsOrElement } from './exemplars/Widget'
 import { CardContentItemEntity, CardProps, cardProps } from './card-properties'
 
@@ -28,6 +29,7 @@ const CardContentItem = (o: CardContentItemEntity) =>
   renderIfFigure(o) ||
   renderIfTabs(o) ||
   renderIfShortInputs(o) ||
+  renderIfDescriptionList(o) ||
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
