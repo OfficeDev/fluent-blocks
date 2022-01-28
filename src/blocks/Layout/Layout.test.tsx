@@ -2,6 +2,6 @@
 
 import expect from 'expect'
 
-describe('Figure', function () {
+describe('Layout', function () {
   it('iS READY FOR TESTS')
 })

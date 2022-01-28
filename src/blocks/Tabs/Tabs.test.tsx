@@ -26,6 +26,8 @@ describe('Tabs', function () {
             .count()
         ).toEqual(1)
       })
+
+      it('moves focus and switches tabs correctly for keyboard users')
     })
 
     describe('using JSX', function () {
