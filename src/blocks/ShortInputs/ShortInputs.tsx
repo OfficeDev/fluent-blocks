@@ -6,6 +6,7 @@ import {
   escapeElement,
   invalidShortInput,
   propsElementUnion,
+  rem,
   renderIfEscape,
   Sequence,
   useCommonStyles,
@@ -61,10 +62,10 @@ const useShortInputsStyles = makeStyles({
     gap: '.5rem',
   },
   'shortInputSequence--narrow-block': {
-    marginBlockStart: '.5rem',
-    '& > *': {
-      marginBlockEnd: '.5rem',
-    },
+    marginBlockStart: rem(20),
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    gap: '.5rem',
   },
 })
 
