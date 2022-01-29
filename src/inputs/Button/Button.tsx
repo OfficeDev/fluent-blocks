@@ -14,6 +14,7 @@ import {
   rem,
 } from '../../lib'
 import { Icon, iconSize, iconVariant } from '../../inlines'
+import { shortInputContextualVariants } from '../input-properties'
 
 export const buttonActivateAction = actionPayload.merge(
   z.object({
@@ -36,6 +37,9 @@ export const buttonProps = z
         z.literal('transparent'),
       ])
       .optional(),
+    size: z
+      .union([z.literal('small'), z.literal('medium'), z.literal('large')])
+      .optional(),
     iconOnly: z.boolean().optional(),
     icon: z.string().optional(),
     iconPosition: z.union([z.literal('before'), z.literal('after')]).optional(),
@@ -43,23 +47,16 @@ export const buttonProps = z
     iconVariant: iconVariant.optional(),
     ...withActionHandler(buttonActivateAction),
   })
-  .merge(
-    z
-      .object({
-        contextualVariant: z
-          .union([z.literal('inputs'), z.literal('tabs')])
-          .default('inputs'),
-        selected: z.boolean().default(false),
-        controls: z.string(),
-      })
-      .partial()
-  )
+  .merge(shortInputContextualVariants)
 export type ButtonProps = z.infer<typeof buttonProps>
 
 const useButtonStyles = makeStyles({
   root: {
-    margin: 'inherit',
+    margin: 0,
     flexShrink: 0,
+  },
+  fill: {
+    width: '100%',
   },
   tab: (theme) => ({
     position: 'relative',
@@ -120,13 +117,14 @@ export const Button = ({
   icon,
   iconPosition,
   variant,
+  size,
   iconSize,
   iconVariant,
   actionId,
   onAction,
-  contextualVariant,
   selected,
   controls,
+  contextualVariant = 'block-inputs',
 }: ButtonProps) => {
   const context = useFluentPatternsContext()
 
@@ -138,13 +136,19 @@ export const Button = ({
 
   const buttonStyles = useButtonStyles()
 
+  const derivedSize =
+    contextualVariant === 'card-inputs' ? 'small' : size || 'medium'
+  const derivedIconSize =
+    iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
+
   return (
     <FluentButton
-      {...(contextualVariant !== 'tabs' && { block: true })}
       aria-label={label}
       appearance={variant}
+      size={derivedSize}
       className={cx(
         buttonStyles.root,
+        contextualVariant === 'narrow-inputs' && buttonStyles.fill,
         contextualVariant === 'tabs' && buttonStyles.tab,
         contextualVariant === 'tabs' && selected && buttonStyles.tabSelected
       )}
@@ -153,7 +157,7 @@ export const Button = ({
         icon: (
           <Icon
             icon={icon}
-            size={iconSize || 24}
+            size={derivedIconSize}
             variant={
               contextualVariant === 'tabs'
                 ? selected

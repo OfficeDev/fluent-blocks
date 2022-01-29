@@ -3,73 +3,78 @@ import { ReactElement } from 'react'
 // todo: fix this import when Card is released directly from @fluentui/react-components
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Card as FluentCard } from '@fluentui/react-card'
-import { mergeClasses as cx } from '@fluentui/react-components'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import {
-  escapeElement,
   invalidCardContentItem,
   propsElementUnion,
+  rem,
   renderIfEscape,
   Sequence,
   useCommonStyles,
+  useFluentPatternsContext,
 } from '../../lib'
-import {
-  paragraphPropsOrElement,
-  renderIfParagraph,
-} from '../Paragraph/Paragraph'
-import { headingPropsOrElement, renderIfHeading } from '../Heading/Heading'
-import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
-import { tabsPropsOrElement, renderIfTabs } from '../Tabs/Tabs'
-
-export const cardContentItemEntity = z.union([
-  headingPropsOrElement,
-  paragraphPropsOrElement,
-  figurePropsOrElement,
-  tabsPropsOrElement,
-  escapeElement,
-])
-export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>
-
-export const cardContentItemSequence = z.array(cardContentItemEntity)
-export type CardContentItemSequence = z.infer<typeof cardContentItemSequence>
-
-export const cardProps = z
-  .object({
-    card: cardContentItemSequence,
-  })
-  .merge(
-    z
-      .object({
-        contextualVariant: z
-          .union([z.literal('block'), z.literal('layout')])
-          .default('block'),
-      })
-      .partial()
-  )
-export type CardProps = z.infer<typeof cardProps>
+import { renderIfParagraph } from '../Paragraph/Paragraph'
+import { renderIfHeading } from '../Heading/Heading'
+import { renderIfFigure } from '../Figure/Figure'
+import { renderIfTabs } from '../Tabs/Tabs'
+import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
+import { renderIfDescriptionList } from '../DescriptionList/DescriptionList'
+import { renderIfWidget, widgetPropsOrElement } from './exemplars/Widget'
+import { CardContentItemEntity, CardProps, cardProps } from './card-properties'
 
 const CardContentItem = (o: CardContentItemEntity) =>
   renderIfHeading(o) ||
   renderIfParagraph(o) ||
   renderIfFigure(o) ||
   renderIfTabs(o) ||
+  renderIfShortInputs(o) ||
+  renderIfDescriptionList(o) ||
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
+const useCardStyles = makeStyles({
+  root: {
+    boxSizing: 'border-box',
+    padding: rem(20),
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+  },
+  hc: (theme) => ({
+    borderColor: theme.colorNeutralForeground1,
+  }),
+  layoutItemCard: {
+    minHeight: '100%',
+  },
+  blockCard: {
+    marginInlineStart: 'auto',
+    marginInlineEnd: 'auto',
+    marginBlockStart: rem(20),
+    marginBlockEnd: rem(20),
+  },
+})
+
 export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   const commonStyles = useCommonStyles()
+  const cardStyles = useCardStyles()
+  const { themeName } = useFluentPatternsContext()
   return (
     <FluentCard
       className={cx(
-        contextualVariant === 'block' && commonStyles.mainContentWidth,
-        contextualVariant === 'block' && commonStyles.centerBlock
+        cardStyles.root,
+        commonStyles.elevatedSurface,
+        themeName === 'high-contrast' && cardStyles.hc,
+        contextualVariant === 'block' &&
+          commonStyles.mainContentWidthEncapsulated,
+        contextualVariant === 'block' && cardStyles.blockCard,
+        contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}
+      tabIndex={0}
     >
-      <div className={commonStyles.elevatedSurface}>
-        {Sequence<CardContentItemEntity>(card, CardContentItem, {
-          contextualVariant: 'card',
-        })}
-      </div>
+      {Sequence<CardContentItemEntity>(card, CardContentItem, {
+        contextualVariant: 'card',
+      })}
     </FluentCard>
   )
 }
@@ -82,12 +87,22 @@ function isCardElement(o: any): o is ReactElement<CardProps, typeof Card> {
   return o?.type === Card
 }
 
-export const cardPropsOrElement = propsElementUnion<
+export const cardPropsOrElementExact = propsElementUnion<
   typeof cardProps,
   typeof Card
 >(cardProps)
+export type CardPropsOrElementExact = z.infer<typeof cardPropsOrElementExact>
+
+export function renderIfCardExact(o: any) {
+  return isCardProps(o) ? <Card {...o} /> : isCardElement(o) ? o : null
+}
+
+export const cardPropsOrElement = z.union([
+  cardPropsOrElementExact,
+  widgetPropsOrElement,
+])
 export type CardPropsOrElement = z.infer<typeof cardPropsOrElement>
 
 export function renderIfCard(o: any) {
-  return isCardProps(o) ? <Card {...o} /> : isCardElement(o) ? o : null
+  return renderIfCardExact(o) || renderIfWidget(o)
 }

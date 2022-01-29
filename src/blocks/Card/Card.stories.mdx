@@ -1,4 +1,6 @@
+import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
+import fakeTitle from '../../lib/fakeTitle'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
 import { BlockCard, LayoutCard } from './StorybookCard'
@@ -23,6 +25,7 @@ import { themeArgType } from '../../lib'
   }}
   parameters={{
     viewMode: 'docs',
+    chromatic: { delay: 2000 },
   }}
 />
 
@@ -80,3 +83,56 @@ used to group content as a regular Block element as well.
 </Canvas>
 
 <ArgsTable story="Card as a Layout item" />
+
+## Exemplars
+
+### Widget
+
+**Widgets** are Cards which are optimized for use in a Dashboard. They include slots for a title (optional), abstract (optional), a set of tabs (rendering just the first tab’s panel if only one tab is provided), and a call-to-action button at the end (optional).
+
+<Canvas withSource="none">
+  <Story
+    name="Widget"
+    args={{
+      theme: 'light',
+      widget: {
+        title: [{ text: fakeTitle(fake) }],
+        label: 'Demo Widget',
+        abstract: [{ text: fakeTitle(fake) }],
+        tabs: range(2).map((i) => ({
+          tab: { label: fakeTitle(fake) },
+          panel: [
+            {
+              media: {
+                label: 'Demo chart',
+                chart: {
+                  type: ['doughnut', 'line'][i],
+                  data: {
+                    labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+                    datasets: [
+                      {
+                        label: 'Laptops',
+                        data: [1860, 7700, 4100, 3012, 2930],
+                      },
+                      {
+                        label: 'Watches',
+                        data: [1200, 3600, 2480, 5049, 4596],
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        })),
+        footerAction: {
+          label: fakeTitle(fake),
+          icon: 'arrow_right',
+          iconPosition: 'after',
+        },
+      },
+    }}
+  >
+    {seed(1234) || CardLayoutTemplate.bind({})}
+  </Story>
+</Canvas>

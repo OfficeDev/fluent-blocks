@@ -24,6 +24,10 @@ import {
   renderIfShortInputs,
   shortInputsPropsOrElement,
 } from '../ShortInputs/ShortInputs'
+import {
+  descriptionListPropsOrElement,
+  renderIfDescriptionList,
+} from '../DescriptionList/DescriptionList'
 
 export const tabProps = buttonProps.omit({
   type: true,
@@ -39,17 +43,20 @@ export const tabPanelItemEntity = z.union([
   paragraphPropsOrElement,
   figurePropsOrElement,
   shortInputsPropsOrElement,
+  descriptionListPropsOrElement,
   escapeElement,
 ])
 export type TabPanelItemEntity = z.infer<typeof tabPanelItemEntity>
 
 export const tabPanelItemSequence = z.array(tabPanelItemEntity)
+export type TabPanelItemSequence = z.infer<typeof tabPanelItemSequence>
 
 const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfHeading(o) ||
   renderIfParagraph(o) ||
   renderIfFigure(o) ||
   renderIfShortInputs(o) ||
+  renderIfDescriptionList(o) ||
   renderIfEscape(o) ||
   invalidTabPanelItem(o)
 
@@ -59,18 +66,28 @@ export const tabsItemProps = z.object({
 })
 export type TabsItemProps = z.infer<typeof tabsItemProps>
 
-export const tabsProps = z.object({
-  label: z.string(),
-  tabs: z.array(tabsItemProps),
-  tabVariant: z
-    .union([z.literal('subtle'), z.literal('transparent')])
-    .default('transparent')
-    .optional(),
-  tabListVariant: z
-    .union([z.literal('start'), z.literal('center')])
-    .default('start')
-    .optional(),
-})
+export const tabsProps = z
+  .object({
+    label: z.string(),
+    tabs: z.array(tabsItemProps),
+    tabVariant: z
+      .union([z.literal('subtle'), z.literal('transparent')])
+      .default('transparent')
+      .optional(),
+    tabListVariant: z
+      .union([z.literal('start'), z.literal('center')])
+      .default('start')
+      .optional(),
+  })
+  .merge(
+    z
+      .object({
+        contextualVariant: z
+          .union([z.literal('card'), z.literal('block')])
+          .default('block'),
+      })
+      .partial()
+  )
 export type TabsProps = z.infer<typeof tabsProps>
 
 const useTabsStyles = makeStyles({
@@ -84,8 +101,15 @@ const useTabsStyles = makeStyles({
     paddingBlockStart: rem(2),
     paddingBlockEnd: rem(2),
   },
+  tabListCardContext: {
+    marginInlineStart: '-.5rem',
+    marginInlineEnd: '-.5rem',
+  },
   tabListCenter: {
     justifyContent: 'center',
+  },
+  tabs: {
+    flexGrow: 1,
   },
 })
 
@@ -101,19 +125,21 @@ export const Tabs = ({
   label,
   tabVariant = 'transparent',
   tabListVariant = 'start',
+  contextualVariant = 'block',
 }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(0)
   const itemIds = tabs.map(() => uniqueId('tabItem'))
   const tabsStyles = useTabsStyles()
   const commonStyles = useCommonStyles()
   return (
-    <div aria-label={label}>
+    <div aria-label={label} className={tabsStyles.tabs}>
       <div className={cx(commonStyles.centerBlock, tabsStyles.tabScrollCtx)}>
         <div
           role="tablist"
           className={cx(
             tabsStyles.tabList,
-            tabListVariant === 'center' && tabsStyles.tabListCenter
+            tabListVariant === 'center' && tabsStyles.tabListCenter,
+            contextualVariant === 'card' && tabsStyles.tabListCardContext
           )}
         >
           {tabs.map((tabItem, t) => (
@@ -127,6 +153,7 @@ export const Tabs = ({
                 contextualVariant: 'tabs',
                 selected: activeTab === t,
                 controls: panelId(itemIds[t]),
+                size: contextualVariant === 'block' ? 'medium' : 'small',
                 onAction: () => {
                   setActiveTab(t)
                 },
@@ -139,7 +166,7 @@ export const Tabs = ({
         <div
           key={itemIds[t]}
           id={panelId(itemIds[t])}
-          tabIndex={0}
+          tabIndex={activeTab !== t ? -1 : 0}
           role="tabpanel"
           aria-labelledby={tabId(itemIds[t])}
           {...(activeTab !== t && { hidden: true })}

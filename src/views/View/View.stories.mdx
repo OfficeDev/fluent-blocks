@@ -1,5 +1,6 @@
 import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
+import fakeTitle from '../../lib/fakeTitle'
 import { View } from './View'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
@@ -10,10 +11,6 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
     main: {
       name: 'Main',
       control: { type: 'object' },
-    },
-    dir: {
-      name: 'Text direction',
-      control: { type: 'inline-radio', labels: { ltr: '→', rtl: '←' } },
     },
     theme: {
       name: 'Theme variant',
@@ -31,11 +28,6 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
     viewMode: 'docs',
   }}
 />
-
-export const fakeTitle = () => {
-  const lowercase = fake('{{lorem.words}}')
-  return lowercase.charAt(0).toUpperCase() + lowercase.slice(1)
-}
 
 export const ViewTemplate = (props) => <View {...props} />
 
@@ -113,16 +105,26 @@ that time `View` will call its interaction callback with the update.
             ],
             sections: range(2).map(() => ({
               title: [{ text: fakeTitle(fake) }],
-              blocks: range(3).map(() => ({
-                paragraph: range(3).map(() => ({
-                  text: fake('{{lorem.sentence}} '),
+              blocks: [
+                ...range(3).map(() => ({
+                  paragraph: range(3).map(() => ({
+                    text: fake('{{lorem.sentence}} '),
+                  })),
                 })),
-              })),
+                {
+                  card: [
+                    {
+                      paragraph: fakeTitle(fake),
+                      level: 3,
+                    },
+                    { paragraph: fake('{{lorem.paragraph}}') },
+                  ],
+                },
+              ],
             })),
           }),
         })),
       },
-      dir: 'ltr',
       theme: 'light',
     }}
   >

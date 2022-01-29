@@ -28,6 +28,9 @@ export type PieChartProps = {
   cutoutPercentage?: number
 }
 
+/**
+ * @internal
+ */
 export const PieChart = memo(
   // eslint-disable-next-line max-lines-per-function
   ({ label, data, cutoutPercentage }: PieChartProps) => {

@@ -252,4 +252,7 @@ const illustration = {
   ),
 }
 
+/**
+ * @internal
+ */
 export default illustration

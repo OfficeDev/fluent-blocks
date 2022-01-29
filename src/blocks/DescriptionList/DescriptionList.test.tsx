@@ -2,28 +2,26 @@
 
 import expect from 'expect'
 
-describe('Figure', function () {
+describe('Description list', function () {
   describe('interactions', function () {
     this.timeout(5e3)
     describe('using serializeable props', function () {
       before(async function () {
-        await this.goto(this.storybookUrl('tests-figure--figure-json-test'))
+        await this.goto(this.storybookUrl('tests-dl--dl-json-test'))
       })
       it('renders to the page', async function () {
         expect(
           await this.page
-            .locator(
-              '#root figure img[alt="0c9c1a2c-f75c-4a03-a2eb-a84a097ea33d"]'
-            )
+            .locator('#root dl dt >> text=84f20521-7e72-4c2a-8782-f931709653c3')
             .count()
         ).toEqual(1)
         expect(
           await this.page
-            .locator(
-              '#root figcaption >> text=56fe5be3-ad5a-481e-b971-cab910f1c99b'
-            )
+            .locator('#root dl dd >> text=3c15cfbd-1fc0-4b6d-8334-59f94e5b4886')
             .count()
         ).toEqual(1)
+        expect(await this.page.locator('#root dl dt + dd').count()).toEqual(1)
+        expect(await this.page.locator('#root dl dd + dt').count()).toEqual(0)
       })
     })
   })

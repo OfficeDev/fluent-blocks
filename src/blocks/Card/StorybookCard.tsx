@@ -1,6 +1,9 @@
-import { Main } from '../../surfaces'
+import range from 'lodash/range'
+
 import { FluentPatternsProvider, ThemeName } from '../../lib'
-import { CardProps } from './Card'
+
+import { Main } from '../../surfaces'
+import { CardProps } from './card-properties'
 
 export const BlockCard = ({
   theme,
@@ -21,7 +24,7 @@ export const LayoutCard = ({
         {
           layout: {
             variant: 'grid',
-            items: [props, { ...props }, { ...props }, { ...props }],
+            items: range(3).map((i) => ({ item: { ...props } })),
           },
         },
       ]}

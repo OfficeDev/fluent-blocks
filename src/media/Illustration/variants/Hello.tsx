@@ -265,4 +265,7 @@ const illustration = {
     </svg>
   ),
 }
+/**
+ * @internal
+ */
 export default illustration
