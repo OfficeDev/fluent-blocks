@@ -15,7 +15,7 @@
     "storybook:start": "start-storybook -p 4000",
     "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
     "dev": "pnpm storybook:start",
-    "test": "start-server-and-test 'yarn storybook:start-ci' http://localhost:4000 'yarn test:run'",
+    "test": "start-server-and-test 'pnpm storybook:start-ci' http://localhost:4000 'pnpm test:run'",
     "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx",
     "check": "tsc --noEmit"
   },
