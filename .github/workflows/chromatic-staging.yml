@@ -20,13 +20,11 @@ jobs:
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         uses: pnpm/action-setup@v2.1.0
