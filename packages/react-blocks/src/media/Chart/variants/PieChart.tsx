@@ -1,96 +1,99 @@
 import { memo, useEffect, useRef, useContext } from 'react'
-import { Chart } from 'chart.js'
-import { FluentPatternsContext, useTranslations } from '../../../lib'
+import Chart from 'chart.js'
+import update from 'lodash/update'
+import isNumber from 'lodash/isNumber'
+import cloneDeep from 'lodash/cloneDeep'
 
+import { FluentPatternsContext, useTranslations } from '../../../lib'
 import {
   tooltipTrigger,
   chartConfig,
   axesConfig,
   setTooltipColorScheme,
+  usNumberFormat,
   useChartId,
 } from '../chart-utils'
 import {
   buildPattern,
-  chartBubbleDataPointPatterns,
+  chartBarDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { BubbleChartDatum, ChartData } from '../chart-types'
+import { ChartData } from '../chart-types'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
+
+export type PieChartProps = {
+  data: ChartData
+  label?: string
+  cutoutPercentage?: number
+}
 
 /**
  * @internal
  */
-export const BubbleChart = memo(
+export const PieChart = memo(
   // eslint-disable-next-line max-lines-per-function
-  ({ label, data }: { label: string; data: ChartData }) => {
+  function UnmemoizedPieChart({
+    label,
+    data,
+    cutoutPercentage,
+  }: PieChartProps) {
+    if (data && data.datasets && data.datasets[0].data.length > 6) {
+      data.datasets[0].data = data.datasets[0].data.slice(0, 6)
+      console.warn(
+        'Please follow design guidance and apply 6 or fewer data points per chart.'
+      )
+    }
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()
     const { themeName, theme } = useContext(FluentPatternsContext)
-
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()
 
-    // Sort for kayboard access
-    data.datasets.map((dataset) => {
-      dataset.data.sort((a: any, b: any) => a.x - b.x)
-    })
-
-    const createDataPoints = (): Chart.ChartDataSets[] =>
-      Array.from(data.datasets, (set, i) => {
-        let dataPointConfig = {
-          label: translate(set.label),
-          data: set.data,
-          borderWidth: 0,
-          borderSkipped: false,
-          borderColor: theme.colorNeutralBackground1,
-          hoverBorderColor: chartDataPointColors[i],
-          backgroundColor: chartDataPointColors[i],
-          hoverBorderWidth: 0,
-          hoverBackgroundColor: chartDataPointColors[i],
-          pointBorderColor: theme.colorNeutralBackground1,
-          pointBackgroundColor: theme.colorNeutralForeground2,
-          pointHoverBackgroundColor: theme.colorNeutralForeground2,
-          pointHoverBorderColor: chartDataPointColors[i],
-          pointHoverBorderWidth: 0,
-          borderCapStyle: 'round',
-          borderJoinStyle: 'round',
-          pointBorderWidth: 0,
-          pointRadius: 0,
-          pointHoverRadius: 0,
-        }
-        if (themeName === 'high-contrast') {
-          const backgroundPattern = buildPattern({
-            ...chartBubbleDataPointPatterns[i],
-            backgroundColor: theme.colorNeutralBackground1,
-            patternColor: theme.colorBrandBackground,
-          })
-          const backgroundPatternHover = buildPattern({
-            ...chartBubbleDataPointPatterns[i],
-            backgroundColor: theme.colorNeutralBackground1,
-            patternColor: theme.colorNeutralStroke1Hover,
-          })
-          dataPointConfig = {
-            ...dataPointConfig,
-            borderWidth: 1,
-            hoverBorderColor: theme.colorNeutralStroke1Hover,
-            hoverBorderWidth: 3,
-            pointBorderColor: theme.colorNeutralStroke1,
-            pointHoverBorderColor: theme.colorNeutralStroke1Hover,
-            pointHoverRadius: 0,
-            borderColor: theme.colorBrandBackground,
-            backgroundColor: backgroundPattern as unknown as string,
-            hoverBackgroundColor: backgroundPatternHover as unknown as string,
-          }
-        }
-        return dataPointConfig as any
+    const pieChartPatterns = Array.from({ length: 6 }, (v, i) =>
+      buildPattern({
+        ...chartBarDataPointPatterns[i],
+        backgroundColor: theme.colorNeutralBackground1,
+        patternColor: theme.colorBrandForeground1,
       })
+    )
+
+    const pieChartHoverPatterns = Array.from({ length: 6 }, (v, i) =>
+      buildPattern({
+        ...chartBarDataPointPatterns[i],
+        backgroundColor: theme.colorNeutralBackground1,
+        patternColor: theme.colorNeutralStroke1Hover,
+      })
+    )
+
+    const createDataPoints = (): Chart.ChartDataSets[] => {
+      let dataPointConfig = {
+        label: translate(data.datasets[0].label),
+        data: cloneDeep(data.datasets[0].data),
+        borderWidth: 2,
+        borderColor: theme.colorNeutralBackground1,
+        hoverBorderColor: theme.colorNeutralBackground1,
+        backgroundColor: chartDataPointColors,
+        hoverBackgroundColor: chartDataPointColors,
+      }
+      if (themeName === 'high-contrast') {
+        dataPointConfig = {
+          ...dataPointConfig,
+          borderWidth: 3,
+          hoverBorderColor: theme.colorNeutralStroke1Hover,
+          borderColor: theme.colorBrandBackground,
+          backgroundColor: pieChartPatterns as unknown as string[],
+          hoverBackgroundColor: pieChartHoverPatterns as unknown as string[],
+        }
+      }
+      return [dataPointConfig]
+    }
 
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
       let selectedIndex = -1
-      let selectedDataSet = 0
+      const selectedDataSet = 0
 
       if (!canvasRef.current) {
         return
@@ -99,8 +102,38 @@ export const BubbleChart = memo(
       if (!ctx) {
         return
       }
-      const config: any = chartConfig({ type: 'bubble' })
-      config.options.hover.mode = 'nearest'
+      const config: any = chartConfig({ type: 'pie' })
+      config.options.hover.mode = 'point'
+
+      config.options.layout.padding.top = 32
+      config.options.layout.padding.left = -16
+      config.options.layout.padding.right = 32
+      config.options.layout.padding.bottom = 32
+
+      config.options.scales.xAxes[0].ticks.display = false
+      config.options.scales.xAxes[0].gridLines.display = false
+
+      config.options.scales.yAxes[0].ticks.display = false
+      config.options.scales.yAxes[0].gridLines.display = false
+
+      if (cutoutPercentage) {
+        config.options.cutoutPercentage = cutoutPercentage
+      }
+      // Pie chart custom settings
+      config.options.tooltips.callbacks.label = (tooltipItem: any, data: any) =>
+        translate(data.labels[tooltipItem.index])
+      config.options.tooltips.callbacks.labelColor = (tooltipItem: any) => ({
+        backgroundColor: chartDataPointColors[tooltipItem.index],
+      })
+
+      config.options.tooltips.callbacks.title = (tooltipItems: any) =>
+        `${(
+          (Number(data.datasets[0].data[tooltipItems[0].index]) /
+            (data.datasets[0].data as number[]).reduce((a, b) => a + b)) *
+          100
+        ).toPrecision(2)}% (${usNumberFormat(
+          Number(data.datasets[0].data[tooltipItems[0].index])
+        )})`
 
       chartRef.current = new Chart(ctx, {
         ...(config as any),
@@ -183,10 +216,10 @@ export const BubbleChart = memo(
         if (themeName === 'high-contrast') {
           ;(chartRef.current as any).data.datasets.map(
             (dataset: any, i: number) => {
-              dataset.borderColor = theme.colorNeutralStroke1
+              dataset.borderColor = theme.colorNeutralStroke1Hover
               dataset.borderWidth = 2
               dataset.backgroundColor = buildPattern({
-                ...chartBubbleDataPointPatterns[i],
+                ...chartBarDataPointPatterns[i],
                 backgroundColor: theme.colorNeutralBackground1,
                 patternColor: theme.colorBrandBackground,
               })
@@ -203,45 +236,14 @@ export const BubbleChart = memo(
         removeDataPointsHoverStates()
         switch (e.key) {
           case 'ArrowRight':
+          case 'ArrowUp':
             e.preventDefault()
             selectedIndex = (selectedIndex + 1) % meta().data.length
             break
           case 'ArrowLeft':
-            e.preventDefault()
-            selectedIndex = (selectedIndex || meta().data.length) - 1
-            break
-          case 'ArrowUp':
           case 'ArrowDown':
             e.preventDefault()
-            if (data.datasets.length > 1) {
-              // Get all values for the current data point
-              const values = data.datasets.map(
-                (dataset) => dataset.data[selectedIndex]
-              )
-              // Sort an array to define next available number
-              const sorted = (
-                [...Array.from(new Set(values))] as BubbleChartDatum[]
-              ).sort((a: BubbleChartDatum, b: BubbleChartDatum) => a.y - b.y)
-              const nextValue =
-                sorted[
-                  sorted.findIndex((v) => v === values[selectedDataSet]) +
-                    (e.key === 'ArrowUp' ? 1 : -1)
-                ]
-
-              // Find dataset ID by the next higher number after current
-              let nextDataSet = values.findIndex((v) => v === nextValue)
-
-              // If there is no next number that could selected, get number from oposite side
-              if (nextDataSet < 0) {
-                nextDataSet = values.findIndex(
-                  (v) =>
-                    v ===
-                    sorted[e.key === 'ArrowUp' ? 0 : data.datasets.length - 1]
-                )
-              }
-              selectedDataSet = nextDataSet
-              selectedIndex = selectedIndex % meta().data.length
-            }
+            selectedIndex = (selectedIndex || meta().data.length) - 1
             break
         }
 
@@ -289,9 +291,10 @@ export const BubbleChart = memo(
         themeName,
         theme,
         chartDataPointColors,
-        patterns: chartBubbleDataPointPatterns,
+        patterns: chartBarDataPointPatterns,
+        verticalDataAlignment: true,
       })
-      // Update axeses
+      // Update axes
       axesConfig({ chart: chartRef.current, ctx, theme })
 
       chartRef.current.update()
@@ -301,8 +304,12 @@ export const BubbleChart = memo(
       if (!chartRef.current) {
         return
       }
-      chartRef.current.data.datasets![datasetIndex].hidden =
-        !chartRef.current.data.datasets![datasetIndex].hidden
+      update(
+        chartRef.current.data,
+        `datasets[0].data[${datasetIndex}]`,
+        (val) =>
+          isNumber(val) ? { hidden: true } : data.datasets[0].data[datasetIndex]
+      )
       chartRef.current.update()
     }
 
@@ -310,7 +317,7 @@ export const BubbleChart = memo(
 
     return (
       <div>
-        <div className={chartStyles.landscapeChartContainer}>
+        <div className={chartStyles.squareChartContainer}>
           <canvas
             id={chartId}
             ref={canvasRef}
@@ -319,17 +326,19 @@ export const BubbleChart = memo(
             aria-label={label}
           >
             {data.datasets.map((set, setKey) =>
-              (set.data as BubbleChartDatum[]).forEach(
-                (item: BubbleChartDatum, itemKey: number) => (
+              (set.data as number[]).forEach(
+                (item: number, itemKey: number) => (
                   // Generated tooltips for screen readers
                   <div
                     key={itemKey}
                     id={`${chartId}-tooltip-${setKey}-${itemKey}`}
                   >
-                    <p>{item.x}</p>
+                    <p>{item}</p>
                     <span>
-                      {translate(set.label)}:{' '}
-                      {(set.data as BubbleChartDatum[])[itemKey].y}
+                      {data.labels && Array.isArray(data.labels)
+                        ? translate(data.labels[setKey])
+                        : translate(data.labels)}
+                      : {set.data[itemKey]}
                     </span>
                   </div>
                 )
@@ -339,7 +348,8 @@ export const BubbleChart = memo(
         </div>
         <Legend
           {...{ data, chartDataPointColors, themeName, theme, onLegendClick }}
-          patterns={chartBubbleDataPointPatterns}
+          patterns={chartBarDataPointPatterns}
+          verticalDataAlignment
         />
       </div>
     )

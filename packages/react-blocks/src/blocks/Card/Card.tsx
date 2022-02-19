@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 // todo: fix this import when Card is released directly from @fluentui/react-components
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Card as FluentCard } from '@fluentui/react-card'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 

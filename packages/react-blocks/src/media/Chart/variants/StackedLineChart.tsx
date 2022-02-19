@@ -1,12 +1,9 @@
+import { Chart } from 'chart.js'
 import { memo, useEffect, useRef, useContext } from 'react'
-import Chart from 'chart.js'
-import update from 'lodash/update'
-import isNumber from 'lodash/isNumber'
-import cloneDeep from 'lodash/cloneDeep'
-
-import { FluentPatternsContext, useTranslations } from '../../../lib'
+import { ChartData } from '../chart-types'
 import {
   tooltipTrigger,
+  tooltipAxisYLine,
   chartConfig,
   axesConfig,
   setTooltipColorScheme,
@@ -15,81 +12,89 @@ import {
 } from '../chart-utils'
 import {
   buildPattern,
-  chartBarDataPointPatterns,
+  chartLineStackedDataPointPatterns,
+  lineChartPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { ChartData } from '../chart-types'
+import { FluentPatternsContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
-
-export type PieChartProps = {
-  data: ChartData
-  label?: string
-  cutoutPercentage?: number
-}
 
 /**
  * @internal
  */
-export const PieChart = memo(
+export const StackedLineChart = memo(
   // eslint-disable-next-line max-lines-per-function
-  ({ label, data, cutoutPercentage }: PieChartProps) => {
-    if (data && data.datasets && data.datasets[0].data.length > 6) {
-      data.datasets[0].data = data.datasets[0].data.slice(0, 6)
-      console.warn(
-        'Please follow design guidance and apply 6 or fewer data points per chart.'
-      )
-    }
+  function UnmemoizedStackedLineChart({
+    label,
+    data,
+  }: {
+    label: string
+    data: ChartData
+  }) {
+    const { themeName, theme } = useContext(FluentPatternsContext)
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()
-    const { themeName, theme } = useContext(FluentPatternsContext)
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()
 
-    const pieChartPatterns = Array.from({ length: 6 }, (v, i) =>
-      buildPattern({
-        ...chartBarDataPointPatterns[i],
-        backgroundColor: theme.colorNeutralBackground1,
-        patternColor: theme.colorBrandForeground1,
-      })
-    )
-
-    const pieChartHoverPatterns = Array.from({ length: 6 }, (v, i) =>
-      buildPattern({
-        ...chartBarDataPointPatterns[i],
-        backgroundColor: theme.colorNeutralBackground1,
-        patternColor: theme.colorNeutralStroke1Hover,
-      })
-    )
-
-    const createDataPoints = (): Chart.ChartDataSets[] => {
-      let dataPointConfig = {
-        label: translate(data.datasets[0].label),
-        data: cloneDeep(data.datasets[0].data),
-        borderWidth: 2,
-        borderColor: theme.colorNeutralBackground1,
-        hoverBorderColor: theme.colorNeutralBackground1,
-        backgroundColor: chartDataPointColors,
-        hoverBackgroundColor: chartDataPointColors,
-      }
-      if (themeName === 'high-contrast') {
-        dataPointConfig = {
-          ...dataPointConfig,
-          borderWidth: 3,
-          hoverBorderColor: theme.colorNeutralStroke1Hover,
-          borderColor: theme.colorBrandBackground,
-          backgroundColor: pieChartPatterns as unknown as string[],
-          hoverBackgroundColor: pieChartHoverPatterns as unknown as string[],
+    const createDataPoints = (): Chart.ChartDataSets[] =>
+      Array.from(data.datasets, (set, i) => {
+        let dataPointConfig = {
+          label: translate(set.label),
+          data: set.data,
+          borderWidth: 1,
+          borderColor: theme.colorNeutralBackground1,
+          hoverBorderColor: chartDataPointColors[i],
+          backgroundColor: chartDataPointColors[i],
+          hoverBorderWidth: 2,
+          hoverBackgroundColor: chartDataPointColors[i],
+          pointBorderColor: theme.colorNeutralBackground1,
+          pointBackgroundColor: theme.colorNeutralForeground2,
+          pointHoverBackgroundColor: theme.colorNeutralForeground2,
+          pointHoverBorderColor: chartDataPointColors[i],
+          pointHoverBorderWidth: 2,
+          borderCapStyle: 'round',
+          borderJoinStyle: 'round',
+          pointBorderWidth: 0,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          pointStyle: 'circle',
+          borderDash: [],
         }
-      }
-      return [dataPointConfig]
-    }
+        if (themeName === 'high-contrast') {
+          const bgPattern = buildPattern({
+            ...chartLineStackedDataPointPatterns[i],
+            backgroundColor: theme.colorNeutralBackground1,
+            patternColor: theme.colorBrandBackground,
+          })
+          const bgPatternHover = buildPattern({
+            ...chartLineStackedDataPointPatterns[i],
+            backgroundColor: theme.colorNeutralBackground1,
+            patternColor: theme.colorNeutralStroke1Hover,
+          })
+          dataPointConfig = {
+            ...dataPointConfig,
+            borderWidth: 3,
+            hoverBorderColor: theme.colorNeutralStroke1Hover,
+            hoverBorderWidth: 4,
+            pointBorderColor: theme.colorNeutralStroke1,
+            pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+            pointHoverRadius: 5,
+            pointStyle: lineChartPatterns[i].pointStyle,
+            borderColor: theme.colorBrandBackground,
+            backgroundColor: bgPattern as unknown as string,
+            hoverBackgroundColor: bgPatternHover as unknown as string,
+          }
+        }
+        return dataPointConfig as Chart.ChartDataSets
+      })
 
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
       let selectedIndex = -1
-      const selectedDataSet = 0
+      let selectedDataSet = 0
 
       if (!canvasRef.current) {
         return
@@ -98,47 +103,42 @@ export const PieChart = memo(
       if (!ctx) {
         return
       }
-      const config: any = chartConfig({ type: 'pie' })
-      config.options.hover.mode = 'point'
+      const config: any = chartConfig({ type: 'line' })
 
-      config.options.layout.padding.top = 32
-      config.options.layout.padding.left = -16
-      config.options.layout.padding.right = 32
-      config.options.layout.padding.bottom = 32
-
-      config.options.scales.xAxes[0].ticks.display = false
-      config.options.scales.xAxes[0].gridLines.display = false
-
-      config.options.scales.yAxes[0].ticks.display = false
-      config.options.scales.yAxes[0].gridLines.display = false
-
-      if (cutoutPercentage) {
-        config.options.cutoutPercentage = cutoutPercentage
+      // Stacked chart custom settings
+      config.options.tooltips.callbacks.title = (tooltipItems: any) => {
+        let total = 0
+        data.datasets.map((dataset) => {
+          const value = dataset.data[tooltipItems[0].index]
+          if (typeof value === 'number') {
+            return (total += value)
+          }
+        })
+        return `${((tooltipItems[0].yLabel / total) * 100).toPrecision(
+          2
+        )}% (${usNumberFormat(tooltipItems[0].yLabel)})`
       }
-      // Pie chart custom settings
-      config.options.tooltips.callbacks.label = (tooltipItem: any, data: any) =>
-        translate(data.labels[tooltipItem.index])
-      config.options.tooltips.callbacks.labelColor = (tooltipItem: any) => ({
-        backgroundColor: chartDataPointColors[tooltipItem.index],
-      })
-
-      config.options.tooltips.callbacks.title = (tooltipItems: any) =>
-        `${(
-          (Number(data.datasets[0].data[tooltipItems[0].index]) /
-            (data.datasets[0].data as number[]).reduce((a, b) => a + b)) *
-          100
-        ).toPrecision(2)}% (${usNumberFormat(
-          Number(data.datasets[0].data[tooltipItems[0].index])
-        )})`
+      config.options.scales.yAxes[0].stacked = true
 
       chartRef.current = new Chart(ctx, {
-        ...(config as any),
+        ...config,
         data: {
           labels: Array.isArray(data.labels)
             ? data.labels.map((label) => translate(label))
             : translate(data.labels),
           datasets: [],
         },
+        plugins: [
+          {
+            afterDatasetsDraw: ({ ctx, tooltip, chart }: any) => {
+              tooltipAxisYLine({
+                chart,
+                ctx,
+                tooltip,
+              })
+            },
+          },
+        ],
       })
       const chart: any = chartRef.current
 
@@ -181,8 +181,8 @@ export const PieChart = memo(
           data,
           set: selectedDataSet,
           index: selectedIndex,
-          themeName,
           theme,
+          themeName,
         })
         document
           .getElementById(
@@ -212,10 +212,10 @@ export const PieChart = memo(
         if (themeName === 'high-contrast') {
           ;(chartRef.current as any).data.datasets.map(
             (dataset: any, i: number) => {
-              dataset.borderColor = theme.colorNeutralStroke1Hover
+              dataset.borderColor = theme.colorNeutralStroke1
               dataset.borderWidth = 2
               dataset.backgroundColor = buildPattern({
-                ...chartBarDataPointPatterns[i],
+                ...chartLineStackedDataPointPatterns[i],
                 backgroundColor: theme.colorNeutralBackground1,
                 patternColor: theme.colorBrandBackground,
               })
@@ -232,14 +232,30 @@ export const PieChart = memo(
         removeDataPointsHoverStates()
         switch (e.key) {
           case 'ArrowRight':
-          case 'ArrowUp':
             e.preventDefault()
             selectedIndex = (selectedIndex + 1) % meta().data.length
             break
           case 'ArrowLeft':
-          case 'ArrowDown':
             e.preventDefault()
             selectedIndex = (selectedIndex || meta().data.length) - 1
+            break
+          case 'ArrowUp':
+            e.preventDefault()
+            if (data.datasets.length > 1) {
+              selectedDataSet += 1
+              if (selectedDataSet === data.datasets.length) {
+                selectedDataSet = 0
+              }
+            }
+            break
+          case 'ArrowDown':
+            e.preventDefault()
+            if (data.datasets.length > 1) {
+              selectedDataSet -= 1
+              if (selectedDataSet < 0) {
+                selectedDataSet = data.datasets.length - 1
+              }
+            }
             break
         }
 
@@ -284,28 +300,23 @@ export const PieChart = memo(
       // Update tooltip colors scheme
       setTooltipColorScheme({
         chart: chartRef.current,
-        themeName,
         theme,
+        themeName,
         chartDataPointColors,
-        patterns: chartBarDataPointPatterns,
-        verticalDataAlignment: true,
+        patterns: chartLineStackedDataPointPatterns,
       })
-      // Update axes
+      // Update axeses
       axesConfig({ chart: chartRef.current, ctx, theme })
-
+      // Show style changes
       chartRef.current.update()
-    }, [themeName])
+    }, [theme])
 
     function onLegendClick(datasetIndex: number) {
       if (!chartRef.current) {
         return
       }
-      update(
-        chartRef.current.data,
-        `datasets[0].data[${datasetIndex}]`,
-        (val) =>
-          isNumber(val) ? { hidden: true } : data.datasets[0].data[datasetIndex]
-      )
+      chartRef.current.data.datasets![datasetIndex].hidden =
+        !chartRef.current.data.datasets![datasetIndex].hidden
       chartRef.current.update()
     }
 
@@ -313,12 +324,14 @@ export const PieChart = memo(
 
     return (
       <div>
-        <div className={chartStyles.squareChartContainer}>
+        <div className={chartStyles.landscapeChartContainer}>
           <canvas
             id={chartId}
             ref={canvasRef}
-            style={{ userSelect: 'none' }}
             tabIndex={0}
+            style={{
+              userSelect: 'none',
+            }}
             aria-label={label}
           >
             {data.datasets.map((set, setKey) =>
@@ -331,10 +344,7 @@ export const PieChart = memo(
                   >
                     <p>{item}</p>
                     <span>
-                      {data.labels && Array.isArray(data.labels)
-                        ? translate(data.labels[setKey])
-                        : translate(data.labels)}
-                      : {set.data[itemKey]}
+                      {translate(set.label)}: {set.data[itemKey]}
                     </span>
                   </div>
                 )
@@ -344,8 +354,7 @@ export const PieChart = memo(
         </div>
         <Legend
           {...{ data, chartDataPointColors, themeName, theme, onLegendClick }}
-          patterns={chartBarDataPointPatterns}
-          verticalDataAlignment
+          patterns={chartLineStackedDataPointPatterns}
         />
       </div>
     )

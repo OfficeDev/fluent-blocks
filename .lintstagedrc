@@ -1,4 +1,4 @@
 {
-  "{src,.storybook}/**/*.{js,jsx,ts,tsx,md,mdx,json}": "prettier --write",
-  "{src,.storybook}/**/*.{js,jsx,ts,tsx}": "eslint --cache --max-warnings 0 --fix"
+  "packages/*/{src,.storybook}/**/*.{js,jsx,ts,tsx,md,mdx,json}": "prettier --write",
+  "packages/*/{src,.storybook}/**/*.{js,jsx,ts,tsx}": "eslint --cache --max-warnings 0 --fix"
 }

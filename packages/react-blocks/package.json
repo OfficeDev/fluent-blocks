@@ -1,0 +1,74 @@
+{
+  "name": "@fluentui/react-blocks",
+  "version": "9.0.0-alpha.1",
+  "main": "index.js",
+  "repository": "git@github.com:OfficeDev/fluent-blocks.git",
+  "authors": [
+    "Will Shown <willshown@microsoft.com>",
+    "Zhenya Savchenko <zhenyasa@microsoft.com>"
+  ],
+  "license": "MIT",
+  "types": "types/view.d.ts",
+  "scripts": {
+    "storybook:upgrade": "pnpm update \"@storybook/*\"",
+    "storybook:build": "build-storybook",
+    "storybook:start": "start-storybook -p 4000",
+    "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
+    "dev": "pnpm storybook:start",
+    "lint-ci": "eslint --max-warnings 0 packages/react-blocks/src/**/*.{ts,tsx} packages/react-blocks/.storybook/*.js",
+    "lint-staged": "lint-staged",
+    "test": "start-server-and-test 'yarn storybook:start-ci' http://localhost:4000 'yarn test:run'",
+    "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx",
+    "check": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=12.0.0 <17.0.0",
+    "pnpm": "^6"
+  },
+  "peerDependencies": {
+    "@fluentui/react-components": "9.0.0-beta.5",
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "chart.js": "^2.9.4",
+    "react": ">=16.8.0 <18.0.0",
+    "react-dom": ">=16.8.0 <18.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "latest",
+    "@fluentui/react-card": "9.0.0-beta.5",
+    "@fluentui/react-components": "9.0.0-beta.5",
+    "@storybook/addon-actions": "latest",
+    "@storybook/addon-essentials": "latest",
+    "@storybook/addon-links": "latest",
+    "@storybook/addons": "latest",
+    "@storybook/react": "latest",
+    "@storybook/theming": "latest",
+    "@types/chart.js": "^2.9.29",
+    "@types/faker": "^5.1.2",
+    "@types/lodash": "latest",
+    "@types/mocha": "latest",
+    "@types/node": "^17.0.18",
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "@types/react-test-renderer": ">=16.8.0 <18.0.0",
+    "babel-loader": "latest",
+    "chart.js": "^2.9.4",
+    "chromatic": "latest",
+    "expect": "latest",
+    "faker": "thure/faker.js#v5.1.2",
+    "http-proxy-middleware": "latest",
+    "mocha": "latest",
+    "playwright-chromium": "latest",
+    "react": ">=16.8.0 <18.0.0",
+    "react-dom": ">=16.8.0 <18.0.0",
+    "react-test-renderer": ">=16.8.0 <18.0.0",
+    "start-server-and-test": "latest",
+    "ts-mocha": "latest",
+    "ts-node": "latest",
+    "webpack": "latest"
+  },
+  "dependencies": {
+    "lodash": "latest",
+    "zod": "latest"
+  }
+}

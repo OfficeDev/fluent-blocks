@@ -5,14 +5,15 @@ import { rem, useCommonStyles } from '../../lib'
 import { Section, SectionContentProps } from '../../blocks'
 
 const useMainSectionStyles = makeStyles({
-  root: (theme) => ({
-    overflow: 'hidden',
+  root: {
+    overflowX: 'hidden',
+    overflowY: 'hidden',
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     paddingBlockEnd: rem(44),
     paddingInlineStart: '1rem',
     paddingInlineEnd: '1rem',
-  }),
+  },
 })
 
 export const Main = (props: SectionContentProps) => {

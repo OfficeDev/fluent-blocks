@@ -1,44 +1,47 @@
-import { Chart } from 'chart.js'
 import { memo, useEffect, useRef, useContext } from 'react'
-import { ChartData } from '../chart-types'
+import { Chart } from 'chart.js'
+import { FluentPatternsContext, useTranslations } from '../../../lib'
+
 import {
   tooltipTrigger,
   chartConfig,
   axesConfig,
   setTooltipColorScheme,
-  horizontalBarValue,
-  usNumberFormat,
   useChartId,
 } from '../chart-utils'
 import {
   buildPattern,
-  chartBarDataPointPatterns,
+  chartBubbleDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { FluentPatternsContext, useTranslations } from '../../../lib'
+import { BubbleChartDatum, ChartData } from '../chart-types'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
 
 /**
  * @internal
  */
-export const HorizontalBarChart = memo(
+export const BubbleChart = memo(
   // eslint-disable-next-line max-lines-per-function
-  ({
+  function UnmemoizedBubbleChart({
     label,
     data,
-    stacked,
   }: {
     label: string
     data: ChartData
-    stacked?: boolean
-  }) => {
-    const { themeName, theme } = useContext(FluentPatternsContext)
+  }) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()
+    const { themeName, theme } = useContext(FluentPatternsContext)
+
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()
+
+    // Sort for kayboard access
+    data.datasets.map((dataset) => {
+      dataset.data.sort((a: any, b: any) => a.x - b.x)
+    })
 
     const createDataPoints = (): Chart.ChartDataSets[] =>
       Array.from(data.datasets, (set, i) => {
@@ -46,7 +49,6 @@ export const HorizontalBarChart = memo(
           label: translate(set.label),
           data: set.data,
           borderWidth: 0,
-          barPercentage: 0.5,
           borderSkipped: false,
           borderColor: theme.colorNeutralBackground1,
           hoverBorderColor: chartDataPointColors[i],
@@ -65,13 +67,13 @@ export const HorizontalBarChart = memo(
           pointHoverRadius: 0,
         }
         if (themeName === 'high-contrast') {
-          const bgPattern = buildPattern({
-            ...chartBarDataPointPatterns[i],
+          const backgroundPattern = buildPattern({
+            ...chartBubbleDataPointPatterns[i],
             backgroundColor: theme.colorNeutralBackground1,
             patternColor: theme.colorBrandBackground,
           })
-          const bgHoverPattern = buildPattern({
-            ...chartBarDataPointPatterns[i],
+          const backgroundPatternHover = buildPattern({
+            ...chartBubbleDataPointPatterns[i],
             backgroundColor: theme.colorNeutralBackground1,
             patternColor: theme.colorNeutralStroke1Hover,
           })
@@ -84,8 +86,8 @@ export const HorizontalBarChart = memo(
             pointHoverBorderColor: theme.colorNeutralStroke1Hover,
             pointHoverRadius: 0,
             borderColor: theme.colorBrandBackground,
-            backgroundColor: bgPattern as unknown as string,
-            hoverBackgroundColor: bgHoverPattern as unknown as string,
+            backgroundColor: backgroundPattern as unknown as string,
+            hoverBackgroundColor: backgroundPatternHover as unknown as string,
           }
         }
         return dataPointConfig as any
@@ -94,7 +96,7 @@ export const HorizontalBarChart = memo(
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
       let selectedIndex = -1
-      const selectedDataSet = 0
+      let selectedDataSet = 0
 
       if (!canvasRef.current) {
         return
@@ -103,42 +105,8 @@ export const HorizontalBarChart = memo(
       if (!ctx) {
         return
       }
-      const config: any = chartConfig({ type: 'horizontalBar' })
-      config.options.layout.padding.top = -6
-      config.options.layout.padding.left = -32
-
-      config.options.hover.mode = 'index'
-
-      config.options.scales.xAxes[0].ticks.display = false
-      config.options.scales.xAxes[0].gridLines.display = false
-
-      config.options.scales.yAxes[0].ticks.callback = (v: string) => v
-      config.options.scales.yAxes[0].ticks.mirror = true
-      config.options.scales.yAxes[0].ticks.padding = 0
-      config.options.scales.yAxes[0].gridLines.display = false
-
-      config.options.tooltips.position = 'nearest'
-
-      if (stacked) {
-        config.options.hover.mode = 'point'
-
-        config.options.scales.yAxes[0].stacked = true
-        config.options.scales.xAxes[0].stacked = true
-        config.options.tooltips.mode = 'nearest'
-        config.options.tooltips.axis = 'y'
-        config.options.tooltips.callbacks.title = (tooltipItems: any) => {
-          let total = 0
-          data.datasets.map((dataset) => {
-            const value = dataset.data[tooltipItems[0].index]
-            if (typeof value === 'number') {
-              return (total += value)
-            }
-          })
-          return `${((tooltipItems[0].xLabel / total) * 100).toPrecision(
-            2
-          )}% (${usNumberFormat(tooltipItems[0].xLabel)})`
-        }
-      }
+      const config: any = chartConfig({ type: 'bubble' })
+      config.options.hover.mode = 'nearest'
 
       chartRef.current = new Chart(ctx, {
         ...(config as any),
@@ -148,23 +116,9 @@ export const HorizontalBarChart = memo(
             : translate(data.labels),
           datasets: [],
         },
-        plugins: [
-          {
-            afterDatasetsDraw: ({ ctx, tooltip, chart }: any) => {
-              horizontalBarValue({
-                chart,
-                ctx,
-                stacked,
-              })
-            },
-          },
-        ],
       })
-
       const chart: any = chartRef.current
 
-      chart.config.options.scales.yAxes[0].ticks.labelOffset =
-        chart.chartArea.bottom / data.datasets[0].data.length / 2 - 2
       /**
        * Keyboard manipulations
        */
@@ -204,8 +158,8 @@ export const HorizontalBarChart = memo(
           data,
           set: selectedDataSet,
           index: selectedIndex,
-          theme,
           themeName,
+          theme,
         })
         document
           .getElementById(
@@ -238,7 +192,7 @@ export const HorizontalBarChart = memo(
               dataset.borderColor = theme.colorNeutralStroke1
               dataset.borderWidth = 2
               dataset.backgroundColor = buildPattern({
-                ...chartBarDataPointPatterns[i],
+                ...chartBubbleDataPointPatterns[i],
                 backgroundColor: theme.colorNeutralBackground1,
                 patternColor: theme.colorBrandBackground,
               })
@@ -254,13 +208,46 @@ export const HorizontalBarChart = memo(
       function changeFocus(e: KeyboardEvent) {
         removeDataPointsHoverStates()
         switch (e.key) {
-          case 'ArrowDown':
+          case 'ArrowRight':
             e.preventDefault()
             selectedIndex = (selectedIndex + 1) % meta().data.length
             break
-          case 'ArrowUp':
+          case 'ArrowLeft':
             e.preventDefault()
             selectedIndex = (selectedIndex || meta().data.length) - 1
+            break
+          case 'ArrowUp':
+          case 'ArrowDown':
+            e.preventDefault()
+            if (data.datasets.length > 1) {
+              // Get all values for the current data point
+              const values = data.datasets.map(
+                (dataset) => dataset.data[selectedIndex]
+              )
+              // Sort an array to define next available number
+              const sorted = (
+                [...Array.from(new Set(values))] as BubbleChartDatum[]
+              ).sort((a: BubbleChartDatum, b: BubbleChartDatum) => a.y - b.y)
+              const nextValue =
+                sorted[
+                  sorted.findIndex((v) => v === values[selectedDataSet]) +
+                    (e.key === 'ArrowUp' ? 1 : -1)
+                ]
+
+              // Find dataset ID by the next higher number after current
+              let nextDataSet = values.findIndex((v) => v === nextValue)
+
+              // If there is no next number that could selected, get number from oposite side
+              if (nextDataSet < 0) {
+                nextDataSet = values.findIndex(
+                  (v) =>
+                    v ===
+                    sorted[e.key === 'ArrowUp' ? 0 : data.datasets.length - 1]
+                )
+              }
+              selectedDataSet = nextDataSet
+              selectedIndex = selectedIndex % meta().data.length
+            }
             break
         }
 
@@ -305,16 +292,16 @@ export const HorizontalBarChart = memo(
       // Update tooltip colors scheme
       setTooltipColorScheme({
         chart: chartRef.current,
-        theme,
         themeName,
+        theme,
         chartDataPointColors,
-        patterns: chartBarDataPointPatterns,
+        patterns: chartBubbleDataPointPatterns,
       })
       // Update axeses
       axesConfig({ chart: chartRef.current, ctx, theme })
-      chartRef.current.options.defaultColor = theme.colorNeutralForeground1
+
       chartRef.current.update()
-    }, [theme])
+    }, [themeName])
 
     function onLegendClick(datasetIndex: number) {
       if (!chartRef.current) {
@@ -333,23 +320,22 @@ export const HorizontalBarChart = memo(
           <canvas
             id={chartId}
             ref={canvasRef}
+            style={{ userSelect: 'none' }}
             tabIndex={0}
-            style={{
-              userSelect: 'none',
-            }}
             aria-label={label}
           >
             {data.datasets.map((set, setKey) =>
-              (set.data as number[]).forEach(
-                (item: number, itemKey: number) => (
+              (set.data as BubbleChartDatum[]).forEach(
+                (item: BubbleChartDatum, itemKey: number) => (
                   // Generated tooltips for screen readers
                   <div
                     key={itemKey}
                     id={`${chartId}-tooltip-${setKey}-${itemKey}`}
                   >
-                    <p>{item}</p>
+                    <p>{item.x}</p>
                     <span>
-                      {translate(set.label)}: {set.data[itemKey]}
+                      {translate(set.label)}:{' '}
+                      {(set.data as BubbleChartDatum[])[itemKey].y}
                     </span>
                   </div>
                 )
@@ -359,7 +345,7 @@ export const HorizontalBarChart = memo(
         </div>
         <Legend
           {...{ data, chartDataPointColors, themeName, theme, onLegendClick }}
-          patterns={chartBarDataPointPatterns}
+          patterns={chartBubbleDataPointPatterns}
         />
       </div>
     )

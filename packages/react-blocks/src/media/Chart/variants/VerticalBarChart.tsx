@@ -3,14 +3,18 @@ import { memo, useEffect, useRef, useContext } from 'react'
 import { ChartData } from '../chart-types'
 import {
   tooltipTrigger,
-  tooltipAxisYLine,
+  tooltipAxisXLine,
   chartConfig,
   axesConfig,
   setTooltipColorScheme,
-  hexToRgb,
+  usNumberFormat,
   useChartId,
 } from '../chart-utils'
-import { lineChartPatterns, useChartColors } from '../chart-patterns'
+import {
+  buildPattern,
+  chartBarDataPointPatterns,
+  useChartColors,
+} from '../chart-patterns'
 import { FluentPatternsContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
@@ -18,17 +22,17 @@ import { useChartStyles } from '../chart-styles'
 /**
  * @internal
  */
-export const LineChart = memo(
+export const VerticalBarChart = memo(
   // eslint-disable-next-line max-lines-per-function
-  ({
+  function UnmemoizedVerticalBarChart({
     label,
     data,
-    gradients,
+    stacked,
   }: {
     label: string
     data: ChartData
-    gradients?: boolean
-  }) => {
+    stacked?: boolean
+  }) {
     const { themeName, theme } = useContext(FluentPatternsContext)
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
@@ -41,114 +45,49 @@ export const LineChart = memo(
         let dataPointConfig = {
           label: translate(set.label),
           data: set.data,
-          borderColor: chartDataPointColors[i],
+          borderWidth: 0,
+          borderSkipped: false,
+          borderColor: theme.colorNeutralBackground1,
           hoverBorderColor: chartDataPointColors[i],
-          hoverBorderWidth: 2,
-          backgroundColor: 'transparent',
-          hoverBackgroundColor: 'transparent',
-          borderWidth: 2,
-          pointBorderColor: chartDataPointColors[i],
-          pointBackgroundColor: chartDataPointColors[i],
-          pointHoverBackgroundColor: chartDataPointColors[i],
+          backgroundColor: chartDataPointColors[i],
+          hoverBorderWidth: 0,
+          hoverBackgroundColor: chartDataPointColors[i],
+          pointBorderColor: theme.colorNeutralBackground1,
+          pointBackgroundColor: theme.colorNeutralForeground2,
+          pointHoverBackgroundColor: theme.colorNeutralForeground2,
           pointHoverBorderColor: chartDataPointColors[i],
           pointHoverBorderWidth: 0,
           borderCapStyle: 'round',
           borderJoinStyle: 'round',
           pointBorderWidth: 0,
-          pointRadius: 2,
-          pointHoverRadius: 2,
-          pointStyle: 'circle',
-          borderDash: [],
+          pointRadius: 0,
+          pointHoverRadius: 0,
         }
         if (themeName === 'high-contrast') {
+          const bgPattern = buildPattern({
+            ...chartBarDataPointPatterns[i],
+            backgroundColor: theme.colorNeutralBackground1,
+            patternColor: theme.colorBrandBackground,
+          })
+          const bgHoverPattern = buildPattern({
+            ...chartBarDataPointPatterns[i],
+            backgroundColor: theme.colorNeutralBackground1,
+            patternColor: theme.colorNeutralStroke1Hover,
+          })
           dataPointConfig = {
             ...dataPointConfig,
-            borderColor: theme.colorBrandBackground,
+            borderWidth: 1,
             hoverBorderColor: theme.colorNeutralStroke1Hover,
-            pointBorderColor: theme.colorBrandBackground,
-            pointBackgroundColor: theme.colorBrandBackground,
-            pointHoverBackgroundColor: theme.colorBrandBackground,
-            pointHoverBorderColor: theme.colorBrandBackground,
-            hoverBorderWidth: 4,
-            pointRadius: 4,
-            pointHoverRadius: 4,
-            pointStyle: lineChartPatterns[i].pointStyle,
-            borderDash: lineChartPatterns[i].lineBorderDash,
-          } as any
-        }
-        return dataPointConfig as Chart.ChartDataSets
-      })
-
-    const createAreaChartDataPoints = (
-      ctx: CanvasRenderingContext2D
-    ): Chart.ChartDataSets[] =>
-      Array.from(data.datasets, (set, i) => {
-        const gradientStroke = ctx.createLinearGradient(
-          0,
-          0,
-          0,
-          ctx.canvas.clientHeight * 0.8
-        )
-        const hoverGradientStroke = ctx.createLinearGradient(
-          0,
-          0,
-          0,
-          ctx.canvas.clientHeight * 0.8
-        )
-        if (themeName === 'high-contrast') {
-          const colorRGB = hexToRgb(theme.colorBrandBackground)
-          const hoverColorRGB = hexToRgb(theme.colorNeutralStroke1Hover)
-          gradientStroke.addColorStop(0, `rgba(${colorRGB}, .2)`)
-          gradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
-          hoverGradientStroke.addColorStop(0, `rgba(${hoverColorRGB}, .4)`)
-          hoverGradientStroke.addColorStop(1, `rgba(${hoverColorRGB}, .0)`)
-        } else {
-          const colorRGB = hexToRgb(chartDataPointColors[i])
-          gradientStroke.addColorStop(0, `rgba(${colorRGB}, .4)`)
-          gradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
-          hoverGradientStroke.addColorStop(0, `rgba(${colorRGB}, .6)`)
-          hoverGradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
-        }
-
-        let dataPointConfig = {
-          label: translate(set.label),
-          data: set.data,
-          borderColor: chartDataPointColors[i],
-          hoverBorderColor: chartDataPointColors[i],
-          hoverBorderWidth: 2,
-          backgroundColor: gradientStroke as any,
-          hoverBackgroundColor: hoverGradientStroke as any,
-          borderWidth: 2,
-          pointBorderColor: chartDataPointColors[i],
-          pointBackgroundColor: chartDataPointColors[i],
-          pointHoverBackgroundColor: chartDataPointColors[i],
-          pointHoverBorderColor: chartDataPointColors[i],
-          pointHoverBorderWidth: 0,
-          borderCapStyle: 'round',
-          borderJoinStyle: 'round',
-          pointBorderWidth: 0,
-          pointRadius: 2,
-          pointHoverRadius: 2,
-          pointStyle: 'circle',
-          borderDash: [],
-        }
-        if (themeName === 'high-contrast') {
-          dataPointConfig = {
-            ...dataPointConfig,
+            hoverBorderWidth: 3,
+            pointBorderColor: theme.colorNeutralStroke1,
+            pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+            pointHoverRadius: 0,
             borderColor: theme.colorBrandBackground,
-            hoverBorderColor: theme.colorNeutralStroke1Hover,
-            pointBorderColor: theme.colorBrandBackground,
-            pointBackgroundColor: theme.colorBrandBackground,
-            pointHoverBackgroundColor: theme.colorBrandBackground,
-            pointHoverBorderColor: theme.colorBrandBackground,
-            hoverBorderWidth: 4,
-            pointRadius: 4,
-            pointHoverRadius: 4,
-            pointStyle: lineChartPatterns[i].pointStyle,
-            borderDash: lineChartPatterns[i].lineBorderDash,
-          } as any
+            backgroundColor: bgPattern as unknown as string,
+            hoverBackgroundColor: bgHoverPattern as unknown as string,
+          }
         }
-        return dataPointConfig as Chart.ChartDataSets
+        return dataPointConfig as any
       })
 
     // eslint-disable-next-line max-lines-per-function
@@ -163,8 +102,30 @@ export const LineChart = memo(
       if (!ctx) {
         return
       }
+      const config: any = chartConfig({ type: 'bar' })
+      config.options.hover.mode = 'nearest'
+      config.options.scales.xAxes[0].gridLines.offsetGridLines =
+        data.datasets.length > 1 && !stacked
+
+      if (stacked) {
+        config.options.scales.yAxes[0].stacked = true
+        config.options.scales.xAxes[0].stacked = true
+        config.options.tooltips.callbacks.title = (tooltipItems: any) => {
+          let total = 0
+          data.datasets.map((dataset) => {
+            const value = dataset.data[tooltipItems[0].index]
+            if (typeof value === 'number') {
+              return (total += value)
+            }
+          })
+          return `${((tooltipItems[0].yLabel / total) * 100).toPrecision(
+            2
+          )}% (${usNumberFormat(tooltipItems[0].yLabel)})`
+        }
+      }
+
       chartRef.current = new Chart(ctx, {
-        ...(chartConfig({ type: 'line' }) as any),
+        ...(config as any),
         data: {
           labels: Array.isArray(data.labels)
             ? data.labels.map((label) => translate(label))
@@ -174,7 +135,7 @@ export const LineChart = memo(
         plugins: [
           {
             afterDatasetsDraw: ({ ctx, tooltip, chart }: any) => {
-              tooltipAxisYLine({
+              tooltipAxisXLine({
                 chart,
                 ctx,
                 tooltip,
@@ -254,10 +215,17 @@ export const LineChart = memo(
           }
         }
         if (themeName === 'high-contrast') {
-          chart.data.datasets.map((dataset: any) => {
-            dataset.borderColor = theme.colorNeutralStroke1
-            dataset.borderWidth = 2
-          })
+          ;(chartRef.current as any).data.datasets.map(
+            (dataset: any, i: number) => {
+              dataset.borderColor = theme.colorNeutralStroke1
+              dataset.borderWidth = 2
+              dataset.backgroundColor = buildPattern({
+                ...chartBarDataPointPatterns[i],
+                backgroundColor: theme.colorNeutralBackground1,
+                patternColor: theme.colorBrandBackground,
+              })
+            }
+          )
           chart.update()
         }
         chart.tooltip._active = activeElements
@@ -277,36 +245,21 @@ export const LineChart = memo(
             selectedIndex = (selectedIndex || meta().data.length) - 1
             break
           case 'ArrowUp':
+            e.preventDefault()
+            if (data.datasets.length > 1) {
+              selectedDataSet += 1
+              if (selectedDataSet === data.datasets.length) {
+                selectedDataSet = 0
+              }
+            }
+            break
           case 'ArrowDown':
             e.preventDefault()
             if (data.datasets.length > 1) {
-              // Get all values for the current data point
-              const values = data.datasets.map(
-                (dataset) => dataset.data[selectedIndex]
-              )
-              // Sort an array to define next available number
-              const sorted = [...Array.from(new Set(values))].sort(
-                (a, b) => Number(a) - Number(b)
-              )
-              const nextValue =
-                sorted[
-                  sorted.findIndex((v) => v === values[selectedDataSet]) +
-                    (e.key === 'ArrowUp' ? 1 : -1)
-                ]
-
-              // Find dataset ID by the next higher number after current
-              let nextDataSet = values.findIndex((v) => v === nextValue)
-
-              // If there is no next number that could selected, get number from oposite side
-              if (nextDataSet < 0) {
-                nextDataSet = values.findIndex(
-                  (v) =>
-                    v ===
-                    sorted[e.key === 'ArrowUp' ? 0 : data.datasets.length - 1]
-                )
+              selectedDataSet -= 1
+              if (selectedDataSet < 0) {
+                selectedDataSet = data.datasets.length - 1
               }
-              selectedDataSet = nextDataSet
-              selectedIndex = selectedIndex % meta().data.length
             }
             break
         }
@@ -348,19 +301,17 @@ export const LineChart = memo(
         return
       }
       // Apply new colors scheme for data points
-      chartRef.current.data.datasets = gradients
-        ? createAreaChartDataPoints(ctx)
-        : createDataPoints()
+      chartRef.current.data.datasets = createDataPoints()
       // Update tooltip colors scheme
       setTooltipColorScheme({
         chart: chartRef.current,
         theme,
         themeName,
         chartDataPointColors,
+        patterns: chartBarDataPointPatterns,
       })
       // Update axeses
       axesConfig({ chart: chartRef.current, ctx, theme })
-      // Show style changes
       chartRef.current.update()
     }, [theme])
 
@@ -407,6 +358,7 @@ export const LineChart = memo(
         </div>
         <Legend
           {...{ data, chartDataPointColors, themeName, theme, onLegendClick }}
+          patterns={chartBarDataPointPatterns}
         />
       </div>
     )

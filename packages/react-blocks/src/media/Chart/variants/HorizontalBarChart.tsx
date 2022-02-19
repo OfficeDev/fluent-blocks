@@ -3,10 +3,10 @@ import { memo, useEffect, useRef, useContext } from 'react'
 import { ChartData } from '../chart-types'
 import {
   tooltipTrigger,
-  tooltipAxisXLine,
   chartConfig,
   axesConfig,
   setTooltipColorScheme,
+  horizontalBarValue,
   usNumberFormat,
   useChartId,
 } from '../chart-utils'
@@ -22,9 +22,9 @@ import { useChartStyles } from '../chart-styles'
 /**
  * @internal
  */
-export const VerticalBarChart = memo(
+export const HorizontalBarChart = memo(
   // eslint-disable-next-line max-lines-per-function
-  ({
+  function UnmemoizedHorizontalBarChart({
     label,
     data,
     stacked,
@@ -32,7 +32,7 @@ export const VerticalBarChart = memo(
     label: string
     data: ChartData
     stacked?: boolean
-  }) => {
+  }) {
     const { themeName, theme } = useContext(FluentPatternsContext)
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
@@ -46,6 +46,7 @@ export const VerticalBarChart = memo(
           label: translate(set.label),
           data: set.data,
           borderWidth: 0,
+          barPercentage: 0.5,
           borderSkipped: false,
           borderColor: theme.colorNeutralBackground1,
           hoverBorderColor: chartDataPointColors[i],
@@ -93,7 +94,7 @@ export const VerticalBarChart = memo(
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
       let selectedIndex = -1
-      let selectedDataSet = 0
+      const selectedDataSet = 0
 
       if (!canvasRef.current) {
         return
@@ -102,14 +103,29 @@ export const VerticalBarChart = memo(
       if (!ctx) {
         return
       }
-      const config: any = chartConfig({ type: 'bar' })
-      config.options.hover.mode = 'nearest'
-      config.options.scales.xAxes[0].gridLines.offsetGridLines =
-        data.datasets.length > 1 && !stacked
+      const config: any = chartConfig({ type: 'horizontalBar' })
+      config.options.layout.padding.top = -6
+      config.options.layout.padding.left = -32
+
+      config.options.hover.mode = 'index'
+
+      config.options.scales.xAxes[0].ticks.display = false
+      config.options.scales.xAxes[0].gridLines.display = false
+
+      config.options.scales.yAxes[0].ticks.callback = (v: string) => v
+      config.options.scales.yAxes[0].ticks.mirror = true
+      config.options.scales.yAxes[0].ticks.padding = 0
+      config.options.scales.yAxes[0].gridLines.display = false
+
+      config.options.tooltips.position = 'nearest'
 
       if (stacked) {
+        config.options.hover.mode = 'point'
+
         config.options.scales.yAxes[0].stacked = true
         config.options.scales.xAxes[0].stacked = true
+        config.options.tooltips.mode = 'nearest'
+        config.options.tooltips.axis = 'y'
         config.options.tooltips.callbacks.title = (tooltipItems: any) => {
           let total = 0
           data.datasets.map((dataset) => {
@@ -118,9 +134,9 @@ export const VerticalBarChart = memo(
               return (total += value)
             }
           })
-          return `${((tooltipItems[0].yLabel / total) * 100).toPrecision(
+          return `${((tooltipItems[0].xLabel / total) * 100).toPrecision(
             2
-          )}% (${usNumberFormat(tooltipItems[0].yLabel)})`
+          )}% (${usNumberFormat(tooltipItems[0].xLabel)})`
         }
       }
 
@@ -135,10 +151,10 @@ export const VerticalBarChart = memo(
         plugins: [
           {
             afterDatasetsDraw: ({ ctx, tooltip, chart }: any) => {
-              tooltipAxisXLine({
+              horizontalBarValue({
                 chart,
                 ctx,
-                tooltip,
+                stacked,
               })
             },
           },
@@ -147,6 +163,8 @@ export const VerticalBarChart = memo(
 
       const chart: any = chartRef.current
 
+      chart.config.options.scales.yAxes[0].ticks.labelOffset =
+        chart.chartArea.bottom / data.datasets[0].data.length / 2 - 2
       /**
        * Keyboard manipulations
        */
@@ -236,31 +254,13 @@ export const VerticalBarChart = memo(
       function changeFocus(e: KeyboardEvent) {
         removeDataPointsHoverStates()
         switch (e.key) {
-          case 'ArrowRight':
+          case 'ArrowDown':
             e.preventDefault()
             selectedIndex = (selectedIndex + 1) % meta().data.length
             break
-          case 'ArrowLeft':
-            e.preventDefault()
-            selectedIndex = (selectedIndex || meta().data.length) - 1
-            break
           case 'ArrowUp':
             e.preventDefault()
-            if (data.datasets.length > 1) {
-              selectedDataSet += 1
-              if (selectedDataSet === data.datasets.length) {
-                selectedDataSet = 0
-              }
-            }
-            break
-          case 'ArrowDown':
-            e.preventDefault()
-            if (data.datasets.length > 1) {
-              selectedDataSet -= 1
-              if (selectedDataSet < 0) {
-                selectedDataSet = data.datasets.length - 1
-              }
-            }
+            selectedIndex = (selectedIndex || meta().data.length) - 1
             break
         }
 
@@ -312,6 +312,7 @@ export const VerticalBarChart = memo(
       })
       // Update axeses
       axesConfig({ chart: chartRef.current, ctx, theme })
+      chartRef.current.options.defaultColor = theme.colorNeutralForeground1
       chartRef.current.update()
     }, [theme])
 
