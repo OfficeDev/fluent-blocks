@@ -8,7 +8,6 @@
     "Zhenya Savchenko <zhenyasa@microsoft.com>"
   ],
   "license": "MIT",
-  "types": "types/view.d.ts",
   "scripts": {},
   "engines": {
     "node": ">=12.0.0 <17.0.0",

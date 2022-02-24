@@ -2,7 +2,10 @@
   "name": "@fluentui/blocks-monorepo",
   "version": "9.0.0-alpha.1",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
-  "authors": ["Will Shown <willshown@microsoft.com>", "Zhenya Savchenko <zhenyasa@microsoft.com>"],
+  "authors": [
+    "Will Shown <willshown@microsoft.com>",
+    "Zhenya Savchenko <zhenyasa@microsoft.com>"
+  ],
   "license": "MIT",
   "private": true,
   "scripts": {
