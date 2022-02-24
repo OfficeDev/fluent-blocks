@@ -1,37 +1,19 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
+import {
+  iconVariant as naturalIconVariant,
+  iconSize as naturalIconSize,
+  iconProps as naturalIconProps,
+} from '@fluentui/blocks-schemas'
 
-import { propsElementUnion } from '../../lib'
+import { zodElement } from '../../lib'
 
-export const iconVariant = z.union([z.literal('filled'), z.literal('outline')])
+export const iconVariant = naturalIconVariant()
 export type IconVariant = z.infer<typeof iconVariant>
-
-export const iconSize = z.union([
-  z.literal(10),
-  z.literal(12),
-  z.literal(16),
-  z.literal(20),
-  z.literal(24),
-  z.literal(28),
-  z.literal(32),
-  z.literal(48),
-  z.literal('10'),
-  z.literal('12'),
-  z.literal('16'),
-  z.literal('20'),
-  z.literal('24'),
-  z.literal('28'),
-  z.literal('32'),
-  z.literal('48'),
-])
+export const iconSize = naturalIconSize()
 export type IconSize = z.infer<typeof iconSize>
-
-export const iconProps = z.object({
-  icon: z.string(),
-  variant: iconVariant.default('outline').optional(),
-  size: iconSize.default(20).optional(),
-})
+export const iconProps = naturalIconProps()
 export type IconProps = z.infer<typeof iconProps>
 
 function spriteHref(
@@ -73,11 +55,8 @@ function isIconElement(o: any): o is ReactElement<IconProps, typeof Icon> {
   return o?.type === Icon
 }
 
-export const iconPropsOrElement = propsElementUnion<
-  typeof iconProps,
-  typeof Icon
->(iconProps)
-export type IconPropsOrElement = z.infer<typeof iconPropsOrElement>
+export const iconElement = zodElement<typeof iconProps, typeof Icon>(iconProps)
+export type IconElement = z.infer<typeof iconElement>
 
 export function renderIfIcon(o: any) {
   return isIconProps(o) ? <Icon {...o} /> : isIconElement(o) ? o : null

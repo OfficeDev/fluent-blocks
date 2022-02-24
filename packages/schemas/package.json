@@ -1,7 +1,7 @@
 {
-  "name": "@fluentui/react-blocks",
+  "name": "@fluentui/blocks-schemas",
   "version": "9.0.0-alpha.1",
-  "main": "index.js",
+  "main": "src/index.ts",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -12,5 +12,8 @@
   "engines": {
     "node": ">=12.0.0 <17.0.0",
     "pnpm": "^6"
+  },
+  "dependencies": {
+    "zod": "latest"
   }
 }

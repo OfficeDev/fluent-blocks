@@ -41,6 +41,7 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
+      '@fluentui/blocks-schemas': workspace:9.0.0-alpha.1
       '@fluentui/react-card': nightly
       '@fluentui/react-components': rc
       '@storybook/addon-actions': latest
@@ -76,6 +77,7 @@ importers:
       webpack: latest
       zod: latest
     dependencies:
+      '@fluentui/blocks-schemas': link:../schemas
       lodash: 4.17.21
       zod: 3.12.0
     devDependencies:
@@ -104,7 +106,7 @@ importers:
       faker: github.com/thure/faker.js/7795375c954b5d057cad933f69da9c1072b821e1
       http-proxy-middleware: 2.0.3
       mocha: 9.2.1
-      playwright-chromium: 1.19.1
+      playwright-chromium: 1.19.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-test-renderer: 17.0.2_react@17.0.2
@@ -114,7 +116,10 @@ importers:
       webpack: 5.69.1
 
   packages/schemas:
-    specifiers: {}
+    specifiers:
+      zod: latest
+    dependencies:
+      zod: 3.12.0
 
 packages:
 
@@ -10216,21 +10221,21 @@ packages:
       find-up: 5.0.0
     dev: true
 
-  /playwright-chromium/1.19.1:
-    resolution: {integrity: sha512-gObASFcY8oOAqlJw89UXM/i4GNLvxKADn4DgoEMkXPxG7ATaN3eIyuWg5fGeYjKbAR15SHi+fCmP8n43LWKVTg==}
+  /playwright-chromium/1.19.2:
+    resolution: {integrity: sha512-4S6KiJgR6PCQmlm4IzArgt9aDkzijYXxVG1j3vRqdugXQ1mPA2QIFUmXmRJeDczVkbIR5N8opJSNMnNDFg4qVw==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.19.1
+      playwright-core: 1.19.2
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
     dev: true
 
-  /playwright-core/1.19.1:
-    resolution: {integrity: sha512-+ByjhWX39PlINVRXr4ef9Kle85mk5QzA2WLioCoMQc3bSUtZpLV1mbeUDtRp/bvFw6YDIEyptj4QvzzRTXN3vg==}
+  /playwright-core/1.19.2:
+    resolution: {integrity: sha512-OsL3sJZIo1UxKNWSP7zW7sk3FyUGG06YRHxHeBw51eIOxTCQRx5t+hXd0cvXashN2CHnd3hIZTs2aKa/im4hZQ==}
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
