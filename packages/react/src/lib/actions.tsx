@@ -1,14 +1,9 @@
 import noop from 'lodash/noop'
 import { createContext } from 'react'
 import { z, AnyZodObject } from 'zod'
+import { actionPayload } from '@fluentui/blocks-schemas'
 
-export const actionPayload = z.object({
-  type: z.string(),
-  actionId: z.string(),
-})
 export type ActionPayload = z.infer<typeof actionPayload>
-
-export const anyActionPayload = actionPayload.passthrough()
 
 export type ActionHandler<A = ActionPayload> = (payload: A) => void
 
@@ -18,6 +13,10 @@ export type PropsWithActionHandler<P extends {}, A> = P & {
 
 export function withActionHandler<P extends AnyZodObject>(payload: P) {
   return { onAction: z.function().args(payload).returns(z.void()).optional() }
+}
+
+export function actionHandler<P extends AnyZodObject>(payload: P) {
+  return z.object(withActionHandler<P>(payload))
 }
 
 const ActionsContext = createContext({

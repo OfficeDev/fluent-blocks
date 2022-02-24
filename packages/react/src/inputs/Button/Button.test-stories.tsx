@@ -1,6 +1,6 @@
-import { Button, ButtonProps } from './Button'
-import { ActionHandler, FluentPatternsProvider } from '../../lib'
 import { Parameters } from '@storybook/addons'
+import { Button, ButtonProps, ButtonActionPayload } from './Button'
+import { ActionHandler, FluentPatternsProvider } from '../../lib'
 
 export default {
   title: 'Tests/Button',
@@ -29,7 +29,7 @@ ButtonClickTest.args = {
     actionId: '03cae49a-aaf5-4641-a652-6e633ffd1b75',
     label: 'ca227823-0eb2-42c4-a873-24a1c5068082',
     // eslint-disable-next-line no-console, no-restricted-globals
-    onAction: (payload) => window.alert(payload.actionId),
+    onAction: (payload: ButtonActionPayload) => window.alert(payload.actionId),
   },
 }
 ButtonClickTest.parameters = { chromatic: { disableSnapshot: true } }
