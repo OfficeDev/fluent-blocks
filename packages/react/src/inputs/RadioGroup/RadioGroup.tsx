@@ -1,19 +1,12 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { radioGroupProps as naturalRadioGroupProps } from '@fluentui/blocks-schemas'
 
-import {
-  inputPropsWithInitialStringValue,
-  labeledValueProps,
-} from '../input-properties'
 import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+import { inlineSequenceOrString } from '../../inlines'
 
-export const radioGroupProps = inputPropsWithInitialStringValue.merge(
-  z.object({
-    type: z.literal('radio-group'),
-    options: z.array(labeledValueProps).min(2),
-  })
-)
+export const radioGroupProps = naturalRadioGroupProps(inlineSequenceOrString)
 export type RadioGroupProps = z.infer<typeof radioGroupProps>
 
 const useRadioGroupStyles = makeStyles({
