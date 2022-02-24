@@ -9,6 +9,7 @@ import {
   rem,
   renderIfEscape,
   Sequence,
+  sx,
   useCommonStyles,
 } from '../../lib'
 import {
@@ -58,14 +59,14 @@ const useShortInputsStyles = makeStyles({
   },
   'shortInputSequence--flex': {
     display: 'flex',
-    flexFlow: 'row wrap',
-    gap: '.5rem',
+    ...sx.flexFlow('row', 'wrap'),
+    ...sx.gap('.5rem'),
   },
   'shortInputSequence--narrow-block': {
     marginBlockStart: rem(20),
     display: 'flex',
-    flexFlow: 'column nowrap',
-    gap: '.5rem',
+    ...sx.flexFlow('column', 'nowrap'),
+    ...sx.gap('.5rem'),
   },
 })
 

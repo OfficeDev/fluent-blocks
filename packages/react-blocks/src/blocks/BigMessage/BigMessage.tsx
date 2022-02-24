@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { escaped, renderIfEscape, rem, propsElementUnion } from '../../lib'
+import { escaped, renderIfEscape, rem, propsElementUnion, sx } from '../../lib'
 import { mediaEntity } from '../../media'
 import { inlineSequenceOrString } from '../../inlines'
 import { ButtonProps, buttonProps } from '../../inputs'
@@ -45,7 +45,7 @@ const useBigMessageStyles = makeStyles({
     minHeight: '100vh',
   },
   container: {
-    margin: rem(20),
+    ...sx.margin(rem(20)),
     maxWidth: rem(510),
     minWidth: rem(280),
     textAlign: 'center',

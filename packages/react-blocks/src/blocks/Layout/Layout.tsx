@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { propsElementUnion, Sequence } from '../../lib'
+import { propsElementUnion, Sequence, sx } from '../../lib'
 
 import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
 
@@ -20,14 +20,14 @@ const useLayoutStyles = makeStyles({
   grid: {
     display: 'grid',
     gridTemplateColumns: '1fr',
-    gap: '.5rem',
+    ...sx.gap('.5rem'),
     '@media screen and (min-width: 600px)': {
       gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
     },
   },
   flex: {
     display: 'flex',
-    flexFlow: 'row wrap',
+    ...sx.flexFlow('row', 'wrap'),
     marginInlineEnd: '-.5rem',
     marginBlockEnd: '-.5rem',
   },

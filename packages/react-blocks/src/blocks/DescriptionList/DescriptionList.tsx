@@ -4,6 +4,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
   key,
   propsElementUnion,
+  sx,
   useCommonStyles,
   useTextBlockStyles,
 } from '../../lib'
@@ -22,7 +23,7 @@ export type DescriptionListProps = z.infer<typeof descriptionListProps>
 const useDescriptionListStyles = makeStyles({
   listItem: {
     display: 'flex',
-    flexFlow: 'column nowrap',
+    ...sx.flexFlow('column', 'nowrap'),
     marginBlockEnd: '1.5rem',
     '&:last-child': { marginBlockEnd: 0 },
   },

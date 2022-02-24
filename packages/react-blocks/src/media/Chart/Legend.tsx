@@ -7,7 +7,7 @@ import {
   mergeClasses as cx,
 } from '@fluentui/react-components'
 
-import { ThemeName, useTranslations } from '../../lib'
+import { sx, ThemeName, useTranslations } from '../../lib'
 
 import { legendLabels, Pattern } from './chart-patterns'
 import { ChartData, ChartDataset } from './chart-types'
@@ -35,33 +35,33 @@ const useColorValueStyles = makeStyles({
     minWidth: '1.25rem',
     height: '1rem',
   },
-  canvas: (theme) => ({
+  canvas: {
     width: '100%',
     height: '100%',
     userSelect: 'none',
-    border: 'none',
-    borderRadius: theme.borderRadiusSmall,
-  }),
-  canvasHc: (theme) => ({
-    border: `1px solid ${theme.colorNeutralStroke1}`,
-  }),
+    ...sx.border('0'),
+    ...sx.borderRadius('var(--borderRadiusSmall)'),
+  },
+  canvasHc: {
+    ...sx.border('1px', 'solid', 'var(--colorNeutralStroke1)'),
+  },
 })
 
 const useLegendItemStyles = makeStyles({
-  root: (theme) => ({
-    flex: '0 0 auto',
+  root: {
+    ...sx.flex(0, 0, 'auto'),
     fontSize: '.75rem',
-    color: theme.colorNeutralForeground2,
-    margin: '0.125rem',
-    padding: '0.125rem',
+    color: 'var(--colorNeutralForeground2)',
+    ...sx.margin('0.125rem'),
+    ...sx.padding('0.125rem'),
     minWidth: 0,
-  }),
+  },
 })
 
 const useLegendStyles = makeStyles({
   root: {
     display: 'flex',
-    flexFlow: 'row nowrap',
+    ...sx.flexFlow('row', 'nowrap'),
     overflowX: 'auto',
     overflowY: 'hidden',
   },

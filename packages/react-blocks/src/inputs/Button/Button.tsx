@@ -12,6 +12,7 @@ import {
   withActionHandler,
   useFluentPatternsContext,
   rem,
+  sx,
 } from '../../lib'
 import { Icon, iconSize, iconVariant } from '../../inlines'
 import { shortInputContextualVariants } from '../input-properties'
@@ -52,17 +53,17 @@ export type ButtonProps = z.infer<typeof buttonProps>
 
 const useButtonStyles = makeStyles({
   root: {
-    margin: 0,
+    ...sx.margin(0),
     flexShrink: 0,
   },
   fill: {
     width: '100%',
   },
-  tab: (theme) => ({
+  tab: {
     position: 'relative',
-    fontWeight: theme.fontWeightRegular,
-    color: theme.colorNeutralForeground2,
-    transition: 'color .2s linear',
+    fontWeight: 'var(--fontWeightRegular)',
+    color: 'var(--colorNeutralForeground2)',
+    ...sx.transition('color', '.2s', 'linear'),
     '&:after': {
       content: '""',
       position: 'absolute',
@@ -70,32 +71,35 @@ const useButtonStyles = makeStyles({
       insetInlineStart: rem(12),
       insetInlineEnd: rem(12),
       height: rem(2),
-      borderRadius: theme.borderRadiusCircular,
-      backgroundColor: theme.colorTransparentBackground,
-      transition:
-        'background-color .2s linear, inset-inline-start .2s ease-in-out, inset-inline-end .2s ease-in-out',
+      ...sx.borderRadius('var(--borderRadiusCircular)'),
+      backgroundColor: 'var(--colorTransparentBackground)',
+      ...sx.transition(
+        'background-color, inset-inline-start, inset-inline-end',
+        '.2s, .2s, .2s',
+        'linear, ease-in-out, ease-in-out'
+      ),
     },
     '&:hover': {
-      color: theme.colorNeutralForeground1,
+      color: 'var(--colorNeutralForeground1)',
       '&:after': {
-        backgroundColor: theme.colorNeutralStroke1,
+        backgroundColor: 'var(--colorNeutralStroke1)',
       },
     },
     '&:active': {
       color: 'inherit',
       '&:after': {
-        backgroundColor: theme.colorBrandForeground1,
+        backgroundColor: 'var(--colorBrandForeground1)',
       },
     },
-  }),
-  tabSelected: (theme) => ({
-    fontWeight: theme.fontWeightSemibold,
+  },
+  tabSelected: {
+    fontWeight: 'var(--fontWeightSemibold)',
     '&:after': {
-      backgroundColor: theme.colorBrandForeground1,
+      backgroundColor: 'var(--colorBrandForeground1)',
     },
     '&:hover': {
       '&:after': {
-        backgroundColor: theme.colorBrandForeground1,
+        backgroundColor: 'var(--colorBrandForeground1)',
         insetInlineStart: rem(4),
         insetInlineEnd: rem(4),
       },
@@ -105,10 +109,10 @@ const useButtonStyles = makeStyles({
       '&:after': {
         insetInlineStart: rem(4),
         insetInlineEnd: rem(4),
-        backgroundColor: theme.colorCompoundBrandStrokePressed,
+        backgroundColor: 'var(--colorCompoundBrandStrokePressed)',
       },
     },
-  }),
+  },
 })
 
 export const Button = ({

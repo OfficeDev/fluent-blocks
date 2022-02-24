@@ -8,6 +8,7 @@ import {
   invalidLayoutItemSelf,
   propsElementUnion,
   renderIfEscape,
+  sx,
 } from '../../lib'
 
 import { cardPropsOrElement, renderIfCard } from '../Card/Card'
@@ -39,12 +40,12 @@ export type LayoutItemProps = z.infer<typeof layoutItemProps>
 
 const useLayoutItemStyles = makeStyles({
   flexInlineSizeFactor1: {
-    flex: '1 0 auto',
+    ...sx.flex(1, 0, 'auto'),
     marginInlineEnd: '.5rem',
     marginBlockEnd: '.5rem',
   },
   flexInlineSizeFactor2: {
-    flex: '2 0 auto',
+    ...sx.flex(2, 0, 'auto'),
     marginInlineEnd: '.5rem',
     marginBlockEnd: '.5rem',
   },

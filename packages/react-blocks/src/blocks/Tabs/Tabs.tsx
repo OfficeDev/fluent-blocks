@@ -10,6 +10,7 @@ import {
   rem,
   renderIfEscape,
   Sequence,
+  sx,
   useCommonStyles,
 } from '../../lib'
 
@@ -97,7 +98,7 @@ const useTabsStyles = makeStyles({
   },
   tabList: {
     display: 'flex',
-    flexFlow: 'row nowrap',
+    ...sx.flexFlow('row', 'nowrap'),
     paddingBlockStart: rem(2),
     paddingBlockEnd: rem(2),
   },

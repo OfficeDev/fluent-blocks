@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
 
 import { textInputProps } from '../input-properties'
-import { Placeholder, propsElementUnion, rem } from '../../lib'
+import { Placeholder, propsElementUnion, rem, sx } from '../../lib'
 
 export const shortTextInputProps = textInputProps.merge(
   z.object({
@@ -15,7 +15,7 @@ export type ShortTextInputProps = z.infer<typeof shortTextInputProps>
 const useShortTextInputStyles = makeStyles({
   rootPlaceholder: {
     minWidth: rem(140),
-    flex: '1 0 0',
+    ...sx.flex(1, 0, '0'),
   },
 })
 

@@ -12,6 +12,7 @@ import {
   Sequence,
   useCommonStyles,
   useFluentPatternsContext,
+  sx,
 } from '../../lib'
 import { renderIfParagraph } from '../Paragraph/Paragraph'
 import { renderIfHeading } from '../Heading/Heading'
@@ -35,14 +36,12 @@ const CardContentItem = (o: CardContentItemEntity) =>
 const useCardStyles = makeStyles({
   root: {
     boxSizing: 'border-box',
-    padding: rem(20),
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'transparent',
+    ...sx.padding(rem(12)),
+    ...sx.border('1px', 'solid', 'transparent'),
   },
-  hc: (theme) => ({
-    borderColor: theme.colorNeutralForeground1,
-  }),
+  hc: {
+    ...sx.borderColor('var(--colorNeutralForeground1)'),
+  },
   layoutItemCard: {
     minHeight: '100%',
   },

@@ -1,23 +1,20 @@
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { rem } from './index'
+import { rem } from './units'
+import { sx } from './shorthands'
 
 const useStyles = makeStyles({
-  root: (theme) => ({
+  root: {
     boxSizing: 'border-box',
     minHeight: '3rem',
-    padding: rem(4),
+    ...sx.padding(rem(4)),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: theme.colorPaletteRedBorder2,
-    borderRadius: rem(6),
-
-    color: theme.colorPaletteRedForeground1,
-  }),
+    ...sx.border('1px', 'solid', 'var(--colorPaletteRedBorder2)'),
+    ...sx.borderRadius(rem(6)),
+    color: 'var(--colorPaletteRedForeground1)',
+  },
 })
 
 export const Placeholder = ({

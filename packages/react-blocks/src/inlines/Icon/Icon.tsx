@@ -59,7 +59,7 @@ export const Icon = (props: IconProps) => {
   const { icon, variant, size } = props
   const styles = useStyles()
   return (
-    <svg className={styles.root}>
+    <svg className={styles.root} data-chromatic="ignore">
       <use href={spriteHref(icon, size!, variant!)} />
     </svg>
   )

@@ -24,7 +24,8 @@
     "pnpm": "^6"
   },
   "peerDependencies": {
-    "@fluentui/react-components": "9.0.0-beta.5",
+    "@fluentui/react-card": "nightly",
+    "@fluentui/react-components": "rc",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "chart.js": "^2.9.4",
@@ -33,8 +34,8 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-card": "9.0.0-beta.5",
-    "@fluentui/react-components": "9.0.0-beta.5",
+    "@fluentui/react-card": "nightly",
+    "@fluentui/react-components": "rc",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
@@ -52,6 +53,7 @@
     "babel-loader": "latest",
     "chart.js": "^2.9.4",
     "chromatic": "latest",
+    "csstype": "^2.6.19",
     "expect": "latest",
     "faker": "thure/faker.js#v5.1.2",
     "http-proxy-middleware": "latest",
