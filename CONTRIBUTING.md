@@ -4,28 +4,28 @@ We’re
 
 ## Getting started
 
-Install `node` greater than or equal to v10 and `yarn`, then run:
+Install `node` greater than or equal to v12 and `pnpm`, then run:
 
 ```shell
-$ yarn install
+$ pnpm install
 ```
 
 Then, to start Storybook, run:
 
 ```shell
-$ yarn dev
+$ pnpm dev
 ```
 
 To test while Storybook is running, run:
 
 ```shell
-$ yarn test:run
+$ pnpm test:run
 ```
 
 To run tests also starting Storybook as needed (this will fail if Storybook is already running), run:
 
 ```shell
-$ yarn test
+$ pnpm test
 ```
 
 ## Notes on naming
