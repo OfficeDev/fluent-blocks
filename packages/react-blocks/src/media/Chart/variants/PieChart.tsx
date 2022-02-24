@@ -324,6 +324,7 @@ export const PieChart = memo(
             style={{ userSelect: 'none' }}
             tabIndex={0}
             aria-label={label}
+            data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
               (set.data as number[]).forEach(

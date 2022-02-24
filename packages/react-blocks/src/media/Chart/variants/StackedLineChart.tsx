@@ -333,6 +333,7 @@ export const StackedLineChart = memo(
               userSelect: 'none',
             }}
             aria-label={label}
+            data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
               (set.data as number[]).forEach(

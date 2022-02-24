@@ -1,8 +1,8 @@
-# <img alt="" src="https://rawgit.com/OfficeDev/fluent-blocks/main/packages/react-blocks/.storybook/public/device.svg" width="19" height="32" /> Fluent Blocks (React)
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react-blocks/.storybook/public/brandImage.svg" width="320" />
 
-## [Open Storybook ↗︎][storybook]
+### [Open Storybook ↗︎][storybook]
 
-An implementation of [Fluent][figma-fluent] & [UI Kit][figma-uikit] designs for app development based on [`@fluentui/react-components`][fluentui-v9]. This project succeeds [`@fluentui/react-teams`][react-teams].
+Fluent Blocks is a React implementation of [Fluent][figma-fluent] & [UI Kit][figma-uikit] designs for app development based on [`@fluentui/react-components`][fluentui-v9]. This project succeeds [`@fluentui/react-teams`][react-teams].
 
 This package provides a set of components developers can use to build fully interactive & accessible experiences using whatever React coding convention they prefer, rendering experiences that match Fluent & UI Kit designs.
 
