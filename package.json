@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "lint-ci": "eslint --max-warnings 0 packages/react-blocks/src/**/*.{ts,tsx} packages/react-blocks/.storybook/*.js",
+    "lint-ci": "eslint --max-warnings 0 packages/react/src/**/*.{ts,tsx} packages/react/.storybook/*.js",
     "lint-staged": "lint-staged",
     "test": "pnpm run test -r --if-present"
   },

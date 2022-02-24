@@ -1,4 +1,4 @@
-<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react-blocks/.storybook/public/brandImage.svg" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react/.storybook/public/brandImage.svg" width="320" />
 
 Fluent Blocks makes it easy to use [Fluent][figma-fluent] & [UI Kit][figma-uikit] designs in app development.
 
@@ -6,8 +6,8 @@ This repository provides a set of packages developers can use to build fully int
 
 ## Packages
 
-- [**Fluent Blocks: React**](packages/react-blocks#readme) ([Storybook][storybook])
-- [Fluent Blocks schemas](packages/blocks-schemas#readme)
+- [**Fluent Blocks: React**](packages/react#readme) ([Storybook][storybook])
+- [Schemas](packages/schemas#readme)
 
 ## ⚠️ In active development
 

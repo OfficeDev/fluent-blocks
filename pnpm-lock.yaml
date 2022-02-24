@@ -38,10 +38,7 @@ importers:
       prettier: 2.5.1
       typescript: 4.5.5
 
-  packages/blocks-schemas:
-    specifiers: {}
-
-  packages/react-blocks:
+  packages/react:
     specifiers:
       '@babel/core': latest
       '@fluentui/react-card': nightly
@@ -115,6 +112,9 @@ importers:
       ts-mocha: 9.0.2_mocha@9.2.1
       ts-node: 10.5.0_f3bd4037939c2ed2942ba074291f8ef2
       webpack: 5.69.1
+
+  packages/schemas:
+    specifiers: {}
 
 packages:
 
