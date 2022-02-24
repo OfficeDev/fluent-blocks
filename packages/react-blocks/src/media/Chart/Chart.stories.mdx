@@ -1,0 +1,302 @@
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
+import { Chart } from './StorybookChart'
+import { themeArgType } from '../../lib'
+
+<Meta
+  title="Media/Charts"
+  component={Chart}
+  parameters={{
+    viewMode: 'docs',
+    chromatic: { delay: 4000 },
+  }}
+  argTypes={{
+    ...themeArgType,
+    label: { table: { disable: true } },
+    chart: {
+      name: 'Chart data',
+      abstract: 'The data and options to pass to ChartJS',
+      control: { type: 'object' },
+      table: {
+        type: {
+          summary: 'ChartData',
+        },
+      },
+    },
+  }}
+/>
+
+export const ChartTemplate = (props) => <Chart {...props} />
+
+export const demoData = {
+  labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+  datasets: [
+    {
+      label: 'Laptops',
+      data: [1860, 7700, 4100, 3012, 2930],
+    },
+    {
+      label: 'Watches',
+      data: [1200, 3600, 2480, 5049, 4596],
+    },
+  ],
+}
+
+export const demoBubbleData = {
+  labels: 'Countries',
+  datasets: [
+    {
+      label: 'China',
+      data: [
+        {
+          x: 21269017,
+          y: 5.245,
+          r: 25,
+        },
+      ],
+    },
+    {
+      label: 'Denmark',
+      data: [
+        {
+          x: 258702,
+          y: 7.526,
+          r: 10,
+        },
+      ],
+    },
+    {
+      label: 'Germany',
+      data: [
+        {
+          x: 3979083,
+          y: 6.994,
+          r: 15,
+        },
+      ],
+    },
+    {
+      label: 'Japan',
+      data: [
+        {
+          x: 11931877,
+          y: 5.921,
+          r: 40,
+        },
+      ],
+    },
+    {
+      label: 'France',
+      data: [
+        {
+          x: 17269017,
+          y: 6.921,
+          r: 20,
+        },
+      ],
+    },
+  ],
+}
+
+# Charts
+
+This library comes with a set of built-in accessible charts. These charts expose most of the options made available from [Chart.js](https://www.chartjs.org/) and automate the options that have an impact on accessibility.
+
+### Pie
+
+<Canvas withSource="none">
+  <Story
+    name="Pie"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'pie',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Pie" />
+
+### Doughnut
+
+<Canvas withSource="none">
+  <Story
+    name="Doughnut"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'doughnut',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Doughnut" />
+
+### Vertical bars
+
+<Canvas withSource="none">
+  <Story
+    name="Vertical bars"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Vertical bars" />
+
+### Vertical bars, stacked
+
+<Canvas withSource="none">
+  <Story
+    name="Vertical bars, stacked"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar-stacked',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Vertical bars, stacked" />
+
+### Horizontal bars
+
+<Canvas withSource="none">
+  <Story
+    name="Horizontal bars"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar-horizontal',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Horizontal bars" />
+
+### Horizontal bars, stacked
+
+<Canvas withSource="none">
+  <Story
+    name="Horizontal bars, stacked"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bar-horizontal-stacked',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Horizontal bars, stacked" />
+
+### Lines
+
+<Canvas withSource="none">
+  <Story
+    name="Lines"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'line',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Lines" />
+
+### Lines, shaded
+
+<Canvas withSource="none">
+  <Story
+    name="Lines, shaded"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'line-area',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Lines, shaded" />
+
+### Lines, stacked
+
+<Canvas withSource="none">
+  <Story
+    name="Lines, stacked"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'line-stacked',
+        data: demoData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Lines, stacked" />
+
+### Bubble
+
+<Canvas withSource="none">
+  <Story
+    name="Bubble"
+    args={{
+      theme: 'light',
+      label: 'Demo data',
+      chart: {
+        type: 'bubble',
+        data: demoBubbleData,
+      },
+    }}
+  >
+    {ChartTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Bubble" />

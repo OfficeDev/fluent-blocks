@@ -6,7 +6,6 @@ const eslintrc = {
   plugins: [
     '@typescript-eslint',
     'import',
-    'jest',
     'lodash',
     'react-hooks',
     'react',
@@ -109,17 +108,6 @@ const eslintrc = {
     'import/no-useless-path-segments': 'warn',
     'import/no-deprecated': 'warn',
     'import/no-duplicates': 'warn',
-    'jest/lowercase-name': [
-      'warn',
-      {
-        ignore: ['describe', 'test'],
-      },
-    ],
-    'jest/no-focused-tests': 'warn',
-    'jest/no-jest-import': 'warn',
-    'jest/no-mocks-import': 'warn',
-    'jest/valid-expect': 'warn',
-    'jest/valid-title': 'warn',
     '@typescript-eslint/explicit-member-accessibility': [
       'warn',
       {

@@ -1,0 +1,158 @@
+import range from 'lodash/range'
+import { fake, seed } from 'faker/locale/en_US'
+import fakeTitle from '../../lib/fakeTitle'
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+
+import { Layout } from './StorybookLayout'
+import { themeArgType } from '../../lib'
+
+<Meta
+  title="Blocks/Layout"
+  component={Layout}
+  argTypes={{
+    ...themeArgType,
+    layout: {
+      name: 'Layout',
+      abstract: 'The layout configuration.',
+      control: { type: 'object' },
+      table: {
+        type: {
+          summary: 'LayoutProps',
+        },
+      },
+    },
+    dashboard: {
+      name: 'Dashboard',
+      abstract: 'The dashboard alternative API surface for Layout.',
+      control: { type: 'object' },
+      table: {
+        type: {
+          summary: 'DashboardProps',
+        },
+      },
+    },
+  }}
+  parameters={{
+    viewMode: 'docs',
+    chromatic: { delay: 4000 },
+  }}
+/>
+
+export const LayoutTemplate = (props) => <Layout {...props} />
+
+# Layout
+
+The `Layout` component is a block which can arrange its content items such that more than one can occupy the same inline-axis space. This is useful for arranging content items so that they’re side-by-side, like in a grid or flexbox.
+
+<Canvas withSource="none">
+  <Story
+    name="Layout"
+    args={{
+      theme: 'light',
+      layout: {
+        variant: 'grid',
+        items: range(7).map((i) => ({
+          item: {
+            card: [{ paragraph: [{ text: fake('{{lorem.sentence}}') }] }],
+          },
+          ...(i === 0 && { inlineSizeFactor: 2, blockSizeFactor: 2 }),
+        })),
+      },
+    }}
+  >
+    {seed(1234) || LayoutTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Layout" />
+
+## Exemplars
+
+### Dashboard
+
+**Dashboards** are grid-variant Layouts that expect Widgets (an exemplar of Card) as their items.
+
+<Canvas withSource="none">
+  <Story
+    name="Dashboard"
+    args={{
+      theme: 'light',
+      dashboard: {
+        items: [
+          ...range(5).map((i) => ({
+            item: {
+              widget: {
+                title: [{ text: fakeTitle(fake) }],
+                label: 'Demo Widget',
+                abstract: [{ text: fakeTitle(fake) }],
+                tabs: range(2).map((j) => ({
+                  tab: { label: fakeTitle(fake) },
+                  panel: [
+                    {
+                      media: {
+                        label: 'Demo chart',
+                        chart: {
+                          type: ['line', 'doughnut'][i === 0 ? 1 : j],
+                          data: {
+                            labels: ['Jan', 'Feb', 'March', 'April', 'May'],
+                            datasets: [
+                              {
+                                label: 'Laptops',
+                                data: [1860, 7700, 4100, 3012, 2930],
+                              },
+                              {
+                                label: 'Watches',
+                                data: [1200, 3600, 2480, 5049, 4596],
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  ],
+                })),
+                footerAction: {
+                  label: fakeTitle(fake),
+                  icon: 'arrow_right',
+                  iconPosition: 'after',
+                },
+              },
+            },
+            ...(i === 0 && { inlineSizeFactor: 2, blockSizeFactor: 2 }),
+          })),
+          {
+            item: {
+              widget: {
+                title: [{ text: fakeTitle(fake) }],
+                label: 'Demo Widget',
+                abstract: [{ text: fakeTitle(fake) }],
+                tabs: [
+                  {
+                    tab: { label: fakeTitle(fake) },
+                    panel: [
+                      {
+                        descriptionList: range(4).map((i) => ({
+                          title: fakeTitle(fake),
+                          description: Math.floor(Math.pow(Math.PI, i)) + '%',
+                        })),
+                      },
+                    ],
+                  },
+                ],
+                footerAction: {
+                  label: fakeTitle(fake),
+                  icon: 'arrow_right',
+                  iconPosition: 'after',
+                },
+              },
+            },
+          },
+        ],
+      },
+    }}
+  >
+    {seed(1234) || LayoutTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Dashboard" />
