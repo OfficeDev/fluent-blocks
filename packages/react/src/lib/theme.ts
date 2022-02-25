@@ -1,24 +1,12 @@
-import { z, ZodTypeAny } from 'zod'
+import { z } from 'zod'
 import {
   teamsLightTheme,
   teamsDarkTheme,
   teamsHighContrastTheme,
 } from '@fluentui/react-components'
+import { themeName } from '@fluentui/blocks-schemas'
 
-export const themeName = z.union([
-  z.literal('light'),
-  z.literal('dark'),
-  z.literal('high-contrast'),
-])
 export type ThemeName = z.infer<typeof themeName>
-
-export function themedMap<T extends ZodTypeAny>(valueSchema: T) {
-  return z.object({
-    light: valueSchema,
-    dark: valueSchema,
-    'high-contrast': valueSchema,
-  })
-}
 
 export const getTeamsTheme = (theme: ThemeName) =>
   ({

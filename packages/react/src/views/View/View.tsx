@@ -1,9 +1,8 @@
 import { z } from 'zod'
-import { anyActionPayload } from '@fluentui/blocks-schemas'
+import { anyActionPayload, themeName } from '@fluentui/blocks-schemas'
 
 import {
   FluentPatternsProvider,
-  themeName,
   ParseBoundary,
   withActionHandler,
   translations,

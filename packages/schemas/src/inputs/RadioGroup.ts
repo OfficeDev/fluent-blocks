@@ -1,14 +1,12 @@
-import { z, ZodTypeAny } from 'zod'
+import { z } from 'zod'
 import {
-  inputPropsWithInitialStringValueShape,
-  labeledValuePropsShape,
+  inputPropsWithInitialStringValue,
+  labeledValueProps,
 } from './input-properties'
 
-export const radioGroupProps = (inlineSequenceType?: ZodTypeAny) =>
+export const radioGroupProps = inputPropsWithInitialStringValue.merge(
   z.object({
-    ...inputPropsWithInitialStringValueShape(inlineSequenceType),
     type: z.literal('radio-group'),
-    options: z
-      .array(z.object(labeledValuePropsShape(inlineSequenceType)))
-      .min(2),
+    options: z.array(labeledValueProps).min(2),
   })
+)

@@ -1,8 +1,8 @@
-import { z, ZodTypeAny } from 'zod'
-import { textInputPropsShape } from './input-properties'
+import { z } from 'zod'
+import { textInputProps } from './input-properties'
 
-export const shortTextInputProps = (inlineSequenceType?: ZodTypeAny) =>
+export const shortTextInputProps = textInputProps.merge(
   z.object({
-    ...textInputPropsShape(inlineSequenceType),
     multiline: z.literal(false).optional(),
   })
+)

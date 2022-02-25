@@ -1,19 +1,12 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
-import {
-  iconVariant as naturalIconVariant,
-  iconSize as naturalIconSize,
-  iconProps as naturalIconProps,
-} from '@fluentui/blocks-schemas'
+import { iconVariant, iconSize, iconProps } from '@fluentui/blocks-schemas'
 
 import { zodElement } from '../../lib'
 
-export const iconVariant = naturalIconVariant()
 export type IconVariant = z.infer<typeof iconVariant>
-export const iconSize = naturalIconSize()
 export type IconSize = z.infer<typeof iconSize>
-export const iconProps = naturalIconProps()
 export type IconProps = z.infer<typeof iconProps>
 
 function spriteHref(

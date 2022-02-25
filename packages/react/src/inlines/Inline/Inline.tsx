@@ -2,9 +2,7 @@ import { z } from 'zod'
 import isString from 'lodash/isString'
 import {
   inlineEntity as naturalInlineEntity,
-  inlineSequence as naturalInlineSequence,
-  inlineSequenceOrString as naturalInlineSequenceOrString,
-  inlineContentProp as naturalInlineContentProp,
+  inlineContentProps as naturalInlineContentProps,
 } from '@fluentui/blocks-schemas'
 
 import {
@@ -17,19 +15,23 @@ import {
 import { textElement, renderIfText } from '../Text/Text'
 import { iconElement, renderIfIcon } from '../Icon/Icon'
 
-const inlineEntityElements = [textElement, iconElement, escapeElement]
-
-export const inlineEntity = naturalInlineEntity(inlineEntityElements)
+export const inlineEntity = z.union([
+  naturalInlineEntity,
+  textElement,
+  iconElement,
+  escapeElement,
+])
 export type InlineEntity = z.infer<typeof inlineEntity>
 
-export const inlineSequence = naturalInlineSequence(inlineEntityElements)
+export const inlineSequence = z.array(inlineEntity)
 export type InlineSequence = z.infer<typeof inlineSequence>
 
-export const inlineSequenceOrString =
-  naturalInlineSequenceOrString(inlineEntityElements)
+export const inlineSequenceOrString = z.union([z.string(), inlineSequence])
 export type InlineSequenceOrString = z.infer<typeof inlineSequenceOrString>
 
-export const inlineContentProps = naturalInlineContentProp(inlineEntityElements)
+export const inlineContentProps = naturalInlineContentProps.merge(
+  z.object({ inlines: inlineSequenceOrString })
+)
 export type InlineContentProps = z.infer<typeof inlineContentProps>
 
 function renderAsTextIfString(o: any) {

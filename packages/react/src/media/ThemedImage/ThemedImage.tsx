@@ -1,22 +1,27 @@
 import { z } from 'zod'
 import { ReactElement, cloneElement } from 'react'
-
-import {
-  propsElementUnion,
-  themedMap,
-  useFluentPatternsContext,
-} from '../../lib'
-import { mediaProps } from '../media-properties'
 import { makeStyles } from '@fluentui/react-components'
+import {
+  imageSrc,
+  themedImageProps as naturalThemedImageProps,
+} from '@fluentui/blocks-schemas'
+
+import { propsElementUnion, useFluentPatternsContext } from '../../lib'
 
 const imageElement = z
   .object({ type: z.union([z.literal('img'), z.literal('svg')]) })
   .catchall(z.any())
   .transform((el) => el as ReactElement<any, 'img' | 'svg'>)
 
-const image = z.union([z.string().url(), imageElement])
+const image = z.union([imageSrc, imageElement])
 
-export const themedImageProps = mediaProps.merge(themedMap<typeof image>(image))
+export const themedImageProps = naturalThemedImageProps.merge(
+  z.object({
+    light: image,
+    dark: image,
+    'high-contrast': image,
+  })
+)
 export type ThemedImageProps = z.infer<typeof themedImageProps>
 
 const useThemedImageStyles = makeStyles({

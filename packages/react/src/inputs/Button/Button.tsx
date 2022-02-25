@@ -11,8 +11,8 @@ import {
 } from '@fluentui/blocks-schemas'
 
 import {
+  actionHandler,
   propsElementUnion,
-  withActionHandler,
   useFluentPatternsContext,
   rem,
   sx,
@@ -22,9 +22,9 @@ import { shortInputContextualVariants } from '../input-properties'
 
 export const buttonActionPayload = buttonActions.activate
 export type ButtonActionPayload = z.infer<typeof buttonActionPayload>
-export const buttonProps = naturalButtonProps(
-  withActionHandler(buttonActionPayload)
-).merge(shortInputContextualVariants)
+export const buttonProps = naturalButtonProps
+  .merge(actionHandler(buttonActionPayload))
+  .merge(shortInputContextualVariants)
 export type ButtonProps = z.infer<typeof buttonProps>
 
 const useButtonStyles = makeStyles({

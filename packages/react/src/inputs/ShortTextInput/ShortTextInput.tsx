@@ -2,13 +2,12 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
 import { shortTextInputProps as naturalShortTextInputProps } from '@fluentui/blocks-schemas'
-import { inlineSequenceOrString } from '../../inlines'
 
 import { Placeholder, propsElementUnion, rem, sx } from '../../lib'
+import { labelWithElements } from '../input-properties'
 
-export const shortTextInputProps = naturalShortTextInputProps(
-  inlineSequenceOrString
-)
+export const shortTextInputProps =
+  naturalShortTextInputProps.merge(labelWithElements)
 export type ShortTextInputProps = z.infer<typeof shortTextInputProps>
 
 const useShortTextInputStyles = makeStyles({

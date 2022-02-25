@@ -1,10 +1,9 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { textProps as naturalTextProps } from '@fluentui/blocks-schemas'
+import { textProps } from '@fluentui/blocks-schemas'
 
 import { useTextStyles, zodElement } from '../../lib'
 
-export const textProps = naturalTextProps()
 export type TextProps = z.infer<typeof textProps>
 
 export const Text = (props: TextProps) => {

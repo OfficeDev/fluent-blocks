@@ -1,4 +1,24 @@
 import { z } from 'zod'
+import {
+  inputProps as naturalInputProps,
+  inputPropsWithInitialStringValue as naturalInputPropsWithInitialStringValue,
+  textInputProps as naturalTextInputProps,
+  labeledValueProps as naturalLabeledValueProps,
+} from '@fluentui/blocks-schemas'
+
+import { inlineSequenceOrString } from '../inlines'
+
+export const labelWithElements = z.object({ label: inlineSequenceOrString })
+
+export const inputProps = naturalInputProps.merge(labelWithElements)
+
+export const inputPropsWithInitialStringValue =
+  naturalInputPropsWithInitialStringValue.merge(labelWithElements)
+
+export const textInputProps = naturalTextInputProps.merge(labelWithElements)
+
+export const labeledValueProps =
+  naturalLabeledValueProps.merge(labelWithElements)
 
 export const shortInputContextualVariants = z
   .object({

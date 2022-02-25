@@ -2,11 +2,10 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
 import set from 'lodash/set'
+import { chartProps } from '@fluentui/blocks-schemas'
 
 import { invalidChart, propsElementUnion } from '../../lib'
 
-import { mediaProps } from '../media-properties'
-import { chartTypes, chartData } from './chart-types'
 import { PieChart } from './variants/PieChart'
 import { VerticalBarChart } from './variants/VerticalBarChart'
 import { HorizontalBarChart } from './variants/HorizontalBarChart'
@@ -19,15 +18,6 @@ set(
   ChartJS,
   'defaults.global.defaultFontFamily',
   `Segoe UI, system-ui, sans-serif`
-)
-
-export const chartProps = mediaProps.merge(
-  z.object({
-    chart: z.object({
-      type: chartTypes,
-      data: chartData,
-    }),
-  })
 )
 
 export type ChartProps = z.infer<typeof chartProps>

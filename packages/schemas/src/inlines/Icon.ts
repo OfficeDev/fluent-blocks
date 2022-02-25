@@ -1,9 +1,8 @@
 import { z } from 'zod'
-import * as ex from '../lib/extensible-types'
 
-export const iconVariant = ex.union([z.literal('filled'), z.literal('outline')])
+export const iconVariant = z.union([z.literal('filled'), z.literal('outline')])
 
-export const iconSize = ex.union([
+export const iconSize = z.union([
   z.literal(10),
   z.literal(12),
   z.literal(16),
@@ -22,8 +21,8 @@ export const iconSize = ex.union([
   z.literal('48'),
 ])
 
-export const iconProps = ex.object({
+export const iconProps = z.object({
   icon: z.string(),
-  variant: iconVariant().default('outline').optional(),
-  size: iconSize().default(20).optional(),
+  variant: iconVariant.default('outline').optional(),
+  size: iconSize.default(20).optional(),
 })

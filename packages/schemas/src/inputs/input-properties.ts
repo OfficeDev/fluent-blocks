@@ -1,28 +1,26 @@
-import { z, ZodTypeAny } from 'zod'
+import { z } from 'zod'
 import { inlineSequenceOrString } from '../inlines'
 
-const naturalInlineSequenceType = inlineSequenceOrString()
-
-export const inputPropsShape = (inlineSequenceType?: ZodTypeAny) => ({
-  label: inlineSequenceType || naturalInlineSequenceType,
+export const inputProps = z.object({
+  label: inlineSequenceOrString,
   actionId: z.string(),
   required: z.boolean().optional(),
 })
 
-export const inputPropsWithInitialStringValueShape = (
-  inlineSequenceType?: ZodTypeAny
-) => ({
-  ...inputPropsShape(inlineSequenceType),
-  initialValue: z.string().nonempty().optional().nullable(),
-})
+export const inputPropsWithInitialStringValue = inputProps.merge(
+  z.object({
+    initialValue: z.string().nonempty().optional().nullable(),
+  })
+)
 
-export const textInputPropsShape = (inlineSequenceType?: ZodTypeAny) => ({
-  ...inputPropsWithInitialStringValueShape(inlineSequenceType),
-  type: z.literal('text'),
-  placeholder: z.string().optional(),
-})
+export const textInputProps = inputPropsWithInitialStringValue.merge(
+  z.object({
+    type: z.literal('text'),
+    placeholder: z.string().optional(),
+  })
+)
 
-export const labeledValuePropsShape = (inlineSequenceType?: ZodTypeAny) => ({
+export const labeledValueProps = z.object({
   value: z.string().nonempty(),
-  label: inlineSequenceType || naturalInlineSequenceType,
+  label: inlineSequenceOrString,
 })

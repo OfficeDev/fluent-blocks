@@ -1,17 +1,13 @@
-import { z, ZodTypeAny } from 'zod'
-import * as ex from '../lib/extensible-types'
+import { z } from 'zod'
 import { textProps } from './Text'
 import { iconProps } from './Icon'
 
-export const inlineEntity = ex.union([z.string(), textProps(), iconProps()])
+export const inlineEntity = z.union([z.string(), textProps, iconProps])
 
-export const inlineSequence = (additionalMembers?: ZodTypeAny[]) =>
-  z.array(inlineEntity(additionalMembers))
+export const inlineSequence = z.array(inlineEntity)
 
-export const inlineSequenceOrString = (additionalMembers?: ZodTypeAny[]) =>
-  z.union([z.string(), inlineSequence(additionalMembers)])
+export const inlineSequenceOrString = z.union([z.string(), inlineSequence])
 
-export const inlineContentProp = (additionalMembers?: ZodTypeAny[]) =>
-  z.object({
-    inlines: inlineSequenceOrString(additionalMembers),
-  })
+export const inlineContentProps = z.object({
+  inlines: inlineSequenceOrString,
+})

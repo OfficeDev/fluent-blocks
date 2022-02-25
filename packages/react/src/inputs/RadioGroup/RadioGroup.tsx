@@ -4,9 +4,9 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import { radioGroupProps as naturalRadioGroupProps } from '@fluentui/blocks-schemas'
 
 import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
-import { inlineSequenceOrString } from '../../inlines'
+import { labelWithElements } from '../input-properties'
 
-export const radioGroupProps = naturalRadioGroupProps(inlineSequenceOrString)
+export const radioGroupProps = naturalRadioGroupProps.merge(labelWithElements)
 export type RadioGroupProps = z.infer<typeof radioGroupProps>
 
 const useRadioGroupStyles = makeStyles({
