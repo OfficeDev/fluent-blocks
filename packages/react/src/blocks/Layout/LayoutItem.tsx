@@ -1,6 +1,10 @@
 import { z } from 'zod'
 import { cloneElement, ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import {
+  layoutVariant,
+  layoutItemProps as naturalLayoutItemProps,
+} from '@fluentui/blocks-schemas'
 
 import {
   escapeElement,
@@ -12,30 +16,19 @@ import {
 } from '../../lib'
 
 import { cardPropsOrElement, renderIfCard } from '../Card/Card'
-import { layoutVariant } from './layout-properties'
 
 export const layoutItemEntity = z.union([cardPropsOrElement, escapeElement])
 export type LayoutItemEntity = z.infer<typeof layoutItemEntity>
 
-export const layoutItemProps = z
-  .object({
-    item: layoutItemEntity,
-    inlineSizeFactor: z
-      .union([z.literal(1), z.literal(2)])
-      .default(1)
-      .optional(),
-    blockSizeFactor: z
-      .union([z.literal(1), z.literal(2)])
-      .default(1)
-      .optional(),
-  })
+export const layoutItemProps = naturalLayoutItemProps
   .merge(
-    z
-      .object({
-        contextualVariant: layoutVariant.default('grid'),
-      })
-      .partial()
+    z.object({
+      item: layoutItemEntity,
+    })
   )
+  .extend({
+    contextualVariant: layoutVariant.default('grid').optional(),
+  })
 export type LayoutItemProps = z.infer<typeof layoutItemProps>
 
 const useLayoutItemStyles = makeStyles({

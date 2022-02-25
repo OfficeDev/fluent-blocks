@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { bigMessageProps as naturalBigMessageProps } from '@fluentui/blocks-schemas'
 
 import { escaped, renderIfEscape, rem, propsElementUnion, sx } from '../../lib'
 import { mediaEntity } from '../../media'
@@ -8,7 +9,7 @@ import { inlineSequenceOrString } from '../../inlines'
 import { ButtonProps, buttonProps } from '../../inputs'
 
 import { Figure } from '../Figure/Figure'
-import { Heading, headingLevel } from '../Heading/Heading'
+import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
@@ -21,17 +22,18 @@ const actionsBlockProps = z.object({
 })
 type ActionsBlockProps = z.infer<typeof actionsBlockProps>
 
-export const bigMessageProps = z.object({
-  message: z.object({
-    variant: z.literal('big'),
-    media: mediaEntity.optional(),
-    title: inlineSequenceOrString,
-    abstract: inlineSequenceOrString.optional(),
-    actions: escaped(actionsBlockProps).optional(),
-    viewportHeight: z.boolean().optional(),
-  }),
-  level: headingLevel.default(2).optional(),
-})
+export const bigMessageProps = naturalBigMessageProps.merge(
+  z.object({
+    message: naturalBigMessageProps.shape.message.merge(
+      z.object({
+        media: mediaEntity.optional(),
+        title: inlineSequenceOrString,
+        abstract: inlineSequenceOrString.optional(),
+        actions: escaped(actionsBlockProps).optional(),
+      })
+    ),
+  })
+)
 
 export type BigMessageProps = z.infer<typeof bigMessageProps>
 

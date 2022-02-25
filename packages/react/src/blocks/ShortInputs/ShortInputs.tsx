@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { shortInputsProps as naturalShortInputsProps } from '@fluentui/blocks-schemas'
 
 import {
   escapeElement,
@@ -29,24 +30,20 @@ export type ShortInputEntity = z.infer<typeof shortInputEntity>
 export const shortInputSequence = z.array(shortInputEntity)
 export type ShortInputSequence = z.infer<typeof shortInputSequence>
 
-const shortInputsProps = z
-  .object({
-    inputs: shortInputSequence,
-    variant: z
-      .union([z.literal('flex'), z.literal('narrow-block')])
-      .default('flex')
+export const shortInputsProps = naturalShortInputsProps
+  .merge(
+    z.object({
+      inputs: shortInputSequence,
+    })
+  )
+  .extend({
+    contextualVariant: z
+      .union([z.literal('card'), z.literal('block')])
+      .default('block')
       .optional(),
   })
-  .merge(
-    z
-      .object({
-        contextualVariant: z
-          .union([z.literal('card'), z.literal('block')])
-          .default('block'),
-      })
-      .partial()
-  )
 export type ShortInputsProps = z.infer<typeof shortInputsProps>
+type Variants = ShortInputsProps['variant']
 
 const useShortInputsStyles = makeStyles({
   root: {

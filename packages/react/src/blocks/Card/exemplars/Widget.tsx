@@ -25,7 +25,7 @@ export const widgetProps = z
       })
     ),
   })
-  .merge(cardContextualVariants)
+  .extend(cardContextualVariants)
 export type WidgetProps = z.infer<typeof widgetProps>
 
 const widgetFooterActionProps = {

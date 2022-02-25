@@ -2,24 +2,18 @@ import { z } from 'zod'
 import uniqueId from 'lodash/uniqueId'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { figureProps as naturalFigureProps } from '@fluentui/blocks-schemas'
 
 import { inlineSequenceOrString, InlineContent } from '../../inlines'
 import { mediaEntity, Media } from '../../media'
 import { propsElementUnion, useCommonStyles } from '../../lib'
 
-export const figureProps = z.object({
-  media: mediaEntity,
-  caption: inlineSequenceOrString.optional(),
-  captionHidden: z.boolean().optional(),
-  variant: z
-    .union([
-      z.literal('viewportWidth'),
-      z.literal('textWidth'),
-      z.literal('narrow'),
-    ])
-    .default('viewportWidth')
-    .optional(),
-})
+export const figureProps = naturalFigureProps.merge(
+  z.object({
+    media: mediaEntity,
+    caption: inlineSequenceOrString.optional(),
+  })
+)
 export type FigureProps = z.infer<typeof figureProps>
 
 const useFigureStyles = makeStyles({
