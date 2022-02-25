@@ -1,4 +1,5 @@
 export * from './blocks'
+export * from './exemplars'
 export * from './inlines'
 export * from './inputs'
 export * from './media'

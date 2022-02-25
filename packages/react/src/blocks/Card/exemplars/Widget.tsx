@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
+import { widgetProps as naturalWidgetProps } from '@fluentui/blocks-schemas'
 
 import { inlineSequenceOrString } from '../../../inlines'
 import { propsElementUnion } from '../../../lib'
@@ -9,22 +10,26 @@ import { tabsProps } from '../../Tabs/Tabs'
 import { Card } from '../Card'
 import { cardContextualVariants, CardProps } from '../card-properties'
 
-export const widgetProps = z
-  .object({
-    widget: tabsProps.omit({ tabVariant: true, tabListVariant: true }).merge(
-      z.object({
-        title: inlineSequenceOrString.optional(),
-        abstract: inlineSequenceOrString.optional(),
-        footerAction: buttonProps
-          .omit({
-            type: true,
-            variant: true,
-            iconOnly: true,
+export const widgetProps = naturalWidgetProps
+  .merge(
+    z.object({
+      widget: naturalWidgetProps.shape.widget.merge(
+        tabsProps.omit({ tabVariant: true, tabListVariant: true }).merge(
+          z.object({
+            title: inlineSequenceOrString.optional(),
+            abstract: inlineSequenceOrString.optional(),
+            footerAction: buttonProps
+              .omit({
+                type: true,
+                variant: true,
+                iconOnly: true,
+              })
+              .optional(),
           })
-          .optional(),
-      })
-    ),
-  })
+        )
+      ),
+    })
+  )
   .extend(cardContextualVariants)
 export type WidgetProps = z.infer<typeof widgetProps>
 
