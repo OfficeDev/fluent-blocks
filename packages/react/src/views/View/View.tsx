@@ -1,11 +1,10 @@
 import { z } from 'zod'
+import { anyActionPayload, themeName } from '@fluentui/blocks-schemas'
 
 import {
   FluentPatternsProvider,
-  themeName,
   ParseBoundary,
   withActionHandler,
-  anyActionPayload,
   translations,
   defaultTranslations,
 } from '../../lib'

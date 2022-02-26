@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
+import { dashboardProps as naturalDashboardProps } from '@fluentui/blocks-schemas'
 
 import { propsElementUnion } from '../../../../lib'
 
@@ -8,19 +9,23 @@ import { LayoutProps } from '../../layout-properties'
 import { widgetPropsOrElement } from '../../../Card/exemplars/Widget'
 import { layoutItemProps } from '../../LayoutItem'
 
-export const dashboardProps = z.object({
-  dashboard: z.object({
-    items: z.array(
-      layoutItemProps
-        .pick({ inlineSizeFactor: true, blockSizeFactor: true })
-        .merge(
-          z.object({
-            item: widgetPropsOrElement,
-          })
-        )
+export const dashboardProps = naturalDashboardProps.merge(
+  z.object({
+    dashboard: naturalDashboardProps.shape.dashboard.merge(
+      z.object({
+        items: z.array(
+          layoutItemProps
+            .pick({ inlineSizeFactor: true, blockSizeFactor: true })
+            .merge(
+              z.object({
+                item: widgetPropsOrElement,
+              })
+            )
+        ),
+      })
     ),
-  }),
-})
+  })
+)
 export type DashboardProps = z.infer<typeof dashboardProps>
 
 export const dashboardLayout = ({

@@ -1,6 +1,12 @@
 import { z } from 'zod'
-import { InlineContent, inlineSequenceOrString } from '../../inlines'
+import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import {
+  descriptionListProps as naturalDescriptionListProps,
+  descriptionListItemProps,
+} from '@fluentui/blocks-schemas'
+
+import { InlineContent, inlineSequenceOrString } from '../../inlines'
 import {
   key,
   propsElementUnion,
@@ -8,16 +14,19 @@ import {
   useCommonStyles,
   useTextBlockStyles,
 } from '../../lib'
-import { ReactElement } from 'react'
 
-export const descriptionListProps = z.object({
-  descriptionList: z.array(
-    z.object({
-      title: inlineSequenceOrString,
-      description: inlineSequenceOrString,
-    })
-  ),
-})
+export const descriptionListProps = naturalDescriptionListProps.merge(
+  z.object({
+    descriptionList: z.array(
+      descriptionListItemProps.merge(
+        z.object({
+          title: inlineSequenceOrString,
+          description: inlineSequenceOrString,
+        })
+      )
+    ),
+  })
+)
 export type DescriptionListProps = z.infer<typeof descriptionListProps>
 
 const useDescriptionListStyles = makeStyles({

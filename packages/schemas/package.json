@@ -1,16 +1,26 @@
 {
-  "name": "@fluentui/react-blocks",
+  "name": "@fluentui/blocks-schemas",
   "version": "9.0.0-alpha.1",
-  "main": "index.js",
+  "main": "src/index.ts",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
     "Zhenya Savchenko <zhenyasa@microsoft.com>"
   ],
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "render:json-schemas": "ts-node ./scripts/render-json-schemas.ts"
+  },
   "engines": {
     "node": ">=12.0.0 <17.0.0",
     "pnpm": "^6"
+  },
+  "dependencies": {
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "ts-node": "latest",
+    "zod-to-json-schema": "latest"
   }
 }

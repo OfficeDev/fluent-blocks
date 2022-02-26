@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
+import { paragraphProps as naturalParagraphProps } from '@fluentui/blocks-schemas'
 
 import { InlineContent, inlineSequenceOrString } from '../../inlines'
 import {
@@ -9,19 +10,18 @@ import {
   useTextBlockStyles,
 } from '../../lib'
 
-export const paragraphProps = z
-  .object({
-    paragraph: inlineSequenceOrString,
-  })
+export const paragraphProps = naturalParagraphProps
   .merge(
-    z
-      .object({
-        contextualVariant: z
-          .union([z.literal('card'), z.literal('block')])
-          .default('block'),
-      })
-      .partial()
+    z.object({
+      paragraph: inlineSequenceOrString,
+    })
   )
+  .extend({
+    contextualVariant: z
+      .union([z.literal('card'), z.literal('block')])
+      .default('block')
+      .optional(),
+  })
 export type ParagraphProps = z.infer<typeof paragraphProps>
 
 export const Paragraph = (props: ParagraphProps) => {

@@ -30,7 +30,7 @@ importers:
       eslint-plugin-import: 2.25.4_eslint@8.9.0
       eslint-plugin-jest: 26.1.1_4f577ff3ace83ac3a8d66a10ef1cd9d7
       eslint-plugin-lodash: 7.4.0_eslint@8.9.0
-      eslint-plugin-react: 7.28.0_eslint@8.9.0
+      eslint-plugin-react: 7.29.1_eslint@8.9.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.9.0
       eslint-plugin-security: 1.4.0
       husky: 7.0.4
@@ -41,6 +41,7 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
+      '@fluentui/blocks-schemas': workspace:9.0.0-alpha.1
       '@fluentui/react-card': nightly
       '@fluentui/react-components': rc
       '@storybook/addon-actions': latest
@@ -76,11 +77,12 @@ importers:
       webpack: latest
       zod: latest
     dependencies:
+      '@fluentui/blocks-schemas': link:../schemas
       lodash: 4.17.21
       zod: 3.12.0
     devDependencies:
       '@babel/core': 7.17.5
-      '@fluentui/react-card': 0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2
+      '@fluentui/react-card': 0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2
       '@fluentui/react-components': 9.0.0-rc.3_0662dad0de89675021e62c5148859ef2
       '@storybook/addon-actions': 6.4.19_b8fdba992ce7d797017dc07106486496
       '@storybook/addon-essentials': 6.4.19_3e8d78cef50beb7c6bfb97c10d9da7ba
@@ -104,7 +106,7 @@ importers:
       faker: github.com/thure/faker.js/7795375c954b5d057cad933f69da9c1072b821e1
       http-proxy-middleware: 2.0.3
       mocha: 9.2.1
-      playwright-chromium: 1.19.1
+      playwright-chromium: 1.19.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-test-renderer: 17.0.2_react@17.0.2
@@ -114,7 +116,17 @@ importers:
       webpack: 5.69.1
 
   packages/schemas:
-    specifiers: {}
+    specifiers:
+      '@types/node': ^17.0.18
+      ts-node: latest
+      zod: latest
+      zod-to-json-schema: latest
+    dependencies:
+      zod: 3.12.0
+    devDependencies:
+      '@types/node': 17.0.18
+      ts-node: 10.5.0_f3bd4037939c2ed2942ba074291f8ef2
+      zod-to-json-schema: 3.11.3
 
 packages:
 
@@ -1689,8 +1701,8 @@ packages:
       - supports-color
     dev: true
 
-  /@fluentui/keyboard-keys/0.0.0-nightly43b133e62020220224.1:
-    resolution: {integrity: sha512-S9C3RQe7SdRq1Wx5hiThtoDql2z7v3a7VtsXcnJpRkBb6JRnjCc314FOQKxyZ7pFge6yU9fj3l/x3MyOcV7xAg==}
+  /@fluentui/keyboard-keys/0.0.0-nightly49d3df438d20220225.1:
+    resolution: {integrity: sha512-+m0ulKmyRJW5x5goJINTqt0Lh81SU8TXX6TBsqBzd229z2MVulMc18SIxVf7JrtmhsK2Ku76ui61jmzuSpLV1A==}
     dev: true
 
   /@fluentui/keyboard-keys/9.0.0-rc.3:
@@ -1796,17 +1808,17 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@fluentui/react-card/0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2:
-    resolution: {integrity: sha512-sbiE91bVzE8GXDmLGk+BNC6kpLItDoU5oskfC0G71DPl9ZOMStNRk5NwNs3bbrfzVLlpAULmf5KhfXiVy+hP/w==}
+  /@fluentui/react-card/0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2:
+    resolution: {integrity: sha512-IncxiWTi+VBC6am1/Pw7FvP8MjNqYXlug9XvrvAgMvJ18DILRXpAs5tXDc8gXcQmKN8ns/hJO4Sw12f/pyMouA==}
     peerDependencies:
       '@types/react': '>=16.8.0 <18.0.0'
       '@types/react-dom': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
       react-dom: '>=16.8.0 <18.0.0'
     dependencies:
-      '@fluentui/react-tabster': 0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2
-      '@fluentui/react-theme': 0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2
-      '@fluentui/react-utilities': 0.0.0-nightly43b133e62020220224.1_a0c521d4794c7ad97f5f4c1c4a7d5818
+      '@fluentui/react-tabster': 0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2
+      '@fluentui/react-theme': 0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2
+      '@fluentui/react-utilities': 0.0.0-nightly49d3df438d20220225.1_a0c521d4794c7ad97f5f4c1c4a7d5818
       '@griffel/react': 1.0.0_react@17.0.2
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.11
@@ -2085,13 +2097,13 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@fluentui/react-shared-contexts/0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2:
-    resolution: {integrity: sha512-DQ2v4sKpYfFd7eh2oiwyr+k4n3dn8891+gWsLqd+8c4gGR75K3iVAAAHO8jIMao/5BtoEeef+r8PIi13tee9Eg==}
+  /@fluentui/react-shared-contexts/0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2:
+    resolution: {integrity: sha512-dIWv9qvnb6AI/OBbduDmhlaGalYnR4ZgKVrSWyLG9pI5JhcuaNURqDfFMbXiWjL+wFs8ZIrZh6V7yC9gyH4XlA==}
     peerDependencies:
       '@types/react': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
     dependencies:
-      '@fluentui/react-theme': 0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2
+      '@fluentui/react-theme': 0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2
       '@types/react': 17.0.39
       react: 17.0.2
       tslib: 2.3.1
@@ -2152,17 +2164,17 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@fluentui/react-tabster/0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2:
-    resolution: {integrity: sha512-10YFNzfk4C6Sxa6sp/o/yH35XK1TOVDzmpOCOts6nXKZsAMV9yu4o7hQTbmsmYFu8ApWWE3hWRk0H5ogxuePSg==}
+  /@fluentui/react-tabster/0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2:
+    resolution: {integrity: sha512-gtBiL1kVJV7ojjts3c4zwrBoHpL+yYmKuA2FR/OLf9ZzL8V/nE7rfiY9YGZ+bTPSrZ/LpRsvyLzkTu3hS6NQ3g==}
     peerDependencies:
       '@types/react': '>=16.8.0 <18.0.0'
       '@types/react-dom': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
       react-dom: '>=16.8.0 <18.0.0'
     dependencies:
-      '@fluentui/react-shared-contexts': 0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2
-      '@fluentui/react-theme': 0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2
-      '@fluentui/react-utilities': 0.0.0-nightly43b133e62020220224.1_a0c521d4794c7ad97f5f4c1c4a7d5818
+      '@fluentui/react-shared-contexts': 0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2
+      '@fluentui/react-theme': 0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2
+      '@fluentui/react-utilities': 0.0.0-nightly49d3df438d20220225.1_a0c521d4794c7ad97f5f4c1c4a7d5818
       '@griffel/react': 1.0.0_react@17.0.2
       '@types/react': 17.0.39
       '@types/react-dom': 17.0.11
@@ -2210,8 +2222,8 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@fluentui/react-theme/0.0.0-nightly43b133e62020220224.1_0662dad0de89675021e62c5148859ef2:
-    resolution: {integrity: sha512-XUwMyI2IEgRKs1IjMGrP/uJPqsF08Pmp6WfshIojotV2EbDB7yTRPkLTcwX444a8tyqxmClsh5FtHhUkGgqsag==}
+  /@fluentui/react-theme/0.0.0-nightly49d3df438d20220225.1_0662dad0de89675021e62c5148859ef2:
+    resolution: {integrity: sha512-swHlNBh4ciiYIGAc37AuT+XuAtCVD25PwxomlI4V6NV8GKMcbDCT8HeKQGyNVzj0+9HBlKAgfcxRngeQpnWppw==}
     peerDependencies:
       '@types/react': '>=16.8.0 <18.0.0'
       '@types/react-dom': '>=16.8.0 <18.0.0'
@@ -2261,13 +2273,13 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@fluentui/react-utilities/0.0.0-nightly43b133e62020220224.1_a0c521d4794c7ad97f5f4c1c4a7d5818:
-    resolution: {integrity: sha512-63EWmFv77BcizGOu8bee+tGNcVPzIgAOmJTQpfCmFWO3yqdvvs6XHc5cPbyHmBU0IxCWfdbiFkPTx5g4i7+ZDg==}
+  /@fluentui/react-utilities/0.0.0-nightly49d3df438d20220225.1_a0c521d4794c7ad97f5f4c1c4a7d5818:
+    resolution: {integrity: sha512-7GTA+plqvZI/GBSc1CBFTnHVKnRCTp7Upe14YB/AQmbcdPcLBjKn9Ez3ur1SZGPBHrEMeZbVB9uhl1h+MR+bLA==}
     peerDependencies:
       '@types/react': '>=16.8.0 <18.0.0'
       react: '>=16.8.0 <18.0.0'
     dependencies:
-      '@fluentui/keyboard-keys': 0.0.0-nightly43b133e62020220224.1
+      '@fluentui/keyboard-keys': 0.0.0-nightly49d3df438d20220225.1
       '@types/react': 17.0.39
       react: 17.0.2
       tslib: 2.3.1
@@ -6920,8 +6932,8 @@ packages:
       eslint: 8.9.0
     dev: true
 
-  /eslint-plugin-react/7.28.0_eslint@8.9.0:
-    resolution: {integrity: sha512-IOlFIRHzWfEQQKcAD4iyYDndHwTQiCMcJVJjxempf203jnNLUnW34AXLrV33+nEXoifJE2ZEGmcjKPL8957eSw==}
+  /eslint-plugin-react/7.29.1_eslint@8.9.0:
+    resolution: {integrity: sha512-WtzRpHMhsOX05ZrkyaaqmLl2uXGqmYooCfBxftJKlkYdsltiufGgfU7uuoHwR2lBam2Kh/EIVID4aU9e3kbCMA==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
@@ -10216,21 +10228,21 @@ packages:
       find-up: 5.0.0
     dev: true
 
-  /playwright-chromium/1.19.1:
-    resolution: {integrity: sha512-gObASFcY8oOAqlJw89UXM/i4GNLvxKADn4DgoEMkXPxG7ATaN3eIyuWg5fGeYjKbAR15SHi+fCmP8n43LWKVTg==}
+  /playwright-chromium/1.19.2:
+    resolution: {integrity: sha512-4S6KiJgR6PCQmlm4IzArgt9aDkzijYXxVG1j3vRqdugXQ1mPA2QIFUmXmRJeDczVkbIR5N8opJSNMnNDFg4qVw==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.19.1
+      playwright-core: 1.19.2
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
     dev: true
 
-  /playwright-core/1.19.1:
-    resolution: {integrity: sha512-+ByjhWX39PlINVRXr4ef9Kle85mk5QzA2WLioCoMQc3bSUtZpLV1mbeUDtRp/bvFw6YDIEyptj4QvzzRTXN3vg==}
+  /playwright-core/1.19.2:
+    resolution: {integrity: sha512-OsL3sJZIo1UxKNWSP7zW7sk3FyUGG06YRHxHeBw51eIOxTCQRx5t+hXd0cvXashN2CHnd3hIZTs2aKa/im4hZQ==}
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
@@ -13095,9 +13107,14 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /zod-to-json-schema/3.11.3:
+    resolution: {integrity: sha512-K5n/Ri8RHzxkmWXnCHoWqaZgSJ6VYnUGhKXnRbgQKCWGkOR3niJb2tXEqFuQTO9wdCp5d06VhYz6FixGiEettA==}
+    dependencies:
+      zod: 3.12.0
+    dev: true
+
   /zod/3.12.0:
     resolution: {integrity: sha512-w+mmntgEL4hDDL5NLFdN6Fq2DSzxfmlSoJqiYE1/CApO8EkOCxvJvRYEVf8Vr/lRs3i6gqoiyFM6KRcWqqdBzQ==}
-    dev: false
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}

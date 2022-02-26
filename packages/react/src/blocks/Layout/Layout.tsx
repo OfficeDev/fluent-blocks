@@ -2,11 +2,11 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
+import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
 import { propsElementUnion, Sequence, sx } from '../../lib'
 
-import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
-
 import { layoutProps, LayoutProps } from './layout-properties'
+
 import {
   dashboardPropsOrElement,
   renderIfDashboard,

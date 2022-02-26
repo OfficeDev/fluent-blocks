@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
+import { illustrationProps as naturalIllustrationProps } from '@fluentui/blocks-schemas'
 
 import { propsElementUnion } from '../../lib'
 
@@ -10,19 +11,8 @@ import hello from './variants/Hello'
 import thanks from './variants/Thanks'
 
 import { ThemedImage } from '../ThemedImage/ThemedImage'
-import { mediaProps } from '../media-properties'
 
-export const illustrationProps = mediaProps.merge(
-  z.object({
-    illustration: z.union([
-      z.literal('default'),
-      z.literal('empty'),
-      z.literal('error'),
-      z.literal('hello'),
-      z.literal('thanks'),
-    ]),
-  })
-)
+export const illustrationProps = naturalIllustrationProps
 export type IllustrationProps = z.infer<typeof illustrationProps>
 
 const illustrations = { default: dfault, thanks, hello, empty, error }

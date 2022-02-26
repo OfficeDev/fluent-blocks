@@ -1,15 +1,13 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { multilineTextInputProps as naturalMultilineTextInputProps } from '@fluentui/blocks-schemas'
 
-import { textInputProps } from '../input-properties'
 import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+import { labelWithElements } from '../input-properties'
 
-export const multilineTextInputProps = textInputProps.merge(
-  z.object({
-    multiline: z.literal(true),
-  })
-)
+export const multilineTextInputProps =
+  naturalMultilineTextInputProps.merge(labelWithElements)
 export type MultilineTextInputProps = z.infer<typeof multilineTextInputProps>
 
 const useMultilineTextInputStyles = makeStyles({

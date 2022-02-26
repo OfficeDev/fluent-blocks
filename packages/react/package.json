@@ -68,6 +68,7 @@
     "webpack": "latest"
   },
   "dependencies": {
+    "@fluentui/blocks-schemas": "workspace:9.0.0-alpha.1",
     "lodash": "latest",
     "zod": "latest"
   }

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { createElement, ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
+import { headingLevel } from '@fluentui/blocks-schemas'
 
 import { InlineContent } from '../../inlines'
 import {
@@ -10,8 +11,6 @@ import {
 } from '../../lib'
 
 import { paragraphProps } from '../Paragraph/Paragraph'
-
-export const headingLevel = z.number().max(6).min(1)
 
 export const headingProps = paragraphProps.extend({
   level: headingLevel.default(6).optional(),
@@ -68,7 +67,7 @@ export const headingPropsOrElement = propsElementUnion<
   typeof headingProps,
   typeof Heading
 >(headingProps)
-export type HeadingPropsOrElement = z.infer<typeof headingPropsOrElement>
+export type HeadingElement = z.infer<typeof headingPropsOrElement>
 
 export function renderIfHeading(o: any) {
   return isHeadingProps(o) ? <Heading {...o} /> : isHeadingElement(o) ? o : null

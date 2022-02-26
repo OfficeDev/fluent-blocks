@@ -1,16 +1,14 @@
 import { z } from 'zod'
+import { ReactElement } from 'react'
+import { mergeClasses as cx } from '@fluentui/react-components'
+import { codeProps } from '@fluentui/blocks-schemas'
+
 import {
   propsElementUnion,
   useCommonStyles,
   useTextBlockStyles,
   useTextStyles,
 } from '../../lib'
-import { mergeClasses as cx } from '@fluentui/react-components'
-import { ReactElement } from 'react'
-
-export const codeProps = z.object({
-  code: z.string(),
-})
 
 export type CodeProps = z.infer<typeof codeProps>
 

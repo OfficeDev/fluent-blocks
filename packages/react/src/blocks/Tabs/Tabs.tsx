@@ -2,6 +2,10 @@ import { z } from 'zod'
 import { ReactElement, useState } from 'react'
 import uniqueId from 'lodash/uniqueId'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import {
+  tabsItemProps as naturalTabsItemProps,
+  tabsProps as naturalTabsProps,
+} from '@fluentui/blocks-schemas'
 
 import {
   escapeElement,
@@ -61,34 +65,22 @@ const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfEscape(o) ||
   invalidTabPanelItem(o)
 
-export const tabsItemProps = z.object({
-  tab: tabProps,
-  panel: tabPanelItemSequence,
-})
+export const tabsItemProps = naturalTabsItemProps.merge(
+  z.object({
+    tab: tabProps,
+    panel: tabPanelItemSequence,
+  })
+)
 export type TabsItemProps = z.infer<typeof tabsItemProps>
 
-export const tabsProps = z
-  .object({
-    label: z.string(),
-    tabs: z.array(tabsItemProps),
-    tabVariant: z
-      .union([z.literal('subtle'), z.literal('transparent')])
-      .default('transparent')
-      .optional(),
-    tabListVariant: z
-      .union([z.literal('start'), z.literal('center')])
-      .default('start')
+export const tabsProps = naturalTabsProps
+  .merge(z.object({ tabs: z.array(tabsItemProps) }))
+  .extend({
+    contextualVariant: z
+      .union([z.literal('card'), z.literal('block')])
+      .default('block')
       .optional(),
   })
-  .merge(
-    z
-      .object({
-        contextualVariant: z
-          .union([z.literal('card'), z.literal('block')])
-          .default('block'),
-      })
-      .partial()
-  )
 export type TabsProps = z.infer<typeof tabsProps>
 
 const useTabsStyles = makeStyles({

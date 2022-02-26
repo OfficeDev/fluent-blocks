@@ -5,49 +5,25 @@ import {
   makeStyles,
   mergeClasses as cx,
 } from '@fluentui/react-components'
+import {
+  buttonProps as naturalButtonProps,
+  buttonActionPayload,
+} from '@fluentui/blocks-schemas'
 
 import {
+  actionHandler,
   propsElementUnion,
-  actionPayload,
-  withActionHandler,
   useFluentPatternsContext,
   rem,
   sx,
 } from '../../lib'
-import { Icon, iconSize, iconVariant } from '../../inlines'
+import { Icon } from '../../inlines'
 import { shortInputContextualVariants } from '../input-properties'
 
-export const buttonActivateAction = actionPayload.merge(
-  z.object({
-    type: z.literal('activate'),
-  })
-)
-export type ButtonActivateAction = z.infer<typeof buttonActivateAction>
+export type ButtonActionPayload = z.infer<typeof buttonActionPayload>
 
-export const buttonProps = z
-  .object({
-    // buttons can't be 'required', so that property is excluded
-    type: z.literal('button'),
-    label: z.string().min(1), // this is intentionally not `inlineSequence` and it must not be an empty string
-    actionId: z.string(),
-    variant: z
-      .union([
-        z.literal('outline'),
-        z.literal('primary'),
-        z.literal('subtle'),
-        z.literal('transparent'),
-      ])
-      .optional(),
-    size: z
-      .union([z.literal('small'), z.literal('medium'), z.literal('large')])
-      .optional(),
-    iconOnly: z.boolean().optional(),
-    icon: z.string().optional(),
-    iconPosition: z.union([z.literal('before'), z.literal('after')]).optional(),
-    iconSize: iconSize.optional(),
-    iconVariant: iconVariant.optional(),
-    ...withActionHandler(buttonActivateAction),
-  })
+export const buttonProps = naturalButtonProps
+  .merge(actionHandler(buttonActionPayload))
   .merge(shortInputContextualVariants)
 export type ButtonProps = z.infer<typeof buttonProps>
 

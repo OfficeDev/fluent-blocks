@@ -1,13 +1,14 @@
 import { z } from 'zod'
+import { layoutProps as naturalLayoutProps } from '@fluentui/blocks-schemas'
 import { layoutItemPropsOrElement } from './LayoutItem'
 
-export const layoutVariant = z.union([z.literal('grid'), z.literal('flex')])
-export type LayoutVariant = z.infer<typeof layoutVariant>
-
-export const layoutProps = z.object({
-  layout: z.object({
-    variant: layoutVariant,
-    items: z.array(layoutItemPropsOrElement),
-  }),
-})
+export const layoutProps = naturalLayoutProps.merge(
+  z.object({
+    layout: naturalLayoutProps.shape.layout.merge(
+      z.object({
+        items: z.array(layoutItemPropsOrElement),
+      })
+    ),
+  })
+)
 export type LayoutProps = z.infer<typeof layoutProps>

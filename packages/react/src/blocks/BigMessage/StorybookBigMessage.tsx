@@ -1,12 +1,16 @@
 import { BigMessageProps } from './BigMessage'
-import { FluentPatternsProvider, ThemeName } from '../../lib'
+import { ActionHandler, FluentPatternsProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 
 export const BigMessage = ({
   theme,
+  onAction,
   ...props
-}: BigMessageProps['message'] & { theme: ThemeName }) => (
-  <FluentPatternsProvider themeName={theme}>
+}: BigMessageProps['message'] & {
+  theme: ThemeName
+  onAction: ActionHandler
+}) => (
+  <FluentPatternsProvider themeName={theme} onAction={onAction}>
     <Main
       blocks={[
         { message: { ...props, variant: 'big', viewportHeight: false } },
