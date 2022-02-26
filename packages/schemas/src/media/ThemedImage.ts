@@ -1,11 +1,12 @@
 import { z, ZodTypeAny } from 'zod'
-import { mediaPropsShape } from './media-properties'
+import { mediaProps } from './media-properties'
 
 export const imageSrc = z.string().url()
 
-export const themedImageProps = z.object({
-  ...mediaPropsShape,
-  light: imageSrc,
-  dark: imageSrc,
-  'high-contrast': imageSrc,
-})
+export const themedImageProps = mediaProps.merge(
+  z.object({
+    light: imageSrc,
+    dark: imageSrc,
+    'high-contrast': imageSrc,
+  })
+)

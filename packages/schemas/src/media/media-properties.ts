@@ -1,5 +1,5 @@
 import { z } from 'zod'
 
-export const mediaPropsShape = {
+export const mediaProps = z.object({
   label: z.string(),
-}
+})

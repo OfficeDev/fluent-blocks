@@ -2,9 +2,10 @@ import { z } from 'zod'
 import { actionPayload } from '../lib/actions'
 import { iconSize, iconVariant } from '../inlines'
 
-export const buttonActions = {
-  activate: actionPayload.merge(z.object({ type: z.literal('activate') })),
-}
+// this will be a union type for components that support multiple action types.
+export const buttonActionPayload = actionPayload.merge(
+  z.object({ type: z.literal('activate') })
+)
 
 export const buttonProps = z.object({
   type: z.literal('button'),

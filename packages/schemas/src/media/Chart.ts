@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { mediaPropsShape } from './media-properties'
+import { mediaProps } from './media-properties'
 
 export const chartTypes = z.union([
   z.literal('line'),
@@ -31,10 +31,11 @@ export const chartData = z.object({
   datasets: z.array(chartDataset),
 })
 
-export const chartProps = z.object({
-  ...mediaPropsShape,
-  chart: z.object({
-    type: chartTypes,
-    data: chartData,
-  }),
-})
+export const chartProps = mediaProps.merge(
+  z.object({
+    chart: z.object({
+      type: chartTypes,
+      data: chartData,
+    }),
+  })
+)

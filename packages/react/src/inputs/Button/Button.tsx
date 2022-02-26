@@ -7,7 +7,7 @@ import {
 } from '@fluentui/react-components'
 import {
   buttonProps as naturalButtonProps,
-  buttonActions,
+  buttonActionPayload,
 } from '@fluentui/blocks-schemas'
 
 import {
@@ -20,8 +20,8 @@ import {
 import { Icon } from '../../inlines'
 import { shortInputContextualVariants } from '../input-properties'
 
-export const buttonActionPayload = buttonActions.activate
 export type ButtonActionPayload = z.infer<typeof buttonActionPayload>
+
 export const buttonProps = naturalButtonProps
   .merge(actionHandler(buttonActionPayload))
   .merge(shortInputContextualVariants)
