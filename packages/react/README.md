@@ -12,7 +12,7 @@ This project’s API is subject to unannounced breaking changes and is not yet o
 
 ## Contributing
 
-If you’d like to contribute to this project, please see [the Contributing file][contributing].
+If you’d like to contribute to this project, please see [the Contributing file](../../CONTRIBUTING.md).
 
 ## Getting started
 
@@ -94,5 +94,4 @@ In your own project, we recommend serving just the sprites you need locally if p
 [react-teams]: https://www.npmjs.com/package/@fluentui/react-teams
 [storybook]: https://aka.ms/fluent-blocks-storybook
 [wcag]: https://www.w3.org/TR/WCAG21
-[contributing]: /blob/main/CONTRIBUTING.md
 [fmtctx]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flow_Layout/Block_and_Inline_Layout_in_Normal_Flow
