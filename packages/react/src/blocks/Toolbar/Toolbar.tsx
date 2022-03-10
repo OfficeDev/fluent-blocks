@@ -11,6 +11,7 @@ export const toolbarAction = naturalToolbarAction.merge(
     variant: true,
     size: true,
     iconSize: true,
+    contextualVariant: true,
   })
 )
 
@@ -28,4 +29,6 @@ export const toolbarProps = naturalToolbarProps.merge(
 
 export type ToolbarProps = z.infer<typeof toolbarProps>
 
-export const Toolbar = ({ toolbar: { items } }: ToolbarProps) => <div>Toolbar</div>
+export const Toolbar = ({ toolbar: { items } }: ToolbarProps) => (
+  <div>Toolbar</div>
+)
