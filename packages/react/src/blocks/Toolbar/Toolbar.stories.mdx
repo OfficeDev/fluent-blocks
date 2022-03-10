@@ -1,0 +1,31 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs'
+import { seed } from 'faker/locale/en_US'
+
+import { Toolbar } from './StorybookToolbar'
+import { themeArgType } from '../../lib'
+
+<Meta
+  title="Blocks/Toolbar"
+  component={Toolbar}
+  argTypes={{
+    ...themeArgType,
+  }}
+/>
+
+export const ToolbarTemplate = (props) => <Toolbar {...props} />
+
+# Toolbar
+
+<Canvas withSource="none">
+  <Story
+    name="Toolbar"
+    args={{
+      theme: 'light',
+      toolbar: {
+        items: [{ type: 'action', label: 'Hello' }],
+      },
+    }}
+  >
+    {seed(1234) || ToolbarTemplate.bind({})}
+  </Story>
+</Canvas>
