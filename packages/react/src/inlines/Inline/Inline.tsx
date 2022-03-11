@@ -58,7 +58,12 @@ export const InlineContent = (props: InlineContentProps) => {
     <>
       {isString(inlines)
         ? renderIfText({ text: inlines })
-        : Sequence<InlineEntity>(inlines, Inline)}
+        : Sequence<InlineEntity>(
+            inlines.map((inline) =>
+              isString(inline) ? { text: inline } : inline
+            ),
+            Inline
+          )}
     </>
   )
 }
