@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import {
+  makeStyles,
   Menu,
   MenuButton,
   MenuItem,
@@ -17,7 +18,11 @@ import {
 } from '@fluentui/blocks-schemas'
 
 import { Button, buttonProps } from '../../inputs'
-import { propsElementUnion, Sequence } from '../../lib'
+import {
+  propsElementUnion,
+  Sequence,
+  useFluentPatternsContext,
+} from '../../lib'
 import { Icon } from '../../inlines'
 
 export const toolbarAction = naturalToolbarAction.merge(
@@ -37,61 +42,131 @@ export const toolbarItemSequence = z.array(toolbarItemEntity)
 
 export const toolbarProps = naturalToolbarProps.merge(
   z.object({
-    toolbar: z.object({
-      items: toolbarItemSequence,
-    }),
+    toolbar: naturalToolbarProps.shape.toolbar.merge(
+      z.object({
+        items: toolbarItemSequence,
+      })
+    ),
   })
 )
 export type ToolbarProps = z.infer<typeof toolbarProps>
 
-const ToolbarItemInMenu = (item: ToolbarItemEntity) => {
-  if (item.type === 'action') {
-    return <MenuItem>{item.label}</MenuItem>
-  } else {
-    return null
+const toolbarItemContextualOptions = toolbarProps.shape.toolbar.pick({
+  iconSize: true,
+  buttonSize: true,
+})
+type ToolbarItemContextualOptions = z.infer<typeof toolbarItemContextualOptions>
+
+const defaultIconSize = 16
+const defaultButtonSize = 'medium'
+
+const useToolbarStyles = makeStyles({
+  root: {
+    display: 'flex',
+  },
+  flexDivider: {
+    flexGrow: 1,
+  },
+})
+
+const ToolbarFlexDivider = () => {
+  const toolbarStyles = useToolbarStyles()
+  return <div role="none" className={toolbarStyles.flexDivider} />
+}
+
+const ToolbarItemInMenu = (
+  item: ToolbarItemEntity & Partial<ToolbarItemContextualOptions>
+) => {
+  switch (item.type) {
+    case 'action':
+      return (
+        <MenuItem
+          {...(item.icon && {
+            icon: (
+              <Icon
+                icon={item.icon}
+                size={item.iconSize || defaultIconSize}
+                variant="outline"
+              />
+            ),
+          })}
+        >
+          {item.label}
+        </MenuItem>
+      )
+    default:
+      return null
   }
 }
 
-const ToolbarItemInFlow = (item: ToolbarItemEntity) => {
-  if (item.type === 'action') {
-    return (
-      <Button
-        {...item}
-        {...{ variation: 'transparent', size: 'medium', iconSize: 16 }}
-        type="button"
-      />
-    )
-  } else {
-    return null
+const ToolbarItemInFlow = (
+  item: ToolbarItemEntity & Partial<ToolbarItemContextualOptions>
+) => {
+  console.log('[item size]', item.buttonSize || defaultButtonSize)
+  switch (item.type) {
+    case 'action':
+      return Button({
+        ...item,
+        variant: 'transparent',
+        size: item.buttonSize || defaultButtonSize,
+        iconSize: item.iconSize || defaultIconSize,
+        contextualVariant: 'toolbar-item',
+        type: 'button',
+      })
+    default:
+      return null
   }
 }
 
-const ToolbarOverflow = ({ items }: ToolbarProps['toolbar']) => (
-  <Menu>
-    <MenuTrigger>
-      <Tooltip
-        content="With calendar icon and no contents"
-        relationship="label"
-      >
-        <MenuButton
-          icon={<Icon icon="more_horizontal" size={16} variant="outline" />}
-        />
-      </Tooltip>
-    </MenuTrigger>
-    <MenuPopover>
-      <MenuList>
-        {Sequence<ToolbarItemEntity>(items, ToolbarItemInMenu)}
-      </MenuList>
-    </MenuPopover>
-  </Menu>
-)
+const ToolbarOverflow = ({
+  items,
+  iconSize,
+  buttonSize,
+}: ToolbarProps['toolbar']) => {
+  const { translations } = useFluentPatternsContext()
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Tooltip content={translations.more} relationship="label" withArrow>
+          <MenuButton
+            appearance="transparent"
+            icon={
+              <Icon
+                icon="more_horizontal"
+                size={iconSize || defaultIconSize}
+                variant="outline"
+              />
+            }
+            size={buttonSize || defaultButtonSize}
+          />
+        </Tooltip>
+      </MenuTrigger>
+      <MenuPopover>
+        <MenuList>
+          {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
+            items,
+            ToolbarItemInMenu,
+            { iconSize }
+          )}
+        </MenuList>
+      </MenuPopover>
+    </Menu>
+  )
+}
 
-export const Toolbar = ({ toolbar }: ToolbarProps) => (
-  <div>
-    {Sequence<ToolbarItemEntity>(toolbar.items, ToolbarItemInFlow)}
-    <ToolbarOverflow {...toolbar} />
-  </div>
-)
+export const Toolbar = ({ toolbar }: ToolbarProps) => {
+  const toolbarStyles = useToolbarStyles()
+  return (
+    <div className={toolbarStyles.root}>
+      {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
+        toolbar.items,
+        ToolbarItemInFlow,
+        { iconSize: toolbar.iconSize, buttonSize: toolbar.buttonSize }
+      )}
+      {ToolbarOverflow(toolbar)}
+    </div>
+  )
+}
 
 function isToolbarProps(o: any): o is ToolbarProps {
   return 'toolbar' in o

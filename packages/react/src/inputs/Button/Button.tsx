@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { ReactElement, useCallback } from 'react'
 import {
   Button as FluentButton,
+  Tooltip,
   makeStyles,
   mergeClasses as cx,
 } from '@fluentui/react-components'
@@ -89,6 +90,9 @@ const useButtonStyles = makeStyles({
       },
     },
   },
+  toolbarItemInFlow: {
+    minWidth: rem(32),
+  },
 })
 
 export const Button = ({
@@ -121,7 +125,7 @@ export const Button = ({
   const derivedIconSize =
     iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
 
-  return (
+  const button = (
     <FluentButton
       aria-label={label}
       appearance={variant}
@@ -130,7 +134,8 @@ export const Button = ({
         buttonStyles.root,
         contextualVariant === 'narrow-inputs' && buttonStyles.fill,
         contextualVariant === 'tabs' && buttonStyles.tab,
-        contextualVariant === 'tabs' && selected && buttonStyles.tabSelected
+        contextualVariant === 'tabs' && selected && buttonStyles.tabSelected,
+        contextualVariant === 'toolbar-item' && buttonStyles.toolbarItemInFlow
       )}
       {...{ iconOnly, iconPosition }}
       {...(icon && {
@@ -159,6 +164,14 @@ export const Button = ({
     >
       {iconOnly ? null : label}
     </FluentButton>
+  )
+
+  return iconOnly ? (
+    <Tooltip content={label} relationship="label" withArrow>
+      {button}
+    </Tooltip>
+  ) : (
+    button
   )
 }
 

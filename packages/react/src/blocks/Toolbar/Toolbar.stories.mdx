@@ -22,7 +22,10 @@ export const ToolbarTemplate = (props) => <Toolbar {...props} />
     args={{
       theme: 'light',
       toolbar: {
-        items: [{ type: 'action', label: 'Hello' }],
+        items: [
+          { type: 'action', label: 'Font', iconOnly: true, icon: 'text_font' },
+        ],
+        buttonSize: 'large',
       },
     }}
   >

@@ -130,7 +130,7 @@ const eslintrc = {
     'lodash/chaining': ['warn', 'never'],
     'arrow-body-style': 'warn',
     // "arrow-parens": ["warn", "as-needed"], // this conflicts with Prettier formatting
-    complexity: ['warn', 20],
+    complexity: ['warn', 21],
     curly: 'warn',
     'constructor-super': 'warn',
     eqeqeq: ['warn', 'smart'],

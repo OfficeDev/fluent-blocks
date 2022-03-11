@@ -28,5 +28,7 @@ export const toolbarItemSequence = z.array(toolbarItemEntity)
 export const toolbarProps = z.object({
   toolbar: z.object({
     items: toolbarItemSequence,
+    iconSize: buttonProps.shape.iconSize.default(16).optional(),
+    buttonSize: buttonProps.shape.size.default('medium').optional(),
   }),
 })

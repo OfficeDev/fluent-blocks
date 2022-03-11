@@ -28,6 +28,7 @@ export const shortInputContextualVariants = z
         z.literal('card-inputs'),
         z.literal('narrow-inputs'),
         z.literal('tabs'),
+        z.literal('toolbar-item'),
       ])
       .default('block-inputs'),
     selected: z.boolean().default(false),
