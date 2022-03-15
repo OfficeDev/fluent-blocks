@@ -1,4 +1,4 @@
-import { Meta, Canvas, Story } from '@storybook/addon-docs'
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { seed } from 'faker/locale/en_US'
 
 import { Toolbar } from './StorybookToolbar'
@@ -9,6 +9,17 @@ import { themeArgType } from '../../lib'
   component={Toolbar}
   argTypes={{
     ...themeArgType,
+    buttonSize: {
+      name: 'Button size',
+      control: {
+        type: 'inline-radio',
+        labels: {
+          large: 'Large',
+          medium: 'Medium',
+          small: 'Small',
+        },
+      },
+    },
   }}
 />
 
@@ -20,15 +31,56 @@ export const ToolbarTemplate = (props) => <Toolbar {...props} />
   <Story
     name="Toolbar"
     args={{
-      theme: 'light',
+      themeName: 'light',
       toolbar: {
         items: [
           { type: 'action', label: 'Font', iconOnly: true, icon: 'text_font' },
+          { type: 'action', label: 'Code', iconOnly: true, icon: 'code' },
+          { type: 'action', label: 'Fax', iconOnly: true, icon: 'fax' },
+          {
+            type: 'action',
+            label: 'Be responsive',
+            iconOnly: false,
+            icon: 'stack',
+          },
+          {
+            type: 'action',
+            label: 'Be colorful',
+            iconOnly: false,
+            icon: 'paint_bucket',
+          },
+          {
+            type: 'action',
+            label: 'Be inclusive',
+            iconOnly: false,
+            icon: 'accessibility',
+          },
+          {
+            type: 'action',
+            label: 'Music' /*, iconOnly: true, icon: 'music_note_2'*/,
+          },
+          {
+            type: 'action',
+            label: 'Darts',
+            iconOnly: true,
+            icon: 'target_arrow',
+          },
+          { type: 'action', label: 'Cat', iconOnly: true, icon: 'animal_cat' },
+          { type: 'action', label: 'Clock', iconOnly: false, icon: 'clock' },
+          { type: 'action', label: 'Origami', iconOnly: false, icon: 'send' },
+          {
+            type: 'action',
+            label: 'Quote',
+            iconOnly: false,
+            icon: 'text_quote',
+          },
         ],
-        buttonSize: 'large',
       },
+      buttonSize: 'large',
     }}
   >
     {seed(1234) || ToolbarTemplate.bind({})}
   </Story>
 </Canvas>
+
+<ArgsTable story="Toolbar" />

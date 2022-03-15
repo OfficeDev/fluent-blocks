@@ -1,24 +1,26 @@
 import range from 'lodash/range'
 
-import { FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
 
 import { Main } from '../../surfaces'
 import { CardProps } from './card-properties'
 
 export const BlockCard = ({
-  theme,
+  themeName,
+  accentScheme,
   ...props
-}: CardProps & { theme: ThemeName }) => (
-  <FluentBlocksProvider themeName={theme}>
+}: CardProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main blocks={[props]} title={[{ text: ' ' }]} />
   </FluentBlocksProvider>
 )
 
 export const LayoutCard = ({
-  theme,
+  themeName,
+  accentScheme,
   ...props
-}: CardProps & { theme: ThemeName }) => (
-  <FluentBlocksProvider themeName={theme}>
+}: CardProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main
       blocks={[
         {

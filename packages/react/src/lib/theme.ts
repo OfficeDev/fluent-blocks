@@ -3,20 +3,50 @@ import {
   teamsLightTheme,
   teamsDarkTheme,
   teamsHighContrastTheme,
+  webLightTheme,
+  webDarkTheme,
+  webHighContrastTheme,
 } from '@fluentui/react-components'
-import { themeName } from '@fluentui/blocks-schemas'
+import { themeName, accentScheme } from '@fluentui/blocks-schemas'
 
 export type ThemeName = z.infer<typeof themeName>
+export type AccentScheme = z.infer<typeof accentScheme>
 
-export const getTeamsTheme = (theme: ThemeName) =>
-  ({
-    light: teamsLightTheme,
-    dark: teamsDarkTheme,
-    ['high-contrast']: teamsHighContrastTheme,
-  }[theme] ?? teamsLightTheme)
+export const getTheme = (
+  themeName?: ThemeName,
+  accentScheme?: AccentScheme
+) => {
+  const resolvedAccentScheme = accentScheme || 'web'
+  const resolvedThemeName = themeName || 'light'
+  console.log('[getTheme]', resolvedThemeName, resolvedAccentScheme)
+  switch (resolvedAccentScheme) {
+    case 'teams':
+      return (() => {
+        switch (resolvedThemeName) {
+          case 'high-contrast':
+            return teamsHighContrastTheme
+          case 'dark':
+            return teamsDarkTheme
+          default:
+            return teamsLightTheme
+        }
+      })()
+    default:
+      return (() => {
+        switch (resolvedThemeName) {
+          case 'high-contrast':
+            return webHighContrastTheme
+          case 'dark':
+            return webDarkTheme
+          default:
+            return webLightTheme
+        }
+      })()
+  }
+}
 
 export const themeArgType = {
-  theme: {
+  themeName: {
     name: 'Theme',
     defaultValue: 'light',
     control: {
@@ -26,5 +56,19 @@ export const themeArgType = {
       defaultValue: 'light',
     },
     table: { type: { summary: 'Theme' }, defaultValue: { summary: 'light' } },
+  },
+  accentScheme: {
+    name: 'Accent palette',
+    defaultValue: 'web',
+    control: {
+      type: 'inline-radio',
+      options: ['web', 'teams'],
+      labels: { web: 'Web', teams: 'Teams' },
+      defaultValue: 'web',
+    },
+    table: {
+      type: { summary: 'Accent palette' },
+      defaultValue: { summary: 'web' },
+    },
   },
 }

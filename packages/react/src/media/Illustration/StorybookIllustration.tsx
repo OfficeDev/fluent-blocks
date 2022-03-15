@@ -1,12 +1,16 @@
 import { IllustrationProps } from './Illustration'
-import { FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 
 export const Illustration = ({
-  theme,
+  themeName,
+  accentScheme,
   ...props
-}: IllustrationProps & { theme: ThemeName }) => (
-  <FluentBlocksProvider themeName={theme}>
+}: IllustrationProps & {
+  themeName: ThemeName
+  accentScheme: AccentScheme
+}) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main
       blocks={[{ media: props, variant: 'narrow' }]}
       title={[{ text: ' ' }]}

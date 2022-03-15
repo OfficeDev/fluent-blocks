@@ -1,17 +1,19 @@
 import set from 'lodash/set'
 import { ToolbarProps } from './Toolbar'
-import { FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 
 export const Toolbar = ({
-  theme,
+  themeName,
+  accentScheme,
   buttonSize,
   ...props
 }: ToolbarProps & {
-  theme: ThemeName
+  themeName: ThemeName
+  accentScheme: AccentScheme
   buttonSize: 'small' | 'medium' | 'large'
 }) => (
-  <FluentBlocksProvider themeName={theme}>
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main
       title={[{ text: ' ' }]}
       blocks={[{ ...set(props, 'toolbar.buttonSize', buttonSize) }]}

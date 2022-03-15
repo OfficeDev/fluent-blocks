@@ -1,16 +1,23 @@
 import { BigMessageProps } from './BigMessage'
-import { ActionHandler, FluentBlocksProvider, ThemeName } from '../../lib'
+import {
+  AccentScheme,
+  ActionHandler,
+  FluentBlocksProvider,
+  ThemeName,
+} from '../../lib'
 import { Main } from '../../surfaces'
 
 export const BigMessage = ({
-  theme,
+  themeName,
+  accentScheme,
   onAction,
   ...props
 }: BigMessageProps['message'] & {
-  theme: ThemeName
+  themeName: ThemeName
+  accentScheme: AccentScheme
   onAction: ActionHandler
 }) => (
-  <FluentBlocksProvider themeName={theme} onAction={onAction}>
+  <FluentBlocksProvider {...{ themeName, accentScheme, onAction }}>
     <Main
       blocks={[
         { message: { ...props, variant: 'big', viewportHeight: false } },

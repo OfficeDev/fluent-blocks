@@ -1,12 +1,13 @@
 import { ChartProps } from './Chart'
-import { FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 
 export const Chart = ({
-  theme,
+  themeName,
+  accentScheme,
   ...props
-}: ChartProps & { theme: ThemeName }) => (
-  <FluentBlocksProvider themeName={theme}>
+}: ChartProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main blocks={[{ media: props, variant: 'textWidth' }]} title={[' ']} />
   </FluentBlocksProvider>
 )

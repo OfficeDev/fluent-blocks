@@ -1,13 +1,14 @@
 import { LayoutProps } from './layout-properties'
-import { FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 import { InlineSequenceOrString } from '../../inlines'
 
 export const Layout = ({
-  theme,
+  themeName,
+  accentScheme,
   ...props
-}: LayoutProps & { theme: ThemeName }) => (
-  <FluentBlocksProvider themeName={theme}>
+}: LayoutProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main
       blocks={[{ ...props }]}
       title={null as unknown as InlineSequenceOrString}

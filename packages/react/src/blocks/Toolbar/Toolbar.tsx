@@ -9,6 +9,7 @@ import {
   MenuPopover,
   MenuTrigger,
   Tooltip,
+  mergeClasses as cx,
 } from '@fluentui/react-components'
 
 import {
@@ -20,8 +21,9 @@ import {
 import { Button, buttonProps } from '../../inputs'
 import {
   propsElementUnion,
+  rem,
   Sequence,
-  useFluentPatternsContext,
+  useFluentBlocksContext,
 } from '../../lib'
 import { Icon } from '../../inlines'
 
@@ -63,6 +65,16 @@ const defaultButtonSize = 'medium'
 const useToolbarStyles = makeStyles({
   root: {
     display: 'flex',
+    flexWrap: 'wrap',
+  },
+  'root--small': {
+    height: rem(24),
+  },
+  'root--medium': {
+    height: rem(32),
+  },
+  'root--large': {
+    height: rem(40),
   },
   flexDivider: {
     flexGrow: 1,
@@ -123,7 +135,7 @@ const ToolbarOverflow = ({
   iconSize,
   buttonSize,
 }: ToolbarProps['toolbar']) => {
-  const { translations } = useFluentPatternsContext()
+  const { translations } = useFluentBlocksContext()
   return (
     <Menu>
       <MenuTrigger>
@@ -138,6 +150,7 @@ const ToolbarOverflow = ({
               />
             }
             size={buttonSize || defaultButtonSize}
+            data-layout="special"
           />
         </Tooltip>
       </MenuTrigger>
@@ -157,7 +170,12 @@ const ToolbarOverflow = ({
 export const Toolbar = ({ toolbar }: ToolbarProps) => {
   const toolbarStyles = useToolbarStyles()
   return (
-    <div className={toolbarStyles.root}>
+    <div
+      className={cx(
+        toolbarStyles.root,
+        toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`]
+      )}
+    >
       {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
         toolbar.items,
         ToolbarItemInFlow,
