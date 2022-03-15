@@ -56,14 +56,16 @@ export const InlineContent = (props: InlineContentProps) => {
   const { inlines } = props
   return (
     <>
-      {isString(inlines)
-        ? renderIfText({ text: inlines })
-        : Sequence<InlineEntity>(
-            inlines.map((inline) =>
-              isString(inline) ? { text: inline } : inline
-            ),
-            Inline
-          )}
+      {inlines
+        ? isString(inlines)
+          ? renderIfText({ text: inlines })
+          : Sequence<InlineEntity>(
+              inlines.map((inline) =>
+                isString(inline) ? { text: inline } : inline
+              ),
+              Inline
+            )
+        : null}
     </>
   )
 }

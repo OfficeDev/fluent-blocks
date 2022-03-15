@@ -35,7 +35,7 @@ export const View = (data: ViewProps) => (
       translations = defaultTranslations,
       onAction,
     }) => (
-      <FluentPatternsProvider {...{ theme, translations, onAction }}>
+      <FluentPatternsProvider {...{ themeName: theme, translations, onAction }}>
         <Main {...main} />
       </FluentPatternsProvider>
     )}

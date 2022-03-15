@@ -85,7 +85,7 @@ export type TabsProps = z.infer<typeof tabsProps>
 
 const useTabsStyles = makeStyles({
   tabScrollCtx: {
-    overflowX: 'auto',
+    overflowX: 'hidden',
     overflowY: 'hidden',
   },
   tabList: {
