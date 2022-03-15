@@ -6,7 +6,7 @@ import {
   themedImageProps as naturalThemedImageProps,
 } from '@fluentui/blocks-schemas'
 
-import { propsElementUnion, useFluentPatternsContext } from '../../lib'
+import { propsElementUnion, useFluentBlocksContext } from '../../lib'
 
 const imageElement = z
   .object({ type: z.union([z.literal('img'), z.literal('svg')]) })
@@ -29,7 +29,7 @@ const useThemedImageStyles = makeStyles({
 })
 
 export function ThemedImage(props: ThemedImageProps) {
-  const { themeName } = useFluentPatternsContext()
+  const { themeName } = useFluentBlocksContext()
   const value = props[themeName]
   const themedImageStyles = useThemedImageStyles()
   return typeof value == 'string' ? (

@@ -1,4 +1,4 @@
-import { FluentPatternsProvider, ThemeName } from '../../lib'
+import { FluentBlocksProvider, ThemeName } from '../../lib'
 
 import { Main } from '../../surfaces'
 import { DescriptionListProps } from './DescriptionList'
@@ -7,7 +7,7 @@ export const DescriptionList = ({
   theme,
   ...props
 }: DescriptionListProps & { theme: ThemeName }) => (
-  <FluentPatternsProvider themeName={theme}>
+  <FluentBlocksProvider themeName={theme}>
     <Main
       blocks={[
         {
@@ -20,5 +20,5 @@ export const DescriptionList = ({
       ]}
       title={[{ text: ' ' }]}
     />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )

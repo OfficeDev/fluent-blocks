@@ -11,7 +11,7 @@ import {
   renderIfEscape,
   Sequence,
   useCommonStyles,
-  useFluentPatternsContext,
+  useFluentBlocksContext,
   sx,
 } from '../../lib'
 import { renderIfParagraph } from '../Paragraph/Paragraph'
@@ -56,7 +56,7 @@ const useCardStyles = makeStyles({
 export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   const commonStyles = useCommonStyles()
   const cardStyles = useCardStyles()
-  const { themeName } = useFluentPatternsContext()
+  const { themeName } = useFluentBlocksContext()
   return (
     <FluentCard
       className={cx(

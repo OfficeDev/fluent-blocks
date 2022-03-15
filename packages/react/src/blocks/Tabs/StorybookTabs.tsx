@@ -1,9 +1,9 @@
 import { TabsProps } from './Tabs'
-import { FluentPatternsProvider, ThemeName } from '../../lib'
+import { FluentBlocksProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 
 export const Tabs = ({ theme, ...props }: TabsProps & { theme: ThemeName }) => (
-  <FluentPatternsProvider themeName={theme}>
+  <FluentBlocksProvider themeName={theme}>
     <Main title={[{ text: ' ' }]} blocks={[{ card: [props] }]} />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )

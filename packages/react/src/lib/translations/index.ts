@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { useContext } from 'react'
 
-import { FluentPatternsContext } from '../FluentPatternsContext'
+import { FluentBlocksContext } from '../FluentBlocksContext'
 
 import enUS from './en-US'
 
@@ -26,6 +26,6 @@ export const getTranslation = (
 ): string => (translations.hasOwnProperty(key) ? translations[key] : key)
 
 export const useTranslations = () => {
-  const translations = useContext(FluentPatternsContext).translations
+  const translations = useContext(FluentBlocksContext).translations
   return (key: string): string => getTranslation(translations, key)
 }

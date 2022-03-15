@@ -14,7 +14,7 @@ import {
 import {
   actionHandler,
   propsElementUnion,
-  useFluentPatternsContext,
+  useFluentBlocksContext,
   rem,
   sx,
 } from '../../lib'
@@ -110,7 +110,7 @@ export const Button = ({
   controls,
   contextualVariant = 'block-inputs',
 }: ButtonProps) => {
-  const context = useFluentPatternsContext()
+  const context = useFluentBlocksContext()
 
   const onButtonActivate = useCallback(() => {
     const payload = { type: 'activate' as 'activate', actionId }

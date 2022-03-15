@@ -1,6 +1,6 @@
 import range from 'lodash/range'
 
-import { FluentPatternsProvider, ThemeName } from '../../lib'
+import { FluentBlocksProvider, ThemeName } from '../../lib'
 
 import { Main } from '../../surfaces'
 import { CardProps } from './card-properties'
@@ -9,16 +9,16 @@ export const BlockCard = ({
   theme,
   ...props
 }: CardProps & { theme: ThemeName }) => (
-  <FluentPatternsProvider themeName={theme}>
+  <FluentBlocksProvider themeName={theme}>
     <Main blocks={[props]} title={[{ text: ' ' }]} />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )
 
 export const LayoutCard = ({
   theme,
   ...props
 }: CardProps & { theme: ThemeName }) => (
-  <FluentPatternsProvider themeName={theme}>
+  <FluentBlocksProvider themeName={theme}>
     <Main
       blocks={[
         {
@@ -30,5 +30,5 @@ export const LayoutCard = ({
       ]}
       title={[{ text: ' ' }]}
     />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )

@@ -3,20 +3,20 @@ import { createContext, useContext } from 'react'
 import { ActionHandler } from './actions'
 import { Translations, defaultTranslations } from './translations'
 
-export type FluentPatternsContextData = {
+export type FluentPatternsBlocksData = {
   translations: Translations
   themeName: ThemeName
   theme: ReturnType<typeof getTeamsTheme>
   onAction: ActionHandler
 }
 
-export const FluentPatternsContext = createContext<FluentPatternsContextData>({
+export const FluentBlocksContext = createContext<FluentPatternsBlocksData>({
   translations: defaultTranslations,
   themeName: 'light',
   theme: getTeamsTheme('light'),
   onAction: () => {},
 })
 
-export function useFluentPatternsContext() {
-  return useContext(FluentPatternsContext)
+export function useFluentBlocksContext() {
+  return useContext(FluentBlocksContext)
 }

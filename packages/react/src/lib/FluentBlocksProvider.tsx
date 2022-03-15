@@ -2,13 +2,13 @@ import { PropsWithChildren } from 'react'
 import { FluentProvider } from '@fluentui/react-components'
 import { getTeamsTheme, ThemeName } from './theme'
 import {
-  FluentPatternsContext,
-  FluentPatternsContextData,
-} from './FluentPatternsContext'
+  FluentBlocksContext,
+  FluentPatternsBlocksData,
+} from './FluentBlocksContext'
 import { ActionHandler } from './actions'
 import { Translations, defaultTranslations } from './translations'
 
-export const FluentPatternsProvider = ({
+export const FluentBlocksProvider = ({
   themeName = 'light',
   translations = defaultTranslations,
   onAction = () => {},
@@ -19,7 +19,7 @@ export const FluentPatternsProvider = ({
   onAction?: ActionHandler
 }>) => {
   const theme = getTeamsTheme(themeName)
-  const context: FluentPatternsContextData = {
+  const context: FluentPatternsBlocksData = {
     translations,
     themeName,
     onAction,
@@ -33,9 +33,9 @@ export const FluentPatternsProvider = ({
         dir: translations.dir,
       }}
     >
-      <FluentPatternsContext.Provider value={context}>
+      <FluentBlocksContext.Provider value={context}>
         {children}
-      </FluentPatternsContext.Provider>
+      </FluentBlocksContext.Provider>
     </FluentProvider>
   )
 }

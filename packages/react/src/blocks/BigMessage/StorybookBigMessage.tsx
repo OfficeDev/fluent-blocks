@@ -1,5 +1,5 @@
 import { BigMessageProps } from './BigMessage'
-import { ActionHandler, FluentPatternsProvider, ThemeName } from '../../lib'
+import { ActionHandler, FluentBlocksProvider, ThemeName } from '../../lib'
 import { Main } from '../../surfaces'
 
 export const BigMessage = ({
@@ -10,12 +10,12 @@ export const BigMessage = ({
   theme: ThemeName
   onAction: ActionHandler
 }) => (
-  <FluentPatternsProvider themeName={theme} onAction={onAction}>
+  <FluentBlocksProvider themeName={theme} onAction={onAction}>
     <Main
       blocks={[
         { message: { ...props, variant: 'big', viewportHeight: false } },
       ]}
       title={[{ text: ' ' }]}
     />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )

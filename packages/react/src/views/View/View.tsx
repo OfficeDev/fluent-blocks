@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { anyActionPayload, themeName } from '@fluentui/blocks-schemas'
 
 import {
-  FluentPatternsProvider,
+  FluentBlocksProvider,
   ParseBoundary,
   withActionHandler,
   translations,
@@ -35,9 +35,9 @@ export const View = (data: ViewProps) => (
       translations = defaultTranslations,
       onAction,
     }) => (
-      <FluentPatternsProvider {...{ themeName: theme, translations, onAction }}>
+      <FluentBlocksProvider {...{ themeName: theme, translations, onAction }}>
         <Main {...main} />
-      </FluentPatternsProvider>
+      </FluentBlocksProvider>
     )}
   />
 )

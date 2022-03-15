@@ -1,6 +1,6 @@
 import { Parameters } from '@storybook/addons'
 import { Button, ButtonProps, ButtonActionPayload } from './Button'
-import { ActionHandler, FluentPatternsProvider } from '../../lib'
+import { ActionHandler, FluentBlocksProvider } from '../../lib'
 
 export default {
   title: 'Tests/Button',
@@ -13,9 +13,9 @@ type ButtonTestArgs = {
 }
 
 const ButtonTemplate = ({ button, onAction }: ButtonTestArgs) => (
-  <FluentPatternsProvider onAction={onAction}>
+  <FluentBlocksProvider onAction={onAction}>
     <Button {...button} />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )
 
 export const ButtonClickTest: typeof ButtonTemplate & {
