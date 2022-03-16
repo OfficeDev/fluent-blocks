@@ -6,7 +6,7 @@ This repository provides a set of packages developers can use to build fully int
 
 ## Packages
 
-- [**Fluent Blocks: React**](packages/react#readme) ([Storybook][storybook])
+- [**Fluent Blocks: React**](packages/react#readme) ([Storybook ↗][storybook])
 - [Schemas](packages/schemas#readme)
 
 ## ⚠️ In active development
@@ -15,9 +15,8 @@ This project’s API is subject to unannounced breaking changes and is not yet o
 
 ## Contributing
 
-If you’d like to contribute to this project, please see [the Contributing file][contributing].
+If you’d like to contribute to this project, please see [the Contributing file](CONTRIBUTING.md).
 
 [storybook]: https://aka.ms/fluent-blocks-storybook
 [figma-fluent]: https://www.figma.com/community/file/836828295772957889/Microsoft-Fluent-Web
 [figma-uikit]: https://www.figma.com/community/file/916836509871353159/Microsoft-Teams-UI-Kit
-[contributing]: /blob/main/CONTRIBUTING.md

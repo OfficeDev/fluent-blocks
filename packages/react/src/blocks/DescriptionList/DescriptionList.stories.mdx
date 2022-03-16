@@ -4,13 +4,13 @@ import fakeTitle from '../../lib/fakeTitle'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
 import { DescriptionList } from './StorybookDescriptionList'
-import { themeArgType } from '../../lib'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Blocks/Description list"
   component={DescriptionList}
   argTypes={{
-    ...themeArgType,
+    ...contextArgTypes,
     descriptionList: {
       name: 'Description list',
       control: {
@@ -39,7 +39,8 @@ used to present a set of summary statistics.
   <Story
     name="Description list"
     args={{
-      theme: 'light',
+      themeName: 'light',
+      accentScheme: 'teams',
       descriptionList: range(4).map((i) => ({
         title: fakeTitle(fake),
         description: Math.ceil(Math.pow(Math.PI, i)) + '%',

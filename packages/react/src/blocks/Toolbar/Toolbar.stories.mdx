@@ -1,0 +1,139 @@
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
+import { seed } from 'faker/locale/en_US'
+
+import { Toolbar } from './StorybookToolbar'
+import { contextArgTypes } from '../../lib'
+
+<Meta
+  title="Blocks/Toolbar"
+  component={Toolbar}
+  argTypes={{
+    ...contextArgTypes,
+    buttonSize: {
+      name: 'Button size',
+      control: {
+        type: 'inline-radio',
+        labels: {
+          large: 'Large',
+          medium: 'Medium',
+          small: 'Small',
+        },
+      },
+    },
+    toolbar: {
+      name: 'Toolbar configuration',
+      control: {
+        type: 'object',
+      },
+      table: {
+        type: { summary: 'ToolbarProps' },
+      },
+    },
+  }}
+/>
+
+export const ToolbarTemplate = (props) => <Toolbar {...props} />
+
+# Toolbar
+
+The Toolbar block presents the user a set of actions laid-out horizontally. Any actions that can't be displayed on one line move to an overflow menu.
+
+<Canvas withSource="none">
+  <Story
+    name="Toolbar"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      toolbar: {
+        items: [
+          {
+            type: 'action',
+            actionId: 'font',
+            label: 'Font',
+            iconOnly: true,
+            icon: 'text_font',
+          },
+          {
+            type: 'action',
+            actionId: 'code',
+            label: 'Code',
+            iconOnly: true,
+            icon: 'code',
+          },
+          {
+            type: 'action',
+            actionId: 'fax',
+            label: 'Fax',
+            iconOnly: true,
+            icon: 'fax',
+          },
+          {
+            type: 'action',
+            actionId: 'stack',
+            label: 'Be responsive',
+            iconOnly: false,
+            icon: 'stack',
+          },
+          {
+            type: 'action',
+            actionId: 'paint',
+            label: 'Be colorful',
+            iconOnly: false,
+            icon: 'paint_bucket',
+          },
+          {
+            type: 'action',
+            actionId: 'accessibility',
+            label: 'Be inclusive',
+            iconOnly: false,
+            icon: 'accessibility',
+          },
+          {
+            type: 'action',
+            actionId: 'music',
+            label: 'Music' /*, iconOnly: true, icon: 'music_note_2'*/,
+          },
+          {
+            type: 'action',
+            actionId: 'darts',
+            label: 'Darts',
+            iconOnly: true,
+            icon: 'target_arrow',
+          },
+          {
+            type: 'action',
+            actionId: 'cat',
+            label: 'Cat',
+            iconOnly: true,
+            icon: 'animal_cat',
+          },
+          {
+            type: 'action',
+            actionId: 'clock',
+            label: 'Clock',
+            iconOnly: false,
+            icon: 'clock',
+          },
+          {
+            type: 'action',
+            actionId: 'origami',
+            label: 'Origami',
+            iconOnly: false,
+            icon: 'send',
+          },
+          {
+            type: 'action',
+            actionId: 'quote',
+            label: 'Quote',
+            iconOnly: false,
+            icon: 'text_quote',
+          },
+        ],
+      },
+    }}
+  >
+    {seed(1234) || ToolbarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Toolbar" />

@@ -1,13 +1,17 @@
-import { FluentPatternsProvider, ThemeName } from '../../lib'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
 
 import { Main } from '../../surfaces'
 import { DescriptionListProps } from './DescriptionList'
 
 export const DescriptionList = ({
-  theme,
+  themeName,
+  accentScheme,
   ...props
-}: DescriptionListProps & { theme: ThemeName }) => (
-  <FluentPatternsProvider themeName={theme}>
+}: DescriptionListProps & {
+  themeName: ThemeName
+  accentScheme: AccentScheme
+}) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme }}>
     <Main
       blocks={[
         {
@@ -20,5 +24,5 @@ export const DescriptionList = ({
       ]}
       title={[{ text: ' ' }]}
     />
-  </FluentPatternsProvider>
+  </FluentBlocksProvider>
 )

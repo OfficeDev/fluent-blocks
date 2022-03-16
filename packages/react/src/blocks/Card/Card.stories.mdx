@@ -4,13 +4,13 @@ import fakeTitle from '../../lib/fakeTitle'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
 import { BlockCard, LayoutCard } from './StorybookCard'
-import { themeArgType } from '../../lib'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Blocks/Card"
   component={BlockCard}
   argTypes={{
-    ...themeArgType,
+    ...contextArgTypes,
     card: {
       name: 'Card',
       control: {
@@ -45,7 +45,8 @@ used to group content as a regular Block element as well.
   <Story
     name="Card as a Block"
     args={{
-      theme: 'light',
+      themeName: 'light',
+      accentScheme: 'teams',
       card: [
         {
           paragraph: [{ text: 'This is a Card as a regular Block element.' }],
@@ -67,7 +68,8 @@ used to group content as a regular Block element as well.
   <Story
     name="Card as a Layout item"
     args={{
-      theme: 'light',
+      themeName: 'light',
+      accentScheme: 'teams',
       card: [
         {
           paragraph: [{ text: 'This is a Card as a layout item.' }],
@@ -93,7 +95,8 @@ used to group content as a regular Block element as well.
   <Story
     name="Widget"
     args={{
-      theme: 'light',
+      themeName: 'light',
+      accentScheme: 'teams',
       widget: {
         title: [{ text: fakeTitle(fake) }],
         label: 'Demo Widget',

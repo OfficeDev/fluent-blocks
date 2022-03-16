@@ -4,13 +4,13 @@ import fakeTitle from '../../lib/fakeTitle'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 
 import { Layout } from './StorybookLayout'
-import { themeArgType } from '../../lib'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Blocks/Layout"
   component={Layout}
   argTypes={{
-    ...themeArgType,
+    ...contextArgTypes,
     layout: {
       name: 'Layout',
       abstract: 'The layout configuration.',
@@ -47,7 +47,8 @@ The `Layout` component is a block which can arrange its content items such that 
   <Story
     name="Layout"
     args={{
-      theme: 'light',
+      themeName: 'light',
+      accentScheme: 'teams',
       layout: {
         variant: 'grid',
         items: range(7).map((i) => ({
@@ -75,7 +76,8 @@ The `Layout` component is a block which can arrange its content items such that 
   <Story
     name="Dashboard"
     args={{
-      theme: 'light',
+      themeName: 'light',
+      accentScheme: 'teams',
       dashboard: {
         items: [
           ...range(5).map((i) => ({

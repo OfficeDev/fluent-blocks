@@ -1,4 +1,5 @@
-import { BigMessageProps } from './BigMessage'
+import set from 'lodash/set'
+import { ToolbarProps } from './Toolbar'
 import {
   AccentScheme,
   ActionHandler,
@@ -7,22 +8,23 @@ import {
 } from '../../lib'
 import { Main } from '../../surfaces'
 
-export const BigMessage = ({
+export const Toolbar = ({
   themeName,
   accentScheme,
   onAction,
+  buttonSize,
   ...props
-}: BigMessageProps['message'] & {
+}: {
+  toolbar: Omit<ToolbarProps['toolbar'], 'buttonSize'>
   themeName: ThemeName
   accentScheme: AccentScheme
   onAction: ActionHandler
+  buttonSize: 'small' | 'medium' | 'large'
 }) => (
   <FluentBlocksProvider {...{ themeName, accentScheme, onAction }}>
     <Main
-      blocks={[
-        { message: { ...props, variant: 'big', viewportHeight: false } },
-      ]}
       title={[{ text: ' ' }]}
+      blocks={[{ ...set(props, 'toolbar.buttonSize', buttonSize) }]}
     />
   </FluentBlocksProvider>
 )

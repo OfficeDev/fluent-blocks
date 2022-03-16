@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useContext } from 'react'
 import { Chart } from 'chart.js'
-import { FluentPatternsContext, useTranslations } from '../../../lib'
+import { FluentBlocksContext, useTranslations } from '../../../lib'
 
 import {
   tooltipTrigger,
@@ -33,7 +33,7 @@ export const BubbleChart = memo(
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()
-    const { themeName, theme } = useContext(FluentPatternsContext)
+    const { themeName, theme } = useContext(FluentBlocksContext)
 
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()

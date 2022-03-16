@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@1.7.0/schema.json",
+  "changelog": ["@changesets/changelog-github", { "repo": "OfficeDev/fluent-blocks" }],
+  "commit": false,
+  "fixed": [],
+  "linked": [["@fluentui/blocks-schemas", "@fluentui/react-blocks"]],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

@@ -10,15 +10,19 @@ This package provides a set of components developers can use to build fully inte
 
 This project’s API is subject to unannounced breaking changes and is not yet on any release cycle.
 
-## Contributing
+## Development & contributing
 
-If you’d like to contribute to this project, please see [the Contributing file][contributing].
+If you’d like to run the development environment or contribute to this project, please see [the Contributing file](CONTRIBUTING.md).
 
 ## Getting started
 
 1. Using TypeScript and an IDE that supports type inspections will make using this project much easier
-2. Make sure you have the correct peer dependencies listed in `package.json`
-3. Install from Github: `yarn add OfficeDev/fluent-react-blocks`
+2. Since this project is not published to NPM yet, do the following:
+   1. Clone this repo, `cd` to `packages/react` within this repo
+   2. Run your package manager’s `link` command ([npm link](https://docs.npmjs.com/cli/v6/commands/npm-link), [yarn link](https://classic.yarnpkg.com/lang/en/docs/cli/link/), [pnpm link](https://pnpm.io/cli/link))
+   3. `cd` to your project
+   4. Use the same package manager you used earlier to add `@fluentui/react-blocks` to your project
+3. **Make sure to resolve any peer dependency warnings**; currently all peer dependencies are needed at the right versions for this package to work
 4. Use the `View` component to hand off all UI responsibility to this project, or use individual components as you need, whichever suits your needs best.
 
 ## How design pattern usage is validated through types
@@ -39,6 +43,10 @@ Some top-level components like `View` will check the props it was provided and p
 These components won’t render a component that has unexpected props or content, unless you use `Escape`. If you feel the need to use a pattern not provided by this project, you can do so using the `Escape` component as a JSX element in any of a component’s content props that aren’t “tightly-bound”, e.g.:
 
 ```tsx
+// Only Escape imported from this package will render,
+// so make sure you’ve imported it:
+import { Section, Escape } from '@fluentui/react-blocks';
+
 <Section
   title={[
     <Escape contentMeetsAccessibilityAndDesignStandards key="t1">
@@ -49,9 +57,15 @@ These components won’t render a component that has unexpected props or content
 />
 ```
 
+### Exceptions: tightly bound components
+
 A component may ignore `Escape` only if it is “tightly-bound” with another component. Components are tightly-bound when they make sense only when used together, e.g. `Layout` and `LayoutItem` where `Layout` will only render `LayoutItems` in its `items` prop. If you need to render special content in such a situation, you can either replace the entire parent with `Escape`, or use `Escape` as the _content_ of one of the children.
 
-Make sure the content you add using `Escape` conforms to [WCAG 2.1][wcag] and is designed inclusively. If you would like to share the pattern for the community, [we’d welcome your contribution][contributing]!
+### Escape inclusively, and share your designs!
+
+Make sure the content you add using `Escape` conforms to [WCAG 2.1][wcag] and is designed inclusively.
+
+If you would like to share your pattern with the community, [we’d welcome your contribution](CONTRIBUTING.md)! We’d all thank you to submit PR’s that extend this project with your accessible high-quality patterns.
 
 ## Concepts
 
@@ -94,5 +108,4 @@ In your own project, we recommend serving just the sprites you need locally if p
 [react-teams]: https://www.npmjs.com/package/@fluentui/react-teams
 [storybook]: https://aka.ms/fluent-blocks-storybook
 [wcag]: https://www.w3.org/TR/WCAG21
-[contributing]: /blob/main/CONTRIBUTING.md
 [fmtctx]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flow_Layout/Block_and_Inline_Layout_in_Normal_Flow

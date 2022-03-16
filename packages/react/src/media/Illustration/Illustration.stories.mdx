@@ -1,12 +1,12 @@
 import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { Illustration } from './StorybookIllustration'
-import { themeArgType } from '../../lib'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Media/Illustrations"
   component={Illustration}
   parameters={{ viewMode: 'docs' }}
-  argTypes={{ ...themeArgType, illustration: { table: { disable: true } } }}
+  argTypes={{ ...contextArgTypes, illustration: { table: { disable: true } } }}
 />
 
 export const IllustrationTemplate = (props) => <Illustration {...props} />
@@ -18,7 +18,14 @@ This library comes with a set of built-in illustrations you can simply reference
 ### Default:
 
 <Canvas withSource="none">
-  <Story name="Default" args={{ theme: 'light', illustration: 'default' }}>
+  <Story
+    name="Default"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      illustration: 'default',
+    }}
+  >
     {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
@@ -28,7 +35,10 @@ This library comes with a set of built-in illustrations you can simply reference
 ### Empty:
 
 <Canvas withSource="none">
-  <Story name="Empty" args={{ theme: 'light', illustration: 'empty' }}>
+  <Story
+    name="Empty"
+    args={{ themeName: 'light', accentScheme: 'teams', illustration: 'empty' }}
+  >
     {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
@@ -38,7 +48,10 @@ This library comes with a set of built-in illustrations you can simply reference
 ### Error:
 
 <Canvas withSource="none">
-  <Story name="Error" args={{ theme: 'light', illustration: 'error' }}>
+  <Story
+    name="Error"
+    args={{ themeName: 'light', accentScheme: 'teams', illustration: 'error' }}
+  >
     {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
@@ -48,7 +61,10 @@ This library comes with a set of built-in illustrations you can simply reference
 ### Hello:
 
 <Canvas withSource="none">
-  <Story name="Hello" args={{ theme: 'light', illustration: 'hello' }}>
+  <Story
+    name="Hello"
+    args={{ themeName: 'light', accentScheme: 'teams', illustration: 'hello' }}
+  >
     {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>
@@ -58,7 +74,10 @@ This library comes with a set of built-in illustrations you can simply reference
 ### Thanks:
 
 <Canvas withSource="none">
-  <Story name="Thanks" args={{ theme: 'light', illustration: 'thanks' }}>
+  <Story
+    name="Thanks"
+    args={{ themeName: 'light', accentScheme: 'teams', illustration: 'thanks' }}
+  >
     {IllustrationTemplate.bind({})}
   </Story>
 </Canvas>

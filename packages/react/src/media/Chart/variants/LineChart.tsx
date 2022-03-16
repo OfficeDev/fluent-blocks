@@ -11,7 +11,7 @@ import {
   useChartId,
 } from '../chart-utils'
 import { lineChartPatterns, useChartColors } from '../chart-patterns'
-import { FluentPatternsContext, useTranslations } from '../../../lib'
+import { FluentBlocksContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
 
@@ -29,7 +29,7 @@ export const LineChart = memo(
     data: ChartData
     gradients?: boolean
   }) {
-    const { themeName, theme } = useContext(FluentPatternsContext)
+    const { themeName, theme } = useContext(FluentBlocksContext)
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()

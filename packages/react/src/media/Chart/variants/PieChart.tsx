@@ -4,7 +4,7 @@ import update from 'lodash/update'
 import isNumber from 'lodash/isNumber'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { FluentPatternsContext, useTranslations } from '../../../lib'
+import { FluentBlocksContext, useTranslations } from '../../../lib'
 import {
   tooltipTrigger,
   chartConfig,
@@ -47,7 +47,7 @@ export const PieChart = memo(
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const chartRef = useRef<Chart | undefined>()
     const chartId = useChartId()
-    const { themeName, theme } = useContext(FluentPatternsContext)
+    const { themeName, theme } = useContext(FluentBlocksContext)
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()
 

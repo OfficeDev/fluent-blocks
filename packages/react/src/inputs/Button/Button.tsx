@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { ReactElement, useCallback } from 'react'
 import {
   Button as FluentButton,
+  Tooltip,
   makeStyles,
   mergeClasses as cx,
 } from '@fluentui/react-components'
@@ -13,7 +14,7 @@ import {
 import {
   actionHandler,
   propsElementUnion,
-  useFluentPatternsContext,
+  useFluentBlocksContext,
   rem,
   sx,
 } from '../../lib'
@@ -89,6 +90,16 @@ const useButtonStyles = makeStyles({
       },
     },
   },
+  toolbarItemInFlow: {
+    minWidth: rem(32),
+    order: 1,
+  },
+  toolbarItemNeedsUpdate: {
+    visibility: 'hidden',
+  },
+  toolbarItemHidden: {
+    display: 'none',
+  },
 })
 
 export const Button = ({
@@ -106,7 +117,7 @@ export const Button = ({
   controls,
   contextualVariant = 'block-inputs',
 }: ButtonProps) => {
-  const context = useFluentPatternsContext()
+  const context = useFluentBlocksContext()
 
   const onButtonActivate = useCallback(() => {
     const payload = { type: 'activate' as 'activate', actionId }
@@ -121,7 +132,7 @@ export const Button = ({
   const derivedIconSize =
     iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
 
-  return (
+  const button = (
     <FluentButton
       aria-label={label}
       appearance={variant}
@@ -130,7 +141,13 @@ export const Button = ({
         buttonStyles.root,
         contextualVariant === 'narrow-inputs' && buttonStyles.fill,
         contextualVariant === 'tabs' && buttonStyles.tab,
-        contextualVariant === 'tabs' && selected && buttonStyles.tabSelected
+        contextualVariant === 'tabs' && selected && buttonStyles.tabSelected,
+        contextualVariant.startsWith('toolbar-item') &&
+          buttonStyles.toolbarItemInFlow,
+        contextualVariant === 'toolbar-item--needs-update' &&
+          buttonStyles.toolbarItemNeedsUpdate,
+        contextualVariant === 'toolbar-item--hidden' &&
+          buttonStyles.toolbarItemHidden
       )}
       {...{ iconOnly, iconPosition }}
       {...(icon && {
@@ -149,7 +166,7 @@ export const Button = ({
         ),
       })}
       onClick={onButtonActivate}
-      id={actionId}
+      id={`${contextualVariant}__${actionId}`}
       {...(selected && { 'aria-selected': selected })}
       {...(controls && { 'aria-controls': controls })}
       {...(contextualVariant === 'tabs' && {
@@ -159,6 +176,14 @@ export const Button = ({
     >
       {iconOnly ? null : label}
     </FluentButton>
+  )
+
+  return iconOnly ? (
+    <Tooltip content={label} relationship="label" withArrow>
+      {button}
+    </Tooltip>
+  ) : (
+    button
   )
 }
 
