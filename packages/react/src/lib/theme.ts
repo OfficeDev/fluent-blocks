@@ -69,4 +69,5 @@ export const contextArgTypes = {
       defaultValue: { summary: 'web' },
     },
   },
+  onAction: { action: 'action' },
 }

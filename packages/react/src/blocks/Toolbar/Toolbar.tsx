@@ -9,6 +9,7 @@ import {
 import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 import every from 'lodash/every'
+import noop from 'lodash/noop'
 
 import {
   makeStyles,
@@ -30,6 +31,7 @@ import {
 
 import { Button, buttonProps } from '../../inputs'
 import {
+  ActionHandler,
   propsElementUnion,
   rem,
   Sequence,
@@ -47,6 +49,7 @@ export const toolbarAction = naturalToolbarAction.merge(
     contextualVariant: true,
   })
 )
+export type ToolbarAction = z.infer<typeof toolbarAction>
 
 export const toolbarItemEntity = z.union([toolbarAction, toolbarDivider])
 export type ToolbarItemEntity = z.infer<typeof toolbarItemEntity>
@@ -81,6 +84,7 @@ type ToolbarItemContextualOptions = z.infer<
   Partial<{
     layoutNeedsUpdate: boolean
     hidden: boolean
+    onAction: ActionHandler
   }>
 
 const defaultIconSize = 16
@@ -114,14 +118,22 @@ const useToolbarStyles = makeStyles({
   },
 })
 
-const ToolbarFlexDivider = () => {
-  const toolbarStyles = useToolbarStyles()
-  return <div role="none" className={toolbarStyles.flexDivider} />
-}
-
 const ToolbarItemInMenu = (
   item: ToolbarItemEntity & Partial<ToolbarItemContextualOptions>
 ) => {
+  const context = useFluentBlocksContext()
+
+  const onItemActivate = item.hasOwnProperty('actionId')
+    ? useCallback(() => {
+        const payload = {
+          type: 'activate' as 'activate',
+          actionId: (item as ToolbarAction).actionId,
+        }
+        item.onAction && item.onAction(payload)
+        context.onAction(payload)
+      }, [item])
+    : noop
+
   switch (item.type) {
     case 'action':
       return item.hidden ? null : (
@@ -135,6 +147,7 @@ const ToolbarItemInMenu = (
               />
             ),
           })}
+          onClick={onItemActivate}
         >
           {item.label}
         </MenuItem>
