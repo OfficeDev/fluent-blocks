@@ -1,5 +1,15 @@
 import { z } from 'zod'
-import { ReactElement } from 'react'
+import {
+  ReactElement,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
+import debounce from 'lodash/debounce'
+import get from 'lodash/get'
+import every from 'lodash/every'
+
 import {
   makeStyles,
   Menu,
@@ -57,7 +67,13 @@ const toolbarItemContextualOptions = toolbarProps.shape.toolbar.pick({
   iconSize: true,
   buttonSize: true,
 })
-type ToolbarItemContextualOptions = z.infer<typeof toolbarItemContextualOptions>
+type ToolbarItemContextualOptions = z.infer<
+  typeof toolbarItemContextualOptions
+> &
+  Partial<{
+    layoutNeedsUpdate: boolean
+    hidden: boolean
+  }>
 
 const defaultIconSize = 16
 const defaultButtonSize = 'medium'
@@ -79,6 +95,15 @@ const useToolbarStyles = makeStyles({
   flexDivider: {
     flexGrow: 1,
   },
+  overflowTrigger: {
+    order: 0,
+  },
+  'overflowTrigger--ready': {
+    order: 2,
+  },
+  'overflowTrigger--hidden': {
+    display: 'none',
+  },
 })
 
 const ToolbarFlexDivider = () => {
@@ -91,7 +116,7 @@ const ToolbarItemInMenu = (
 ) => {
   switch (item.type) {
     case 'action':
-      return (
+      return item.hidden ? null : (
         <MenuItem
           {...(item.icon && {
             icon: (
@@ -114,7 +139,6 @@ const ToolbarItemInMenu = (
 const ToolbarItemInFlow = (
   item: ToolbarItemEntity & Partial<ToolbarItemContextualOptions>
 ) => {
-  console.log('[item size]', item.buttonSize || defaultButtonSize)
   switch (item.type) {
     case 'action':
       return Button({
@@ -122,7 +146,11 @@ const ToolbarItemInFlow = (
         variant: 'transparent',
         size: item.buttonSize || defaultButtonSize,
         iconSize: item.iconSize || defaultIconSize,
-        contextualVariant: 'toolbar-item',
+        contextualVariant: item.layoutNeedsUpdate
+          ? 'toolbar-item--needs-update'
+          : item.hidden
+          ? 'toolbar-item--hidden'
+          : 'toolbar-item',
         type: 'button',
       })
     default:
@@ -130,58 +158,128 @@ const ToolbarItemInFlow = (
   }
 }
 
-const ToolbarOverflow = ({
-  items,
-  iconSize,
-  buttonSize,
-}: ToolbarProps['toolbar']) => {
-  const { translations } = useFluentBlocksContext()
-  return (
-    <Menu>
-      <MenuTrigger>
-        <Tooltip content={translations.more} relationship="label" withArrow>
-          <MenuButton
-            appearance="transparent"
-            icon={
-              <Icon
-                icon="more_horizontal"
-                size={iconSize || defaultIconSize}
-                variant="outline"
-              />
-            }
-            size={buttonSize || defaultButtonSize}
-            data-layout="special"
-          />
-        </Tooltip>
-      </MenuTrigger>
-      <MenuPopover>
-        <MenuList>
-          {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
-            items,
-            ToolbarItemInMenu,
-            { iconSize }
-          )}
-        </MenuList>
-      </MenuPopover>
-    </Menu>
-  )
-}
-
 export const Toolbar = ({ toolbar }: ToolbarProps) => {
   const toolbarStyles = useToolbarStyles()
+  const { translations } = useFluentBlocksContext()
+  const $toolbar = useRef<HTMLDivElement | null>(null)
+  const [layoutNeedsUpdate, setLayoutNeedsUpdate] = useState(true)
+  const [actionsInFlow, setActionsInFlow] = useState<Set<string>>(new Set())
+
+  const getNextActionsInFlow = useCallback(() => {
+    const $trigger = $toolbar.current?.querySelector('[data-layout]')
+    const $children = $toolbar.current?.children
+    const nextActionsInFlow = []
+    if ($children && $trigger instanceof HTMLElement) {
+      const baseOffset = $trigger.offsetTop
+      for (let i = 0; i < $children.length; i++) {
+        const $child = $children.item(i)
+        if (
+          $child &&
+          $child instanceof HTMLElement &&
+          !$child.hasAttribute('data-layout') &&
+          $child.offsetTop === baseOffset
+        ) {
+          const actionId = $child.getAttribute('id')?.split('__')[1]
+          if (actionId) {
+            nextActionsInFlow.push(actionId)
+          }
+        }
+      }
+    }
+    return new Set(nextActionsInFlow)
+  }, [])
+
+  const debouncedUpdateToolbarLayout = useCallback(
+    debounce(
+      () => {
+        setActionsInFlow(getNextActionsInFlow())
+        setLayoutNeedsUpdate(false)
+      },
+      400,
+      { leading: false, trailing: true }
+    ),
+    []
+  )
+
+  const handleResize = useCallback(() => {
+    setLayoutNeedsUpdate(true)
+    debouncedUpdateToolbarLayout()
+  }, [])
+
+  useLayoutEffect(() => {
+    document.defaultView?.addEventListener('resize', handleResize)
+    if ($toolbar.current && layoutNeedsUpdate) {
+      setActionsInFlow(getNextActionsInFlow())
+      setLayoutNeedsUpdate(false)
+    }
+    return () =>
+      document.defaultView?.removeEventListener('resize', handleResize)
+  }, [toolbar, $toolbar.current])
+
+  const menuItemHiddenFlags = layoutNeedsUpdate
+    ? undefined
+    : toolbar.items.map((item) => ({
+        hidden: actionsInFlow.has(get(item, 'actionId', false)),
+      }))
+  const hideOverflowTrigger = menuItemHiddenFlags
+    ? every(menuItemHiddenFlags, (flags) => flags.hidden)
+    : false
+
   return (
     <div
       className={cx(
         toolbarStyles.root,
         toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`]
       )}
+      ref={$toolbar}
     >
       {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
         toolbar.items,
         ToolbarItemInFlow,
-        { iconSize: toolbar.iconSize, buttonSize: toolbar.buttonSize }
+        {
+          iconSize: toolbar.iconSize,
+          buttonSize: toolbar.buttonSize,
+          layoutNeedsUpdate,
+        },
+        layoutNeedsUpdate
+          ? undefined
+          : toolbar.items.map((item) => ({
+              hidden: !actionsInFlow.has(get(item, 'actionId', false)),
+            }))
       )}
-      {ToolbarOverflow(toolbar)}
+      <Menu>
+        <MenuTrigger>
+          <Tooltip content={translations.more} relationship="label" withArrow>
+            <MenuButton
+              appearance="transparent"
+              icon={
+                <Icon
+                  icon="more_horizontal"
+                  size={toolbar.iconSize || defaultIconSize}
+                  variant="outline"
+                />
+              }
+              size={toolbar.buttonSize || defaultButtonSize}
+              data-layout="required"
+              className={cx(
+                toolbarStyles.overflowTrigger,
+                !layoutNeedsUpdate && toolbarStyles['overflowTrigger--ready'],
+                hideOverflowTrigger && toolbarStyles['overflowTrigger--hidden']
+              )}
+            />
+          </Tooltip>
+        </MenuTrigger>
+        <MenuPopover>
+          <MenuList>
+            {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
+              toolbar.items,
+              ToolbarItemInMenu,
+              { iconSize: toolbar.iconSize },
+              menuItemHiddenFlags
+            )}
+          </MenuList>
+        </MenuPopover>
+      </Menu>
     </div>
   )
 }

@@ -18,7 +18,6 @@ export const getTheme = (
 ) => {
   const resolvedAccentScheme = accentScheme || 'web'
   const resolvedThemeName = themeName || 'light'
-  console.log('[getTheme]', resolvedThemeName, resolvedAccentScheme)
   switch (resolvedAccentScheme) {
     case 'teams':
       return (() => {
@@ -55,7 +54,10 @@ export const themeArgType = {
       labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
       defaultValue: 'light',
     },
-    table: { type: { summary: 'Theme' }, defaultValue: { summary: 'light' } },
+    table: {
+      type: { summary: 'ThemeName' },
+      defaultValue: { summary: 'light' },
+    },
   },
   accentScheme: {
     name: 'Accent palette',
@@ -67,7 +69,7 @@ export const themeArgType = {
       defaultValue: 'web',
     },
     table: {
-      type: { summary: 'Accent palette' },
+      type: { summary: 'AccentScheme' },
       defaultValue: { summary: 'web' },
     },
   },

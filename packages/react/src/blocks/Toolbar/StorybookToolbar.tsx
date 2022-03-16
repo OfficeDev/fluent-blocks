@@ -8,7 +8,8 @@ export const Toolbar = ({
   accentScheme,
   buttonSize,
   ...props
-}: ToolbarProps & {
+}: {
+  toolbar: Omit<ToolbarProps['toolbar'], 'buttonSize'>
   themeName: ThemeName
   accentScheme: AccentScheme
   buttonSize: 'small' | 'medium' | 'large'

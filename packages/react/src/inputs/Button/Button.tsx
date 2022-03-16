@@ -92,6 +92,13 @@ const useButtonStyles = makeStyles({
   },
   toolbarItemInFlow: {
     minWidth: rem(32),
+    order: 1,
+  },
+  toolbarItemNeedsUpdate: {
+    visibility: 'hidden',
+  },
+  toolbarItemHidden: {
+    display: 'none',
   },
 })
 
@@ -135,7 +142,12 @@ export const Button = ({
         contextualVariant === 'narrow-inputs' && buttonStyles.fill,
         contextualVariant === 'tabs' && buttonStyles.tab,
         contextualVariant === 'tabs' && selected && buttonStyles.tabSelected,
-        contextualVariant === 'toolbar-item' && buttonStyles.toolbarItemInFlow
+        contextualVariant.startsWith('toolbar-item') &&
+          buttonStyles.toolbarItemInFlow,
+        contextualVariant === 'toolbar-item--needs-update' &&
+          buttonStyles.toolbarItemNeedsUpdate,
+        contextualVariant === 'toolbar-item--hidden' &&
+          buttonStyles.toolbarItemHidden
       )}
       {...{ iconOnly, iconPosition }}
       {...(icon && {
@@ -154,7 +166,7 @@ export const Button = ({
         ),
       })}
       onClick={onButtonActivate}
-      id={actionId}
+      id={`${contextualVariant}__${actionId}`}
       {...(selected && { 'aria-selected': selected })}
       {...(controls && { 'aria-controls': controls })}
       {...(contextualVariant === 'tabs' && {
