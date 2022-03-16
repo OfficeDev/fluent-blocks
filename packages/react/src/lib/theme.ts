@@ -44,15 +44,13 @@ export const getTheme = (
   }
 }
 
-export const themeArgType = {
+export const contextArgTypes = {
   themeName: {
     name: 'Theme',
-    defaultValue: 'light',
+    options: ['light', 'dark', 'high-contrast'],
     control: {
       type: 'inline-radio',
-      options: ['light', 'dark', 'high-contrast'],
       labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
-      defaultValue: 'light',
     },
     table: {
       type: { summary: 'ThemeName' },
@@ -61,12 +59,10 @@ export const themeArgType = {
   },
   accentScheme: {
     name: 'Accent palette',
-    defaultValue: 'web',
+    options: ['web', 'teams'],
     control: {
       type: 'inline-radio',
-      options: ['web', 'teams'],
       labels: { web: 'Web', teams: 'Teams' },
-      defaultValue: 'web',
     },
     table: {
       type: { summary: 'AccentScheme' },

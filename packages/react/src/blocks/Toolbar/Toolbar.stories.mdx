@@ -2,13 +2,13 @@ import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { seed } from 'faker/locale/en_US'
 
 import { Toolbar } from './StorybookToolbar'
-import { themeArgType } from '../../lib'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Blocks/Toolbar"
   component={Toolbar}
   argTypes={{
-    ...themeArgType,
+    ...contextArgTypes,
     buttonSize: {
       name: 'Button size',
       control: {
@@ -18,7 +18,6 @@ import { themeArgType } from '../../lib'
           medium: 'Medium',
           small: 'Small',
         },
-        defaultValue: 'large',
       },
     },
     toolbar: {

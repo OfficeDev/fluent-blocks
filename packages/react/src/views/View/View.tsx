@@ -1,5 +1,9 @@
 import { z } from 'zod'
-import { anyActionPayload, themeName } from '@fluentui/blocks-schemas'
+import {
+  accentScheme,
+  anyActionPayload,
+  themeName,
+} from '@fluentui/blocks-schemas'
 
 import {
   FluentBlocksProvider,
@@ -13,11 +17,12 @@ import { Main } from '../../surfaces'
 import { sectionContentProps } from '../../blocks'
 
 export const viewProps = z.object({
-  sidebar: z.object({}).optional(),
-  toolbar: z.object({}).optional(),
-  modal: z.object({}).optional(),
+  // sidebar: z.object({}).optional(),
+  // topbar: z.object({}).optional(),
+  // modal: z.object({}).optional(),
   main: sectionContentProps,
-  theme: themeName.optional(),
+  themeName: themeName.optional(),
+  accentScheme: accentScheme.optional(),
   translations: translations.optional(),
   ...withActionHandler(anyActionPayload),
 })
@@ -31,11 +36,14 @@ export const View = (data: ViewProps) => (
     data={data}
     children={({
       main,
-      theme = 'light',
+      themeName = 'light',
+      accentScheme = 'web',
       translations = defaultTranslations,
       onAction,
     }) => (
-      <FluentBlocksProvider {...{ themeName: theme, translations, onAction }}>
+      <FluentBlocksProvider
+        {...{ themeName, accentScheme, translations, onAction }}
+      >
         <Main {...main} />
       </FluentBlocksProvider>
     )}

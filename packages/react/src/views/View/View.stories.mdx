@@ -3,6 +3,7 @@ import { fake, seed } from 'faker/locale/en_US'
 import fakeTitle from '../../lib/fakeTitle'
 import { View } from './View'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Views/View"
@@ -12,17 +13,7 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
       name: 'Main',
       control: { type: 'object' },
     },
-    theme: {
-      name: 'Theme variant',
-      control: {
-        type: 'inline-radio',
-        labels: {
-          light: 'Light',
-          dark: 'Dark',
-          'high-contrast': 'High contrast',
-        },
-      },
-    },
+    ...contextArgTypes,
   }}
   parameters={{
     viewMode: 'docs',

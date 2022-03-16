@@ -1,6 +1,6 @@
 import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { Chart } from './StorybookChart'
-import { themeArgType } from '../../lib'
+import { contextArgTypes } from '../../lib'
 
 <Meta
   title="Media/Charts"
@@ -9,7 +9,7 @@ import { themeArgType } from '../../lib'
     viewMode: 'docs',
   }}
   argTypes={{
-    ...themeArgType,
+    ...contextArgTypes,
     label: { table: { disable: true } },
     chart: {
       name: 'Chart data',
