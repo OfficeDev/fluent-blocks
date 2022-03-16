@@ -43,6 +43,10 @@ Some top-level components like `View` will check the props it was provided and p
 These components won’t render a component that has unexpected props or content, unless you use `Escape`. If you feel the need to use a pattern not provided by this project, you can do so using the `Escape` component as a JSX element in any of a component’s content props that aren’t “tightly-bound”, e.g.:
 
 ```tsx
+// Only Escape imported from this package will render,
+// so make sure you’ve imported it:
+import { Section, Escape } from '@fluentui/react-blocks';
+
 <Section
   title={[
     <Escape contentMeetsAccessibilityAndDesignStandards key="t1">
@@ -53,9 +57,15 @@ These components won’t render a component that has unexpected props or content
 />
 ```
 
+### Exceptions: tightly bound components
+
 A component may ignore `Escape` only if it is “tightly-bound” with another component. Components are tightly-bound when they make sense only when used together, e.g. `Layout` and `LayoutItem` where `Layout` will only render `LayoutItems` in its `items` prop. If you need to render special content in such a situation, you can either replace the entire parent with `Escape`, or use `Escape` as the _content_ of one of the children.
 
-Make sure the content you add using `Escape` conforms to [WCAG 2.1][wcag] and is designed inclusively. If you would like to share the pattern for the community, [we’d welcome your contribution](CONTRIBUTING.md)!
+### Escape inclusively, and share your designs!
+
+Make sure the content you add using `Escape` conforms to [WCAG 2.1][wcag] and is designed inclusively.
+
+If you would like to share your pattern with the community, [we’d welcome your contribution](CONTRIBUTING.md)! We’d all thank you to submit PR’s that extend this project with your accessible high-quality patterns.
 
 ## Concepts
 
