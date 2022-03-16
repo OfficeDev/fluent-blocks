@@ -33,6 +33,7 @@ import {
   propsElementUnion,
   rem,
   Sequence,
+  useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
 import { Icon } from '../../inlines'
@@ -52,15 +53,22 @@ export type ToolbarItemEntity = z.infer<typeof toolbarItemEntity>
 
 export const toolbarItemSequence = z.array(toolbarItemEntity)
 
-export const toolbarProps = naturalToolbarProps.merge(
-  z.object({
-    toolbar: naturalToolbarProps.shape.toolbar.merge(
-      z.object({
-        items: toolbarItemSequence,
-      })
-    ),
+export const toolbarProps = naturalToolbarProps
+  .merge(
+    z.object({
+      toolbar: naturalToolbarProps.shape.toolbar.merge(
+        z.object({
+          items: toolbarItemSequence,
+        })
+      ),
+    })
+  )
+  .extend({
+    contextualVariant: z
+      .union([z.literal('card'), z.literal('block')])
+      .default('block')
+      .optional(),
   })
-)
 export type ToolbarProps = z.infer<typeof toolbarProps>
 
 const toolbarItemContextualOptions = toolbarProps.shape.toolbar.pick({
@@ -158,7 +166,11 @@ const ToolbarItemInFlow = (
   }
 }
 
-export const Toolbar = ({ toolbar }: ToolbarProps) => {
+export const Toolbar = ({
+  toolbar,
+  contextualVariant = 'block',
+}: ToolbarProps) => {
+  const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
   const { translations } = useFluentBlocksContext()
   const $toolbar = useRef<HTMLDivElement | null>(null)
@@ -195,7 +207,7 @@ export const Toolbar = ({ toolbar }: ToolbarProps) => {
         setActionsInFlow(getNextActionsInFlow())
         setLayoutNeedsUpdate(false)
       },
-      400,
+      100,
       { leading: false, trailing: true }
     ),
     []
@@ -229,7 +241,9 @@ export const Toolbar = ({ toolbar }: ToolbarProps) => {
     <div
       className={cx(
         toolbarStyles.root,
-        toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`]
+        toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`],
+        contextualVariant === 'block' && commonStyles.mainContentWidth,
+        contextualVariant === 'block' && commonStyles.centerBlock
       )}
       ref={$toolbar}
     >
