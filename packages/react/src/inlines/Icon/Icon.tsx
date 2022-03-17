@@ -22,19 +22,20 @@ function spriteHref(
 
 const iconToTextRatio = 1.16
 
-const useStyles = makeStyles({
+const useIconStyles = makeStyles({
   root: {
     height: `${iconToTextRatio}em`,
     width: `${iconToTextRatio}em`,
     verticalAlign: 'text-bottom',
+    fill: 'currentcolor',
   },
 })
 
 export const Icon = (props: IconProps) => {
   const { icon, variant, size } = props
-  const styles = useStyles()
+  const iconStyles = useIconStyles()
   return (
-    <svg className={styles.root} data-chromatic="ignore">
+    <svg className={iconStyles.root} data-chromatic="ignore">
       <use href={spriteHref(icon, size!, variant!)} />
     </svg>
   )
