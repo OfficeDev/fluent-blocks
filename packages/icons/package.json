@@ -1,5 +1,5 @@
 {
-  "name": "@fluentui/blocks-basic-icons",
+  "name": "@fluent-blocks/basic-icons",
   "version": "9.0.0",
   "main": "basic-icons.json",
   "files": ["basic-icons.json", "basic-icons.svg"],

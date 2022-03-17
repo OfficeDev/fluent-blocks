@@ -1,5 +1,5 @@
 {
-  "name": "@fluentui/blocks-monorepo",
+  "name": "@fluent-blocks/monorepo",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
