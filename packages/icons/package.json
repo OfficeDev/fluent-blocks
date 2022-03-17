@@ -1,6 +1,11 @@
 {
   "name": "@fluent-blocks/basic-icons",
   "version": "9.0.0-alpha.1",
+  "repository": "git@github.com:OfficeDev/fluent-blocks.git",
+  "authors": [
+    "Will Shown <willshown@microsoft.com>"
+  ],
+  "license": "MIT",
   "main": "basic-icons.json",
   "files": ["basic-icons.json", "basic-icons.svg"],
   "scripts": {
