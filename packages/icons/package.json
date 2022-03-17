@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/basic-icons",
-  "version": "9.0.0",
+  "version": "9.0.0-alpha.1",
   "main": "basic-icons.json",
   "files": ["basic-icons.json", "basic-icons.svg"],
   "scripts": {

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { multilineTextInputProps as naturalMultilineTextInputProps } from '@fluentui/blocks-schemas'
+import { multilineTextInputProps as naturalMultilineTextInputProps } from '@fluent-blocks/schemas'
 
 import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 import { labelWithElements } from '../input-properties'

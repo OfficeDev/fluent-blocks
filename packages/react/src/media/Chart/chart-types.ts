@@ -3,7 +3,7 @@ import {
   bubbleChartDatum,
   chartDataset,
   chartData,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 export type BubbleChartDatum = z.infer<typeof bubbleChartDatum>
 

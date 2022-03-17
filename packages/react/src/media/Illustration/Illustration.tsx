@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { illustrationProps as naturalIllustrationProps } from '@fluentui/blocks-schemas'
+import { illustrationProps as naturalIllustrationProps } from '@fluent-blocks/schemas'
 
 import { propsElementUnion } from '../../lib'
 

@@ -4,7 +4,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
   descriptionListProps as naturalDescriptionListProps,
   descriptionListItemProps,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import { InlineContent, inlineSequenceOrString } from '../../inlines'
 import {

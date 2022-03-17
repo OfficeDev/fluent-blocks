@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
-import { shortTextInputProps as naturalShortTextInputProps } from '@fluentui/blocks-schemas'
+import { shortTextInputProps as naturalShortTextInputProps } from '@fluent-blocks/schemas'
 
 import { Placeholder, propsElementUnion, rem, sx } from '../../lib'
 import { labelWithElements } from '../input-properties'

@@ -2,6 +2,14 @@
   "sizes": [16, 24],
   "styles": ["regular", "filled"],
   "include": {
-    "airplane": {}
+    "add": {},
+    "search": {},
+    "arrow_right": {},
+    "arrow_up": {},
+    "arrow_left": {},
+    "arrow_down": {},
+    "accessibility": {},
+    "clock": {},
+    "send": {}
   }
 }

@@ -7,7 +7,7 @@ import {
   webDarkTheme,
   webHighContrastTheme,
 } from '@fluentui/react-components'
-import { themeName, accentScheme } from '@fluentui/blocks-schemas'
+import { themeName, accentScheme } from '@fluent-blocks/schemas'
 
 export type ThemeName = z.infer<typeof themeName>
 export type AccentScheme = z.infer<typeof accentScheme>

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { widgetProps as naturalWidgetProps } from '@fluentui/blocks-schemas'
+import { widgetProps as naturalWidgetProps } from '@fluent-blocks/schemas'
 
 import { inlineSequenceOrString } from '../../../inlines'
 import { propsElementUnion } from '../../../lib'

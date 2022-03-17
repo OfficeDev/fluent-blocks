@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { textProps } from '@fluentui/blocks-schemas'
+import { textProps } from '@fluent-blocks/schemas'
 
 import { useTextStyles, zodElement } from '../../lib'
 

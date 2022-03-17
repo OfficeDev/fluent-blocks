@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.0.0",
+  "version": "9.0.0-alpha.1",
   "main": "index.js",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
@@ -17,7 +17,8 @@
     "dev": "pnpm storybook:start",
     "test": "start-server-and-test 'pnpm storybook:start-ci' http://localhost:4000 'pnpm test:run'",
     "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "postinstall": "cd .storybook/public && [ -L basic-icons.svg ] || ln -s ../../node_modules/@fluent-blocks/basic-icons/basic-icons.svg"
   },
   "engines": {
     "node": ">=12.0.0 <17.0.0",
@@ -68,8 +69,8 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluent-blocks/basic-icons": "workspace:^9.0.0",
-    "@fluent-blocks/schemas": "workspace:~9.0.0",
+    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.1",
+    "@fluent-blocks/schemas": "workspace:9.0.0-alpha.1",
     "lodash": "latest",
     "zod": "latest"
   }

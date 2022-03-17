@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
-import { iconVariant, iconSize, iconProps } from '@fluentui/blocks-schemas'
+import { iconVariant, iconSize, iconProps } from '@fluent-blocks/schemas'
 
 import { zodElement } from '../../lib'
 

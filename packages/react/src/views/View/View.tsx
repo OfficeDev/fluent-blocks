@@ -3,7 +3,7 @@ import {
   accentScheme,
   anyActionPayload,
   themeName,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import {
   FluentBlocksProvider,

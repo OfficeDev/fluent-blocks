@@ -27,7 +27,7 @@ import {
   toolbarDivider,
   toolbarAction as naturalToolbarAction,
   toolbarProps as naturalToolbarProps,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import { Button, buttonProps } from '../../inputs'
 import {
