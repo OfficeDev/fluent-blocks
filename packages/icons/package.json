@@ -1,0 +1,12 @@
+{
+  "name": "@fluentui/blocks-basic-icons",
+  "version": "9.0.0",
+  "main": "basic-icons.json",
+  "files": ["basic-icons.json", "basic-icons.svg"],
+  "scripts": {
+    "bundle": "touch ./basic-icons.svg && fluentui-svg-icon-sprites bundle -i ./basic-icons.json -s ./node_modules/fluentui-svg-icon-sprites/icons -o ./basic-icons.svg"
+  },
+  "devDependencies": {
+    "fluentui-svg-icon-sprites": "1.1.164-alpha.1"
+  }
+}
