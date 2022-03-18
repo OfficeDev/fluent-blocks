@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky install && cd packages/react/node_modules/@fluent-blocks/basic-icons && ls -la",
     "lint-ci": "eslint --max-warnings 0 packages/react/src/**/*.{ts,tsx} packages/react/.storybook/*.js",
     "lint-staged": "lint-staged",
     "test": "pnpm run test -r --if-present",
