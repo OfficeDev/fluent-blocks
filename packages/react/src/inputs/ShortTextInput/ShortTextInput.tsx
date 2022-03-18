@@ -1,27 +1,75 @@
 import { z } from 'zod'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { makeStyles } from '@fluentui/react-components'
 import { shortTextInputProps as naturalShortTextInputProps } from '@fluent-blocks/schemas'
 
-import { Placeholder, propsElementUnion, rem, sx } from '../../lib'
-import { labelWithElements } from '../input-properties'
+// todo: fix this import when it stabilizes
+import { Input, Label } from '@fluentui/react-components/unstable'
 
-export const shortTextInputProps =
-  naturalShortTextInputProps.merge(labelWithElements)
+import { propsElementUnion, rem, sx } from '../../lib'
+import { labelWithElements } from '../input-properties'
+import { Inline, InlineContent, inlineEntity } from '../../inlines'
+
+export const shortTextInputProps = naturalShortTextInputProps
+  .merge(labelWithElements)
+  .merge(
+    z.object({
+      before: inlineEntity.optional(),
+      after: inlineEntity.optional(),
+    })
+  )
+  .extend({
+    contextualVariant: z
+      .union([z.literal('block-inputs'), z.literal('card')])
+      .default('block-inputs')
+      .optional(),
+  })
 export type ShortTextInputProps = z.infer<typeof shortTextInputProps>
 
 const useShortTextInputStyles = makeStyles({
-  rootPlaceholder: {
+  root: {
     minWidth: rem(140),
     ...sx.flex(1, 0, '0'),
   },
+  label: {
+    color: 'var(--surface-foreground)',
+  },
+  input: {},
 })
 
-export const ShortTextInput = (props: ShortTextInputProps) => {
-  // todo: replace placeholder when `react-components` makes correct component available
-  const styles = useShortTextInputStyles()
+export const ShortTextInput = ({
+  label,
+  actionId,
+  placeholder,
+  before,
+  after,
+  initialValue,
+  contextualVariant = 'block-inputs',
+}: ShortTextInputProps) => {
+  const shortTextInputStyles = useShortTextInputStyles()
   return (
-    <Placeholder label="Short text input" className={styles.rootPlaceholder} />
+    <div className={shortTextInputStyles.root}>
+      <Label htmlFor={actionId} className={shortTextInputStyles.label}>
+        <InlineContent inlines={label} />
+      </Label>
+      <Input
+        {...{
+          id: actionId,
+          placeholder,
+          defaultValue: initialValue,
+          ...(before && { contentBefore: Inline(before) }),
+          ...(after && { contentAfter: Inline(after) }),
+        }}
+        appearance={(() => {
+          switch (contextualVariant) {
+            case 'card':
+              return 'filledDarker'
+            default:
+              return 'filledLighter'
+          }
+        })()}
+      />
+    </div>
   )
 }
 

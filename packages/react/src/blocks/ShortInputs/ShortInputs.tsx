@@ -47,7 +47,8 @@ type Variants = ShortInputsProps['variant']
 
 const useShortInputsStyles = makeStyles({
   root: {
-    marginBlockEnd: '.5rem',
+    marginBlockStart: '.5rem',
+    marginBlockEnd: '1rem',
   },
   cardContext: {
     marginInlineStart: '-.5rem',
@@ -56,6 +57,7 @@ const useShortInputsStyles = makeStyles({
   },
   'shortInputSequence--flex': {
     display: 'flex',
+    alignItems: 'flex-end',
     ...sx.flexFlow('row', 'wrap'),
     ...sx.gap('.5rem'),
   },

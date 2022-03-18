@@ -147,16 +147,24 @@ that time `View` will call its interaction callback with the update.
                     type: 'text',
                     actionId: 'a1',
                     label: [{ text: fakeTitle(fake) }],
+                    initialValue: fake('{{name.firstName}} {{name.lastName}}'),
+                    after: { icon: 'person' },
                   },
                   {
                     type: 'text',
                     actionId: 'a2',
                     label: [{ text: fakeTitle(fake) }],
+                    placeholder: 'username',
+                    after: { text: '@live.com' },
                   },
                   {
                     type: 'text',
                     actionId: 'a3',
                     label: [{ text: fakeTitle(fake) }],
+                    initialValue: fake(
+                      '{{system.fileName}}.{{system.fileExt}}'
+                    ),
+                    before: { icon: 'document' },
                   },
                 ],
               },
