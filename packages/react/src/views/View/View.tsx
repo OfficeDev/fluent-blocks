@@ -24,6 +24,7 @@ export const viewProps = z.object({
   themeName: themeName.optional(),
   accentScheme: accentScheme.optional(),
   translations: translations.optional(),
+  basicSpriteUrl: z.string().optional(),
   ...withActionHandler(anyActionPayload),
 })
 
@@ -39,10 +40,11 @@ export const View = (data: ViewProps) => (
       themeName = 'light',
       accentScheme = 'web',
       translations = defaultTranslations,
+      basicSpriteUrl,
       onAction,
     }) => (
       <FluentBlocksProvider
-        {...{ themeName, accentScheme, translations, onAction }}
+        {...{ themeName, accentScheme, translations, onAction, basicSpriteUrl }}
       >
         <Main {...main} />
       </FluentBlocksProvider>

@@ -6,9 +6,14 @@ import { InlineSequenceOrString } from '../../inlines'
 export const Layout = ({
   themeName,
   accentScheme,
+  basicSpriteUrl,
   ...props
-}: LayoutProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme }}>
+}: LayoutProps & {
+  themeName: ThemeName
+  accentScheme: AccentScheme
+  basicSpriteUrl: string
+}) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
     <Main
       blocks={[{ ...props }]}
       title={null as unknown as InlineSequenceOrString}

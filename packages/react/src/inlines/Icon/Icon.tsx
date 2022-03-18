@@ -1,9 +1,11 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
+import get from 'lodash/get'
 import { makeStyles } from '@fluentui/react-components'
 import { iconVariant, iconSize, iconProps } from '@fluent-blocks/schemas'
+import basicIcons from '@fluent-blocks/basic-icons'
 
-import { zodElement } from '../../lib'
+import { useFluentBlocksContext, zodElement } from '../../lib'
 
 export type IconVariant = z.infer<typeof iconVariant>
 export type IconSize = z.infer<typeof iconSize>
@@ -12,12 +14,27 @@ export type IconProps = z.infer<typeof iconProps>
 function spriteHref(
   icon: string,
   size: IconSize,
-  variant: IconVariant
+  variant: IconVariant,
+  basicSpriteUrl: string
 ): string {
-  const assetId = `${icon}_${size}_${
-    variant === 'outline' ? 'regular' : variant
-  }`
-  return `/sprites/${assetId}.sprite.svg#${assetId}`
+  const style = variant === 'outline' ? 'regular' : variant
+  const assetId = `${icon}_${size}_${style}`
+  const basicIconConfig = get(basicIcons, ['include', icon], null)
+  if (
+    basicIconConfig &&
+    get(basicIconConfig, 'sizes', get(basicIcons, 'sizes', [])).includes(
+      size
+    ) &&
+    get(basicIconConfig, 'styles', get(basicIcons, 'styles', [])).includes(
+      style
+    )
+  ) {
+    // use basic sprite
+    return `${basicSpriteUrl}#${assetId}`
+  } else {
+    // fallback
+    return `/sprites/${assetId}.sprite.svg#${assetId}`
+  }
 }
 
 const iconToTextRatio = 1.16
@@ -32,11 +49,12 @@ const useIconStyles = makeStyles({
 })
 
 export const Icon = (props: IconProps) => {
-  const { icon, variant, size } = props
+  const { icon, variant = 'outline', size = 20 } = props
   const iconStyles = useIconStyles()
+  const { basicSpriteUrl } = useFluentBlocksContext()
   return (
     <svg className={iconStyles.root} data-chromatic="ignore">
-      <use href={spriteHref(icon, size!, variant!)} />
+      <use href={spriteHref(icon, size, variant, basicSpriteUrl)} />
     </svg>
   )
 }

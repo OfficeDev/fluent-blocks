@@ -4,6 +4,8 @@ import { seed } from 'faker/locale/en_US'
 import { Toolbar } from './StorybookToolbar'
 import { contextArgTypes } from '../../lib'
 
+import basicSpriteUrl from '../../../.storybook/public/basic-icons.svg'
+
 <Meta
   title="Blocks/Toolbar"
   component={Toolbar}
@@ -32,7 +34,9 @@ import { contextArgTypes } from '../../lib'
   }}
 />
 
-export const ToolbarTemplate = (props) => <Toolbar {...props} />
+export const ToolbarTemplate = (props) => (
+  <Toolbar {...props} basicSpriteUrl={basicSpriteUrl} />
+)
 
 # Toolbar
 

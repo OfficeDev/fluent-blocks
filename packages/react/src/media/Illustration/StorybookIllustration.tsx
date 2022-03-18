@@ -5,12 +5,14 @@ import { Main } from '../../surfaces'
 export const Illustration = ({
   themeName,
   accentScheme,
+  basicSpriteUrl,
   ...props
 }: IllustrationProps & {
   themeName: ThemeName
   accentScheme: AccentScheme
+  basicSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme }}>
+  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
     <Main
       blocks={[{ media: props, variant: 'narrow' }]}
       title={[{ text: ' ' }]}
