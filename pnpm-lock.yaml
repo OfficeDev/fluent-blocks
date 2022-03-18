@@ -49,7 +49,7 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
-      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.1
+      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.2
       '@fluent-blocks/schemas': workspace:9.0.0-alpha.1
       '@fluentui/react-card': latest
       '@fluentui/react-components': latest
