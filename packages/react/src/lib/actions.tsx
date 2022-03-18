@@ -1,7 +1,7 @@
 import noop from 'lodash/noop'
 import { createContext } from 'react'
 import { z, AnyZodObject } from 'zod'
-import { actionPayload } from '@fluentui/blocks-schemas'
+import { actionPayload } from '@fluent-blocks/schemas'
 
 export type ActionPayload = z.infer<typeof actionPayload>
 

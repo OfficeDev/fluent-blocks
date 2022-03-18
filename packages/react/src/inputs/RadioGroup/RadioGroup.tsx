@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { radioGroupProps as naturalRadioGroupProps } from '@fluentui/blocks-schemas'
+import { radioGroupProps as naturalRadioGroupProps } from '@fluent-blocks/schemas'
 
 import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
 import { labelWithElements } from '../input-properties'

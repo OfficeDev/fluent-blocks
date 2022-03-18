@@ -4,6 +4,8 @@ import { seed } from 'faker/locale/en_US'
 import { Toolbar } from './StorybookToolbar'
 import { contextArgTypes } from '../../lib'
 
+import basicSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+
 <Meta
   title="Blocks/Toolbar"
   component={Toolbar}
@@ -32,7 +34,9 @@ import { contextArgTypes } from '../../lib'
   }}
 />
 
-export const ToolbarTemplate = (props) => <Toolbar {...props} />
+export const ToolbarTemplate = (props) => (
+  <Toolbar {...props} basicSpriteUrl={basicSpriteUrl} />
+)
 
 # Toolbar
 
@@ -62,10 +66,10 @@ The Toolbar block presents the user a set of actions laid-out horizontally. Any 
           },
           {
             type: 'action',
-            actionId: 'fax',
-            label: 'Fax',
+            actionId: 'eye',
+            label: 'Eye',
             iconOnly: true,
-            icon: 'fax',
+            icon: 'eye',
           },
           {
             type: 'action',
@@ -76,10 +80,10 @@ The Toolbar block presents the user a set of actions laid-out horizontally. Any 
           },
           {
             type: 'action',
-            actionId: 'paint',
+            actionId: 'heart',
             label: 'Be colorful',
             iconOnly: false,
-            icon: 'paint_bucket',
+            icon: 'heart',
           },
           {
             type: 'action',
@@ -90,15 +94,15 @@ The Toolbar block presents the user a set of actions laid-out horizontally. Any 
           },
           {
             type: 'action',
-            actionId: 'music',
-            label: 'Music' /*, iconOnly: true, icon: 'music_note_2'*/,
+            actionId: 'chat',
+            label: 'Chat' /*, iconOnly: true, icon: 'music_note_2'*/,
           },
           {
             type: 'action',
-            actionId: 'darts',
-            label: 'Darts',
+            actionId: 'moon',
+            label: 'Moon',
             iconOnly: true,
-            icon: 'target_arrow',
+            icon: 'weather_moon',
           },
           {
             type: 'action',
@@ -123,10 +127,10 @@ The Toolbar block presents the user a set of actions laid-out horizontally. Any 
           },
           {
             type: 'action',
-            actionId: 'quote',
-            label: 'Quote',
+            actionId: 'tools',
+            label: 'Tools',
             iconOnly: false,
-            icon: 'text_quote',
+            icon: 'wrench',
           },
         ],
       },

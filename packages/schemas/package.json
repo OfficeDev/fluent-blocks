@@ -1,6 +1,6 @@
 {
-  "name": "@fluentui/blocks-schemas",
-  "version": "9.0.0",
+  "name": "@fluent-blocks/schemas",
+  "version": "9.0.0-alpha.1",
   "main": "src/index.ts",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [

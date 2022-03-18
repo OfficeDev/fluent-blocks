@@ -3,7 +3,7 @@ import isString from 'lodash/isString'
 import {
   inlineEntity as naturalInlineEntity,
   inlineContentProps as naturalInlineContentProps,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import {
   invalidInline,

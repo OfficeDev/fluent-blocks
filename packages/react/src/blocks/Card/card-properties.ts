@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { cardProps as naturalCardProps } from '@fluentui/blocks-schemas'
+import { cardProps as naturalCardProps } from '@fluent-blocks/schemas'
 
 import { headingPropsOrElement } from '../Heading/Heading'
 import { paragraphPropsOrElement } from '../Paragraph/Paragraph'

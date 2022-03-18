@@ -19,7 +19,7 @@ import { useState, useEffect } from 'react'
 export const getIcons = async () => {
   const nameExp = /(.+)_(\d+)_\w+\.sprite\.svg$/
   const response = await fetch(
-    'https://data.jsdelivr.com/v1/package/npm/fluentui-svg-icon-sprites@1.1.142'
+    'https://data.jsdelivr.com/v1/package/npm/fluentui-svg-icon-sprites@1.1.163'
   )
   if (response.ok) {
     const jsonValue = await response.json() // Get JSON value from the response body
@@ -247,6 +247,10 @@ export const IconFinder = () => {
 There are more than 1,750 icons in `react-system-icons` available for you to use
 with the `Icon` component, without having to list the repository containing the
 icon assets as a dependency.
+
+Fluent Blocks brings `@fluent-blocks/basic-icons/basic-icons.svg` with it, which
+you should serve alongside your app. Provide `FluentBlocksProvider` with
+`basicSpriteUrl` pointing to where browsers can get `basic-icons.svg`.
 
 You can search for the icon you want to use here. Simply type a query in the
 input below and select the desired size. All icons are available in both

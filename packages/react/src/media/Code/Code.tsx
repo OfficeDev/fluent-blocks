@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { codeProps } from '@fluentui/blocks-schemas'
+import { codeProps } from '@fluent-blocks/schemas'
 
 import {
   propsElementUnion,

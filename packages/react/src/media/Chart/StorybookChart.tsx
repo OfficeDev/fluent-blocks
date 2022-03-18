@@ -5,9 +5,14 @@ import { Main } from '../../surfaces'
 export const Chart = ({
   themeName,
   accentScheme,
+  basicSpriteUrl,
   ...props
-}: ChartProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme }}>
+}: ChartProps & {
+  themeName: ThemeName
+  accentScheme: AccentScheme
+  basicSpriteUrl: string
+}) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
     <Main blocks={[{ media: props, variant: 'textWidth' }]} title={[' ']} />
   </FluentBlocksProvider>
 )

@@ -2,7 +2,7 @@ import { z } from 'zod'
 import uniqueId from 'lodash/uniqueId'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { figureProps as naturalFigureProps } from '@fluentui/blocks-schemas'
+import { figureProps as naturalFigureProps } from '@fluent-blocks/schemas'
 
 import { inlineSequenceOrString, InlineContent } from '../../inlines'
 import { mediaEntity, Media } from '../../media'

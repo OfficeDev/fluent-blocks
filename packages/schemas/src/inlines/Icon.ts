@@ -24,5 +24,5 @@ export const iconSize = z.union([
 export const iconProps = z.object({
   icon: z.string(),
   variant: iconVariant.default('outline').optional(),
-  size: iconSize.default(20).optional(),
+  size: iconSize.default(16).optional(),
 })

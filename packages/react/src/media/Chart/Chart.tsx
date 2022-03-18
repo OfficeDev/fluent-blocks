@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
 import set from 'lodash/set'
-import { chartProps } from '@fluentui/blocks-schemas'
+import { chartProps } from '@fluent-blocks/schemas'
 
 import { invalidChart, propsElementUnion } from '../../lib'
 

@@ -2,6 +2,8 @@ import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { BigMessage } from './StorybookBigMessage'
 import { contextArgTypes } from '../../lib'
 
+import basicSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+
 <Meta
   title="Blocks/Big message"
   component={BigMessage}
@@ -16,7 +18,9 @@ import { contextArgTypes } from '../../lib'
   }}
 />
 
-export const BigMessageTemplate = (props) => <BigMessage {...props} />
+export const BigMessageTemplate = (props) => (
+  <BigMessage {...props} basicSpriteUrl={basicSpriteUrl} />
+)
 
 # Big message
 
@@ -158,7 +162,7 @@ Error states come in many forms. Consider an appropriate illustration to ease th
         tertiary: {
           actionId: 'a2',
           label: 'Try again',
-          icon: 'arrow_counterclockwise',
+          icon: 'arrow_sync',
         },
       },
     }}

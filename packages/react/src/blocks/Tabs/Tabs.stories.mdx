@@ -6,6 +6,8 @@ import range from 'lodash/range'
 import { Tabs } from './StorybookTabs'
 import { contextArgTypes } from '../../lib'
 
+import basicSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+
 <Meta
   title="Blocks/Tabs"
   component={Tabs}
@@ -14,7 +16,9 @@ import { contextArgTypes } from '../../lib'
   }}
 />
 
-export const TabsTemplate = (props) => <Tabs {...props} />
+export const TabsTemplate = (props) => (
+  <Tabs {...props} basicSpriteUrl={basicSpriteUrl} />
+)
 
 # Tabs
 

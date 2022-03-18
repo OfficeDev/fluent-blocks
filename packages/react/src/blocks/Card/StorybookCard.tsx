@@ -8,9 +8,14 @@ import { CardProps } from './card-properties'
 export const BlockCard = ({
   themeName,
   accentScheme,
+  basicSpriteUrl,
   ...props
-}: CardProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme }}>
+}: CardProps & {
+  themeName: ThemeName
+  accentScheme: AccentScheme
+  basicSpriteUrl: string
+}) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
     <Main blocks={[props]} title={[{ text: ' ' }]} />
   </FluentBlocksProvider>
 )
@@ -18,9 +23,14 @@ export const BlockCard = ({
 export const LayoutCard = ({
   themeName,
   accentScheme,
+  basicSpriteUrl,
   ...props
-}: CardProps & { themeName: ThemeName; accentScheme: AccentScheme }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme }}>
+}: CardProps & {
+  themeName: ThemeName
+  accentScheme: AccentScheme
+  basicSpriteUrl: string
+}) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
     <Main
       blocks={[
         {

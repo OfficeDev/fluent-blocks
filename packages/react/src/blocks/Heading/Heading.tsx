@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { createElement, ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { headingLevel } from '@fluentui/blocks-schemas'
+import { headingLevel } from '@fluent-blocks/schemas'
 
 import { InlineContent } from '../../inlines'
 import {

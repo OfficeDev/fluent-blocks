@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { layoutProps as naturalLayoutProps } from '@fluentui/blocks-schemas'
+import { layoutProps as naturalLayoutProps } from '@fluent-blocks/schemas'
 import { layoutItemPropsOrElement } from './LayoutItem'
 
 export const layoutProps = naturalLayoutProps.merge(

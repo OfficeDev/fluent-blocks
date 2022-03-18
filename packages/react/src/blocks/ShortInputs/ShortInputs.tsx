@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { shortInputsProps as naturalShortInputsProps } from '@fluentui/blocks-schemas'
+import { shortInputsProps as naturalShortInputsProps } from '@fluent-blocks/schemas'
 
 import {
   escapeElement,

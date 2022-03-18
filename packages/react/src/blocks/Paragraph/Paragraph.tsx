@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { paragraphProps as naturalParagraphProps } from '@fluentui/blocks-schemas'
+import { paragraphProps as naturalParagraphProps } from '@fluent-blocks/schemas'
 
 import { InlineContent, inlineSequenceOrString } from '../../inlines'
 import {

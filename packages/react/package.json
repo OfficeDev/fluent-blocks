@@ -1,6 +1,6 @@
 {
-  "name": "@fluentui/react-blocks",
-  "version": "9.0.0",
+  "name": "@fluent-blocks/react",
+  "version": "9.0.0-alpha.1",
   "main": "index.js",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
@@ -34,8 +34,8 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-card": "nightly",
-    "@fluentui/react-components": "rc",
+    "@fluentui/react-card": "latest",
+    "@fluentui/react-components": "latest",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
@@ -68,7 +68,8 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluentui/blocks-schemas": "workspace:~9.0.0",
+    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.3",
+    "@fluent-blocks/schemas": "workspace:9.0.0-alpha.1",
     "lodash": "latest",
     "zod": "latest"
   }

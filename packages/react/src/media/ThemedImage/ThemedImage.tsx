@@ -4,7 +4,7 @@ import { makeStyles } from '@fluentui/react-components'
 import {
   imageSrc,
   themedImageProps as naturalThemedImageProps,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import { propsElementUnion, useFluentBlocksContext } from '../../lib'
 

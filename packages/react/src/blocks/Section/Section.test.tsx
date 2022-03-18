@@ -16,7 +16,7 @@ describe('Section', function () {
         .create(
           <Section
             title={[{ text: 'Title' }, { icon: 'animal_cat' }]}
-            abstract={[{ text: 'Abstract' }, { icon: 'diversity' }]}
+            abstract={[{ text: 'Abstract' }, { icon: 'accessibility' }]}
           />
         )
         .toJSON()

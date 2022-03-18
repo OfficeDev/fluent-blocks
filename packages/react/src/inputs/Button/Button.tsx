@@ -9,7 +9,7 @@ import {
 import {
   buttonProps as naturalButtonProps,
   buttonActionPayload,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import {
   actionHandler,

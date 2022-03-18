@@ -4,7 +4,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
   layoutVariant,
   layoutItemProps as naturalLayoutItemProps,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import {
   escapeElement,

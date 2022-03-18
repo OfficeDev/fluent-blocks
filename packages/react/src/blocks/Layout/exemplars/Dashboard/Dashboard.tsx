@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-import { dashboardProps as naturalDashboardProps } from '@fluentui/blocks-schemas'
+import { dashboardProps as naturalDashboardProps } from '@fluent-blocks/schemas'
 
 import { propsElementUnion } from '../../../../lib'
 

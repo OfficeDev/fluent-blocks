@@ -5,7 +5,7 @@ import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
   tabsItemProps as naturalTabsItemProps,
   tabsProps as naturalTabsProps,
-} from '@fluentui/blocks-schemas'
+} from '@fluent-blocks/schemas'
 
 import {
   escapeElement,

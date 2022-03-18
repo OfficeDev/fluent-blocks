@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { bigMessageProps as naturalBigMessageProps } from '@fluentui/blocks-schemas'
+import { bigMessageProps as naturalBigMessageProps } from '@fluent-blocks/schemas'
 
 import { escaped, renderIfEscape, rem, propsElementUnion, sx } from '../../lib'
 import { mediaEntity } from '../../media'
