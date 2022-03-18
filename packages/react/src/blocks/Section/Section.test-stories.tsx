@@ -22,7 +22,7 @@ SectionJsonTest.args = {
   ],
   abstract: [
     { text: 'aca0c8ba-b43c-4e9f-b554-960ac12b4633' },
-    { icon: 'diversity' },
+    { icon: 'accessibility' },
   ],
 }
 SectionJsonTest.parameters = { chromatic: { disableSnapshot: true } }
