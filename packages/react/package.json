@@ -17,8 +17,7 @@
     "dev": "pnpm storybook:start",
     "test": "start-server-and-test 'pnpm storybook:start-ci' http://localhost:4000 'pnpm test:run'",
     "test:run": "ts-mocha -p ./tsconfig.test.json --require src/setup.test.ts src/**/*.test.tsx",
-    "check": "tsc --noEmit",
-    "postinstall": "cd .storybook/public && [ -L basic-icons.svg ] || ln -s ../../node_modules/@fluent-blocks/basic-icons/basic-icons.svg"
+    "check": "tsc --noEmit"
   },
   "engines": {
     "node": ">=12.0.0 <17.0.0",
