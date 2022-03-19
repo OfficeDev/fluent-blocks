@@ -24,7 +24,7 @@
     "pnpm": "^6"
   },
   "peerDependencies": {
-    "@fluentui/react-components": "rc",
+    "@fluentui/react-components": "latest",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "chart.js": "^2.9.4",
