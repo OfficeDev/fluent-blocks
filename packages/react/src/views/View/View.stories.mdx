@@ -46,11 +46,30 @@ that time `View` will call its interaction callback with the update.
         ],
         sections: range(4).map((s) => ({
           title: [{ text: fakeTitle(fake) }],
-          blocks: range(3).map(() => ({
-            paragraph: range(3).map(() => ({
-              text: fake('{{lorem.sentence}} '),
+          blocks: [
+            ...range(2).map(() => ({
+              paragraph: range(3).map(() => ({
+                text: fake('{{lorem.sentence}} '),
+              })),
             })),
-          })),
+            ...(s === 0
+              ? [
+                  {
+                    media: { label: 'Hello', illustration: 'hello' },
+                    variant: 'narrow',
+                    caption: [
+                      { text: 'Figure caption: ' },
+                      { text: fake('{{lorem.sentence}}') },
+                    ],
+                  },
+                ]
+              : []),
+            {
+              paragraph: range(3).map(() => ({
+                text: fake('{{lorem.sentence}} '),
+              })),
+            },
+          ],
           ...(s === 1 && {
             blocks: [
               {
@@ -156,6 +175,7 @@ that time `View` will call its interaction callback with the update.
                     type: 'text',
                     actionId: 'a2',
                     label: [{ text: fakeTitle(fake) }],
+                    inputType: 'email',
                     placeholder: 'username',
                     after: { text: '@live.com' },
                   },
@@ -163,10 +183,9 @@ that time `View` will call its interaction callback with the update.
                     type: 'text',
                     actionId: 'a3',
                     label: [{ text: fakeTitle(fake) }],
-                    initialValue: fake(
-                      '{{system.fileName}}.{{system.fileExt}}'
-                    ),
-                    before: { icon: 'document' },
+                    inputType: 'tel',
+                    initialValue: fake('{{phone.phoneNumber}}'),
+                    before: { icon: 'call' },
                   },
                 ],
               },
@@ -177,14 +196,6 @@ that time `View` will call its interaction callback with the update.
                 options: [
                   { label: [{ text: fakeTitle(fake) }], value: 'v1' },
                   { label: [{ text: fakeTitle(fake) }], value: 'v2' },
-                ],
-              },
-              {
-                media: { label: 'Hello', illustration: 'hello' },
-                variant: 'narrow',
-                caption: [
-                  { text: 'Figure caption: ' },
-                  { text: fake('{{lorem.sentence}}') },
                 ],
               },
             ],

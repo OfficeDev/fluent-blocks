@@ -31,32 +31,29 @@ export const viewProps = z.object({
 export type ViewProps = z.infer<typeof viewProps>
 
 /** An experience provided to the user via their device’s canvas. */
-export const View = (data: ViewProps) => {
-  console.log('[data]', data)
-  return (
-    <ParseBoundary<ViewProps>
-      schema={viewProps}
-      data={data}
-      children={({
-        main,
-        themeName = 'light',
-        accentScheme = 'web',
-        translations = defaultTranslations,
-        basicSpriteUrl,
-        onAction,
-      }) => (
-        <FluentBlocksProvider
-          {...{
-            themeName,
-            accentScheme,
-            translations,
-            onAction,
-            basicSpriteUrl,
-          }}
-        >
-          <Main {...main} />
-        </FluentBlocksProvider>
-      )}
-    />
-  )
-}
+export const View = (data: ViewProps) => (
+  <ParseBoundary<ViewProps>
+    schema={viewProps}
+    data={data}
+    children={({
+      main,
+      themeName = 'light',
+      accentScheme = 'web',
+      translations = defaultTranslations,
+      basicSpriteUrl,
+      onAction,
+    }) => (
+      <FluentBlocksProvider
+        {...{
+          themeName,
+          accentScheme,
+          translations,
+          onAction,
+          basicSpriteUrl,
+        }}
+      >
+        <Main {...main} />
+      </FluentBlocksProvider>
+    )}
+  />
+)

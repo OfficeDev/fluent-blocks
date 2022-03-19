@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
 import { shortTextInputProps as naturalShortTextInputProps } from '@fluent-blocks/schemas'
 
@@ -41,6 +41,7 @@ export const ShortTextInput = ({
   label,
   actionId,
   placeholder,
+  inputType,
   before,
   after,
   initialValue,
@@ -57,6 +58,7 @@ export const ShortTextInput = ({
           id: actionId,
           placeholder,
           defaultValue: initialValue,
+          type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
         }}
