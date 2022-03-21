@@ -1,0 +1,21 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs'
+import { Person } from './Person'
+
+<Meta title="Graph/Person" component={Person} />
+
+export const PersonTemplate = (props) => <Person {...props} />
+
+# Person
+
+The following is a hello-world:
+
+<Canvas withSource="none">
+  <Story
+    name="Me"
+    args={{
+      message: 'world',
+    }}
+  >
+    {PersonTemplate.bind({})}
+  </Story>
+</Canvas>

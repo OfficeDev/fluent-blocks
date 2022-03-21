@@ -1,0 +1,44 @@
+{
+  "name": "@fluent-blocks/graph-react",
+  "version": "9.0.0-alpha.1",
+  "repository": "git@github.com:OfficeDev/fluent-blocks.git",
+  "authors": ["Will Shown <willshown@microsoft.com>"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.0.0 <17.0.0",
+    "pnpm": "^6"
+  },
+  "scripts": {
+    "storybook:build": "build-storybook",
+    "storybook:start": "start-storybook -p 4000",
+    "dev": "pnpm storybook:start",
+    "check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@fluentui/react-components": "latest",
+    "@fluent-blocks/react": "latest",
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "react": "18.0.0-rc.2",
+    "react-dom": "18.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@babel/core": "latest",
+    "@fluentui/react-components": "latest",
+    "@fluent-blocks/react": "workspace:9.0.0-alpha.1",
+    "@storybook/addon-actions": "latest",
+    "@storybook/addon-essentials": "latest",
+    "@storybook/addon-links": "latest",
+    "@storybook/addons": "latest",
+    "@storybook/react": "latest",
+    "@storybook/theming": "latest",
+    "@types/lodash": "latest",
+    "@types/node": "^17.0.18",
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "babel-loader": "latest",
+    "react": "18.0.0-rc.2",
+    "react-dom": "18.0.0-rc.2",
+    "webpack": "latest"
+  }
+}
