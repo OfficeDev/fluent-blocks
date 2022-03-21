@@ -1,8 +1,9 @@
 import { z } from 'zod'
 import { ReactElement } from 'react'
-// todo: fix this import when Card is released directly from @fluentui/react-components
-import { Card as FluentCard } from '@fluentui/react-card'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
+// todo: fix this import when it stabilizes
+import { Card as FluentCard } from '@fluentui/react-components/unstable'
 
 import {
   invalidCardContentItem,

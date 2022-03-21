@@ -3,30 +3,66 @@ import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import { radioGroupProps as naturalRadioGroupProps } from '@fluent-blocks/schemas'
 
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
+// todo: fix this import when it stabilizes
+import {
+  RadioGroup as FluentRadioGroup,
+  Radio,
+  Label,
+} from '@fluentui/react-components/unstable'
+
+import { propsElementUnion, useCommonStyles } from '../../lib'
 import { labelWithElements } from '../input-properties'
+import { InlineContent } from '../../inlines'
 
 export const radioGroupProps = naturalRadioGroupProps.merge(labelWithElements)
 export type RadioGroupProps = z.infer<typeof radioGroupProps>
 
 const useRadioGroupStyles = makeStyles({
   root: {
-    marginBlockEnd: '.5rem',
+    marginBlockStart: '.5rem',
+    marginBlockEnd: '1rem',
+  },
+  radioGroup: {
+    marginBlockStart: '.25rem',
+  },
+  label: {
+    color: 'var(--surface-foreground)',
   },
 })
 
-export const RadioGroup = (props: RadioGroupProps) => {
-  const styles = useRadioGroupStyles()
+export const RadioGroup = ({
+  label,
+  actionId,
+  initialValue,
+  options,
+}: RadioGroupProps) => {
+  const radioGroupStyles = useRadioGroupStyles()
   const commonStyles = useCommonStyles()
+  const labelId = `${actionId}__label`
   return (
-    <Placeholder
-      label="Radio group"
+    <div
       className={cx(
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        styles.root
+        radioGroupStyles.root
       )}
-    />
+    >
+      <Label id={labelId} className={radioGroupStyles.label}>
+        <InlineContent inlines={label} />
+      </Label>
+      <FluentRadioGroup
+        defaultValue={initialValue}
+        aria-labelledby={labelId}
+        className={radioGroupStyles.radioGroup}
+      >
+        {options.map(({ value, label }) => (
+          <Radio
+            key={value}
+            {...{ value, label: <InlineContent inlines={label} /> }}
+          />
+        ))}
+      </FluentRadioGroup>
+    </div>
   )
 }
 

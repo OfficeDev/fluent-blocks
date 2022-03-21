@@ -44,7 +44,13 @@ export const View = (data: ViewProps) => (
       onAction,
     }) => (
       <FluentBlocksProvider
-        {...{ themeName, accentScheme, translations, onAction, basicSpriteUrl }}
+        {...{
+          themeName,
+          accentScheme,
+          translations,
+          onAction,
+          basicSpriteUrl,
+        }}
       >
         <Main {...main} />
       </FluentBlocksProvider>

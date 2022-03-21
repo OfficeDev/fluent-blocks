@@ -9,7 +9,7 @@ export const inputProps = z.object({
 
 export const inputPropsWithInitialStringValue = inputProps.merge(
   z.object({
-    initialValue: z.string().nonempty().optional().nullable(),
+    initialValue: z.string().optional(),
   })
 )
 
