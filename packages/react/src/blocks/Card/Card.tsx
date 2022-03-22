@@ -63,7 +63,7 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
       className={cx(
         cardStyles.root,
         commonStyles.elevatedSurface,
-        themeName === 'high-contrast' && cardStyles.hc,
+        themeName === 'highContrast' && cardStyles.hc,
         contextualVariant === 'block' &&
           commonStyles.mainContentWidthEncapsulated,
         contextualVariant === 'block' && cardStyles.blockCard,

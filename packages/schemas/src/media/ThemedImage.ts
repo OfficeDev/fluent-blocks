@@ -7,6 +7,6 @@ export const themedImageProps = mediaProps.merge(
   z.object({
     light: imageSrc,
     dark: imageSrc,
-    'high-contrast': imageSrc,
+    highContrast: imageSrc,
   })
 )

@@ -19,7 +19,7 @@ export const themedImageProps = naturalThemedImageProps.merge(
   z.object({
     light: image,
     dark: image,
-    'high-contrast': image,
+    highContrast: image,
   })
 )
 export type ThemedImageProps = z.infer<typeof themedImageProps>
@@ -49,7 +49,7 @@ export function ThemedImage(props: ThemedImageProps) {
 }
 
 function isThemedImageProps(o: any): o is ThemedImageProps {
-  return 'light' in o && 'dark' in o && 'high-contrast' in o
+  return 'light' in o && 'dark' in o && 'highContrast' in o
 }
 
 function isThemedImageElement(

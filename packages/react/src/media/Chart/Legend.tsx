@@ -99,7 +99,7 @@ const ColorValue = ({
   return (
     <div
       className={
-        themeName === 'high-contrast'
+        themeName === 'highContrast'
           ? colorValueStyles.hc
           : colorValueStyles.root
       }
@@ -108,7 +108,7 @@ const ColorValue = ({
         ref={labelColorValueRef}
         className={cx(
           colorValueStyles.canvas,
-          patterns && themeName === 'high-contrast' && colorValueStyles.canvasHc
+          patterns && themeName === 'highContrast' && colorValueStyles.canvasHc
         )}
       />
     </div>

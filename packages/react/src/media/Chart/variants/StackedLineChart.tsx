@@ -63,7 +63,7 @@ export const StackedLineChart = memo(
           pointStyle: 'circle',
           borderDash: [],
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           const bgPattern = buildPattern({
             ...chartLineStackedDataPointPatterns[i],
             backgroundColor: theme.colorNeutralBackground1,
@@ -209,7 +209,7 @@ export const StackedLineChart = memo(
             break
           }
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           ;(chartRef.current as any).data.datasets.map(
             (dataset: any, i: number) => {
               dataset.borderColor = theme.colorNeutralStroke1

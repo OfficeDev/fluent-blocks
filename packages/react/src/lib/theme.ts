@@ -22,7 +22,7 @@ export const getTheme = (
     case 'teams':
       return (() => {
         switch (resolvedThemeName) {
-          case 'high-contrast':
+          case 'highContrast':
             return teamsHighContrastTheme
           case 'dark':
             return teamsDarkTheme
@@ -33,7 +33,7 @@ export const getTheme = (
     default:
       return (() => {
         switch (resolvedThemeName) {
-          case 'high-contrast':
+          case 'highContrast':
             return webHighContrastTheme
           case 'dark':
             return webDarkTheme
@@ -47,10 +47,10 @@ export const getTheme = (
 export const contextArgTypes = {
   themeName: {
     name: 'Theme',
-    options: ['light', 'dark', 'high-contrast'],
+    options: ['light', 'dark', 'highContrast'],
     control: {
       type: 'inline-radio',
-      labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
+      labels: { light: 'Light', dark: 'Dark', highContrast: 'HC' },
     },
     table: {
       type: { summary: 'ThemeName' },

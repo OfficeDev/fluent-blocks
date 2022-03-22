@@ -1,31 +1,36 @@
-import {access, open, unlink} from 'fs/promises'
-import {zodToTs, printNode, createTypeAlias} from "zod-to-ts";
-import * as inlineModules from '../src/inlines'
+import { access, open, unlink } from 'fs/promises'
+import { zodToTs, printNode, createTypeAlias } from 'zod-to-ts'
+import * as modules from '../src'
 
-function capitalize(lowercase: string){
+function capitalize(lowercase: string) {
   return lowercase.charAt(0).toUpperCase() + lowercase.slice(1)
 }
 
 const out = 'types.d.ts'
 
-async function render () {
-
-  await access(out).then(function(){return unlink(out)})
+async function render() {
+  await access(out).then(() => unlink(out))
 
   const definitions = await open(out, 'w')
 
-  await Promise.all(Object.keys(inlineModules).map(moduleName=>{
-    const identifier = capitalize(moduleName)
-    const {node: iconPropsNode} = zodToTs(
+  await Promise.all(
+    Object.keys(modules).map((moduleName) => {
       // @ts-ignore
-      inlineModules[moduleName],
-      identifier,
-    )
-    definitions.write(
-      `${printNode(createTypeAlias(iconPropsNode, identifier))}\n\n`
-    )
-  }))
-
+      if (modules[moduleName]._def) {
+        const identifier = capitalize(moduleName)
+        const { node: iconPropsNode } = zodToTs(
+          // @ts-ignore
+          modules[moduleName],
+          identifier
+        )
+        return definitions.write(
+          `${printNode(createTypeAlias(iconPropsNode, identifier), {})}\n\n`
+        )
+      } else {
+        return Promise.resolve()
+      }
+    })
+  )
 }
 
 render()
