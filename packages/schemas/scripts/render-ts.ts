@@ -9,9 +9,12 @@ function capitalize(lowercase: string) {
 const out = 'types.d.ts'
 
 async function render() {
-  await access(out).then(() => unlink(out))
-
-  const definitions = await open(out, 'w')
+  const definitions = await access(out)
+    .then(
+      () => unlink(out),
+      () => {}
+    )
+    .then(() => open(out, 'w'))
 
   await Promise.all(
     Object.keys(modules).map((moduleName) => {

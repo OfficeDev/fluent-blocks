@@ -1,13 +1,14 @@
 {
   "name": "@fluent-blocks/schemas",
-  "version": "9.0.0-alpha.1",
+  "version": "9.0.0-alpha.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "types.d.ts",
   "files": [
     "cjs",
     "esm",
-    "json"
+    "json",
+    "types.d.ts"
   ],
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
@@ -16,7 +17,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "pnpm render:json-schemas && just-scripts build",
+    "build": "pnpm render:json && pnpm render:ts && just-scripts build",
     "render:json": "ts-node scripts/render-json.ts",
     "render:ts": "ts-node scripts/render-ts.ts"
   },
