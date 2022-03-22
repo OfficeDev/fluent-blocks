@@ -1,7 +1,9 @@
 {
   "name": "@fluent-blocks/schemas",
   "version": "9.0.0-alpha.1",
-  "main": "src/index.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "files": ["cjs", "esm", "json"],
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -9,6 +11,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "build": "pnpm render:json-schemas && just-scripts build",
     "render:json-schemas": "ts-node ./scripts/render-json-schemas.ts"
   },
   "engines": {
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@types/node": "^17.0.18",
     "ts-node": "latest",
-    "zod-to-json-schema": "latest"
+    "zod-to-json-schema": "latest",
+    "just-scripts": "latest"
   }
 }

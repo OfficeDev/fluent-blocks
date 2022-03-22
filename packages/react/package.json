@@ -57,7 +57,7 @@
     "expect": "latest",
     "faker": "thure/faker.js#v5.1.2",
     "http-proxy-middleware": "latest",
-    "just-scripts": "^1.8.0",
+    "just-scripts": "latest",
     "mocha": "latest",
     "playwright-chromium": "latest",
     "react": ">=16.8.0 <18.0.0",
