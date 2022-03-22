@@ -4,5 +4,8 @@
     "module": "commonjs",
     "isolatedModules": false
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "**/schemas.ts",
+  ]
 }
