@@ -1,15 +1,17 @@
 {
   "name": "@fluent-blocks/react",
   "version": "9.0.0-alpha.1",
-  "main": "index.js",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
     "Zhenya Savchenko <zhenyasa@microsoft.com>"
   ],
   "license": "MIT",
-  "types": "types/view.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "files": ["cjs", "esm"],
   "scripts": {
+    "build": "just-scripts build",
     "storybook:upgrade": "pnpm update \"@storybook/*\"",
     "storybook:build": "build-storybook",
     "storybook:start": "start-storybook -p 4000",
@@ -55,6 +57,7 @@
     "expect": "latest",
     "faker": "thure/faker.js#v5.1.2",
     "http-proxy-middleware": "latest",
+    "just-scripts": "^1.8.0",
     "mocha": "latest",
     "playwright-chromium": "latest",
     "react": ">=16.8.0 <18.0.0",
