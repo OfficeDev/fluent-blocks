@@ -3,7 +3,11 @@
   "version": "9.0.0-alpha.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "files": ["cjs", "esm", "json"],
+  "files": [
+    "cjs",
+    "esm",
+    "json"
+  ],
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -12,7 +16,8 @@
   "license": "MIT",
   "scripts": {
     "build": "pnpm render:json-schemas && just-scripts build",
-    "render:json-schemas": "ts-node ./scripts/render-json-schemas.ts"
+    "render:json": "ts-node scripts/render-json.ts",
+    "render:ts": "ts-node scripts/render-ts.ts"
   },
   "engines": {
     "node": ">=12.0.0 <17.0.0",
@@ -23,8 +28,9 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.18",
+    "just-scripts": "latest",
     "ts-node": "latest",
     "zod-to-json-schema": "latest",
-    "just-scripts": "latest"
+    "zod-to-ts": "^0.2.2"
   }
 }

@@ -134,6 +134,7 @@ importers:
       ts-node: latest
       zod: latest
       zod-to-json-schema: latest
+      zod-to-ts: ^0.2.2
     dependencies:
       zod: 3.14.2
     devDependencies:
@@ -141,6 +142,7 @@ importers:
       just-scripts: 1.8.0
       ts-node: 10.7.0_b3bffd23b91051c5fffa541a5822dff1
       zod-to-json-schema: 3.11.3
+      zod-to-ts: 0.2.2_typescript@4.6.2+zod@3.14.2
 
 packages:
 
@@ -14388,6 +14390,16 @@ packages:
   /zod-to-json-schema/3.11.3:
     resolution: {integrity: sha512-K5n/Ri8RHzxkmWXnCHoWqaZgSJ6VYnUGhKXnRbgQKCWGkOR3niJb2tXEqFuQTO9wdCp5d06VhYz6FixGiEettA==}
     dependencies:
+      zod: 3.14.2
+    dev: true
+
+  /zod-to-ts/0.2.2_typescript@4.6.2+zod@3.14.2:
+    resolution: {integrity: sha512-ardXRu0EIDcS8pP0+1jL5a4ZtPIfxhmWHjwYH7Mol38/D3OUqgo+QjK648+R6T7N0RkfSNOSI1AkddKILetLKQ==}
+    peerDependencies:
+      typescript: ^4
+      zod: ^3
+    dependencies:
+      typescript: 4.6.2
       zod: 3.14.2
     dev: true
 
