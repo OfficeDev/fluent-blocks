@@ -3,6 +3,7 @@
   "version": "9.0.0-alpha.1",
   "main": "cjs/index.js",
   "module": "esm/index.js",
+  "types": "types.d.ts",
   "files": [
     "cjs",
     "esm",

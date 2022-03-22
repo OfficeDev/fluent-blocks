@@ -18,13 +18,13 @@ async function render() {
       // @ts-ignore
       if (modules[moduleName]._def) {
         const identifier = capitalize(moduleName)
-        const { node: iconPropsNode } = zodToTs(
+        const { node } = zodToTs(
           // @ts-ignore
           modules[moduleName],
           identifier
         )
         return definitions.write(
-          `${printNode(createTypeAlias(iconPropsNode, identifier), {})}\n\n`
+          `${printNode(createTypeAlias(node, identifier), {})}\n\n`
         )
       } else {
         return Promise.resolve()
