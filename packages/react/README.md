@@ -21,7 +21,7 @@ If you’d like to run the development environment or contribute to this project
    1. Clone this repo, `cd` to `packages/react` within this repo
    2. Run your package manager’s `link` command ([npm link](https://docs.npmjs.com/cli/v6/commands/npm-link), [yarn link](https://classic.yarnpkg.com/lang/en/docs/cli/link/), [pnpm link](https://pnpm.io/cli/link))
    3. `cd` to your project
-   4. Use the same package manager you used earlier to add `@fluentui/react-blocks` to your project
+   4. Use the same package manager you used earlier to `link` `@fluentui/react-blocks` to your project
 3. **Make sure to resolve any peer dependency warnings**; currently all peer dependencies are needed at the right versions for this package to work
 4. Use the `View` component to hand off all UI responsibility to this project, or use individual components as you need, whichever suits your needs best.
 
