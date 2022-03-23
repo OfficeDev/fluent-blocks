@@ -1,35 +1,26 @@
-import { z } from 'zod'
 import { cloneElement, ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
-  layoutVariant,
-  layoutItemProps as naturalLayoutItemProps,
+  LayoutVariant,
+  LayoutItemProps as NaturalLayoutItemProps,
 } from '@fluent-blocks/schemas'
 
 import {
-  escapeElement,
+  EscapeElement,
   invalidLayoutItem,
   invalidLayoutItemSelf,
-  propsElementUnion,
   renderIfEscape,
   sx,
 } from '../../lib'
 
-import { cardPropsOrElement, renderIfCard } from '../Card/Card'
+import { CardPropsOrElement, renderIfCard } from '../Card/Card'
 
-export const layoutItemEntity = z.union([cardPropsOrElement, escapeElement])
-export type LayoutItemEntity = z.infer<typeof layoutItemEntity>
+export type LayoutItemEntity = CardPropsOrElement | EscapeElement
 
-export const layoutItemProps = naturalLayoutItemProps
-  .merge(
-    z.object({
-      item: layoutItemEntity,
-    })
-  )
-  .extend({
-    contextualVariant: layoutVariant.default('grid').optional(),
-  })
-export type LayoutItemProps = z.infer<typeof layoutItemProps>
+export interface LayoutItemProps extends Omit<NaturalLayoutItemProps, 'item'> {
+  item: LayoutItemEntity
+  contextualVariant?: LayoutVariant
+}
 
 const useLayoutItemStyles = makeStyles({
   flexInlineSizeFactor1: {
@@ -89,21 +80,16 @@ export const LayoutItem = ({
   )
 }
 
+export type LayoutItemElement = ReactElement<LayoutItemProps, typeof LayoutItem>
+export type LayoutItemPropsOrElement = LayoutItemProps | LayoutItemElement
+
 function isLayoutItemProps(o: any): o is LayoutItemProps {
   return 'item' in o
 }
 
-function isLayoutItemElement(
-  o: any
-): o is ReactElement<LayoutItemProps, typeof LayoutItem> {
+function isLayoutItemElement(o: any): o is LayoutItemElement {
   return o?.type === LayoutItem
 }
-
-export const layoutItemPropsOrElement = propsElementUnion<
-  typeof layoutItemProps,
-  typeof LayoutItem
->(layoutItemProps)
-export type LayoutItemPropsOrElement = z.infer<typeof layoutItemPropsOrElement>
 
 export function renderIfLayoutItem(o: any) {
   return isLayoutItemProps(o) ? (

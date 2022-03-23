@@ -1,33 +1,17 @@
 {
   "name": "@fluent-blocks/schemas",
-  "version": "9.0.0-alpha.2",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
+  "version": "9.0.0-alpha.3",
+  "main": "index.d.ts",
   "types": "types/index.d.ts",
-  "files": [
-    "cjs",
-    "esm",
-    "types"
-  ],
+  "files": [ "types" ],
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
     "Zhenya Savchenko <zhenyasa@microsoft.com>"
   ],
   "license": "MIT",
-  "scripts": {
-    "build": "just-scripts build"
-  },
   "engines": {
     "node": ">=12.0.0 <17.0.0",
     "pnpm": "^6"
-  },
-  "dependencies": {
-    "zod": "latest"
-  },
-  "devDependencies": {
-    "@types/node": "^17.0.18",
-    "just-scripts": "latest",
-    "ts-node": "latest"
   }
 }

@@ -1,39 +1,42 @@
-import { z } from 'zod'
 import {
-  inputProps as naturalInputProps,
-  inputPropsWithInitialStringValue as naturalInputPropsWithInitialStringValue,
-  textInputProps as naturalTextInputProps,
-  labeledValueProps as naturalLabeledValueProps,
+  InputProps as NaturalInputProps,
+  InputInitialValueProps as NaturalInputWithInitialStringValue,
+  TextInputProps as NaturalTextInputProps,
+  LabeledValueProps as NaturalLabeledValueProps,
+  InlineSequenceOrString as NaturalInlineSequenceOrString,
 } from '@fluent-blocks/schemas'
 
-import { inlineSequenceOrString } from '../inlines'
+import { InlineSequenceOrString } from '../inlines'
 
-export const labelWithElements = z.object({ label: inlineSequenceOrString })
+export type WithInputElements<
+  T extends { label: NaturalInlineSequenceOrString }
+> = Omit<T, 'label'> & {
+  label: InlineSequenceOrString
+}
 
-export const inputProps = naturalInputProps.merge(labelWithElements)
+export interface InputProps extends WithInputElements<NaturalInputProps> {}
 
-export const inputPropsWithInitialStringValue =
-  naturalInputPropsWithInitialStringValue.merge(labelWithElements)
+export interface InputInitialValueProps
+  extends InputProps,
+    NaturalInputWithInitialStringValue {}
 
-export const textInputProps = naturalTextInputProps.merge(labelWithElements)
+export interface TextInputProps
+  extends WithInputElements<NaturalTextInputProps> {}
 
-export const labeledValueProps =
-  naturalLabeledValueProps.merge(labelWithElements)
+export interface LabeledValueProps
+  extends WithInputElements<NaturalLabeledValueProps> {}
 
-export const shortInputContextualVariants = z
-  .object({
-    contextualVariant: z
-      .union([
-        z.literal('block-inputs'),
-        z.literal('card-inputs'),
-        z.literal('narrow-inputs'),
-        z.literal('tabs'),
-        z.literal('toolbar-item'),
-        z.literal('toolbar-item--needs-update'),
-        z.literal('toolbar-item--hidden'),
-      ])
-      .default('block-inputs'),
-    selected: z.boolean().default(false),
-    controls: z.string(),
-  })
-  .partial()
+export type ShortInputContextualVariant =
+  | 'block-inputs'
+  | 'card-inputs'
+  | 'narrow-inputs'
+  | 'tabs'
+  | 'toolbar-item'
+  | 'toolbar-item--needs-update'
+  | 'toolbar-item--hidden'
+
+export interface ShortInputContextualProps {
+  contextualVariant?: ShortInputContextualVariant
+  selected?: boolean
+  controls?: string
+}

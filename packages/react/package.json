@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.0.0-alpha.1",
+  "version": "9.0.0-alpha.2",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -9,7 +9,11 @@
   "license": "MIT",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "files": ["cjs", "esm"],
+  "files": [
+    "cjs",
+    "esm",
+    "types"
+  ],
   "scripts": {
     "build": "just-scripts build",
     "storybook:upgrade": "pnpm update \"@storybook/*\"",
@@ -71,8 +75,7 @@
   },
   "dependencies": {
     "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.4",
-    "@fluent-blocks/schemas": "workspace:9.0.0-alpha.2",
-    "lodash": "latest",
-    "zod": "latest"
+    "@fluent-blocks/schemas": "workspace:9.0.0-alpha.3",
+    "lodash": "latest"
   }
 }

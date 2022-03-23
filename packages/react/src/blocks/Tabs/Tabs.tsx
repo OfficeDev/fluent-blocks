@@ -1,16 +1,14 @@
-import { z } from 'zod'
 import { ReactElement, useState } from 'react'
 import uniqueId from 'lodash/uniqueId'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
-  tabsItemProps as naturalTabsItemProps,
-  tabsProps as naturalTabsProps,
+  TabsItemProps as NaturalTabsItemProps,
+  TabsProps as NaturalTabsProps,
 } from '@fluent-blocks/schemas'
 
 import {
-  escapeElement,
+  EscapeElement,
   invalidTabPanelItem,
-  propsElementUnion,
   rem,
   renderIfEscape,
   Sequence,
@@ -18,43 +16,42 @@ import {
   useCommonStyles,
 } from '../../lib'
 
-import { buttonProps, Button } from '../../inputs'
-import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
-import { headingPropsOrElement, renderIfHeading } from '../Heading/Heading'
+import { ButtonProps, Button } from '../../inputs'
+import { FigurePropsOrElement, renderIfFigure } from '../Figure/Figure'
+import { HeadingPropsOrElement, renderIfHeading } from '../Heading/Heading'
 import {
-  paragraphPropsOrElement,
+  ParagraphPropsOrElement,
   renderIfParagraph,
 } from '../Paragraph/Paragraph'
 import {
   renderIfShortInputs,
-  shortInputsPropsOrElement,
+  ShortInputsPropsOrElement,
 } from '../ShortInputs/ShortInputs'
 import {
-  descriptionListPropsOrElement,
+  DescriptionListPropsOrElement,
   renderIfDescriptionList,
 } from '../DescriptionList/DescriptionList'
 
-export const tabProps = buttonProps.omit({
-  type: true,
-  actionId: true,
-  variant: true,
-  iconVariant: true,
-  onAction: true,
-  contextualVariant: true,
-})
+export interface TabProps
+  extends Omit<
+    ButtonProps,
+    | 'type'
+    | 'actionId'
+    | 'variant'
+    | 'iconVariant'
+    | 'onAction'
+    | 'contextualVariant'
+  > {}
 
-export const tabPanelItemEntity = z.union([
-  headingPropsOrElement,
-  paragraphPropsOrElement,
-  figurePropsOrElement,
-  shortInputsPropsOrElement,
-  descriptionListPropsOrElement,
-  escapeElement,
-])
-export type TabPanelItemEntity = z.infer<typeof tabPanelItemEntity>
+export type TabPanelItemEntity =
+  | HeadingPropsOrElement
+  | ParagraphPropsOrElement
+  | FigurePropsOrElement
+  | ShortInputsPropsOrElement
+  | DescriptionListPropsOrElement
+  | EscapeElement
 
-export const tabPanelItemSequence = z.array(tabPanelItemEntity)
-export type TabPanelItemSequence = z.infer<typeof tabPanelItemSequence>
+export type TabPanelItemSequence = TabPanelItemEntity[]
 
 const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfHeading(o) ||
@@ -65,23 +62,16 @@ const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfEscape(o) ||
   invalidTabPanelItem(o)
 
-export const tabsItemProps = naturalTabsItemProps.merge(
-  z.object({
-    tab: tabProps,
-    panel: tabPanelItemSequence,
-  })
-)
-export type TabsItemProps = z.infer<typeof tabsItemProps>
+export interface TabsItemProps
+  extends Omit<NaturalTabsItemProps, 'tab' | 'panel'> {
+  tab: TabProps
+  panel: TabPanelItemSequence
+}
 
-export const tabsProps = naturalTabsProps
-  .merge(z.object({ tabs: z.array(tabsItemProps) }))
-  .extend({
-    contextualVariant: z
-      .union([z.literal('card'), z.literal('block')])
-      .default('block')
-      .optional(),
-  })
-export type TabsProps = z.infer<typeof tabsProps>
+export interface TabsProps extends Omit<NaturalTabsProps, 'tabs'> {
+  tabs: TabsItemProps[]
+  contextualVariant?: 'card' | 'block'
+}
 
 const useTabsStyles = makeStyles({
   tabScrollCtx: {
@@ -140,7 +130,7 @@ export const Tabs = ({
               key={itemIds[t]}
               {...{
                 ...tabItem.tab,
-                type: 'button',
+                type: 'action',
                 actionId: tabId(itemIds[t]),
                 variant: tabVariant,
                 contextualVariant: 'tabs',
@@ -173,19 +163,16 @@ export const Tabs = ({
   )
 }
 
+export type TabsElement = ReactElement<TabsProps, typeof Tabs>
+export type TabsPropsOrElement = TabsProps | TabsElement
+
 function isTabsProps(o: any): o is TabsProps {
   return 'tabs' in o
 }
 
-function isTabsElement(o: any): o is ReactElement<TabsProps, typeof Tabs> {
+function isTabsElement(o: any): o is TabsElement {
   return o?.type === Tabs
 }
-
-export const tabsPropsOrElement = propsElementUnion<
-  typeof tabsProps,
-  typeof Tabs
->(tabsProps)
-export type TabsPropsOrElement = z.infer<typeof tabsPropsOrElement>
 
 export function renderIfTabs(o: any) {
   return isTabsProps(o) ? <Tabs {...o} /> : isTabsElement(o) ? o : null

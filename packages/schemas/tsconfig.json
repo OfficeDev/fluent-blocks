@@ -1,11 +1,3 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "module": "commonjs",
-    "isolatedModules": false
-  },
-  "include": ["src"],
-  "exclude": [
-    "**/schemas.ts",
-  ]
+  "extends": "../../tsconfig.json"
 }

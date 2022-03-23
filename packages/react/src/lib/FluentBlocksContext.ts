@@ -10,7 +10,7 @@ export type FluentPatternsBlocksData = {
   themeName: ThemeName
   accentScheme: AccentScheme
   theme: ReturnType<typeof getTheme>
-  onAction: ActionHandler
+  onAction: ActionHandler<any>
   basicSpriteUrl: string
 }
 

@@ -1,14 +1,8 @@
-import { z } from 'zod'
-import { ReactNode } from 'react'
+import { PropsWithChildren, ReactElement } from 'react'
 
-import { zodElement } from './propsElementUnion'
-
-export const escapeProps = z.object({
-  contentMeetsAccessibilityAndDesignStandards: z.literal(true),
-  children: z.any().transform((val) => val as ReactNode | undefined),
-})
-
-export type EscapeProps = z.infer<typeof escapeProps>
+export type EscapeProps = PropsWithChildren<{
+  contentMeetsAccessibilityAndDesignStandards: true
+}>
 
 export const Escape = ({
   contentMeetsAccessibilityAndDesignStandards,
@@ -27,11 +21,7 @@ export const Escape = ({
   return contentMeetsAccessibilityAndDesignStandards ? <>{children}</> : null
 }
 
-export const escapeElement = zodElement<typeof escapeProps, typeof Escape>(
-  escapeProps
-)
-
-export type EscapeElement = z.infer<typeof escapeElement>
+export type EscapeElement = ReactElement<EscapeProps, typeof Escape>
 
 export function isEscapeElement(o: any): o is EscapeElement {
   return o?.type === Escape

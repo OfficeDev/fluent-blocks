@@ -81,7 +81,7 @@ This library harmonizes the patterns in Fluent and the UI Kit with concepts from
         - `RadioGroup`
         - `ShortTextInput`
 - **Surfaces**, each of which expect to be unique in a given view
-- **Views**, the top-level components which validate props and render an entire UI in a viewport
+- **Views**, the top-level components which render an entire UI in a viewport
 
 Any component may also have **Exemplars**, which render the same component but with a specialized API surface optimized for a specific use-case for the pattern, e.g. `Widget` always renders a `Card` though its props are based on the more constrained scope of content for cards in a dashboard from the UI Kit.
 

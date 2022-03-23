@@ -1,30 +1,18 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
-import { shortTextInputProps as naturalShortTextInputProps } from '@fluent-blocks/schemas'
+import { ShortTextInputProps as NaturalShortTextInputProps } from '@fluent-blocks/schemas'
 
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
 
-import { propsElementUnion, rem, sx } from '../../lib'
-import { labelWithElements } from '../input-properties'
-import { Inline, InlineContent, inlineEntity } from '../../inlines'
+import { rem, sx } from '../../lib'
+import { WithInputElements } from '../input-properties'
+import { Inline, InlineContent } from '../../inlines'
 
-export const shortTextInputProps = naturalShortTextInputProps
-  .merge(labelWithElements)
-  .merge(
-    z.object({
-      before: inlineEntity.optional(),
-      after: inlineEntity.optional(),
-    })
-  )
-  .extend({
-    contextualVariant: z
-      .union([z.literal('block-inputs'), z.literal('card')])
-      .default('block-inputs')
-      .optional(),
-  })
-export type ShortTextInputProps = z.infer<typeof shortTextInputProps>
+export interface ShortTextInputProps
+  extends WithInputElements<NaturalShortTextInputProps> {
+  contextualVariant?: 'block-inputs' | 'card'
+}
 
 const useShortTextInputStyles = makeStyles({
   root: {
@@ -75,23 +63,21 @@ export const ShortTextInput = ({
   )
 }
 
+export type ShortTextInputElement = ReactElement<
+  ShortTextInputProps,
+  typeof ShortTextInput
+>
+export type ShortTextInputPropsOrElement =
+  | ShortTextInputProps
+  | ShortTextInputElement
+
 function isShortTextInputProps(o: any): o is ShortTextInputProps {
   return 'type' in o && o.type === 'text' && !('multiline' in o && o.multiline)
 }
 
-function isShortTextInputElement(
-  o: any
-): o is ReactElement<ShortTextInputProps, typeof ShortTextInput> {
+function isShortTextInputElement(o: any): o is ShortTextInputElement {
   return o?.type === ShortTextInput && isShortTextInputProps(o?.props)
 }
-
-export const shortTextInputPropsOrElement = propsElementUnion<
-  typeof shortTextInputProps,
-  typeof ShortTextInput
->(shortTextInputProps)
-export type ShortTextInputPropsOrElement = z.infer<
-  typeof shortTextInputPropsOrElement
->
 
 export function renderIfShortTextInput(o: any) {
   return isShortTextInputProps(o) ? (
