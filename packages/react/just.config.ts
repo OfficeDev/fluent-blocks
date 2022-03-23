@@ -8,7 +8,8 @@ import {
 
 task('rm:cjs', ()=>rm('cjs', {recursive: true, force: true}))
 task('rm:esm', ()=>rm('esm', {recursive: true, force: true}))
-task("clean", parallel('rm:cjs', 'rm:esm'));
+task('rm:types', ()=>rm('types', {recursive: true, force: true}))
+task("clean", parallel('rm:cjs', 'rm:esm', 'rm:types'));
 
 task(
   "build:tsc",
@@ -19,6 +20,10 @@ task(
     }),
     tscTask({
       module: "ES2020",
+      declarationDir: 'types',
+      disableSizeLimit: true,
+      declarationMap: true,
+      declaration: true,
       outDir: "esm"
     })
   )

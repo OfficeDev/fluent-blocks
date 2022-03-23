@@ -12,3 +12,4 @@ export const textProps = z.object({
     ])
     .optional(),
 })
+export type ZTextProps = typeof textProps

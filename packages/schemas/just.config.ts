@@ -23,6 +23,7 @@ task(
       declarationDir: 'types',
       disableSizeLimit: true,
       declaration: true,
+      declarationMap: true,
       outDir: "esm"
     })
   )

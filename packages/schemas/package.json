@@ -28,8 +28,6 @@
   "devDependencies": {
     "@types/node": "^17.0.18",
     "just-scripts": "latest",
-    "ts-node": "latest",
-    "zod-to-json-schema": "latest",
-    "zod-to-ts": "^0.2.2"
+    "ts-node": "latest"
   }
 }

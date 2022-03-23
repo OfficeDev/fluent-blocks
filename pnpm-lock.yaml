@@ -133,16 +133,12 @@ importers:
       just-scripts: latest
       ts-node: latest
       zod: latest
-      zod-to-json-schema: latest
-      zod-to-ts: ^0.2.2
     dependencies:
       zod: 3.14.2
     devDependencies:
       '@types/node': 17.0.18
       just-scripts: 1.8.0
-      ts-node: 10.7.0_b3bffd23b91051c5fffa541a5822dff1
-      zod-to-json-schema: 3.11.3
-      zod-to-ts: 0.2.2_typescript@4.6.2+zod@3.14.2
+      ts-node: 10.7.0_@types+node@17.0.18
 
 packages:
 
@@ -6239,6 +6235,7 @@ packages:
 
   /commander/2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+    requiresBuild: true
     dev: true
 
   /commander/4.1.1:
@@ -13312,6 +13309,36 @@ packages:
       tsconfig-paths: 3.14.0
     dev: true
 
+  /ts-node/10.7.0_@types+node@17.0.18:
+    resolution: {integrity: sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      '@swc/wasm':
+        optional: true
+    dependencies:
+      '@cspotcode/source-map-support': 0.7.0
+      '@tsconfig/node10': 1.0.8
+      '@tsconfig/node12': 1.0.9
+      '@tsconfig/node14': 1.0.1
+      '@tsconfig/node16': 1.0.2
+      '@types/node': 17.0.18
+      acorn: 8.7.0
+      acorn-walk: 8.2.0
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      v8-compile-cache-lib: 3.0.0
+      yn: 3.1.1
+    dev: true
+
   /ts-node/10.7.0_b3bffd23b91051c5fffa541a5822dff1:
     resolution: {integrity: sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==}
     hasBin: true
@@ -14387,24 +14414,9 @@ packages:
       commander: 2.20.3
     dev: true
 
-  /zod-to-json-schema/3.11.3:
-    resolution: {integrity: sha512-K5n/Ri8RHzxkmWXnCHoWqaZgSJ6VYnUGhKXnRbgQKCWGkOR3niJb2tXEqFuQTO9wdCp5d06VhYz6FixGiEettA==}
-    dependencies:
-      zod: 3.14.2
-    dev: true
-
-  /zod-to-ts/0.2.2_typescript@4.6.2+zod@3.14.2:
-    resolution: {integrity: sha512-ardXRu0EIDcS8pP0+1jL5a4ZtPIfxhmWHjwYH7Mol38/D3OUqgo+QjK648+R6T7N0RkfSNOSI1AkddKILetLKQ==}
-    peerDependencies:
-      typescript: ^4
-      zod: ^3
-    dependencies:
-      typescript: 4.6.2
-      zod: 3.14.2
-    dev: true
-
   /zod/3.14.2:
     resolution: {integrity: sha512-iF+wrtzz7fQfkmn60PG6XFxaWBhYYKzp2i+nv24WbLUWb2JjymdkHlzBwP0erpc78WotwP5g9AAu7Sk8GWVVNw==}
+    dev: false
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
