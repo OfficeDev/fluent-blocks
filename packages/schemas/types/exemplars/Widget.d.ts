@@ -1,4 +1,4 @@
-import {TabsProps} from '../blocks'
+import { TabsProps } from '../blocks'
 import { ButtonProps } from '../inputs'
 import { InlineSequenceOrString } from '../inlines'
 

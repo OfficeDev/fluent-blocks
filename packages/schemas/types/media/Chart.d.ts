@@ -1,26 +1,26 @@
 import { MediaProps } from './media-properties'
 
 export type ChartType =
-  'line' |
-  'line-stacked' |
-  'line-area' |
-  'bar' |
-  'bar-stacked' |
-  'bar-horizontal' |
-  'bar-horizontal-stacked' |
-  'pie' |
-  'doughnut' |
-  'bubble'
+  | 'line'
+  | 'line-stacked'
+  | 'line-area'
+  | 'bar'
+  | 'bar-stacked'
+  | 'bar-horizontal'
+  | 'bar-horizontal-stacked'
+  | 'pie'
+  | 'doughnut'
+  | 'bubble'
 
 export type BubbleChartDatum = {
-  x: number,
-  y: number,
+  x: number
+  y: number
   z: number
 }
 
 export interface ChartDataset {
   label: string
-  data: number[] | BubbleChartDatum,
+  data: number[] | BubbleChartDatum
   hidden?: boolean
 }
 

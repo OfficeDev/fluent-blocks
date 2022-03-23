@@ -1,9 +1,9 @@
-import {ButtonProps} from '../inputs'
+import { ButtonProps } from '../inputs'
 
 export type ToolbarAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'>
 
 export type ToolbarDivider = {
-  type: 'divider',
+  type: 'divider'
   variant?: 'line'
 }
 
@@ -13,7 +13,7 @@ export type ToolbarItemSequence = ToolbarItemEntity[]
 
 export interface ToolbarProps {
   toolbar: {
-    items: ToolbarItemSequence,
+    items: ToolbarItemSequence
     iconSize?: ButtonProps['iconSize']
     buttonSize?: ButtonProps['size']
   }

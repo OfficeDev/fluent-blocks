@@ -5,12 +5,13 @@ import { TabsProps } from './Tabs'
 import { ShortInputsProps } from './ShortInputs'
 import { DescriptionListProps } from './DescriptionList'
 
-export type CardContentItemEntity = HeadingProps |
-  ParagraphProps |
-  FigureProps |
-  TabsProps |
-  ShortInputsProps |
-  DescriptionListProps
+export type CardContentItemEntity =
+  | HeadingProps
+  | ParagraphProps
+  | FigureProps
+  | TabsProps
+  | ShortInputsProps
+  | DescriptionListProps
 
 export type CardContentItemSequence = CardContentItemEntity[]
 

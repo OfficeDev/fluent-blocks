@@ -5,9 +5,17 @@ import { ShortInputsProps } from './ShortInputs'
 import { ParagraphProps } from './Paragraph'
 import { DescriptionListProps } from './DescriptionList'
 
-export type TabProps = Omit<ButtonProps, 'type' | 'actionId' | 'variant' | 'iconVariant'>
+export type TabProps = Omit<
+  ButtonProps,
+  'type' | 'actionId' | 'variant' | 'iconVariant'
+>
 
-export type TabPanelItemEntity = HeadingProps | ParagraphProps | FigureProps | ShortInputsProps | DescriptionListProps
+export type TabPanelItemEntity =
+  | HeadingProps
+  | ParagraphProps
+  | FigureProps
+  | ShortInputsProps
+  | DescriptionListProps
 
 export type TabPanelItemSequence = TabPanelItemEntity[]
 
@@ -18,7 +26,7 @@ export interface TabsItemProps {
 
 export interface TabsProps {
   label: string
-  tabs: TabsItemProps[],
+  tabs: TabsItemProps[]
   tabVariant?: 'subtle' | 'transparent'
   tabListVariant?: 'start' | 'center'
 }

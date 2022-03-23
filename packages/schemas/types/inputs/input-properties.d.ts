@@ -1,19 +1,22 @@
 import { InlineSequenceOrString } from '../inlines'
 
 export interface InputProps {
-  label: InlineSequenceOrString,
-  actionId: string,
+  label: InlineSequenceOrString
+  actionId: string
 }
 
 export interface InputRequiredProps {
-  required?: boolean,
+  required?: boolean
 }
 
 export interface InputPropsInitialValueProps {
   initialValue?: string
 }
 
-export interface TextInputProps extends InputProps, InputRequiredProps, InputPropsInitialValueProps {
+export interface TextInputProps
+  extends InputProps,
+    InputRequiredProps,
+    InputPropsInitialValueProps {
   type: 'text'
   placeholder?: string
 }

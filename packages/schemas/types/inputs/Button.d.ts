@@ -1,6 +1,6 @@
 import { ActionPayload } from '../lib/actions'
 import { IconSize, IconVariant } from '../inlines'
-import {InputProps} from "./input-properties";
+import { InputProps } from './input-properties'
 
 export interface ButtonActionPayload extends ActionPayload {
   type: 'activate'
@@ -13,7 +13,7 @@ export interface ButtonProps extends InputProps {
   type: 'action'
   variant: ButtonVariant
   size: ButtonSize
-  iconOnly?: boolean,
+  iconOnly?: boolean
   icon?: string
   iconPosition?: 'before' | 'after'
   iconSize?: IconSize

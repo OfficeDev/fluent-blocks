@@ -1,4 +1,4 @@
-import {TextProps } from './Text'
+import { TextProps } from './Text'
 import { IconProps } from './Icon'
 
 export type InlineEntity = string | TextProps | IconProps

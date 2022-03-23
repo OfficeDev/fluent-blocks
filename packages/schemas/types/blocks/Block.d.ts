@@ -6,4 +6,12 @@ import { CardProps } from './Card'
 import { ShortInputsProps } from './ShortInputs'
 import { MultilineTextInputProps, RadioGroupProps } from '../inputs'
 
-export type BlockEntity = ParagraphProps | LayoutProps | FigureProps | CardProps | ShortInputsProps | MultilineTextInputProps | RadioGroupProps | BigMessageProps
+export type BlockEntity =
+  | ParagraphProps
+  | LayoutProps
+  | FigureProps
+  | CardProps
+  | ShortInputsProps
+  | MultilineTextInputProps
+  | RadioGroupProps
+  | BigMessageProps
