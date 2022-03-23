@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.0.0-alpha.1",
+  "version": "9.0.0-alpha.2",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
