@@ -34,8 +34,8 @@
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "chart.js": "^2.9.4",
-    "react": ">=16.8.0 <18.0.0",
-    "react-dom": ">=16.8.0 <18.0.0"
+    "react": ">=17.0.0 <19.0.0",
+    "react-dom": ">=17.0.0 <19.0.0"
   },
   "devDependencies": {
     "@babel/core": "latest",
@@ -64,8 +64,8 @@
     "just-scripts": "latest",
     "mocha": "latest",
     "playwright-chromium": "latest",
-    "react": ">=16.8.0 <18.0.0",
-    "react-dom": ">=16.8.0 <18.0.0",
+    "react": ">=17.0.0 <19.0.0",
+    "react-dom": ">=17.0.0 <19.0.0",
     "react-test-renderer": ">=16.8.0 <18.0.0",
     "start-server-and-test": "latest",
     "ts-mocha": "latest",
