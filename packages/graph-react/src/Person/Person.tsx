@@ -1,1 +1,5 @@
-export const Person = ({ message }: { message: string }) => <div>{`Hello, ${message}.`}</div>
+export type PersonProps = {
+  query: string
+}
+
+export const Person = ({ query }: PersonProps) => <div>{query}</div>
