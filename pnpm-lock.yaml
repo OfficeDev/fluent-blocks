@@ -50,7 +50,7 @@ importers:
     specifiers:
       '@babel/core': latest
       '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.4
-      '@fluent-blocks/schemas': workspace:9.0.0-alpha.2
+      '@fluent-blocks/schemas': workspace:9.0.0-alpha.3
       '@fluentui/react-components': latest
       '@storybook/addon-actions': latest
       '@storybook/addon-essentials': latest
@@ -128,17 +128,7 @@ importers:
       webpack: 5.70.0
 
   packages/schemas:
-    specifiers:
-      '@types/node': ^17.0.18
-      just-scripts: latest
-      ts-node: latest
-      zod: latest
-    dependencies:
-      zod: 3.14.2
-    devDependencies:
-      '@types/node': 17.0.18
-      just-scripts: 1.8.0
-      ts-node: 10.7.0_b3bffd23b91051c5fffa541a5822dff1
+    specifiers: {}
 
 packages:
 

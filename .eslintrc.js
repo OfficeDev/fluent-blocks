@@ -62,14 +62,6 @@ const eslintrc = {
     '@typescript-eslint/naming-convention': [
       'warn',
       {
-        selector: 'interface',
-        format: ['PascalCase'],
-        custom: {
-          regex: '^I[A-Z]',
-          match: true,
-        },
-      },
-      {
         selector: 'class',
         format: ['PascalCase'],
       },
