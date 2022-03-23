@@ -1,38 +1,33 @@
-import { z } from 'zod'
 import isString from 'lodash/isString'
 import {
-  inlineEntity as naturalInlineEntity,
-  inlineContentProps as naturalInlineContentProps,
+  InlineEntity as NaturalInlineEntity,
+  InlineContentProps as NaturalInlineContentProps,
 } from '@fluent-blocks/schemas'
 
 import {
   invalidInline,
-  escapeElement,
+  EscapeElement,
   renderIfEscape,
   Sequence,
 } from '../../lib'
 
-import { textElement, renderIfText } from '../Text/Text'
-import { iconElement, renderIfIcon } from '../Icon/Icon'
+import { TextElement, renderIfText } from '../Text/Text'
+import { IconElement, renderIfIcon } from '../Icon/Icon'
 
-export const inlineEntity = z.union([
-  naturalInlineEntity,
-  textElement,
-  iconElement,
-  escapeElement,
-])
-export type InlineEntity = z.infer<typeof inlineEntity>
+export type InlineEntity =
+  | NaturalInlineEntity
+  | TextElement
+  | IconElement
+  | EscapeElement
 
-export const inlineSequence = z.array(inlineEntity)
-export type InlineSequence = z.infer<typeof inlineSequence>
+export type InlineSequence = InlineEntity[]
 
-export const inlineSequenceOrString = z.union([z.string(), inlineSequence])
-export type InlineSequenceOrString = z.infer<typeof inlineSequenceOrString>
+export type InlineSequenceOrString = string | InlineSequence
 
-export const inlineContentProps = naturalInlineContentProps.merge(
-  z.object({ inlines: inlineSequenceOrString })
-)
-export type InlineContentProps = z.infer<typeof inlineContentProps>
+export interface InlineContentProps
+  extends Omit<NaturalInlineContentProps, 'inlines'> {
+  inlines: InlineSequenceOrString
+}
 
 function renderAsTextIfString(o: any) {
   return isString(o) ? renderIfText({ text: o }) : null

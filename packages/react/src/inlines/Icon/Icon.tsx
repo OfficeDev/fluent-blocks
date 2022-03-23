@@ -1,15 +1,10 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import get from 'lodash/get'
 import { makeStyles } from '@fluentui/react-components'
-import { iconVariant, iconSize, iconProps } from '@fluent-blocks/schemas'
+import { IconVariant, IconSize, IconProps } from '@fluent-blocks/schemas'
 import basicIcons from '@fluent-blocks/basic-icons'
 
-import { useFluentBlocksContext, zodElement } from '../../lib'
-
-export type IconVariant = z.infer<typeof iconVariant>
-export type IconSize = z.infer<typeof iconSize>
-export type IconProps = z.infer<typeof iconProps>
+import { useFluentBlocksContext } from '../../lib'
 
 function spriteHref(
   icon: string,
@@ -59,16 +54,15 @@ export const Icon = (props: IconProps) => {
   )
 }
 
+export type IconElement = ReactElement<IconProps, typeof Icon>
+
 function isIconProps(o: any): o is IconProps {
   return 'icon' in o
 }
 
-function isIconElement(o: any): o is ReactElement<IconProps, typeof Icon> {
+function isIconElement(o: any): o is IconElement {
   return o?.type === Icon
 }
-
-export const iconElement = zodElement<typeof iconProps, typeof Icon>(iconProps)
-export type IconElement = z.infer<typeof iconElement>
 
 export function renderIfIcon(o: any) {
   return isIconProps(o) ? <Icon {...o} /> : isIconElement(o) ? o : null

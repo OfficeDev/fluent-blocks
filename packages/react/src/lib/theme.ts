@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import {
   teamsLightTheme,
   teamsDarkTheme,
@@ -7,10 +6,7 @@ import {
   webDarkTheme,
   webHighContrastTheme,
 } from '@fluentui/react-components'
-import { themeName, accentScheme } from '@fluent-blocks/schemas'
-
-export type ThemeName = z.infer<typeof themeName>
-export type AccentScheme = z.infer<typeof accentScheme>
+import { ThemeName, AccentScheme } from '@fluent-blocks/schemas'
 
 export const getTheme = (
   themeName?: ThemeName,

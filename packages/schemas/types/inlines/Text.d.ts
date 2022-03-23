@@ -7,5 +7,5 @@ export type TextVariant =
 
 export interface TextProps {
   text: string
-  variant: TextVariant
+  variant?: TextVariant
 }
