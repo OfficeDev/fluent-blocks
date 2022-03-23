@@ -49,8 +49,8 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
-      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.3
-      '@fluent-blocks/schemas': workspace:9.0.0-alpha.1
+      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.4
+      '@fluent-blocks/schemas': workspace:9.0.0-alpha.2
       '@fluentui/react-components': latest
       '@storybook/addon-actions': latest
       '@storybook/addon-essentials': latest
@@ -138,7 +138,7 @@ importers:
     devDependencies:
       '@types/node': 17.0.18
       just-scripts: 1.8.0
-      ts-node: 10.7.0_@types+node@17.0.18
+      ts-node: 10.7.0_b3bffd23b91051c5fffa541a5822dff1
 
 packages:
 
@@ -13307,36 +13307,6 @@ packages:
       ts-node: 7.0.1
     optionalDependencies:
       tsconfig-paths: 3.14.0
-    dev: true
-
-  /ts-node/10.7.0_@types+node@17.0.18:
-    resolution: {integrity: sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==}
-    hasBin: true
-    peerDependencies:
-      '@swc/core': '>=1.2.50'
-      '@swc/wasm': '>=1.2.50'
-      '@types/node': '*'
-      typescript: '>=2.7'
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      '@swc/wasm':
-        optional: true
-    dependencies:
-      '@cspotcode/source-map-support': 0.7.0
-      '@tsconfig/node10': 1.0.8
-      '@tsconfig/node12': 1.0.9
-      '@tsconfig/node14': 1.0.1
-      '@tsconfig/node16': 1.0.2
-      '@types/node': 17.0.18
-      acorn: 8.7.0
-      acorn-walk: 8.2.0
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      v8-compile-cache-lib: 3.0.0
-      yn: 3.1.1
     dev: true
 
   /ts-node/10.7.0_b3bffd23b91051c5fffa541a5822dff1:

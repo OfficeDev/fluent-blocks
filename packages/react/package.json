@@ -70,7 +70,7 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.3",
+    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.4",
     "@fluent-blocks/schemas": "workspace:9.0.0-alpha.2",
     "lodash": "latest",
     "zod": "latest"
