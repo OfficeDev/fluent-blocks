@@ -1,33 +1,20 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
-  descriptionListProps as naturalDescriptionListProps,
-  descriptionListItemProps,
+  DescriptionListProps as NaturalDescriptionListProps,
+  DescriptionListItemProps,
 } from '@fluent-blocks/schemas'
 
-import { InlineContent, inlineSequenceOrString } from '../../inlines'
-import {
-  key,
-  propsElementUnion,
-  sx,
-  useCommonStyles,
-  useTextBlockStyles,
-} from '../../lib'
+import { InlineContent, InlineSequenceOrString } from '../../inlines'
+import { key, sx, useCommonStyles, useTextBlockStyles } from '../../lib'
 
-export const descriptionListProps = naturalDescriptionListProps.merge(
-  z.object({
-    descriptionList: z.array(
-      descriptionListItemProps.merge(
-        z.object({
-          title: inlineSequenceOrString,
-          description: inlineSequenceOrString,
-        })
-      )
-    ),
-  })
-)
-export type DescriptionListProps = z.infer<typeof descriptionListProps>
+export interface DescriptionListProps
+  extends Omit<NaturalDescriptionListProps, 'descriptionList'> {
+  descriptionList: (DescriptionListItemProps & {
+    title: InlineSequenceOrString
+    description: InlineSequenceOrString
+  })[]
+}
 
 const useDescriptionListStyles = makeStyles({
   listItem: {
@@ -75,21 +62,21 @@ export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
   )
 }
 
+export type DescriptionListElement = ReactElement<
+  DescriptionListProps,
+  typeof DescriptionList
+>
+export type DescriptionListPropsOrElement =
+  | DescriptionListProps
+  | DescriptionListElement
+
 function isDescriptionListProps(o: any): o is DescriptionListProps {
   return 'descriptionList' in o
 }
 
-function isDescriptionListElement(
-  o: any
-): o is ReactElement<DescriptionListProps, typeof DescriptionList> {
+function isDescriptionListElement(o: any): o is DescriptionListElement {
   return o?.type === DescriptionList
 }
-
-export const descriptionListPropsOrElement = propsElementUnion<
-  typeof descriptionListProps,
-  typeof DescriptionList
->(descriptionListProps)
-export type DescriptionListPropsOrElement = z.infer<typeof descriptionListProps>
 
 export function renderIfDescriptionList(o: any) {
   return isDescriptionListProps(o) ? (

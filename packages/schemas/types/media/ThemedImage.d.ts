@@ -1,7 +1,6 @@
 import { MediaProps } from './media-properties'
+import { ThemeName } from '../lib/themes'
 
-export interface ThemedImageProps extends MediaProps {
-  light: string
-  dark: string
-  highContrast: string
+export type ThemedImageProps = MediaProps & {
+  [key in ThemeName]: string
 }

@@ -20,7 +20,7 @@ export type BubbleChartDatum = {
 
 export interface ChartDataset {
   label: string
-  data: number[] | BubbleChartDatum
+  data: number[] | BubbleChartDatum[]
   hidden?: boolean
 }
 

@@ -9,14 +9,14 @@ export interface InputRequiredProps {
   required?: boolean
 }
 
-export interface InputPropsInitialValueProps {
+export interface InputInitialValueProps {
   initialValue?: string
 }
 
 export interface TextInputProps
   extends InputProps,
     InputRequiredProps,
-    InputPropsInitialValueProps {
+    InputInitialValueProps {
   type: 'text'
   placeholder?: string
 }

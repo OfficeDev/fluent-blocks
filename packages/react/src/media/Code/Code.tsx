@@ -1,16 +1,10 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { codeProps } from '@fluent-blocks/schemas'
+import { CodeProps as NaturalCodeProps } from '@fluent-blocks/schemas'
 
-import {
-  propsElementUnion,
-  useCommonStyles,
-  useTextBlockStyles,
-  useTextStyles,
-} from '../../lib'
+import { useCommonStyles, useTextBlockStyles, useTextStyles } from '../../lib'
 
-export type CodeProps = z.infer<typeof codeProps>
+export type CodeProps = NaturalCodeProps
 
 export const Code = ({ code }: CodeProps) => {
   const textStyles = useTextStyles()
@@ -31,19 +25,16 @@ export const Code = ({ code }: CodeProps) => {
   )
 }
 
+export type CodeElement = ReactElement<CodeProps, typeof Code>
+export type CodePropsOrElement = CodeProps | CodeElement
+
 function isCodeProps(o: any): o is CodeProps {
   return 'code' in o
 }
 
-function isCodeElement(o: any): o is ReactElement<CodeProps, typeof Code> {
+function isCodeElement(o: any): o is CodeElement {
   return o?.type === Code
 }
-
-export const codePropsOrElement = propsElementUnion<
-  typeof codeProps,
-  typeof Code
->(codeProps)
-export type CodePropsOrElement = z.infer<typeof codePropsOrElement>
 
 export function renderIfCode(o: any) {
   return isCodeProps(o) ? <Code {...o} /> : isCodeElement(o) ? o : null

@@ -1,32 +1,19 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
-import { dashboardProps as naturalDashboardProps } from '@fluent-blocks/schemas'
-
-import { propsElementUnion } from '../../../../lib'
+import { DashboardProps as NaturalDashboardProps } from '@fluent-blocks/schemas'
 
 import { Layout } from '../../Layout'
 import { LayoutProps } from '../../layout-properties'
-import { widgetPropsOrElement } from '../../../Card/exemplars/Widget'
-import { layoutItemProps } from '../../LayoutItem'
+import { WidgetPropsOrElement } from '../../../Card/exemplars/Widget'
+import { LayoutItemProps } from '../../LayoutItem'
 
-export const dashboardProps = naturalDashboardProps.merge(
-  z.object({
-    dashboard: naturalDashboardProps.shape.dashboard.merge(
-      z.object({
-        items: z.array(
-          layoutItemProps
-            .pick({ inlineSizeFactor: true, blockSizeFactor: true })
-            .merge(
-              z.object({
-                item: widgetPropsOrElement,
-              })
-            )
-        ),
-      })
-    ),
-  })
-)
-export type DashboardProps = z.infer<typeof dashboardProps>
+export interface DashboardProps
+  extends Omit<NaturalDashboardProps, 'dashboard'> {
+  dashboard: Omit<NaturalDashboardProps['dashboard'], 'items'> & {
+    items: (Pick<LayoutItemProps, 'inlineSizeFactor' | 'blockSizeFactor'> & {
+      item: WidgetPropsOrElement
+    })[]
+  }
+}
 
 export const dashboardLayout = ({
   dashboard: { items },
@@ -38,21 +25,16 @@ export const Dashboard = (props: DashboardProps) => (
   <Layout {...dashboardLayout(props)} />
 )
 
+export type DashboardElement = ReactElement<DashboardProps, typeof Dashboard>
+export type DashboardPropsOrElement = DashboardProps | DashboardElement
+
 function isDashboardProps(o: any): o is DashboardProps {
   return 'dashboard' in o
 }
 
-function isDashboardElement(
-  o: any
-): o is ReactElement<DashboardProps, typeof Dashboard> {
+function isDashboardElement(o: any): o is DashboardElement {
   return o?.type === Dashboard
 }
-
-export const dashboardPropsOrElement = propsElementUnion<
-  typeof dashboardProps,
-  typeof Dashboard
->(dashboardProps)
-export type DashboardPropsOrElement = z.infer<typeof dashboardPropsOrElement>
 
 export function renderIfDashboard(o: any) {
   return isDashboardProps(o) ? (

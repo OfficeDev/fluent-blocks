@@ -1,14 +1,12 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { multilineTextInputProps as naturalMultilineTextInputProps } from '@fluent-blocks/schemas'
+import { MultilineTextInputProps as NaturalMultilineTextInputProps } from '@fluent-blocks/schemas'
 
-import { Placeholder, propsElementUnion, useCommonStyles } from '../../lib'
-import { labelWithElements } from '../input-properties'
+import { Placeholder, useCommonStyles } from '../../lib'
+import { WithInputElements } from '../input-properties'
 
-export const multilineTextInputProps =
-  naturalMultilineTextInputProps.merge(labelWithElements)
-export type MultilineTextInputProps = z.infer<typeof multilineTextInputProps>
+export interface MultilineTextInputProps
+  extends WithInputElements<NaturalMultilineTextInputProps> {}
 
 const useMultilineTextInputStyles = makeStyles({
   root: {
@@ -32,23 +30,21 @@ export const MultilineTextInput = (props: MultilineTextInputProps) => {
   )
 }
 
+export type MultilineTextInputElement = ReactElement<
+  MultilineTextInputProps,
+  typeof MultilineTextInput
+>
+export type MultilineTextInputPropsOrElement =
+  | MultilineTextInputProps
+  | MultilineTextInputElement
+
 function isMultilineTextInputProps(o: any): o is MultilineTextInputProps {
   return 'type' in o && o.type === 'text' && 'multiline' in o && o.multiline
 }
 
-function isMultilineTextInputElement(
-  o: any
-): o is ReactElement<MultilineTextInputProps, typeof MultilineTextInput> {
+function isMultilineTextInputElement(o: any): o is MultilineTextInputElement {
   return o?.type === MultilineTextInput
 }
-
-export const multilineTextInputPropsOrElement = propsElementUnion<
-  typeof multilineTextInputProps,
-  typeof MultilineTextInput
->(multilineTextInputProps)
-export type MultilineTextInputPropsOrElement = z.infer<
-  typeof multilineTextInputPropsOrElement
->
 
 export function renderIfMultilineTextInput(o: any) {
   return isMultilineTextInputProps(o) ? (

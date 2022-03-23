@@ -1,59 +1,41 @@
-import { z } from 'zod'
-import {
-  accentScheme,
-  anyActionPayload,
-  themeName,
-} from '@fluent-blocks/schemas'
+import { AccentScheme, ThemeName } from '@fluent-blocks/schemas'
 
 import {
   FluentBlocksProvider,
-  ParseBoundary,
-  withActionHandler,
-  translations,
+  WithActionHandler,
+  Translations,
   defaultTranslations,
 } from '../../lib'
 
 import { Main } from '../../surfaces'
-import { sectionContentProps } from '../../blocks'
+import { SectionContentProps } from '../../blocks'
 
-export const viewProps = z.object({
-  // sidebar: z.object({}).optional(),
-  // topbar: z.object({}).optional(),
-  // modal: z.object({}).optional(),
-  main: sectionContentProps,
-  themeName: themeName.optional(),
-  accentScheme: accentScheme.optional(),
-  translations: translations.optional(),
-  basicSpriteUrl: z.string().optional(),
-  ...withActionHandler(anyActionPayload),
-})
-
-export type ViewProps = z.infer<typeof viewProps>
+export interface ViewProps extends WithActionHandler<any> {
+  main: SectionContentProps
+  themeName?: ThemeName
+  accentScheme?: AccentScheme
+  translations?: Translations
+  basicSpriteUrl?: string
+}
 
 /** An experience provided to the user via their device’s canvas. */
-export const View = (data: ViewProps) => (
-  <ParseBoundary<ViewProps>
-    schema={viewProps}
-    data={data}
-    children={({
-      main,
-      themeName = 'light',
-      accentScheme = 'web',
-      translations = defaultTranslations,
-      basicSpriteUrl,
+export const View = ({
+  main,
+  themeName = 'light',
+  accentScheme = 'web',
+  translations = defaultTranslations,
+  basicSpriteUrl,
+  onAction,
+}: ViewProps) => (
+  <FluentBlocksProvider
+    {...{
+      themeName,
+      accentScheme,
+      translations,
       onAction,
-    }) => (
-      <FluentBlocksProvider
-        {...{
-          themeName,
-          accentScheme,
-          translations,
-          onAction,
-          basicSpriteUrl,
-        }}
-      >
-        <Main {...main} />
-      </FluentBlocksProvider>
-    )}
-  />
+      basicSpriteUrl,
+    }}
+  >
+    <Main {...main} />
+  </FluentBlocksProvider>
 )

@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import { ReactElement, useCallback } from 'react'
 import {
   Button as FluentButton,
@@ -7,26 +6,20 @@ import {
   mergeClasses as cx,
 } from '@fluentui/react-components'
 import {
-  buttonProps as naturalButtonProps,
-  buttonActionPayload,
+  ButtonProps as NaturalButtonProps,
+  ButtonActionPayload as NaturalButtonActionPayload,
 } from '@fluent-blocks/schemas'
 
-import {
-  actionHandler,
-  propsElementUnion,
-  useFluentBlocksContext,
-  rem,
-  sx,
-} from '../../lib'
+import { WithActionHandler, useFluentBlocksContext, rem, sx } from '../../lib'
 import { Icon } from '../../inlines'
-import { shortInputContextualVariants } from '../input-properties'
+import { ShortInputContextualProps } from '../input-properties'
 
-export type ButtonActionPayload = z.infer<typeof buttonActionPayload>
+export type ButtonActionPayload = NaturalButtonActionPayload
 
-export const buttonProps = naturalButtonProps
-  .merge(actionHandler(buttonActionPayload))
-  .merge(shortInputContextualVariants)
-export type ButtonProps = z.infer<typeof buttonProps>
+export interface ButtonProps
+  extends NaturalButtonProps,
+    WithActionHandler<ButtonActionPayload>,
+    ShortInputContextualProps {}
 
 const useButtonStyles = makeStyles({
   root: {
@@ -187,21 +180,16 @@ export const Button = ({
   )
 }
 
+export type ButtonElement = ReactElement<ButtonProps, typeof Button>
+export type ButtonPropsOrElement = ButtonProps | ButtonElement
+
 function isButtonProps(o: any): o is ButtonProps {
-  return o && 'type' in o && o.type === 'button'
+  return o && 'type' in o && o.type === 'action'
 }
 
-function isButtonElement(
-  o: any
-): o is ReactElement<ButtonProps, typeof Button> {
+function isButtonElement(o: any): o is ButtonElement {
   return o?.type === Button
 }
-
-export const buttonPropsOrElement = propsElementUnion<
-  typeof buttonProps,
-  typeof Button
->(buttonProps)
-export type ButtonPropsOrElement = z.infer<typeof buttonPropsOrElement>
 
 export function renderIfButton(o: any) {
   return isButtonProps(o) ? <Button {...o} /> : isButtonElement(o) ? o : null

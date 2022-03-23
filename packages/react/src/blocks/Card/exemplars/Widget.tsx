@@ -1,40 +1,29 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
-import { widgetProps as naturalWidgetProps } from '@fluent-blocks/schemas'
+import {
+  HeadingLevel,
+  WidgetProps as NaturalWidgetProps,
+} from '@fluent-blocks/schemas'
 
-import { inlineSequenceOrString } from '../../../inlines'
-import { propsElementUnion } from '../../../lib'
-import { buttonProps } from '../../../inputs'
+import { InlineSequenceOrString } from '../../../inlines'
+import { ButtonProps } from '../../../inputs'
 
-import { tabsProps } from '../../Tabs/Tabs'
 import { Card } from '../Card'
-import { cardContextualVariants, CardProps } from '../card-properties'
+import { CardProps } from '../card-properties'
 
-export const widgetProps = naturalWidgetProps
-  .merge(
-    z.object({
-      widget: naturalWidgetProps.shape.widget.merge(
-        tabsProps.omit({ tabVariant: true, tabListVariant: true }).merge(
-          z.object({
-            title: inlineSequenceOrString.optional(),
-            abstract: inlineSequenceOrString.optional(),
-            footerAction: buttonProps
-              .omit({
-                type: true,
-                variant: true,
-                iconOnly: true,
-              })
-              .optional(),
-          })
-        )
-      ),
-    })
-  )
-  .extend(cardContextualVariants)
-export type WidgetProps = z.infer<typeof widgetProps>
+export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
+  widget: Omit<
+    NaturalWidgetProps['widget'],
+    'title' | 'abstract' | 'footerAction'
+  > & {
+    title?: InlineSequenceOrString
+    abstract?: InlineSequenceOrString
+    footerAction?: Omit<ButtonProps, 'type' | 'variant' | 'iconOnly'>
+  }
+  contextualVariant?: CardProps['contextualVariant']
+}
 
 const widgetFooterActionProps = {
-  type: 'button' as 'button',
+  type: 'action' as 'action',
   variant: 'transparent' as 'transparent',
 }
 
@@ -43,7 +32,7 @@ export const widgetCard = ({
   contextualVariant,
 }: WidgetProps): CardProps => ({
   card: [
-    ...(title ? [{ paragraph: title, level: 3 }] : []),
+    ...(title ? [{ paragraph: title, level: 3 as HeadingLevel }] : []),
     ...(abstract ? [{ paragraph: abstract }] : []),
     ...(tabs ? (tabs.length > 1 ? [{ tabs, label }] : tabs[0].panel) : []),
     ...(footerAction
@@ -55,21 +44,16 @@ export const widgetCard = ({
 
 export const Widget = (props: WidgetProps) => <Card {...widgetCard(props)} />
 
+export type WidgetElement = ReactElement<WidgetProps, typeof Widget>
+export type WidgetPropsOrElement = WidgetProps | WidgetElement
+
 function isWidgetProps(o: any): o is WidgetProps {
   return 'widget' in o
 }
 
-function isWidgetElement(
-  o: any
-): o is ReactElement<WidgetProps, typeof Widget> {
+function isWidgetElement(o: any): o is WidgetElement {
   return o?.type === Widget
 }
-
-export const widgetPropsOrElement = propsElementUnion<
-  typeof widgetProps,
-  typeof Widget
->(widgetProps)
-export type WidgetPropsOrElement = z.infer<typeof widgetPropsOrElement>
 
 export function renderIfWidget(o: any) {
   return isWidgetProps(o) ? <Widget {...o} /> : isWidgetElement(o) ? o : null

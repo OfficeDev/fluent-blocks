@@ -9,7 +9,7 @@ export default {
 
 type ButtonTestArgs = {
   button: ButtonProps
-  onAction?: ActionHandler
+  onAction?: ActionHandler<ButtonActionPayload>
 }
 
 const ButtonTemplate = ({ button, onAction }: ButtonTestArgs) => (
@@ -25,7 +25,7 @@ export const ButtonClickTest: typeof ButtonTemplate & {
 
 ButtonClickTest.args = {
   button: {
-    type: 'button',
+    type: 'action',
     actionId: '03cae49a-aaf5-4641-a652-6e633ffd1b75',
     label: 'ca227823-0eb2-42c4-a873-24a1c5068082',
     // eslint-disable-next-line no-console, no-restricted-globals
@@ -41,7 +41,7 @@ export const ButtonEmitTest: typeof ButtonTemplate & {
 
 ButtonEmitTest.args = {
   button: {
-    type: 'button',
+    type: 'action',
     actionId: 'bb35aced-ab23-4eaa-96c0-48cb8800f58f',
     label: '1c525f9a-de85-4b35-8c23-658c625a2bf8',
   },

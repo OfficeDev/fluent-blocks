@@ -90,7 +90,6 @@ const eslintrc = {
         lib: 'never',
       },
     ],
-    '@typescript-eslint/no-empty-interface': 'warn',
     '@typescript-eslint/no-misused-new': 'warn',
     '@typescript-eslint/type-annotation-spacing': 'warn',
     '@typescript-eslint/unified-signatures': 'warn',

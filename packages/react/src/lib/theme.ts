@@ -6,7 +6,13 @@ import {
   webDarkTheme,
   webHighContrastTheme,
 } from '@fluentui/react-components'
-import { ThemeName, AccentScheme } from '@fluent-blocks/schemas'
+import {
+  ThemeName as NaturalThemeName,
+  AccentScheme as NaturalAccentScheme,
+} from '@fluent-blocks/schemas'
+
+export type ThemeName = NaturalThemeName
+export type AccentScheme = NaturalAccentScheme
 
 export const getTheme = (
   themeName?: ThemeName,

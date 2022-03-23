@@ -1,21 +1,15 @@
-import { z } from 'zod'
 import { createElement, ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { headingLevel } from '@fluent-blocks/schemas'
+import { HeadingProps as NaturalHeadingProps } from '@fluent-blocks/schemas'
 
 import { InlineContent } from '../../inlines'
-import {
-  propsElementUnion,
-  useCommonStyles,
-  useTextBlockStyles,
-} from '../../lib'
+import { useCommonStyles, useTextBlockStyles } from '../../lib'
 
-import { paragraphProps } from '../Paragraph/Paragraph'
+import { ParagraphProps } from '../Paragraph/Paragraph'
 
-export const headingProps = paragraphProps.extend({
-  level: headingLevel.default(6).optional(),
-})
-export type HeadingProps = z.infer<typeof headingProps>
+export interface HeadingProps
+  extends ParagraphProps,
+    Omit<NaturalHeadingProps, 'paragraph'> {}
 
 export const Heading = (props: HeadingProps) => {
   const { paragraph, level = 6, contextualVariant = 'block' } = props
@@ -53,21 +47,16 @@ export const Heading = (props: HeadingProps) => {
   return createElement(elementName, { className }, content) as JSX.Element
 }
 
+export type HeadingElement = ReactElement<HeadingProps, typeof Heading>
+export type HeadingPropsOrElement = HeadingProps | HeadingElement
+
 function isHeadingProps(o: any): o is HeadingProps {
   return 'level' in o
 }
 
-function isHeadingElement(
-  o: any
-): o is ReactElement<HeadingProps, typeof Heading> {
+function isHeadingElement(o: any): o is HeadingElement {
   return o?.type === Heading
 }
-
-export const headingPropsOrElement = propsElementUnion<
-  typeof headingProps,
-  typeof Heading
->(headingProps)
-export type HeadingElement = z.infer<typeof headingPropsOrElement>
 
 export function renderIfHeading(o: any) {
   return isHeadingProps(o) ? <Heading {...o} /> : isHeadingElement(o) ? o : null

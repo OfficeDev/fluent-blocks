@@ -1,28 +1,15 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { mergeClasses as cx } from '@fluentui/react-components'
-import { paragraphProps as naturalParagraphProps } from '@fluent-blocks/schemas'
+import { ParagraphProps as NaturalParagraphProps } from '@fluent-blocks/schemas'
 
-import { InlineContent, inlineSequenceOrString } from '../../inlines'
-import {
-  propsElementUnion,
-  useCommonStyles,
-  useTextBlockStyles,
-} from '../../lib'
+import { InlineContent, InlineSequenceOrString } from '../../inlines'
+import { useCommonStyles, useTextBlockStyles } from '../../lib'
 
-export const paragraphProps = naturalParagraphProps
-  .merge(
-    z.object({
-      paragraph: inlineSequenceOrString,
-    })
-  )
-  .extend({
-    contextualVariant: z
-      .union([z.literal('card'), z.literal('block')])
-      .default('block')
-      .optional(),
-  })
-export type ParagraphProps = z.infer<typeof paragraphProps>
+export interface ParagraphProps
+  extends Omit<NaturalParagraphProps, 'paragraph'> {
+  paragraph: InlineSequenceOrString
+  contextualVariant?: 'card' | 'block'
+}
 
 export const Paragraph = (props: ParagraphProps) => {
   const { paragraph, contextualVariant = 'block' } = props
@@ -42,21 +29,16 @@ export const Paragraph = (props: ParagraphProps) => {
   )
 }
 
+export type ParagraphElement = ReactElement<ParagraphProps, typeof Paragraph>
+export type ParagraphPropsOrElement = ParagraphProps | ParagraphElement
+
 function isParagraphProps(o: any): o is ParagraphProps {
   return 'paragraph' in o
 }
 
-function isParagraphElement(
-  o: any
-): o is ReactElement<ParagraphProps, typeof Paragraph> {
+function isParagraphElement(o: any): o is ParagraphElement {
   return o?.type === Paragraph
 }
-
-export const paragraphPropsOrElement = propsElementUnion<
-  typeof paragraphProps,
-  typeof Paragraph
->(paragraphProps)
-export type ParagraphPropsOrElement = z.infer<typeof paragraphPropsOrElement>
 
 export function renderIfParagraph(o: any) {
   return isParagraphProps(o) ? (

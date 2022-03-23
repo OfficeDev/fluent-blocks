@@ -9,10 +9,11 @@ export interface ButtonActionPayload extends ActionPayload {
 export type ButtonVariant = 'outline' | 'primary' | 'subtle' | 'transparent'
 export type ButtonSize = 'small' | 'medium' | 'large'
 
-export interface ButtonProps extends InputProps {
+export interface ButtonProps extends Omit<InputProps, 'label'> {
   type: 'action'
-  variant: ButtonVariant
-  size: ButtonSize
+  label: string
+  variant?: ButtonVariant
+  size?: ButtonSize
   iconOnly?: boolean
   icon?: string
   iconPosition?: 'before' | 'after'
