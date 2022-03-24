@@ -1,20 +1,25 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.0.0-alpha.4",
+  "version": "9.0.0-alpha.5",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
     "Zhenya Savchenko <zhenyasa@microsoft.com>"
   ],
   "license": "MIT",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "cjs/index.js",
+    "module": "esm/index.js",
+    "types": "types/index.d.ts"
+  },
   "files": [
     "cjs",
     "esm",
     "types"
   ],
   "scripts": {
+    "prepublishOnly": "pnpm build",
     "build": "just-scripts build",
     "storybook:upgrade": "pnpm update \"@storybook/*\"",
     "storybook:build": "build-storybook",
