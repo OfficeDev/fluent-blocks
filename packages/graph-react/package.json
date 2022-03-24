@@ -17,16 +17,16 @@
     "check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@fluent-blocks/react": "latest",
+    "@fluent-blocks/react": "alpha",
     "@fluentui/react-components": "latest",
-    "@types/react": ">=16.8.0 <18.0.0",
-    "@types/react-dom": ">=16.8.0 <18.0.0",
-    "react": "18.0.0-rc.2",
-    "react-dom": "18.0.0-rc.2"
+    "@types/react": ">=17.0.0 <19.0.0",
+    "@types/react-dom": ">=17.0.0 <19.0.0",
+    "react": ">=17.0.0 <19.0.0",
+    "react-dom": ">=17.0.0 <19.0.0"
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluent-blocks/react": "workspace:9.0.0-alpha.1",
+    "@fluent-blocks/react": "workspace:9.0.0-alpha.4",
     "@fluentui/react-components": "latest",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
@@ -36,12 +36,12 @@
     "@storybook/theming": "latest",
     "@types/lodash": "latest",
     "@types/microsoft-graph": "^2.13.0",
-    "@types/node": "^17.0.18",
-    "@types/react": ">=16.8.0 <18.0.0",
-    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "@types/node": ">=17.0.0 <19.0.0",
+    "@types/react": ">=17.0.0 <19.0.0",
+    "@types/react-dom": ">=17.0.0 <19.0.0",
     "babel-loader": "latest",
-    "react": "18.0.0-rc.2",
-    "react-dom": "18.0.0-rc.2",
+    "react": ">=17.0.0 <19.0.0",
+    "react-dom": ">=17.0.0 <19.0.0",
     "webpack": "latest"
   },
   "dependencies": {
