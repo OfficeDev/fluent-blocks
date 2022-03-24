@@ -58,23 +58,29 @@ const useBigMessageStyles = makeStyles({
 
 function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
   const inputs: ShortInputSequence = []
-  primary && isEscapeElement(primary)
-    ? inputs.push(primary)
-    : inputs.push({
-        type: 'action',
-        variant: 'primary',
-        ...(primary as BigMessageActionProps),
-      })
-  secondary && isEscapeElement(secondary)
-    ? inputs.push(secondary)
-    : inputs.push({ type: 'action', ...(secondary as BigMessageActionProps) })
-  tertiary && isEscapeElement(tertiary)
-    ? inputs.push(tertiary)
-    : inputs.push({
-        type: 'action',
-        variant: 'subtle',
-        ...(tertiary as BigMessageActionProps),
-      })
+  if (primary) {
+    isEscapeElement(primary)
+      ? inputs.push(primary)
+      : inputs.push({
+          type: 'action',
+          variant: 'primary',
+          ...(primary as BigMessageActionProps),
+        })
+  }
+  if (secondary) {
+    isEscapeElement(secondary)
+      ? inputs.push(secondary)
+      : inputs.push({ type: 'action', ...(secondary as BigMessageActionProps) })
+  }
+  if (tertiary) {
+    isEscapeElement(tertiary)
+      ? inputs.push(tertiary)
+      : inputs.push({
+          type: 'action',
+          variant: 'subtle',
+          ...(tertiary as BigMessageActionProps),
+        })
+  }
   return <ShortInputs variant="narrow-block" inputs={inputs} />
 }
 
