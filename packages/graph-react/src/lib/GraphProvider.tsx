@@ -7,17 +7,13 @@ import { PublicClientApplication } from '@azure/msal-browser'
 export type GraphProviderContext = {
   tenantId: string
   clientId: string
-  clientSecret: string
   scopes: string[]
-  client: Client | undefined
 }
 
 export const defaultContext = {
   tenantId: process.env.TENANT_ID ?? '',
   clientId: process.env.CLIENT_ID ?? '',
-  clientSecret: process.env.CLIENT_SECRET ?? '',
   scopes: process.env.SCOPES?.split(',') ?? [''],
-  client: undefined,
 }
 
 /**
