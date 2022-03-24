@@ -6,7 +6,7 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 import { BlockCard, LayoutCard } from './StorybookCard'
 import { contextArgTypes } from '../../lib'
 
-import basicSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
 
 <Meta
   title="Blocks/Card"
@@ -31,10 +31,10 @@ import basicSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
 />
 
 export const CardBlockTemplate = (props) => (
-  <BlockCard {...props} basicSpriteUrl={basicSpriteUrl} />
+  <BlockCard {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 export const CardLayoutTemplate = (props) => (
-  <LayoutCard {...props} basicSpriteUrl={basicSpriteUrl} />
+  <LayoutCard {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
 # Card

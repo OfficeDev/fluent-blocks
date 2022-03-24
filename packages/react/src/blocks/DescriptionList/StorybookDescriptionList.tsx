@@ -6,14 +6,14 @@ import { DescriptionListProps } from './DescriptionList'
 export const DescriptionList = ({
   themeName,
   accentScheme,
-  basicSpriteUrl,
+  iconSpriteUrl,
   ...props
 }: DescriptionListProps & {
   themeName: ThemeName
   accentScheme: AccentScheme
-  basicSpriteUrl: string
+  iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
+  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
     <Main
       blocks={[
         {

@@ -11,7 +11,7 @@ export type FluentPatternsBlocksData = {
   accentScheme: AccentScheme
   theme: ReturnType<typeof getTheme>
   onAction: ActionHandler<any>
-  basicSpriteUrl: string
+  iconSpriteUrl: string
 }
 
 export const defaultContext: FluentPatternsBlocksData = {
@@ -20,7 +20,7 @@ export const defaultContext: FluentPatternsBlocksData = {
   accentScheme: 'web',
   theme: getTheme('light', 'web'),
   onAction: noop,
-  basicSpriteUrl: '/sprites/basic-icons.svg',
+  iconSpriteUrl: '/sprites/basic-icons.svg',
 }
 
 export const FluentBlocksContext =

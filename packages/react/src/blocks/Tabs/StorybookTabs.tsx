@@ -5,14 +5,14 @@ import { Main } from '../../surfaces'
 export const Tabs = ({
   themeName,
   accentScheme,
-  basicSpriteUrl,
+  iconSpriteUrl,
   ...props
 }: TabsProps & {
   themeName: ThemeName
   accentScheme: AccentScheme
-  basicSpriteUrl: string
+  iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, basicSpriteUrl }}>
+  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
     <Main title={[{ text: ' ' }]} blocks={[{ card: [props] }]} />
   </FluentBlocksProvider>
 )

@@ -1,26 +1,26 @@
 import { BigMessageProps } from './BigMessage'
 import {
   AccentScheme,
-  ActionHandler,
   FluentBlocksProvider,
   ThemeName,
+  WithActionHandler,
 } from '../../lib'
 import { Main } from '../../surfaces'
+import { ButtonActionPayload } from '../../inputs'
 
 export const BigMessage = ({
   themeName,
   accentScheme,
   onAction,
-  basicSpriteUrl,
+  iconSpriteUrl,
   ...props
 }: BigMessageProps['message'] & {
   themeName: ThemeName
   accentScheme: AccentScheme
-  onAction: ActionHandler
-  basicSpriteUrl: string
-}) => (
+  iconSpriteUrl: string
+} & WithActionHandler<ButtonActionPayload>) => (
   <FluentBlocksProvider
-    {...{ themeName, accentScheme, onAction, basicSpriteUrl }}
+    {...{ themeName, accentScheme, onAction, iconSpriteUrl }}
   >
     <Main
       blocks={[

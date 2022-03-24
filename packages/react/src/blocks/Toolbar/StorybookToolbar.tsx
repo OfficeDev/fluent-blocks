@@ -13,7 +13,7 @@ export const Toolbar = ({
   accentScheme,
   onAction,
   buttonSize,
-  basicSpriteUrl,
+  iconSpriteUrl,
   ...props
 }: {
   toolbar: Omit<ToolbarProps['toolbar'], 'buttonSize'>
@@ -21,10 +21,10 @@ export const Toolbar = ({
   accentScheme: AccentScheme
   onAction: ActionHandler
   buttonSize: 'small' | 'medium' | 'large'
-  basicSpriteUrl: string
+  iconSpriteUrl: string
 }) => (
   <FluentBlocksProvider
-    {...{ themeName, accentScheme, onAction, basicSpriteUrl }}
+    {...{ themeName, accentScheme, onAction, iconSpriteUrl }}
   >
     <Main
       title={[{ text: ' ' }]}
