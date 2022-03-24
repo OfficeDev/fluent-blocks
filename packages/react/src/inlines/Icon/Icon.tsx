@@ -10,7 +10,7 @@ function spriteHref(
   icon: string,
   size: IconSize,
   variant: IconVariant,
-  basicSpriteUrl: string
+  iconSpriteUrl: string
 ): string {
   const style = variant === 'outline' ? 'regular' : variant
   const assetId = `${icon}_${size}_${style}`
@@ -25,7 +25,7 @@ function spriteHref(
     )
   ) {
     // use basic sprite
-    return `${basicSpriteUrl}#${assetId}`
+    return `${iconSpriteUrl}#${assetId}`
   } else {
     // fallback
     return `/sprites/${assetId}.sprite.svg#${assetId}`
@@ -46,10 +46,10 @@ const useIconStyles = makeStyles({
 export const Icon = (props: IconProps) => {
   const { icon, variant = 'outline', size = 16 } = props
   const iconStyles = useIconStyles()
-  const { basicSpriteUrl } = useFluentBlocksContext()
+  const { iconSpriteUrl } = useFluentBlocksContext()
   return (
     <svg className={iconStyles.root} data-chromatic="ignore">
-      <use href={spriteHref(icon, size, variant, basicSpriteUrl)} />
+      <use href={spriteHref(icon, size, variant, iconSpriteUrl)} />
     </svg>
   )
 }

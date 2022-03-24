@@ -16,10 +16,63 @@ If you’d like to run the development environment or contribute to this project
 
 ## Getting started
 
-1. Using TypeScript and an IDE that supports type inspections will make using this project much easier
-2. Install `@fluent-blocks/react@alpha` using your package manager
-4. **Make sure to resolve any peer dependency warnings**; currently all peer dependencies are needed at the right versions for this package to work
-5. Use the `View` component to hand off all UI responsibility to this project, or use individual components as you need, whichever suits your needs best.
+Using TypeScript and an IDE that supports type inspections will make using this project much easier!
+
+1. Add `react@17`, `react-dom@17`, and `@fluentui/react-components@latest` if they’re not in your project already
+2. Add `chart.js@^2.9.4` if you want to use charts from this package
+3. Depending on your package manager, you may need to add `@fluent-blocks/basic-icons` to use icons
+4. Finally, install this package, `@fluent-blocks/react@alpha`, using your package manager
+
+Now anywhere you can use React, you can use Fluent Blocks. If you want to delegate the entire viewport to Fluent Blocks, use the `View` component on its own:
+
+```tsx
+import { View, Escape } from '@fluent-blocks/react';
+import basicIcons from '@fluent-blocks/basic-icons/basic-icons.svg';
+import { render } from 'react-dom'
+
+render(
+  <View accentScheme='teams' iconSpriteUrl={basicIcons} main={{
+    title: 'Hello, world.',
+    blocks: [
+      {
+        message: {
+          title: 'Let’s do this thing…',
+          variant: 'big',
+          media: {illustration: 'hello', label: 'Hello'},
+          viewportHeight: false,
+          actions: {
+            primary: <Escape contentMeetsAccessibilityAndDesignStandards>
+              <span>…for real this time.</span>
+            </Escape>,
+            secondary: {
+              actionId: 'start',
+              label: 'Get started',
+              icon: 'arrow_right',
+              iconPosition: 'after'
+            }
+          }
+        }
+      },
+    ],
+  }}/>,
+  document.getElementById('root')
+)
+```
+
+If you want to use Fluent Blocks’ intermediary components, wrap where any will render in a single `FluentBlocksProvider` (there only needs to be one on the page):
+
+```tsx
+import { FluentBlocksProvider, Illustration } from '@fluent-blocks/react';
+import basicIcons from '@fluent-blocks/basic-icons/basic-icons.svg';
+import { render } from 'react-dom'
+
+render(
+  <FluentBlocksProvider iconSpriteUrl={basicIcons}>
+    <Illustration illustration='hello' label='Hello'/>
+  </FluentBlocksProvider>,
+  document.getElementById('root')
+)
+```
 
 ## How design pattern usage is validated through types
 
