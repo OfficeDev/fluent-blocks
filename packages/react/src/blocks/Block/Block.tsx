@@ -1,46 +1,41 @@
-import { z } from 'zod'
-
-import { invalidBlock, escapeElement, renderIfEscape } from '../../lib'
+import { invalidBlock, EscapeElement, renderIfEscape } from '../../lib'
 
 import {
-  paragraphPropsOrElement,
+  ParagraphPropsOrElement,
   renderIfParagraph,
 } from '../Paragraph/Paragraph'
-import { figurePropsOrElement, renderIfFigure } from '../Figure/Figure'
+import { FigurePropsOrElement, renderIfFigure } from '../Figure/Figure'
 import {
-  shortInputsPropsOrElement,
+  ShortInputsPropsOrElement,
   renderIfShortInputs,
 } from '../ShortInputs/ShortInputs'
 import {
-  multilineTextInputPropsOrElement,
+  MultilineTextInputPropsOrElement,
   renderIfMultilineTextInput,
-  radioGroupPropsOrElement,
+  RadioGroupPropsOrElement,
   renderIfRadioGroup,
 } from '../../inputs'
 import {
-  bigMessagePropsOrElement,
+  BigMessagePropsOrElement,
   renderIfBigMessage,
 } from '../BigMessage/BigMessage'
-import { layoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
-import { cardPropsOrElement, renderIfCard } from '../Card/Card'
-import { toolbarPropsOrElement, renderIfToolbar } from '../Toolbar/Toolbar'
+import { LayoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
+import { CardPropsOrElement, renderIfCard } from '../Card/Card'
+import { ToolbarPropsOrElement, renderIfToolbar } from '../Toolbar/Toolbar'
 
-export const blockEntity = z.union([
-  paragraphPropsOrElement,
-  layoutPropsOrElement,
-  figurePropsOrElement,
-  cardPropsOrElement,
-  toolbarPropsOrElement,
-  shortInputsPropsOrElement,
-  multilineTextInputPropsOrElement,
-  radioGroupPropsOrElement,
-  bigMessagePropsOrElement,
-  escapeElement,
-])
-export type BlockEntity = z.infer<typeof blockEntity>
+export type BlockEntity =
+  | ParagraphPropsOrElement
+  | LayoutPropsOrElement
+  | FigurePropsOrElement
+  | CardPropsOrElement
+  | ToolbarPropsOrElement
+  | ShortInputsPropsOrElement
+  | MultilineTextInputPropsOrElement
+  | RadioGroupPropsOrElement
+  | BigMessagePropsOrElement
+  | EscapeElement
 
-export const blockSequence = z.array(blockEntity)
-export type BlockSequence = z.infer<typeof blockSequence>
+export type BlockSequence = BlockEntity[]
 
 /**
  * This component primarily serves as a way to route to more specific block elements based on which properties are present.

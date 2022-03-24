@@ -3,5 +3,5 @@
 import expect from 'expect'
 
 describe('Short text input', function () {
-  it('is still in placeholder stage')
+  it('iS READY FOR TESTS')
 })

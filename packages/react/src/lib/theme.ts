@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import {
   teamsLightTheme,
   teamsDarkTheme,
@@ -7,10 +6,13 @@ import {
   webDarkTheme,
   webHighContrastTheme,
 } from '@fluentui/react-components'
-import { themeName, accentScheme } from '@fluent-blocks/schemas'
+import {
+  ThemeName as NaturalThemeName,
+  AccentScheme as NaturalAccentScheme,
+} from '@fluent-blocks/schemas'
 
-export type ThemeName = z.infer<typeof themeName>
-export type AccentScheme = z.infer<typeof accentScheme>
+export type ThemeName = NaturalThemeName
+export type AccentScheme = NaturalAccentScheme
 
 export const getTheme = (
   themeName?: ThemeName,
@@ -22,7 +24,7 @@ export const getTheme = (
     case 'teams':
       return (() => {
         switch (resolvedThemeName) {
-          case 'high-contrast':
+          case 'highContrast':
             return teamsHighContrastTheme
           case 'dark':
             return teamsDarkTheme
@@ -33,7 +35,7 @@ export const getTheme = (
     default:
       return (() => {
         switch (resolvedThemeName) {
-          case 'high-contrast':
+          case 'highContrast':
             return webHighContrastTheme
           case 'dark':
             return webDarkTheme
@@ -47,10 +49,10 @@ export const getTheme = (
 export const contextArgTypes = {
   themeName: {
     name: 'Theme',
-    options: ['light', 'dark', 'high-contrast'],
+    options: ['light', 'dark', 'highContrast'],
     control: {
       type: 'inline-radio',
-      labels: { light: 'Light', dark: 'Dark', 'high-contrast': 'HC' },
+      labels: { light: 'Light', dark: 'Dark', highContrast: 'HC' },
     },
     table: {
       type: { summary: 'ThemeName' },

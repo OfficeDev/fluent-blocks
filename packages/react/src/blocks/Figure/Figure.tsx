@@ -1,20 +1,17 @@
-import { z } from 'zod'
 import uniqueId from 'lodash/uniqueId'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { figureProps as naturalFigureProps } from '@fluent-blocks/schemas'
+import { FigureProps as NaturalFigureProps } from '@fluent-blocks/schemas'
 
-import { inlineSequenceOrString, InlineContent } from '../../inlines'
-import { mediaEntity, Media } from '../../media'
-import { propsElementUnion, useCommonStyles } from '../../lib'
+import { InlineSequenceOrString, InlineContent } from '../../inlines'
+import { MediaEntity, Media } from '../../media'
+import { useCommonStyles } from '../../lib'
 
-export const figureProps = naturalFigureProps.merge(
-  z.object({
-    media: mediaEntity,
-    caption: inlineSequenceOrString.optional(),
-  })
-)
-export type FigureProps = z.infer<typeof figureProps>
+export interface FigureProps
+  extends Omit<NaturalFigureProps, 'media' | 'caption'> {
+  media: MediaEntity
+  caption?: InlineSequenceOrString
+}
 
 const useFigureStyles = makeStyles({
   root: {
@@ -58,21 +55,16 @@ export const Figure = (props: FigureProps) => {
   )
 }
 
+export type FigureElement = ReactElement<FigureProps, typeof Figure>
+export type FigurePropsOrElement = FigureProps | FigureElement
+
 function isFigureProps(o: any): o is FigureProps {
   return 'media' in o
 }
 
-function isFigureElement(
-  o: any
-): o is ReactElement<FigureProps, typeof Figure> {
+function isFigureElement(o: any): o is FigureElement {
   return o?.type === Figure
 }
-
-export const figurePropsOrElement = propsElementUnion<
-  typeof figureProps,
-  typeof Figure
->(figureProps)
-export type FigurePropsOrElement = z.infer<typeof figurePropsOrElement>
 
 export function renderIfFigure(o: any) {
   return isFigureProps(o) ? <Figure {...o} /> : isFigureElement(o) ? o : null

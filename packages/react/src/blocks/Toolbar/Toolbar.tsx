@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import {
   ReactElement,
   useCallback,
@@ -24,68 +23,49 @@ import {
 } from '@fluentui/react-components'
 
 import {
-  toolbarDivider,
-  toolbarAction as naturalToolbarAction,
-  toolbarProps as naturalToolbarProps,
+  ToolbarDivider,
+  ToolbarAction as NaturalToolbarAction,
+  ToolbarProps as NaturalToolbarProps,
 } from '@fluent-blocks/schemas'
 
-import { Button, buttonProps } from '../../inputs'
+import { Button, ButtonActionPayload, ButtonProps } from '../../inputs'
 import {
-  ActionHandler,
-  propsElementUnion,
   rem,
   Sequence,
   useCommonStyles,
   useFluentBlocksContext,
+  WithActionHandler,
 } from '../../lib'
 import { Icon } from '../../inlines'
 
-export const toolbarAction = naturalToolbarAction.merge(
-  buttonProps.omit({
-    type: true,
-    variant: true,
-    size: true,
-    iconSize: true,
-    contextualVariant: true,
-  })
-)
-export type ToolbarAction = z.infer<typeof toolbarAction>
+export interface ToolbarAction
+  extends NaturalToolbarAction,
+    Omit<
+      ButtonProps,
+      'type' | 'variant' | 'size' | 'iconSze' | 'contextualVariant'
+    > {}
 
-export const toolbarItemEntity = z.union([toolbarAction, toolbarDivider])
-export type ToolbarItemEntity = z.infer<typeof toolbarItemEntity>
+export type ToolbarItemEntity = ToolbarAction | ToolbarDivider
 
-export const toolbarItemSequence = z.array(toolbarItemEntity)
+export type ToolbarItemSequence = ToolbarItemEntity[]
 
-export const toolbarProps = naturalToolbarProps
-  .merge(
-    z.object({
-      toolbar: naturalToolbarProps.shape.toolbar.merge(
-        z.object({
-          items: toolbarItemSequence,
-        })
-      ),
-    })
-  )
-  .extend({
-    contextualVariant: z
-      .union([z.literal('card'), z.literal('block')])
-      .default('block')
-      .optional(),
-  })
-export type ToolbarProps = z.infer<typeof toolbarProps>
+export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
+  toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {
+    items: ToolbarItemSequence
+  }
+  contextualVariant?: 'card' | 'block'
+}
 
-const toolbarItemContextualOptions = toolbarProps.shape.toolbar.pick({
-  iconSize: true,
-  buttonSize: true,
-})
-type ToolbarItemContextualOptions = z.infer<
-  typeof toolbarItemContextualOptions
+type ToolbarItemContextualOptions = Pick<
+  ToolbarProps['toolbar'],
+  'iconSize' | 'buttonSize'
 > &
-  Partial<{
-    layoutNeedsUpdate: boolean
-    hidden: boolean
-    onAction: ActionHandler
-  }>
+  Partial<
+    WithActionHandler<ButtonActionPayload> & {
+      layoutNeedsUpdate: boolean
+      hidden: boolean
+    }
+  >
 
 const defaultIconSize = 16
 const defaultButtonSize = 'medium'
@@ -172,7 +152,7 @@ const ToolbarItemInFlow = (
           : item.hidden
           ? 'toolbar-item--hidden'
           : 'toolbar-item',
-        type: 'button',
+        type: 'action',
       })
     default:
       return null
@@ -311,21 +291,16 @@ export const Toolbar = ({
   )
 }
 
+export type ToolbarElement = ReactElement<ToolbarProps, typeof Toolbar>
+export type ToolbarPropsOrElement = ToolbarProps | ToolbarElement
+
 function isToolbarProps(o: any): o is ToolbarProps {
   return 'toolbar' in o
 }
 
-function isToolbarElement(
-  o: any
-): o is ReactElement<ToolbarProps, typeof Toolbar> {
+function isToolbarElement(o: any): o is ToolbarElement {
   return o?.type === Toolbar
 }
-
-export const toolbarPropsOrElement = propsElementUnion<
-  typeof toolbarProps,
-  typeof Toolbar
->(toolbarProps)
-export type ToolbarPropsOrElement = z.infer<typeof toolbarPropsOrElement>
 
 export function renderIfToolbar(o: any) {
   return isToolbarProps(o) ? <Toolbar {...o} /> : isToolbarElement(o) ? o : null

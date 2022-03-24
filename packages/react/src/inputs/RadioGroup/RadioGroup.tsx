@@ -1,7 +1,6 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { radioGroupProps as naturalRadioGroupProps } from '@fluent-blocks/schemas'
+import { RadioGroupProps as NaturalRadioGroupProps } from '@fluent-blocks/schemas'
 
 // todo: fix this import when it stabilizes
 import {
@@ -10,12 +9,12 @@ import {
   Label,
 } from '@fluentui/react-components/unstable'
 
-import { propsElementUnion, useCommonStyles } from '../../lib'
-import { labelWithElements } from '../input-properties'
+import { makeLabelId, useCommonStyles } from '../../lib'
+import { WithInputElements } from '../input-properties'
 import { InlineContent } from '../../inlines'
 
-export const radioGroupProps = naturalRadioGroupProps.merge(labelWithElements)
-export type RadioGroupProps = z.infer<typeof radioGroupProps>
+export interface RadioGroupProps
+  extends WithInputElements<NaturalRadioGroupProps> {}
 
 const useRadioGroupStyles = makeStyles({
   root: {
@@ -38,7 +37,7 @@ export const RadioGroup = ({
 }: RadioGroupProps) => {
   const radioGroupStyles = useRadioGroupStyles()
   const commonStyles = useCommonStyles()
-  const labelId = `${actionId}__label`
+  const labelId = makeLabelId(actionId)
   return (
     <div
       className={cx(
@@ -66,21 +65,16 @@ export const RadioGroup = ({
   )
 }
 
+export type RadioGroupElement = ReactElement<RadioGroupProps, typeof RadioGroup>
+export type RadioGroupPropsOrElement = RadioGroupProps | RadioGroupElement
+
 function isRadioGroupProps(o: any): o is RadioGroupProps {
   return 'type' in o && o.type === 'radio-group'
 }
 
-function isRadioGroupElement(
-  o: any
-): o is ReactElement<RadioGroupProps, typeof RadioGroup> {
+function isRadioGroupElement(o: any): o is RadioGroupElement {
   return o?.type === RadioGroup
 }
-
-export const radioGroupPropsOrElement = propsElementUnion<
-  typeof radioGroupProps,
-  typeof RadioGroup
->(radioGroupProps)
-export type RadioGroupPropsOrElement = z.infer<typeof radioGroupPropsOrElement>
 
 export function renderIfRadioGroup(o: any) {
   return isRadioGroupProps(o) ? (

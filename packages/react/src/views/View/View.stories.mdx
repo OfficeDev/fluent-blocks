@@ -291,7 +291,7 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                       {
                         inputs: [
                           {
-                            type: 'button',
+                            type: 'action',
                             actionId: 'auth',
                             label: 'Authorize',
                             variant: 'primary',
@@ -330,8 +330,7 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                         media: {
                           light: 'https://i.ibb.co/LdW9rHH/deploy.png',
                           dark: 'https://i.ibb.co/LdW9rHH/deploy.png',
-                          'high-contrast':
-                            'https://i.ibb.co/LdW9rHH/deploy.png',
+                          highContrast: 'https://i.ibb.co/LdW9rHH/deploy.png',
                           label:
                             'Screenshot of deploying in Visual Studio Code.',
                         },
@@ -353,8 +352,7 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                         media: {
                           light: 'https://i.ibb.co/pj5VzYQ/publish.png',
                           dark: 'https://i.ibb.co/pj5VzYQ/publish.png',
-                          'high-contrast':
-                            'https://i.ibb.co/pj5VzYQ/publish.png',
+                          highContrast: 'https://i.ibb.co/pj5VzYQ/publish.png',
                           label:
                             'Screenshot of publishing in Visual Studio Code.',
                         },
@@ -370,26 +368,6 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
         ],
       },
       accentScheme: 'teams',
-    }}
-  >
-    {seed(1234) || ViewTemplate.bind({})}
-  </Story>
-</Canvas>
-
-## Props parsing & validation issues
-
-As a first-class pattern, `View` will parse the content props you give it
-and render any schema validation issues it encounters to the page in
-development. In production, it will display an error message to the user and
-call its error callback with the issues.
-
-<Canvas withSource="none">
-  <Story
-    name="Props validation"
-    args={{
-      main: {
-        title: [{ potato: 'This content won’t be valid.' }],
-      },
     }}
   >
     {seed(1234) || ViewTemplate.bind({})}

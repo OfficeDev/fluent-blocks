@@ -3,3 +3,6 @@ node_modules
 *.log
 .eslintcache
 .DS_Store
+cjs
+esm
+types.d.ts

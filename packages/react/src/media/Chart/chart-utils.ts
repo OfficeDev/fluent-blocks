@@ -89,27 +89,27 @@ export function tooltipTrigger({
       if (dataset.data[index] === data.datasets[set].data[index]) {
         duplicates.push(i)
       }
-      if (themeName === 'high-contrast') {
+      if (themeName === 'highContrast') {
         chart.data.datasets[i].borderColor = theme.colorNeutralStroke1
         chart.data.datasets[i].borderWidth = 2
       }
     })
     duplicates.forEach((segmentId) => {
       segments.push(chart.getDatasetMeta(segmentId).data[index])
-      if (themeName === 'high-contrast') {
+      if (themeName === 'highContrast') {
         chart.data.datasets[segmentId].borderColor =
           theme.colorNeutralStroke1Hover
         chart.data.datasets[segmentId].borderWidth = 4
       }
     })
-    if (themeName === 'high-contrast') {
+    if (themeName === 'highContrast') {
       chart.update()
     }
     chart.tooltip._active = segments
   } else {
     const segment = chart.getDatasetMeta(set).data[index]
     chart.tooltip._active = [segment]
-    if (themeName === 'high-contrast' && patterns) {
+    if (themeName === 'highContrast' && patterns) {
       chart.data.datasets.map((dataset: any, i: number) => {
         dataset.borderColor = theme.colorNeutralStroke1
         dataset.borderWidth = 2
@@ -348,11 +348,11 @@ export const setTooltipColorScheme = ({
     titleFontColor: theme.colorNeutralForeground3,
     bodyFontColor: theme.colorNeutralForeground3,
     footerFontColor: theme.colorNeutralForeground3,
-    borderWidth: themeName === 'high-contrast' ? 2 : 0,
+    borderWidth: themeName === 'highContrast' ? 2 : 0,
     callbacks: {
       ...chart.options.tooltips?.callbacks,
       labelColor:
-        patterns && themeName === 'high-contrast'
+        patterns && themeName === 'highContrast'
           ? (tooltipItem: any) => ({
               borderColor: 'transparent',
               backgroundColor: buildPattern({
@@ -376,7 +376,7 @@ export const setTooltipColorScheme = ({
             }),
     },
   }
-  if (themeName === 'high-contrast') {
+  if (themeName === 'highContrast') {
     ;(chart as any).options.scales.yAxes[0].gridLines.lineWidth = 0.25
   } else {
     ;(chart as any).options.scales.yAxes[0].gridLines.lineWidth = 1

@@ -60,7 +60,7 @@ export const LineChart = memo(
           pointStyle: 'circle',
           borderDash: [],
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           dataPointConfig = {
             ...dataPointConfig,
             borderColor: theme.colorBrandBackground,
@@ -95,7 +95,7 @@ export const LineChart = memo(
           0,
           ctx.canvas.clientHeight * 0.8
         )
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           const colorRGB = hexToRgb(theme.colorBrandBackground)
           const hoverColorRGB = hexToRgb(theme.colorNeutralStroke1Hover)
           gradientStroke.addColorStop(0, `rgba(${colorRGB}, .2)`)
@@ -132,7 +132,7 @@ export const LineChart = memo(
           pointStyle: 'circle',
           borderDash: [],
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           dataPointConfig = {
             ...dataPointConfig,
             borderColor: theme.colorBrandBackground,
@@ -253,7 +253,7 @@ export const LineChart = memo(
             break
           }
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           chart.data.datasets.map((dataset: any) => {
             dataset.borderColor = theme.colorNeutralStroke1
             dataset.borderWidth = 2

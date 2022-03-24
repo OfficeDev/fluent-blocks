@@ -171,7 +171,7 @@ const illustration = {
       </g>
     </svg>
   ),
-  'high-contrast': (
+  highContrast: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 221" width="100%">
       <defs />
       <g fill="none" fillRule="nonzero">

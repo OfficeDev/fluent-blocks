@@ -1,12 +1,10 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { shortInputsProps as naturalShortInputsProps } from '@fluent-blocks/schemas'
+import { ShortInputsProps as NaturalShortInputsProps } from '@fluent-blocks/schemas'
 
 import {
-  escapeElement,
+  EscapeElement,
   invalidShortInput,
-  propsElementUnion,
   rem,
   renderIfEscape,
   Sequence,
@@ -14,36 +12,24 @@ import {
   useCommonStyles,
 } from '../../lib'
 import {
-  buttonPropsOrElement,
+  ButtonPropsOrElement,
   renderIfButton,
   renderIfShortTextInput,
-  shortTextInputPropsOrElement,
+  ShortTextInputPropsOrElement,
 } from '../../inputs'
 
-export const shortInputEntity = z.union([
-  shortTextInputPropsOrElement,
-  buttonPropsOrElement,
-  escapeElement,
-])
-export type ShortInputEntity = z.infer<typeof shortInputEntity>
+export type ShortInputEntity =
+  | ShortTextInputPropsOrElement
+  | ButtonPropsOrElement
+  | EscapeElement
 
-export const shortInputSequence = z.array(shortInputEntity)
-export type ShortInputSequence = z.infer<typeof shortInputSequence>
+export type ShortInputSequence = ShortInputEntity[]
 
-export const shortInputsProps = naturalShortInputsProps
-  .merge(
-    z.object({
-      inputs: shortInputSequence,
-    })
-  )
-  .extend({
-    contextualVariant: z
-      .union([z.literal('card'), z.literal('block')])
-      .default('block')
-      .optional(),
-  })
-export type ShortInputsProps = z.infer<typeof shortInputsProps>
-type Variants = ShortInputsProps['variant']
+export interface ShortInputsProps
+  extends Omit<NaturalShortInputsProps, 'inputs'> {
+  inputs: ShortInputSequence
+  contextualVariant?: 'card' | 'block'
+}
 
 const useShortInputsStyles = makeStyles({
   root: {
@@ -107,23 +93,19 @@ export const ShortInputs = (props: ShortInputsProps) => {
   )
 }
 
+export type ShortInputsElement = ReactElement<
+  ShortInputsProps,
+  typeof ShortInputs
+>
+export type ShortInputsPropsOrElement = ShortInputsProps | ShortInputsElement
+
 function isShortInputsProps(o: any): o is ShortInputsProps {
   return 'inputs' in o
 }
 
-function isShortInputsElement(
-  o: any
-): o is ReactElement<ShortInputsProps, typeof ShortInputs> {
+function isShortInputsElement(o: any): o is ShortInputsElement {
   return o?.type === ShortInputs
 }
-
-export const shortInputsPropsOrElement = propsElementUnion<
-  typeof shortInputsProps,
-  typeof ShortInputs
->(shortInputsProps)
-export type ShortInputsPropsOrElement = z.infer<
-  typeof shortInputsPropsOrElement
->
 
 export function renderIfShortInputs(o: any) {
   return isShortInputsProps(o) ? (

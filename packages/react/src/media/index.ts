@@ -1,24 +1,21 @@
-import { z } from 'zod'
-import { escapeElement, renderIfEscape, invalidMedia } from '../lib'
+import { EscapeElement, renderIfEscape, invalidMedia } from '../lib'
 import {
-  illustrationPropsOrElement,
+  IllustrationPropsOrElement,
   renderIfIllustration,
 } from './Illustration/Illustration'
-import { codePropsOrElement, renderIfCode } from './Code/Code'
+import { CodePropsOrElement, renderIfCode } from './Code/Code'
 import {
   renderIfThemedImage,
-  themedImagePropsOrElement,
+  ThemedImagePropsOrElement,
 } from './ThemedImage/ThemedImage'
-import { chartPropsOrElement, renderIfChart } from './Chart/Chart'
+import { ChartPropsOrElement, renderIfChart } from './Chart/Chart'
 
-export const mediaEntity = z.union([
-  illustrationPropsOrElement,
-  chartPropsOrElement,
-  codePropsOrElement,
-  themedImagePropsOrElement,
-  escapeElement,
-])
-export type MediaEntity = z.infer<typeof mediaEntity>
+export type MediaEntity =
+  | IllustrationPropsOrElement
+  | ChartPropsOrElement
+  | CodePropsOrElement
+  | ThemedImagePropsOrElement
+  | EscapeElement
 
 export const Media = (o: MediaEntity) =>
   renderIfIllustration(o) ||

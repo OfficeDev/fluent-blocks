@@ -1,41 +1,37 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { bigMessageProps as naturalBigMessageProps } from '@fluent-blocks/schemas'
+import { BigMessageProps as NaturalBigMessageProps } from '@fluent-blocks/schemas'
 
-import { escaped, renderIfEscape, rem, propsElementUnion, sx } from '../../lib'
-import { mediaEntity } from '../../media'
-import { inlineSequenceOrString } from '../../inlines'
-import { ButtonProps, buttonProps } from '../../inputs'
+import { renderIfEscape, rem, sx, EscapeElement } from '../../lib'
+import { MediaEntity } from '../../media'
+import { InlineSequenceOrString } from '../../inlines'
+import { ButtonProps } from '../../inputs'
 
 import { Figure } from '../Figure/Figure'
 import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
-const actionProps = buttonProps.omit({ variant: true, type: true })
+type BigMessageActionProps = Omit<ButtonProps, 'variant' | 'type'>
 
-const actionsBlockProps = z.object({
-  primary: actionProps.optional(),
-  secondary: actionProps.optional(),
-  tertiary: actionProps.optional(),
-})
-type ActionsBlockProps = z.infer<typeof actionsBlockProps>
+type ActionsBlockProps = {
+  primary?: BigMessageActionProps
+  secondary?: BigMessageActionProps
+  tertiary?: BigMessageActionProps
+}
 
-export const bigMessageProps = naturalBigMessageProps.merge(
-  z.object({
-    message: naturalBigMessageProps.shape.message.merge(
-      z.object({
-        media: mediaEntity.optional(),
-        title: inlineSequenceOrString,
-        abstract: inlineSequenceOrString.optional(),
-        actions: escaped(actionsBlockProps).optional(),
-      })
-    ),
-  })
-)
-
-export type BigMessageProps = z.infer<typeof bigMessageProps>
+export interface BigMessageProps
+  extends Omit<NaturalBigMessageProps, 'message'> {
+  message: Omit<
+    NaturalBigMessageProps['message'],
+    'media' | 'title' | 'abstract' | 'actions'
+  > & {
+    title: InlineSequenceOrString
+    media?: MediaEntity
+    abstract?: InlineSequenceOrString
+    actions?: ActionsBlockProps | EscapeElement
+  }
+}
 
 const useBigMessageStyles = makeStyles({
   root: {
@@ -56,9 +52,9 @@ const useBigMessageStyles = makeStyles({
 
 function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
   const inputs: ButtonProps[] = []
-  primary && inputs.push({ type: 'button', variant: 'primary', ...primary })
-  secondary && inputs.push({ type: 'button', ...secondary })
-  tertiary && inputs.push({ type: 'button', variant: 'subtle', ...tertiary })
+  primary && inputs.push({ type: 'action', variant: 'primary', ...primary })
+  secondary && inputs.push({ type: 'action', ...secondary })
+  tertiary && inputs.push({ type: 'action', variant: 'subtle', ...tertiary })
   return <ShortInputs variant="narrow-block" inputs={inputs} />
 }
 
@@ -84,21 +80,16 @@ export function BigMessage(props: BigMessageProps) {
   )
 }
 
+export type BigMessageElement = ReactElement<BigMessageProps, typeof BigMessage>
+export type BigMessagePropsOrElement = BigMessageProps | BigMessageElement
+
 function isBigMessageProps(o: any): o is BigMessageProps {
   return 'message' in o && 'variant' in o.message && o.message.variant === 'big'
 }
 
-function isBigMessageElement(
-  o: any
-): o is ReactElement<BigMessageProps, typeof BigMessage> {
+function isBigMessageElement(o: any): o is BigMessageElement {
   return o?.type === BigMessage
 }
-
-export const bigMessagePropsOrElement = propsElementUnion<
-  typeof bigMessageProps,
-  typeof BigMessage
->(bigMessageProps)
-export type BigMessagePropsOrElement = z.infer<typeof bigMessagePropsOrElement>
 
 export function renderIfBigMessage(o: any) {
   return isBigMessageProps(o) ? (

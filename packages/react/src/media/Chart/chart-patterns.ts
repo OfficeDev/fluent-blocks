@@ -82,7 +82,7 @@ export const legendLabels = ({
     return
   }
   ctx.save()
-  if (themeName === 'high-contrast') {
+  if (themeName === 'highContrast') {
     if (patterns) {
       ctx.setTransform(1.4, 0, 0, 1, 0, 0)
       ctx.scale(12, 10)

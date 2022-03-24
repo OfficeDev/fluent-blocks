@@ -1,10 +1,9 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
 import set from 'lodash/set'
-import { chartProps } from '@fluent-blocks/schemas'
+import { ChartProps } from '@fluent-blocks/schemas'
 
-import { invalidChart, propsElementUnion } from '../../lib'
+import { invalidChart } from '../../lib'
 
 import { PieChart } from './variants/PieChart'
 import { VerticalBarChart } from './variants/VerticalBarChart'
@@ -19,8 +18,6 @@ set(
   'defaults.global.defaultFontFamily',
   `Segoe UI, system-ui, sans-serif`
 )
-
-export type ChartProps = z.infer<typeof chartProps>
 
 export function Chart(props: ChartProps) {
   const { chart, label } = props
@@ -50,19 +47,16 @@ export function Chart(props: ChartProps) {
   }
 }
 
+export type ChartElement = ReactElement<ChartProps, typeof Chart>
+export type ChartPropsOrElement = ChartProps | ChartElement
+
 function isChartProps(o: any): o is ChartProps {
   return 'chart' in o
 }
 
-function isChartElement(o: any): o is ReactElement<ChartProps, typeof Chart> {
+function isChartElement(o: any): o is ChartElement {
   return o?.type === Chart
 }
-
-export const chartPropsOrElement = propsElementUnion<
-  typeof chartProps,
-  typeof Chart
->(chartProps)
-export type ChartPropsOrElement = z.infer<typeof chartPropsOrElement>
 
 export function renderIfChart(o: any) {
   return isChartProps(o) ? <Chart {...o} /> : isChartElement(o) ? o : null

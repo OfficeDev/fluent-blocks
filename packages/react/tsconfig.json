@@ -1,6 +1,11 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "types": ["mocha", "react/next", "react-dom/next"]
-  }
+  "include": ["src"],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.stories.mdx",
+    "**/*.test.tsx",
+    "**/*.test-stories.tsx",
+    "**/Storybook*.tsx"
+  ]
 }

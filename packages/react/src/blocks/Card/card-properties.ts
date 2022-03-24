@@ -1,40 +1,25 @@
-import { z } from 'zod'
-import { cardProps as naturalCardProps } from '@fluent-blocks/schemas'
+import { CardProps as NaturalCardProps } from '@fluent-blocks/schemas'
 
-import { headingPropsOrElement } from '../Heading/Heading'
-import { paragraphPropsOrElement } from '../Paragraph/Paragraph'
-import { figurePropsOrElement } from '../Figure/Figure'
-import { tabsPropsOrElement } from '../Tabs/Tabs'
-import { shortInputsPropsOrElement } from '../ShortInputs/ShortInputs'
-import { descriptionListPropsOrElement } from '../DescriptionList/DescriptionList'
-import { escapeElement } from '../../lib'
+import { HeadingPropsOrElement } from '../Heading/Heading'
+import { ParagraphPropsOrElement } from '../Paragraph/Paragraph'
+import { FigurePropsOrElement } from '../Figure/Figure'
+import { TabsPropsOrElement } from '../Tabs/Tabs'
+import { ShortInputsPropsOrElement } from '../ShortInputs/ShortInputs'
+import { DescriptionListPropsOrElement } from '../DescriptionList/DescriptionList'
+import { EscapeElement } from '../../lib'
 
-export const cardContentItemEntity = z.union([
-  headingPropsOrElement,
-  paragraphPropsOrElement,
-  figurePropsOrElement,
-  tabsPropsOrElement,
-  shortInputsPropsOrElement,
-  descriptionListPropsOrElement,
-  escapeElement,
-])
-export type CardContentItemEntity = z.infer<typeof cardContentItemEntity>
+export type CardContentItemEntity =
+  | HeadingPropsOrElement
+  | ParagraphPropsOrElement
+  | FigurePropsOrElement
+  | TabsPropsOrElement
+  | ShortInputsPropsOrElement
+  | DescriptionListPropsOrElement
+  | EscapeElement
 
-export const cardContentItemSequence = z.array(cardContentItemEntity)
-export type CardContentItemSequence = z.infer<typeof cardContentItemSequence>
+export type CardContentItemSequence = CardContentItemEntity[]
 
-export const cardContextualVariants = {
-  contextualVariant: z
-    .union([z.literal('block'), z.literal('layout')])
-    .default('block')
-    .optional(),
+export interface CardProps extends Omit<NaturalCardProps, 'card'> {
+  card: CardContentItemSequence
+  contextualVariant?: 'block' | 'layout'
 }
-
-export const cardProps = naturalCardProps
-  .merge(
-    z.object({
-      card: cardContentItemSequence,
-    })
-  )
-  .extend(cardContextualVariants)
-export type CardProps = z.infer<typeof cardProps>

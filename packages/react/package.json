@@ -1,15 +1,21 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.0.0-alpha.1",
-  "main": "index.js",
+  "version": "9.0.0-alpha.4",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
     "Zhenya Savchenko <zhenyasa@microsoft.com>"
   ],
   "license": "MIT",
-  "types": "types/view.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "files": [
+    "cjs",
+    "esm",
+    "types"
+  ],
   "scripts": {
+    "build": "just-scripts build",
     "storybook:upgrade": "pnpm update \"@storybook/*\"",
     "storybook:build": "build-storybook",
     "storybook:start": "start-storybook -p 4000",
@@ -25,11 +31,11 @@
   },
   "peerDependencies": {
     "@fluentui/react-components": "latest",
-    "@types/react": ">=16.8.0 <18.0.0",
-    "@types/react-dom": ">=16.8.0 <18.0.0",
+    "@types/react": ">=17.0.0 <19.0.0",
+    "@types/react-dom": ">=17.0.0 <19.0.0",
     "chart.js": "^2.9.4",
-    "react": "18.0.0-rc.2",
-    "react-dom": "18.0.0-rc.2"
+    "react": ">=17.0.0 <19.0.0",
+    "react-dom": ">=17.0.0 <19.0.0"
   },
   "devDependencies": {
     "@babel/core": "latest",
@@ -45,9 +51,9 @@
     "@types/lodash": "latest",
     "@types/mocha": "latest",
     "@types/node": "^17.0.18",
-    "@types/react": ">=16.8.0 <18.0.0",
-    "@types/react-dom": ">=16.8.0 <18.0.0",
-    "@types/react-test-renderer": ">=16.8.0 <18.0.0",
+    "@types/react": ">=17.0.0 <19.0.0",
+    "@types/react-dom": ">=17.0.0 <19.0.0",
+    "@types/react-test-renderer": ">=17.0.0 <19.0.0",
     "babel-loader": "latest",
     "chart.js": "^2.9.4",
     "chromatic": "latest",
@@ -55,11 +61,12 @@
     "expect": "latest",
     "faker": "thure/faker.js#v5.1.2",
     "http-proxy-middleware": "latest",
+    "just-scripts": "latest",
     "mocha": "latest",
     "playwright-chromium": "latest",
-    "react": "18.0.0-rc.2",
-    "react-dom": "18.0.0-rc.2",
-    "react-test-renderer": "18.0.0-rc.2",
+    "react": ">=17.0.0 <19.0.0",
+    "react-dom": ">=17.0.0 <19.0.0",
+    "react-test-renderer": ">=17.0.0 <19.0.0",
     "start-server-and-test": "latest",
     "ts-mocha": "latest",
     "ts-node": "latest",
@@ -67,9 +74,8 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.3",
-    "@fluent-blocks/schemas": "workspace:9.0.0-alpha.1",
-    "lodash": "latest",
-    "zod": "latest"
+    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.4",
+    "@fluent-blocks/schemas": "workspace:9.0.0-alpha.3",
+    "lodash": "latest"
   }
 }

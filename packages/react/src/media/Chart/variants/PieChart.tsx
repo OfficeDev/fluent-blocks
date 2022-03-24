@@ -77,7 +77,7 @@ export const PieChart = memo(
         backgroundColor: chartDataPointColors,
         hoverBackgroundColor: chartDataPointColors,
       }
-      if (themeName === 'high-contrast') {
+      if (themeName === 'highContrast') {
         dataPointConfig = {
           ...dataPointConfig,
           borderWidth: 3,
@@ -213,7 +213,7 @@ export const PieChart = memo(
             break
           }
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           ;(chartRef.current as any).data.datasets.map(
             (dataset: any, i: number) => {
               dataset.borderColor = theme.colorNeutralStroke1Hover
