@@ -15,7 +15,7 @@ export interface ViewProps extends WithActionHandler<any> {
   themeName?: ThemeName
   accentScheme?: AccentScheme
   translations?: Translations
-  basicSpriteUrl?: string
+  iconSpriteUrl?: string
 }
 
 /** An experience provided to the user via their device’s canvas. */
@@ -24,7 +24,7 @@ export const View = ({
   themeName = 'light',
   accentScheme = 'web',
   translations = defaultTranslations,
-  basicSpriteUrl,
+  iconSpriteUrl,
   onAction,
 }: ViewProps) => (
   <FluentBlocksProvider
@@ -33,7 +33,7 @@ export const View = ({
       accentScheme,
       translations,
       onAction,
-      basicSpriteUrl,
+      iconSpriteUrl,
     }}
   >
     <Main {...main} />
