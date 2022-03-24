@@ -169,7 +169,7 @@ const illustration = {
       </g>
     </svg>
   ),
-  'high-contrast': (
+  highContrast: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 281.6 171.8"

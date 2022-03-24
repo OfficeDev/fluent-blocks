@@ -1,10 +1,7 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
-import { textProps } from '@fluent-blocks/schemas'
+import { TextProps } from '@fluent-blocks/schemas'
 
-import { useTextStyles, zodElement } from '../../lib'
-
-export type TextProps = z.infer<typeof textProps>
+import { useTextStyles } from '../../lib'
 
 export const Text = (props: TextProps) => {
   const { text, variant } = props
@@ -17,16 +14,15 @@ export const Text = (props: TextProps) => {
   }
 }
 
+export type TextElement = ReactElement<TextProps, typeof Text>
+
 function isTextProps(o: any): o is TextProps {
   return 'text' in o
 }
 
-function isTextElement(o: any): o is ReactElement<TextProps, typeof Text> {
+function isTextElement(o: any): o is TextElement {
   return o?.type === Text
 }
-
-export const textElement = zodElement<typeof textProps, typeof Text>(textProps)
-export type TextElement = z.infer<typeof textElement>
 
 export function renderIfText(o: any) {
   return isTextProps(o) ? <Text {...o} /> : isTextElement(o) ? o : null

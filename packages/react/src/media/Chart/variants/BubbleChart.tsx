@@ -66,7 +66,7 @@ export const BubbleChart = memo(
           pointRadius: 0,
           pointHoverRadius: 0,
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           const backgroundPattern = buildPattern({
             ...chartBubbleDataPointPatterns[i],
             backgroundColor: theme.colorNeutralBackground1,
@@ -186,7 +186,7 @@ export const BubbleChart = memo(
             break
           }
         }
-        if (themeName === 'high-contrast') {
+        if (themeName === 'highContrast') {
           ;(chartRef.current as any).data.datasets.map(
             (dataset: any, i: number) => {
               dataset.borderColor = theme.colorNeutralStroke1

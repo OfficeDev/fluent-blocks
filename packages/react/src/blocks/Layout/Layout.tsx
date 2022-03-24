@@ -1,14 +1,13 @@
-import { z } from 'zod'
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
-import { propsElementUnion, Sequence, sx } from '../../lib'
+import { Sequence, sx } from '../../lib'
 
-import { layoutProps, LayoutProps } from './layout-properties'
+import { LayoutProps } from './layout-properties'
 
 import {
-  dashboardPropsOrElement,
+  DashboardPropsOrElement,
   renderIfDashboard,
 } from './exemplars/Dashboard/Dashboard'
 
@@ -49,33 +48,23 @@ export const Layout = ({ layout: { variant, items } }: LayoutProps) => {
   )
 }
 
+export type LayoutElement = ReactElement<LayoutProps, typeof Layout>
+export type LayoutPropsOrElementExact = LayoutProps | LayoutElement
+export type LayoutPropsOrElement =
+  | LayoutPropsOrElementExact
+  | DashboardPropsOrElement
+
 function isLayoutProps(o: any): o is LayoutProps {
   return 'layout' in o
 }
 
-function isLayoutElement(
-  o: any
-): o is ReactElement<LayoutProps, typeof Layout> {
+function isLayoutElement(o: any): o is LayoutElement {
   return o?.type === Layout
 }
-
-export const layoutPropsOrElementExact = propsElementUnion<
-  typeof layoutProps,
-  typeof Layout
->(layoutProps)
-export type LayoutPropsOrElementExact = z.infer<
-  typeof layoutPropsOrElementExact
->
 
 export function renderIfLayoutExact(o: any) {
   return isLayoutProps(o) ? <Layout {...o} /> : isLayoutElement(o) ? o : null
 }
-
-export const layoutPropsOrElement = z.union([
-  layoutPropsOrElementExact,
-  dashboardPropsOrElement,
-])
-export type LayoutPropsOrElement = z.infer<typeof layoutPropsOrElement>
 
 export function renderIfLayout(o: any) {
   return renderIfLayoutExact(o) || renderIfDashboard(o)

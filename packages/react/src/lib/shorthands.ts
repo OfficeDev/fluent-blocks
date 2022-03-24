@@ -3,7 +3,8 @@ import * as CSS from 'csstype'
 
 // The functions defined here are designed to be overwritten when shorthand
 // functions by the same name become available in Griffel.
-export const sx = {
+
+const sxExtensions = {
   transition: (
     property: CSS.TransitionPropertyProperty,
     duration: CSS.GlobalsString,
@@ -29,5 +30,9 @@ export const sx = {
     flexDirection: direction,
     flexWrap: wrap,
   }),
+}
+
+export const sx: typeof sxExtensions & typeof FUIShorthands = {
+  ...sxExtensions,
   ...FUIShorthands,
 }

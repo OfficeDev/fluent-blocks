@@ -1,14 +1,8 @@
-import { z } from 'zod'
-import { layoutProps as naturalLayoutProps } from '@fluent-blocks/schemas'
-import { layoutItemPropsOrElement } from './LayoutItem'
+import { LayoutProps as NaturalLayoutProps } from '@fluent-blocks/schemas'
+import { LayoutItemPropsOrElement } from './LayoutItem'
 
-export const layoutProps = naturalLayoutProps.merge(
-  z.object({
-    layout: naturalLayoutProps.shape.layout.merge(
-      z.object({
-        items: z.array(layoutItemPropsOrElement),
-      })
-    ),
-  })
-)
-export type LayoutProps = z.infer<typeof layoutProps>
+export interface LayoutProps extends Omit<NaturalLayoutProps, 'layout'> {
+  layout: Omit<NaturalLayoutProps['layout'], 'items'> & {
+    items: LayoutItemPropsOrElement[]
+  }
+}

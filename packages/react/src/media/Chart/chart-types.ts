@@ -1,12 +1,11 @@
-import { z } from 'zod'
 import {
-  bubbleChartDatum,
-  chartDataset,
-  chartData,
+  BubbleChartDatum as NaturalBubbleChartDatum,
+  ChartDataset as NaturalChartDataset,
+  ChartData as NaturalChartData,
 } from '@fluent-blocks/schemas'
 
-export type BubbleChartDatum = z.infer<typeof bubbleChartDatum>
+export type BubbleChartDatum = NaturalBubbleChartDatum
 
-export type ChartDataset = z.infer<typeof chartDataset>
+export type ChartDataset = NaturalChartDataset
 
-export type ChartData = z.infer<typeof chartData>
+export type ChartData = NaturalChartData

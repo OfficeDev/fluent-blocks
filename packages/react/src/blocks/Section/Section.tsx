@@ -1,73 +1,43 @@
-import { z } from 'zod'
 import { createElement } from 'react'
 
 import { key, Sequence } from '../../lib'
-import { inlineSequenceOrString } from '../../inlines'
+import { InlineSequenceOrString } from '../../inlines'
 
-import { Block, BlockEntity, blockSequence } from '../Block/Block'
+import { Block, BlockEntity, BlockSequence } from '../Block/Block'
 import { Paragraph } from '../Paragraph/Paragraph'
 import { Heading } from '../Heading/Heading'
-import { BigMessage, bigMessageProps } from '../BigMessage/BigMessage'
+import { BigMessage, BigMessageProps } from '../BigMessage/BigMessage'
+import { HeadingLevel } from '@fluent-blocks/schemas'
 
-const nonRecursiveSectionContentProps = {
-  title: inlineSequenceOrString,
-  abstract: inlineSequenceOrString.optional(),
-  message: bigMessageProps.shape.message
-    .omit({ title: true, variant: true, abstract: true })
-    .optional(),
-  blocks: blockSequence.optional(),
+interface ShallowSectionContentProps {
+  title: InlineSequenceOrString
+  abstract?: InlineSequenceOrString
+  message?: Omit<BigMessageProps['message'], 'title' | 'variant' | 'abstract'>
+  blocks?: BlockSequence
 }
 
 // 𝔅𝔢𝔥𝔬𝔩𝔡 𝔱𝔥𝔦𝔰 𝔰𝔲𝔟𝔩𝔦𝔪𝔢 𝔭𝔶𝔯𝔞𝔪𝔦𝔡
-export const sectionContentProps = z.object({
-  ...nonRecursiveSectionContentProps,
-  sections: z
-    .array(
-      z.object({
-        ...nonRecursiveSectionContentProps,
-        sections: z
-          .array(
-            z.object({
-              ...nonRecursiveSectionContentProps,
-              sections: z
-                .array(
-                  z.object({
-                    ...nonRecursiveSectionContentProps,
-                    sections: z
-                      .array(
-                        z.object({
-                          ...nonRecursiveSectionContentProps,
-                          sections: z
-                            .array(
-                              z.object({
-                                ...nonRecursiveSectionContentProps,
-                              })
-                            )
-                            .optional(),
-                        })
-                      )
-                      .optional(),
-                  })
-                )
-                .optional(),
-            })
-          )
-          .optional(),
-      })
-    )
-    .optional(),
-})
-export type SectionContentProps = z.infer<typeof sectionContentProps>
+export interface SectionContentProps extends ShallowSectionContentProps {
+  sections?: (ShallowSectionContentProps & {
+    sections?: (ShallowSectionContentProps & {
+      sections?: (ShallowSectionContentProps & {
+        sections?: (ShallowSectionContentProps & {
+          sections?: ShallowSectionContentProps[]
+        })[]
+      })[]
+    })[]
+  })[]
+}
 
-const sectionManagedProps = z.object({
-  className: z.string().optional(),
-  level: z.number().default(2).optional(),
-  as: z.string().default('section').optional(),
-})
-type SectionManagedProps = z.infer<typeof sectionManagedProps>
+export interface SectionContextualProps {
+  className?: string
+  level?: HeadingLevel
+  as?: string
+}
 
-export const sectionProps = sectionManagedProps.merge(sectionContentProps)
-export type SectionProps = z.infer<typeof sectionProps>
+export interface SectionProps
+  extends SectionContentProps,
+    SectionContextualProps {}
 
 export const Section = (props: SectionProps) => {
   const {
@@ -105,7 +75,11 @@ export const Section = (props: SectionProps) => {
       )}
       {Sequence<BlockEntity>(blocks, Block)}
       {(sections || []).map((section, _s) => (
-        <Section {...section} key={key(section)} level={level + 1} />
+        <Section
+          {...section}
+          key={key(section)}
+          level={(level + 1) as HeadingLevel}
+        />
       ))}
     </>
   )

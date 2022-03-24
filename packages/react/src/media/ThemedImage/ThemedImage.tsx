@@ -1,28 +1,12 @@
-import { z } from 'zod'
-import { ReactElement, cloneElement } from 'react'
+import { ReactElement, cloneElement, ReactSVGElement } from 'react'
 import { makeStyles } from '@fluentui/react-components'
-import {
-  imageSrc,
-  themedImageProps as naturalThemedImageProps,
-} from '@fluent-blocks/schemas'
+import { ThemeName, MediaProps } from '@fluent-blocks/schemas'
 
-import { propsElementUnion, useFluentBlocksContext } from '../../lib'
+import { useFluentBlocksContext } from '../../lib'
 
-const imageElement = z
-  .object({ type: z.union([z.literal('img'), z.literal('svg')]) })
-  .catchall(z.any())
-  .transform((el) => el as ReactElement<any, 'img' | 'svg'>)
+type ImageValue = string | Omit<ReactSVGElement, 'ref'>
 
-const image = z.union([imageSrc, imageElement])
-
-export const themedImageProps = naturalThemedImageProps.merge(
-  z.object({
-    light: image,
-    dark: image,
-    'high-contrast': image,
-  })
-)
-export type ThemedImageProps = z.infer<typeof themedImageProps>
+export type ThemedImageProps = MediaProps & { [key in ThemeName]: ImageValue }
 
 const useThemedImageStyles = makeStyles({
   img: { maxWidth: '100%', height: 'auto' },
@@ -30,7 +14,7 @@ const useThemedImageStyles = makeStyles({
 
 export function ThemedImage(props: ThemedImageProps) {
   const { themeName } = useFluentBlocksContext()
-  const value = props[themeName]
+  const value = props[themeName] as ImageValue
   const themedImageStyles = useThemedImageStyles()
   return typeof value == 'string' ? (
     <img
@@ -38,8 +22,6 @@ export function ThemedImage(props: ThemedImageProps) {
       src={value}
       className={themedImageStyles.img}
     />
-  ) : value.type === 'img' ? (
-    cloneElement(value, props.label ? { alt: props.label } : { role: 'none' })
   ) : (
     cloneElement(
       value,
@@ -48,23 +30,19 @@ export function ThemedImage(props: ThemedImageProps) {
   )
 }
 
+export type ThemedImageElement = ReactElement<
+  ThemedImageProps,
+  typeof ThemedImage
+>
+export type ThemedImagePropsOrElement = ThemedImageProps | ThemedImageElement
+
 function isThemedImageProps(o: any): o is ThemedImageProps {
-  return 'light' in o && 'dark' in o && 'high-contrast' in o
+  return 'light' in o && 'dark' in o && 'highContrast' in o
 }
 
-function isThemedImageElement(
-  o: any
-): o is ReactElement<ThemedImageProps, typeof ThemedImage> {
+function isThemedImageElement(o: any): o is ThemedImageElement {
   return o?.type === ThemedImage
 }
-
-export const themedImagePropsOrElement = propsElementUnion<
-  typeof themedImageProps,
-  typeof ThemedImage
->(themedImageProps)
-export type ThemedImagePropsOrElement = z.infer<
-  typeof themedImagePropsOrElement
->
 
 export function renderIfThemedImage(o: any) {
   return isThemedImageProps(o) ? (
