@@ -28,6 +28,7 @@
     "@babel/core": "latest",
     "@fluent-blocks/react": "workspace:9.0.0-alpha.1",
     "@fluentui/react-components": "latest",
+    "@microsoft/microsoft-graph-types": "^2.16.0",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
@@ -36,7 +37,7 @@
     "@storybook/theming": "latest",
     "@types/lodash": "latest",
     "@types/microsoft-graph": "^2.13.0",
-    "@types/node": "^17.0.18",
+    "@types/node": "^17.0.21",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "babel-loader": "latest",
@@ -45,10 +46,12 @@
     "webpack": "latest"
   },
   "dependencies": {
+    "@azure/identity": "^2.0.4",
     "@azure/msal-browser": "latest",
     "@azure/msal-react": "latest",
     "@js-temporal/polyfill": "^0.4.0",
     "@microsoft/microsoft-graph-client": "latest",
-    "isomorphic-fetch": "latest"
+    "isomorphic-fetch": "latest",
+    "lazy-universal-dotenv": "^3.0.1"
   }
 }
