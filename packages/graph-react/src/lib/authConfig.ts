@@ -31,13 +31,13 @@ export const msalConfig = {
             console.error(message)
             return
           case LogLevel.Info:
-            console.log(message)
+            // console.log(message)
             return
           case LogLevel.Verbose:
-            console.debug(message)
+            // console.debug(message)
             return
           case LogLevel.Warning:
-            console.warn(message)
+            // console.warn(message)
             return
         }
       },

@@ -1,10 +1,10 @@
-import { graphConfig } from './AuthConfig'
+import { graphConfig } from './authConfig'
 
 export enum GraphApi {
   UserProfile = 'me',
   ListMyChats = 'me/chats',
-  ListMessagsInChats = 'me/chats/{0}/',
-  ListMessags = 'me/chats/{0}/messages',
+  ListMessagesInChats = 'me/chats/{0}/',
+  ListMessages = 'me/chats/{0}/messages',
 }
 
 export async function callMsGraph(

@@ -1,0 +1,16 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs'
+import { Chat } from './StorybookChat'
+
+<Meta title="Graph/Chat" component={Chat} />
+
+export const ChatTemplate = (props) => <Chat {...props} />
+
+# Chat
+
+The following is a test chat:
+
+<Canvas withSource="none">
+  <Story name="Chat" args={{}}>
+    {ChatTemplate.bind({})}
+  </Story>
+</Canvas>

@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, memo, useEffect } from 'react'
 import { Client } from '@microsoft/microsoft-graph-client'
 import { MsalProvider } from '@azure/msal-react'
-import { msalConfig, loginRequest } from './AuthConfig'
+import { msalConfig, loginRequest } from './authConfig'
 import { PublicClientApplication } from '@azure/msal-browser'
 
 export type GraphProviderContext = {

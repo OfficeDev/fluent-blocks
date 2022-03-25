@@ -1,4 +1,5 @@
 export * from './BigMessage'
+export * from './ChatMessage'
 export * from './Block'
 export * from './Card'
 export * from './DescriptionList'

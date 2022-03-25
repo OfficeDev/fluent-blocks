@@ -1,14 +1,14 @@
-import { Person as NaturalPerson, PersonProps } from './Person'
+import { Chat as NaturalChat, ChatProps } from './Chat'
 import { GraphProvider } from '../lib/GraphProvider'
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from '@azure/msal-react'
 
-export const Person = ({ query }: PersonProps) => (
+export const Chat = (_: ChatProps) => (
   <GraphProvider>
     <AuthenticatedTemplate>
-      <NaturalPerson query={query} />
+      <NaturalChat />
     </AuthenticatedTemplate>
     <UnauthenticatedTemplate>
       <h5 className="card-title">
