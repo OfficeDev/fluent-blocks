@@ -30,7 +30,7 @@ importers:
       eslint-config-prettier: 8.5.0_eslint@8.11.0
       eslint-import-resolver-typescript: 2.7.0_fe22d862ffeecaee86c93a006d59e41e
       eslint-plugin-import: 2.25.4_eslint@8.11.0
-      eslint-plugin-jest: 26.1.2_686cb7cbb66462c533222a3f4a3aa551
+      eslint-plugin-jest: 26.1.3_686cb7cbb66462c533222a3f4a3aa551
       eslint-plugin-lodash: 7.4.0_eslint@8.11.0
       eslint-plugin-react: 7.29.4_eslint@8.11.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.11.0
@@ -50,7 +50,7 @@ importers:
     specifiers:
       '@babel/core': latest
       '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.4
-      '@fluent-blocks/schemas': workspace:9.0.0-alpha.3
+      '@fluent-blocks/schemas': workspace:9.0.0-alpha.4
       '@fluentui/react-components': latest
       '@storybook/addon-actions': latest
       '@storybook/addon-essentials': latest
@@ -7309,9 +7309,9 @@ packages:
       tsconfig-paths: 3.14.1
     dev: true
 
-  /eslint-plugin-jest/26.1.2_686cb7cbb66462c533222a3f4a3aa551:
-    resolution: {integrity: sha512-1bXCoRODPkGN06n9KAMls4Jm0eyS+0Q/LWcIxhqWR2ycV0Z7lnx2c10idk4dtFIJY5xStgiIr5snC6/rxcXpbw==}
-    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+  /eslint-plugin-jest/26.1.3_686cb7cbb66462c533222a3f4a3aa551:
+    resolution: {integrity: sha512-Pju+T7MFpo5VFhFlwrkK/9jRUu18r2iugvgyrWOnnGRaVTFFmFXp+xFJpHyqmjjLmGJPKLeEFLVTAxezkApcpQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.0.0
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
