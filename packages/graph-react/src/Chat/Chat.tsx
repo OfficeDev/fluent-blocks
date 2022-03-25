@@ -1,18 +1,34 @@
 import { Suspense, useMemo } from 'react'
-import { GraphEntity, graphUri, useGraph } from '../lib/GraphProvider'
+import { ChatMessage as GraphChatMessage } from 'microsoft-graph'
+import { ChatMessage } from '@fluent-blocks/react'
+import { GraphEntity, useGraph } from '../lib/GraphProvider'
 import { AsyncResource } from '../lib/Resource/AsyncResource'
-import { ChatMessage } from 'microsoft-graph'
 
 export interface ChatProps {}
 
 const ChatMessages = ({
   chatResource,
 }: {
-  chatResource: AsyncResource<ChatMessage[]>
+  chatResource: AsyncResource<GraphChatMessage[]>
 }) => {
   const messages = chatResource.read()
   if (messages) {
-    return <pre>{JSON.stringify(messages, null, 4)}</pre>
+    return (
+      <>
+        {messages.map((message) => (
+          <ChatMessage
+            key={message.id}
+            {...{
+              instant: message.createdDateTime || '',
+              author: {
+                name: message.from?.user?.displayName ?? 'Unknown',
+              },
+              chatMessage: message.body?.content || '<empty>',
+            }}
+          />
+        ))}
+      </>
+    )
   } else {
     return null
   }
