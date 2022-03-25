@@ -1,34 +1,38 @@
-import { Suspense } from 'react'
-import { useMsal } from '@azure/msal-react'
-import { loginRequest } from '../lib/authConfig'
-import { callMsGraph, GraphApi } from '../lib/graph'
+import { Suspense, useMemo } from 'react'
+import { GraphEntity, graphUri, useGraph } from '../lib/GraphProvider'
 import { AsyncResource } from '../lib/Resource/AsyncResource'
+import { ChatMessage } from 'microsoft-graph'
 
 export interface ChatProps {}
 
 const ChatMessages = ({
   chatResource,
 }: {
-  chatResource: AsyncResource<{}>
+  chatResource: AsyncResource<ChatMessage[]>
 }) => {
   const messages = chatResource.read()
-  return <pre>{JSON.stringify(messages, null, 4)}</pre>
+  if (messages) {
+    return <pre>{JSON.stringify(messages, null, 4)}</pre>
+  } else {return null}
 }
 
 export const Chat = (_: ChatProps) => {
-  const { instance, accounts } = useMsal()
-  const chatResource = new AsyncResource(
-    instance
-      .acquireTokenSilent({ ...loginRequest, account: accounts[0] })
-      .then(({ accessToken }) =>
-        callMsGraph(accessToken, GraphApi.ListMyChats).then((chats) => [
-          accessToken,
-          chats,
-        ])
-      )
-      .then(([accessToken, chats]) =>
-        callMsGraph(accessToken, GraphApi.ListMessages, chats.value[0].id)
-      )
+  const { graphClient } = useGraph()
+
+  const chatResource = useMemo(
+    () =>
+      new AsyncResource(
+        graphClient!
+          .api(graphUri(GraphEntity.ListMyChats))
+          .get()
+          .then(({ value }) =>
+            graphClient!
+              .api(graphUri(GraphEntity.ListMessages, value[0].id))
+              .get()
+          )
+          .then(({ value }) => value)
+      ),
+    []
   )
 
   return (

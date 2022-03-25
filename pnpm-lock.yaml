@@ -37,7 +37,7 @@ importers:
       eslint-plugin-security: 1.4.0
       husky: 7.0.4
       lint-staged: 12.3.7
-      prettier: 2.6.0
+      prettier: 2.6.1
       typescript: 4.6.2
 
   packages/graph-react:
@@ -46,6 +46,7 @@ importers:
       '@azure/msal-browser': latest
       '@azure/msal-react': latest
       '@babel/core': latest
+      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.4
       '@fluent-blocks/react': workspace:9.0.0-alpha.7
       '@fluentui/react-components': latest
       '@js-temporal/polyfill': ^0.4.0
@@ -76,6 +77,7 @@ importers:
       isomorphic-fetch: 3.0.0
     devDependencies:
       '@babel/core': 7.17.8
+      '@fluent-blocks/basic-icons': link:../icons
       '@fluent-blocks/react': link:../react
       '@fluentui/react-components': 9.0.0-rc.6_ac05c509efc0eea848785b71958edf2e
       '@microsoft/microsoft-graph-types': 2.16.0
@@ -8233,7 +8235,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: false
 
   /follow-redirects/1.14.9_debug@4.3.2:
     resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
@@ -8990,7 +8991,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.14.9_debug@4.3.2
+      follow-redirects: 1.14.9
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -11640,8 +11641,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier/2.6.0:
-    resolution: {integrity: sha512-m2FgJibYrBGGgQXNzfd0PuDGShJgRavjUoRCw1mZERIWVSXF0iLzLm+aOqTAbLnC3n6JzUhAA8uZnFVghHJ86A==}
+  /prettier/2.6.1:
+    resolution: {integrity: sha512-8UVbTBYGwN37Bs9LERmxCPjdvPxlEowx2urIL6urHzdb3SDq4B/Z6xLFCblrSnE4iKWcS6ziJ3aOYrc1kz/E2A==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
