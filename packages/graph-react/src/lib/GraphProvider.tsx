@@ -62,8 +62,8 @@ export interface GraphContextValue {
 export const defaultGraphContextValue: GraphContextValue = {
   authProvider: null,
   graphClient: null,
-  graphGet: () => Promise.reject(),
-  graphPost: () => Promise.reject(),
+  graphGet: () => Promise.reject('Graph provider not ready.'),
+  graphPost: () => Promise.reject('Graph provider not ready.'),
 }
 
 export const GraphContext = createContext<GraphContextValue>(

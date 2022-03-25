@@ -4,14 +4,16 @@ import { ChatMessage } from '@fluent-blocks/react'
 import { GraphEntity, useGraph } from '../lib/GraphProvider'
 import { AsyncResource } from '../lib/Resource/AsyncResource'
 
-export interface ChatProps {}
+export interface ChatProps {
+  chatId: string
+}
 
 const ChatMessages = ({
-  chatResource,
+  messagesResource,
 }: {
-  chatResource: AsyncResource<GraphChatMessage[]>
+  messagesResource: AsyncResource<GraphChatMessage[]>
 }) => {
-  const messages = chatResource.read()
+  const messages = messagesResource.read()
   if (messages) {
     return (
       <>
@@ -34,22 +36,20 @@ const ChatMessages = ({
   }
 }
 
-export const Chat = (_: ChatProps) => {
+export const Chat = ({ chatId }: ChatProps) => {
   const { graphGet } = useGraph()
 
-  const chatResource = useMemo(
+  const messagesResource = useMemo(
     () =>
       new AsyncResource(
-        graphGet(GraphEntity.ListMyChats)
-          .then(({ value }) => graphGet(GraphEntity.ListMessages, value[0].id))
-          .then(({ value }) => value)
+        graphGet(GraphEntity.ListMessages, chatId).then(({ value }) => value)
       ),
     []
   )
 
   return (
-    <Suspense fallback={'Loading…'}>
-      <ChatMessages {...{ chatResource }} />
+    <Suspense fallback={'Loading messages…'}>
+      <ChatMessages {...{ messagesResource }} />
     </Suspense>
   )
 }
