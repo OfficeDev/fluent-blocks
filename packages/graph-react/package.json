@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluent-blocks/react": "workspace:9.0.0-alpha.4",
+    "@fluent-blocks/react": "workspace:9.0.0-alpha.7",
     "@fluentui/react-components": "latest",
     "@microsoft/microsoft-graph-types": "^2.16.0",
     "@storybook/addon-actions": "latest",
