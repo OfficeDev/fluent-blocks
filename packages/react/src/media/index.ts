@@ -28,3 +28,4 @@ export const Media = (o: MediaEntity) =>
 export * from './Illustration/Illustration'
 export * from './Code/Code'
 export * from './ThemedImage/ThemedImage'
+export * from './Avatar/Avatar'

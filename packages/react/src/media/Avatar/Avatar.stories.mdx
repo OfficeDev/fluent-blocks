@@ -1,0 +1,39 @@
+import { fake, seed } from 'faker/locale/en_US'
+import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
+import { Avatar } from './StorybookAvatar'
+import { contextArgTypes } from '../../lib'
+
+import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+
+export const AvatarTemplate = (props) => (
+  <Avatar {...props} iconSpriteUrl={iconSpriteUrl} />
+)
+
+<Meta
+  title="Media/Avatars"
+  component={Avatar}
+  parameters={{
+    viewMode: 'docs',
+  }}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+/>
+
+# Avatars
+
+<Canvas withSource="none">
+  <Story
+    name="Avatars"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      label: fake('{{name.firstName}} {{name.lastName}}'),
+      avatar: {},
+    }}
+  >
+    {seed(1234) || AvatarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Avatars" />
