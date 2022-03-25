@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/schemas",
-  "version": "9.0.0-alpha.3",
+  "version": "9.0.0-alpha.4",
   "main": "index.d.ts",
   "types": "types/index.d.ts",
   "files": [ "types" ],

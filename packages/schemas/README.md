@@ -1,56 +1,31 @@
 <img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react/.storybook/public/brandImage.svg" width="320" />
 
-This package contains the schemas that specify the platform-agnostic API surface for Fluent Blocks.
+This package contains the TypeScript types that specify the platform-agnostic API surface for Fluent Blocks. It used to export JSON and Zod schemas, and it will again soon.
 
-## Using these schemas
+## Concepts
 
-There are at least two meaningful ways to use these schemas: (1) direct use in platform-specific components (as-is or by merging/extending), and (2) rendering to JSON schemas.
+When it comes to props, all components* must have an eponymous prop which parent components can use to validate what they’re asked to render. For example, in the React package, the `Chart` component has a required `chart` prop, and since it's a kind of media it also has a required `label` prop.
 
-### Direct use
+*: There are exceptions, but we’ll revisit them before releasing to general audiences.
 
-Just import the schema you want to use, and use as you like.
+## Defining platform-specific schemas
 
-#### Parsing / validating
+This package is intended to formalize the ontology that should remain true for all Fluent Blocks packages. Individual packages can extend these schemas to support unique situations, however the original types as specified here _must always be compatible_.
 
-```ts
-import { cardProps } from '@fluentui/blocks-schemas'
-
-const receivedProps = await getUserInput();
-
-const parseResult = cardProps.safeParse(receivedProps)
-
-if(parseResult.success){
-  renderCard(parseResult.data)
-}else{
-  renderError(parseResult.error)
-}
-```
-
-#### Defining platform-specific schemas
-
-```ts
-import { z } from 'zod'
+```tsx
 import { ReactElement } from 'react'
-import { textProps as naturalTextProps } from '@fluentui/blocks-schemas'
+import { TextProps as NaturalTextProps } from '@fluentui/blocks-schemas'
 
-import Text from './Text.tsx'
+type ReactTextVariant = 'liquid' | 'animated'
 
-const textElement = z.object({ props })
-  .catchall(z.any())
-  .transform((el) => el as ReactElement<z.infer<typeof naturalTextProps>, Text>)
+// Here we extend the 'variant' prop to add aditional variants supported in this particular package:
+export interface TextProps extends Omit<NaturalTextProps, 'variant'> {
+  variant: NaturalTextProps['variant'] | ReactTextVariant
+}
 
-export const textPropsOrElement = z.union([
-  textProps,
-  textElement
-])
+export const Text = (props: TextProps) => <span>{textMagicHere}</span>
+
+// This particular package needs to work with additional derived types, which is also fine:
+export type TextElement = ReactElement<TextProps, typeof Text>
+export type TextPropsOrElement = TextProps | TextElement
 ```
-
-### JSON schemas
-
-To use the JSON schemas, they need to be built. Install dependencies before building with `pnpm install`, then from within this package, run:
-
-```shell
-$ pnpm render:json-schemas
-```
-
-The JSON schemas will populate in the `json` directory in this package.
