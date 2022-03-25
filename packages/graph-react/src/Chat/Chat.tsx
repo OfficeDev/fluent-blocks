@@ -13,23 +13,19 @@ const ChatMessages = ({
   const messages = chatResource.read()
   if (messages) {
     return <pre>{JSON.stringify(messages, null, 4)}</pre>
-  } else {return null}
+  } else {
+    return null
+  }
 }
 
 export const Chat = (_: ChatProps) => {
-  const { graphClient } = useGraph()
+  const { graphGet } = useGraph()
 
   const chatResource = useMemo(
     () =>
       new AsyncResource(
-        graphClient!
-          .api(graphUri(GraphEntity.ListMyChats))
-          .get()
-          .then(({ value }) =>
-            graphClient!
-              .api(graphUri(GraphEntity.ListMessages, value[0].id))
-              .get()
-          )
+        graphGet(GraphEntity.ListMyChats)
+          .then(({ value }) => graphGet(GraphEntity.ListMessages, value[0].id))
           .then(({ value }) => value)
       ),
     []

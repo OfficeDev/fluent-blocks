@@ -45,14 +45,25 @@ export const defaultGraphProviderProps: GraphProviderProps = {
   redirectUri: process.env.REDIRECT_URI ?? 'http://localhost:4000/',
 }
 
+type GraphGet = (uri: GraphEntity, ...params: string[]) => Promise<any>
+type GraphPost = (
+  uri: GraphEntity,
+  payload: any,
+  ...params: string[]
+) => Promise<any>
+
 export interface GraphContextValue {
   authProvider: AuthCodeMSALBrowserAuthenticationProvider | null
   graphClient: Client | null
+  graphGet: GraphGet
+  graphPost: GraphPost
 }
 
 export const defaultGraphContextValue: GraphContextValue = {
   authProvider: null,
   graphClient: null,
+  graphGet: () => Promise.reject(),
+  graphPost: () => Promise.reject(),
 }
 
 export const GraphContext = createContext<GraphContextValue>(
@@ -77,8 +88,14 @@ const UnmemoizedAuthenticatedGraphProvider = ({
     }
   )
   const graphClient = Client.initWithMiddleware({ authProvider })
+  const graphGet = (uri: GraphEntity, ...params: string[]) =>
+    graphClient!.api(graphUri(uri, ...params)).get()
+  const graphPost = (uri: GraphEntity, payload: any, ...params: string[]) =>
+    graphClient!.api(graphUri(uri, ...params)).post(payload)
   return (
-    <GraphContext.Provider value={{ authProvider, graphClient }}>
+    <GraphContext.Provider
+      value={{ authProvider, graphClient, graphGet, graphPost }}
+    >
       {children}
     </GraphContext.Provider>
   )
