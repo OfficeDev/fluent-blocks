@@ -28,6 +28,7 @@
     "@babel/core": "latest",
     "@fluent-blocks/react": "workspace:9.0.0-alpha.4",
     "@fluentui/react-components": "latest",
+    "@microsoft/microsoft-graph-types": "^2.16.0",
     "@storybook/addon-actions": "latest",
     "@storybook/addon-essentials": "latest",
     "@storybook/addon-links": "latest",
@@ -45,6 +46,7 @@
     "webpack": "latest"
   },
   "dependencies": {
+    "@azure/identity": "^2.0.4",
     "@azure/msal-browser": "latest",
     "@azure/msal-react": "latest",
     "@js-temporal/polyfill": "^0.4.0",

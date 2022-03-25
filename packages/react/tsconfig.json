@@ -7,5 +7,8 @@
     "**/*.test.tsx",
     "**/*.test-stories.tsx",
     "**/Storybook*.tsx"
-  ]
+  ],
+  "compilerOptions": {
+    "types": ["mocha", "react/next", "react-dom/next","node"]
+  }
 }
