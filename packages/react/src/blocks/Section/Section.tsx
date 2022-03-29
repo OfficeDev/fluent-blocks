@@ -11,6 +11,7 @@ import { HeadingLevel } from '@fluent-blocks/schemas'
 
 interface ShallowSectionContentProps {
   title: InlineSequenceOrString
+  titleVisuallyHidden?: boolean
   abstract?: InlineSequenceOrString
   message?: Omit<BigMessageProps['message'], 'title' | 'variant' | 'abstract'>
   blocks?: BlockSequence
@@ -42,6 +43,7 @@ export interface SectionProps
 export const Section = (props: SectionProps) => {
   const {
     title,
+    titleVisuallyHidden,
     abstract,
     sections,
     blocks,
@@ -69,7 +71,11 @@ export const Section = (props: SectionProps) => {
         />
       )) || (
         <>
-          <Heading paragraph={title} level={level} />
+          <Heading
+            paragraph={title}
+            level={level}
+            visuallyHidden={titleVisuallyHidden}
+          />
           {abstract && <Paragraph paragraph={abstract} />}
         </>
       )}

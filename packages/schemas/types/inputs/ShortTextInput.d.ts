@@ -16,7 +16,7 @@ export type ShortTextInputType =
   | 'datetime-local'
 
 export interface ShortTextInputProps extends TextInputProps {
-  inputType: ShortTextInputType
+  inputType?: ShortTextInputType
   before?: InlineEntity
   after?: InlineEntity
   multiline?: false

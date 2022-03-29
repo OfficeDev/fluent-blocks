@@ -7,6 +7,7 @@ import {
   ShortInputs,
   useCommonStyles,
   sx,
+  BigMessage,
 } from '@fluent-blocks/react'
 import { GraphEntity, useGraph } from '../lib/GraphProvider'
 import { AsyncResource } from '../lib/Resource/AsyncResource'
@@ -76,8 +77,8 @@ const ChatMessages = ({
         inputs={[
           {
             actionId: 'compose',
-            label: ' ',
-            placeholder: 'Type a new message',
+            label: 'Type a new message',
+            placeholderIsLabel: true,
             inputType: 'text',
             type: 'text',
           },
@@ -107,7 +108,17 @@ export const Chat = ({ chatId }: ChatProps) => {
   )
 
   return (
-    <Suspense fallback={<Paragraph paragraph="Loading messages…" />}>
+    <Suspense
+      fallback={
+        <BigMessage
+          message={{
+            variant: 'big',
+            title: 'Loading messages…',
+            viewportHeight: false,
+          }}
+        />
+      }
+    >
       <ChatMessages {...{ messagesResource, activeAccountId }} />
     </Suspense>
   )

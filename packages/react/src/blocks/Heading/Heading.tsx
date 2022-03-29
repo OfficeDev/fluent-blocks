@@ -12,7 +12,12 @@ export interface HeadingProps
     Omit<NaturalHeadingProps, 'paragraph'> {}
 
 export const Heading = (props: HeadingProps) => {
-  const { paragraph, level = 6, contextualVariant = 'block' } = props
+  const {
+    paragraph,
+    level = 6,
+    contextualVariant = 'block',
+    visuallyHidden,
+  } = props
   const content = <InlineContent inlines={paragraph} />
   const textStyles = useTextBlockStyles()
   const commonStyles = useCommonStyles()
@@ -27,6 +32,8 @@ export const Heading = (props: HeadingProps) => {
 
   const className = (() => {
     switch (true) {
+      case visuallyHidden === true:
+        return cx(commonStyles.visuallyHidden)
       case contextualVariant === 'card' && level === 1:
         return cx(baseStyles, textStyles.h2, textStyles.cardSpacing)
       case contextualVariant === 'card' && level === 2:
