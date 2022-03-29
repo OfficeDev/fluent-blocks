@@ -45,12 +45,8 @@ export const defaultGraphProviderProps: GraphProviderProps = {
   redirectUri: process.env.REDIRECT_URI ?? 'http://localhost/',
 }
 
-type GraphGet = (uri: GraphEntity, ...params: string[]) => Promise<any>
-type GraphPost = (
-  uri: GraphEntity,
-  payload: any,
-  ...params: string[]
-) => Promise<any>
+type GraphGet = (params: string) => Promise<any>
+type GraphPost = (params: string, payload: any) => Promise<any>
 
 export interface GraphContextValue {
   authProvider: AuthCodeMSALBrowserAuthenticationProvider | null
@@ -90,10 +86,9 @@ const UnmemoizedAuthenticatedGraphProvider = ({
     }
   )
   const graphClient = Client.initWithMiddleware({ authProvider })
-  const graphGet = (uri: GraphEntity, ...params: string[]) =>
-    graphClient!.api(graphUri(uri, ...params)).get()
-  const graphPost = (uri: GraphEntity, payload: any, ...params: string[]) =>
-    graphClient!.api(graphUri(uri, ...params)).post(payload)
+  const graphGet = (params: string) => graphClient!.api(params).get()
+  const graphPost = (params: string, payload: any) =>
+    graphClient!.api(params).post(payload)
   const activeAccount =
     instance.getActiveAccount()?.homeAccountId?.split('.') || null
   return (

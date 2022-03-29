@@ -1,48 +1,28 @@
-import { useMemo, Suspense } from 'react'
-import { Chat as GraphChat } from 'microsoft-graph'
+import { Suspense, useCallback } from 'react'
 import { View, BigMessage, Escape } from '@fluent-blocks/react'
 import { Chat as NaturalChat, ChatProps } from './Chat'
-import { GraphEntity, GraphProvider, useGraph } from '../lib/GraphProvider'
+import {
+  GraphEntity,
+  GraphProvider,
+  graphUri,
+  useGraph,
+} from '../lib/GraphProvider'
 import sbGpProps from '../lib/storybookGraphProviderProps'
-import { AsyncResource } from '../lib/Resource/AsyncResource'
 
 // @ts-ignore
 import iconSprite from '@fluent-blocks/basic-icons/basic-icons.svg'
+import useSwr from 'swr'
 
-const FirstChat = ({
-  firstChatResource,
-}: {
-  firstChatResource: AsyncResource<GraphChat>
-}) => {
-  const chat = firstChatResource.read()
-  return chat?.id ? <NaturalChat chatId={chat.id} /> : null
-}
-
-const FirstChatSuspense = () => {
+const FirstChat = (_: {}) => {
   const { graphGet } = useGraph()
-
-  const firstChatResource = useMemo(
-    () =>
-      new AsyncResource<GraphChat>(
-        graphGet(GraphEntity.ListMyChats).then(({ value }) => value[0])
-      ),
+  const fetcher = useCallback(
+    (params: string) => graphGet(params).then(({ value }) => value[0]),
     []
   )
-  return (
-    <Suspense
-      fallback={
-        <BigMessage
-          message={{
-            variant: 'big',
-            title: 'Loading chats…',
-            viewportHeight: false,
-          }}
-        />
-      }
-    >
-      <FirstChat {...{ firstChatResource }} />
-    </Suspense>
-  )
+  const { data, error } = useSwr(graphUri(GraphEntity.ListMyChats), fetcher, {
+    suspense: true,
+  })
+  return data?.id ? <NaturalChat chatId={data.id} /> : null
 }
 
 export const Chat = (_: ChatProps) => (
@@ -55,7 +35,19 @@ export const Chat = (_: ChatProps) => (
         titleVisuallyHidden: true,
         blocks: [
           <Escape key="e1" contentMeetsAccessibilityAndDesignStandards>
-            <FirstChatSuspense />
+            <Suspense
+              fallback={
+                <BigMessage
+                  message={{
+                    variant: 'big',
+                    title: 'Loading chats…',
+                    viewportHeight: false,
+                  }}
+                />
+              }
+            >
+              <FirstChat />
+            </Suspense>
           </Escape>,
         ],
       }}

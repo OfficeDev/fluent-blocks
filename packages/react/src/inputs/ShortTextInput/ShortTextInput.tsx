@@ -1,14 +1,15 @@
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 import {
   ExplicitlyLabeledShortTextInputProps as NaturalExplicitlyLabeledShortTextInputProps,
+  ShortTextInputActionPayload,
   ShortTextInputLabeledByPlaceholderProps as NaturalShortTextInputLabeledByPlaceholderProps,
 } from '@fluent-blocks/schemas'
 
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
 
-import { rem, sx, useCommonStyles } from '../../lib'
+import { rem, sx, useCommonStyles, WithActionHandler } from '../../lib'
 import {
   ShortInputContextualProps,
   WithInputElements,
@@ -17,10 +18,12 @@ import { Inline, InlineContent } from '../../inlines'
 
 export interface ExplicitlyLabeledShortTextInputProps
   extends WithInputElements<NaturalExplicitlyLabeledShortTextInputProps>,
+    WithActionHandler<ShortTextInputActionPayload>,
     ShortInputContextualProps {}
 
 export interface ShortTextInputLabeledByPlaceholderProps
   extends NaturalShortTextInputLabeledByPlaceholderProps,
+    WithActionHandler<ShortTextInputActionPayload>,
     ShortInputContextualProps {}
 
 export type ShortTextInputProps =
@@ -47,10 +50,12 @@ export const ShortTextInput = ({
   before,
   after,
   initialValue,
+  onAction,
   contextualVariant = 'block-inputs',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
   const commonStyles = useCommonStyles()
+  const [internalValue, setInternalValue] = useState(initialValue)
   return (
     <div className={shortTextInputStyles.root}>
       <Label
@@ -68,8 +73,20 @@ export const ShortTextInput = ({
           placeholder: placeholderIsLabel ? (label as string) : placeholder,
           defaultValue: initialValue,
           type: inputType || 'text',
+          onChange: (_e, { value }) => {
+            setInternalValue(value)
+          },
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
+          ...(onAction && {
+            onKeyUp: ({ key }) =>
+              key === 'Enter' &&
+              onAction({
+                type: 'activate',
+                actionId,
+                value: internalValue || '',
+              }),
+          }),
         }}
         appearance={(() => {
           switch (contextualVariant) {
