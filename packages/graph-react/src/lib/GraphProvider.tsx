@@ -41,8 +41,8 @@ export interface GraphProviderProps {
 export const defaultGraphProviderProps: GraphProviderProps = {
   tenantId: process.env.TENANT_ID ?? '',
   clientId: process.env.CLIENT_ID ?? '',
-  scopes: process.env.SCOPES?.split(',') ?? ['User.read', 'Chat.ReadWrite'],
-  redirectUri: process.env.REDIRECT_URI ?? 'http://localhost:4000/',
+  scopes: process.env.SCOPES?.split(',') ?? ['User.read'],
+  redirectUri: process.env.REDIRECT_URI ?? 'http://localhost/',
 }
 
 type GraphGet = (uri: GraphEntity, ...params: string[]) => Promise<any>

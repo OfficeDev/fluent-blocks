@@ -3,6 +3,7 @@ import { Chat as GraphChat } from 'microsoft-graph'
 import { FluentBlocksProvider } from '@fluent-blocks/react'
 import { Chat as NaturalChat, ChatProps } from './Chat'
 import { GraphEntity, GraphProvider, useGraph } from '../lib/GraphProvider'
+import sbGpProps from '../lib/storybookGraphProviderProps'
 import { AsyncResource } from '../lib/Resource/AsyncResource'
 
 // @ts-ignore
@@ -41,7 +42,7 @@ const FirstChatSuspenseInit = () => {
 
 export const Chat = (_: ChatProps) => (
   <FluentBlocksProvider iconSpriteUrl={iconSprite} accentScheme="teams">
-    <GraphProvider>
+    <GraphProvider {...sbGpProps}>
       <FirstChatSuspenseInit />
     </GraphProvider>
   </FluentBlocksProvider>
