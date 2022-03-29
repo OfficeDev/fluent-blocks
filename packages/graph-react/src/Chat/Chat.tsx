@@ -1,21 +1,30 @@
 import { Suspense, useMemo } from 'react'
 import { ChatMessage as GraphChatMessage } from 'microsoft-graph'
 import get from 'lodash/get'
-import { ChatMessage, sx } from '@fluent-blocks/react'
+import {
+  ChatMessage,
+  Paragraph,
+  ShortInputs,
+  useCommonStyles,
+  sx,
+} from '@fluent-blocks/react'
 import { GraphEntity, useGraph } from '../lib/GraphProvider'
 import { AsyncResource } from '../lib/Resource/AsyncResource'
 import { inlinesFromHtml } from '../lib/inlinesFromHtml'
-import { makeStyles } from '@fluentui/react-components'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 export interface ChatProps {
   chatId: string
 }
 
-const useMessagesStyles = makeStyles({
+const useChatStyles = makeStyles({
   root: {
     backgroundColor: 'var(--colorNeutralBackground3)',
     '--surface-background': 'var(--colorNeutralBackground1)',
     ...sx.padding('16px'),
+  },
+  messages: {
+    marginBlockEnd: '8px',
   },
 })
 
@@ -27,31 +36,61 @@ const ChatMessages = ({
   activeAccountId: string[] | null
 }) => {
   const messages = messagesResource.read()
-  const messagesStyles = useMessagesStyles()
+  const chatStyles = useChatStyles()
+  const commonStyles = useCommonStyles()
   return (
-    <div className={messagesStyles.root}>
-      {(messages || []).map((message) => {
-        const fromId = message.from?.user?.id
-        const fromActiveUser =
-          activeAccountId && fromId && activeAccountId.includes(fromId)
-        const messageType = get(message, ['body', 'contentType'], null)
-        const messageBody = get(message, ['body', 'content'], '')
-        const chatMessage =
-          messageType === 'html' ? inlinesFromHtml(messageBody) : [messageBody]
-        return (
-          <ChatMessage
-            key={message.id}
-            {...{
-              instant: message.createdDateTime || '',
-              author: {
-                name: message.from?.user?.displayName ?? 'System',
-                isSelf: !!fromActiveUser,
-              },
-              chatMessage,
-            }}
-          />
-        )
-      })}
+    <div
+      className={cx(
+        chatStyles.root,
+        commonStyles.mainContentWidth,
+        commonStyles.centerBlock
+      )}
+    >
+      <div className={chatStyles.messages}>
+        {(messages || []).map((message) => {
+          const fromId = message.from?.user?.id
+          const fromActiveUser =
+            activeAccountId && fromId && activeAccountId.includes(fromId)
+          const messageType = get(message, ['body', 'contentType'], null)
+          const messageBody = get(message, ['body', 'content'], '')
+          const chatMessage =
+            messageType === 'html'
+              ? inlinesFromHtml(messageBody)
+              : [messageBody]
+          return (
+            <ChatMessage
+              key={message.id}
+              {...{
+                instant: message.createdDateTime || '',
+                author: {
+                  name: message.from?.user?.displayName ?? 'System',
+                  isSelf: !!fromActiveUser,
+                },
+                chatMessage,
+              }}
+            />
+          )
+        })}
+      </div>
+      <ShortInputs
+        inputs={[
+          {
+            actionId: 'compose',
+            label: ' ',
+            placeholder: 'Type a new message',
+            inputType: 'text',
+            type: 'text',
+          },
+          {
+            actionId: 'send',
+            type: 'action',
+            label: 'Send',
+            icon: 'send',
+            iconOnly: true,
+            variant: 'primary',
+          },
+        ]}
+      />
     </div>
   )
 }
@@ -68,7 +107,7 @@ export const Chat = ({ chatId }: ChatProps) => {
   )
 
   return (
-    <Suspense fallback={'Loading messages…'}>
+    <Suspense fallback={<Paragraph paragraph="Loading messages…" />}>
       <ChatMessages {...{ messagesResource, activeAccountId }} />
     </Suspense>
   )

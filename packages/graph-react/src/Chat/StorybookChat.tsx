@@ -1,6 +1,11 @@
 import { useMemo, Suspense } from 'react'
 import { Chat as GraphChat } from 'microsoft-graph'
-import { FluentBlocksProvider } from '@fluent-blocks/react'
+import {
+  FluentBlocksProvider,
+  Main,
+  Paragraph,
+  Escape,
+} from '@fluent-blocks/react'
 import { Chat as NaturalChat, ChatProps } from './Chat'
 import { GraphEntity, GraphProvider, useGraph } from '../lib/GraphProvider'
 import sbGpProps from '../lib/storybookGraphProviderProps'
@@ -29,7 +34,7 @@ const FirstChatSuspense = () => {
     []
   )
   return (
-    <Suspense fallback={'Loading chats…'}>
+    <Suspense fallback={<Paragraph paragraph="Loading chats…" />}>
       <FirstChat {...{ firstChatResource }} />
     </Suspense>
   )
@@ -37,13 +42,24 @@ const FirstChatSuspense = () => {
 
 const FirstChatSuspenseInit = () => {
   const { graphClient } = useGraph()
-  return graphClient ? <FirstChatSuspense /> : <>{'Authenticating…'}</>
+  return graphClient ? (
+    <FirstChatSuspense />
+  ) : (
+    <Paragraph paragraph="Authenticating…" />
+  )
 }
 
 export const Chat = (_: ChatProps) => (
   <FluentBlocksProvider iconSpriteUrl={iconSprite} accentScheme="teams">
     <GraphProvider {...sbGpProps}>
-      <FirstChatSuspenseInit />
+      <Main
+        title="Chat"
+        blocks={[
+          <Escape key="e1" contentMeetsAccessibilityAndDesignStandards>
+            <FirstChatSuspenseInit />
+          </Escape>,
+        ]}
+      />
     </GraphProvider>
   </FluentBlocksProvider>
 )

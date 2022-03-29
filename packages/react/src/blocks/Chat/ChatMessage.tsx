@@ -17,6 +17,7 @@ const useChatMessageStyles = makeStyles({
   root: {
     display: 'flex',
     ...sx.gap('8px'),
+    marginBlockEnd: '4px',
   },
   'root--isSelf': {
     justifyContent: 'flex-end',
