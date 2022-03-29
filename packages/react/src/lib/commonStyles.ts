@@ -85,4 +85,8 @@ export const useTextStyles = makeStyles({
     backgroundColor: 'var(--input-background)',
     ...sx.padding('.1em', '.3em'),
   },
+  caption: {
+    color: 'var(--colorNeutralForeground3)',
+    fontSize: 'var(--fontSizeBase200)',
+  },
 })

@@ -6,4 +6,5 @@ export * from './surfaces'
 export * from './views'
 
 export { Escape } from './lib/Escape'
+export { sx } from './lib/shorthands'
 export { FluentBlocksProvider } from './lib/FluentBlocksProvider'

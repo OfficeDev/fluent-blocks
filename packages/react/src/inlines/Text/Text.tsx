@@ -9,6 +9,8 @@ export const Text = (props: TextProps) => {
   switch (variant) {
     case 'code':
       return <code className={textStyles.code}>{text}</code>
+    case 'caption':
+      return <span className={textStyles.caption}>{text}</span>
     default:
       return <>{text}</>
   }

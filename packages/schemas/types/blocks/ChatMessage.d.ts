@@ -6,6 +6,7 @@ export interface ChatMessageProps {
   author: {
     name: string
     avatar?: Avatar['avatar']
+    isSelf?: boolean
   }
   chatMessage: InlineSequenceOrString
 }

@@ -1,8 +1,8 @@
 import { ChatMessageProps as NaturalChatMessageProps } from '@fluent-blocks/schemas'
 import { Avatar, AvatarProps } from '../../media'
 import { InlineSequenceOrString, Text } from '../../inlines'
-import { makeStyles } from '@fluentui/react-components'
-import { useFluentBlocksContext } from '../../lib'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { useFluentBlocksContext, sx } from '../../lib'
 import { Paragraph } from '../Paragraph/Paragraph'
 
 export interface ChatMessageProps
@@ -16,6 +16,32 @@ export interface ChatMessageProps
 const useChatMessageStyles = makeStyles({
   root: {
     display: 'flex',
+    ...sx.gap('8px'),
+  },
+  'root--isSelf': {
+    justifyContent: 'flex-end',
+  },
+  meta: {
+    marginBlockEnd: '8px',
+  },
+  message: {
+    ...sx.padding('8px', '16px'),
+    position: 'relative',
+    // @ts-ignore
+    '& > :not([role="none"])': {
+      position: 'relative',
+      zIndex: 1,
+    },
+  },
+  background: {
+    position: 'absolute',
+    ...sx.inset('0'),
+    ...sx.borderRadius('var(--borderRadiusMedium)'),
+    backgroundColor: 'var(--surface-background)',
+  },
+  'background--isSelf': {
+    opacity: '0.1',
+    backgroundColor: 'var(--colorBrandBackground)',
   },
 })
 
@@ -29,11 +55,29 @@ export const ChatMessage = ({
     translations: { locale },
   } = useFluentBlocksContext()
   return (
-    <div className={chatMessageStyles.root} role="group">
-      <Avatar avatar={author.avatar || {}} label={author.name} />
-      <div>
-        <div>
-          <Text text={Intl.DateTimeFormat(locale).format(new Date(instant))} />
+    <div
+      className={cx(
+        chatMessageStyles.root,
+        author.isSelf && chatMessageStyles['root--isSelf']
+      )}
+      role="group"
+    >
+      {!author.isSelf && (
+        <Avatar avatar={author.avatar || {}} label={author.name} />
+      )}
+      <div className={chatMessageStyles.message}>
+        <div
+          role="none"
+          className={cx(
+            chatMessageStyles.background,
+            author.isSelf && chatMessageStyles['background--isSelf']
+          )}
+        />
+        <div className={chatMessageStyles.meta}>
+          <Text
+            variant="caption"
+            text={Intl.DateTimeFormat(locale).format(new Date(instant))}
+          />
         </div>
         <Paragraph paragraph={chatMessage} />
       </div>

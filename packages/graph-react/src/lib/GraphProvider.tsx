@@ -57,6 +57,7 @@ export interface GraphContextValue {
   graphClient: Client | null
   graphGet: GraphGet
   graphPost: GraphPost
+  activeAccountId: string[] | null
 }
 
 export const defaultGraphContextValue: GraphContextValue = {
@@ -64,6 +65,7 @@ export const defaultGraphContextValue: GraphContextValue = {
   graphClient: null,
   graphGet: () => Promise.reject('Graph provider not ready.'),
   graphPost: () => Promise.reject('Graph provider not ready.'),
+  activeAccountId: null,
 }
 
 export const GraphContext = createContext<GraphContextValue>(
@@ -92,9 +94,17 @@ const UnmemoizedAuthenticatedGraphProvider = ({
     graphClient!.api(graphUri(uri, ...params)).get()
   const graphPost = (uri: GraphEntity, payload: any, ...params: string[]) =>
     graphClient!.api(graphUri(uri, ...params)).post(payload)
+  const activeAccount =
+    instance.getActiveAccount()?.homeAccountId?.split('.') || null
   return (
     <GraphContext.Provider
-      value={{ authProvider, graphClient, graphGet, graphPost }}
+      value={{
+        authProvider,
+        graphClient,
+        activeAccountId: activeAccount,
+        graphGet,
+        graphPost,
+      }}
     >
       {children}
     </GraphContext.Provider>

@@ -17,8 +17,8 @@
     "check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@fluent-blocks/react": "alpha",
     "@fluent-blocks/basic-icons": "alpha",
+    "@fluent-blocks/react": "alpha",
     "@fluentui/react-components": "latest",
     "@types/react": ">=17.0.0 <19.0.0",
     "@types/react-dom": ">=17.0.0 <19.0.0",
@@ -27,8 +27,9 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluent-blocks/react": "workspace:9.0.0-alpha.7",
     "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.4",
+    "@fluent-blocks/schemas": "workspace:^9.0.0-alpha.3",
+    "@fluent-blocks/react": "workspace:9.0.0-alpha.7",
     "@fluentui/react-components": "latest",
     "@microsoft/microsoft-graph-types": "^2.16.0",
     "@storybook/addon-actions": "latest",
@@ -53,6 +54,7 @@
     "@azure/msal-react": "latest",
     "@js-temporal/polyfill": "^0.4.0",
     "@microsoft/microsoft-graph-client": "latest",
+    "htmlparser2": "^7.2.0",
     "isomorphic-fetch": "latest"
   }
 }

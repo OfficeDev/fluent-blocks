@@ -30,6 +30,12 @@ const sxExtensions = {
     flexDirection: direction,
     flexWrap: wrap,
   }),
+  inset: (length: string) => ({
+    top: length,
+    right: length,
+    bottom: length,
+    left: length,
+  }),
 }
 
 export const sx: typeof sxExtensions & typeof FUIShorthands = {

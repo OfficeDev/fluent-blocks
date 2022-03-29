@@ -40,9 +40,9 @@ const FirstChatSuspenseInit = () => {
 }
 
 export const Chat = (_: ChatProps) => (
-    <FluentBlocksProvider iconSpriteUrl={iconSprite}>
-      <GraphProvider>
-        <FirstChatSuspenseInit />
-      </GraphProvider>
-    </FluentBlocksProvider>
-  )
+  <FluentBlocksProvider iconSpriteUrl={iconSprite} accentScheme="teams">
+    <GraphProvider>
+      <FirstChatSuspenseInit />
+    </GraphProvider>
+  </FluentBlocksProvider>
+)
