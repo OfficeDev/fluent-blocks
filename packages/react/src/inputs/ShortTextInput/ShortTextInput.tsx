@@ -1,6 +1,9 @@
 import { ReactElement } from 'react'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { ShortTextInputProps as NaturalShortTextInputProps } from '@fluent-blocks/schemas'
+import {
+  ExplicitlyLabeledShortTextInputProps as NaturalExplicitlyLabeledShortTextInputProps,
+  ShortTextInputLabeledByPlaceholderProps as NaturalShortTextInputLabeledByPlaceholderProps,
+} from '@fluent-blocks/schemas'
 
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
@@ -12,17 +15,13 @@ import {
 } from '../input-properties'
 import { Inline, InlineContent } from '../../inlines'
 
-interface ExplicitlyLabeledShortTextInputProps
-  extends WithInputElements<NaturalShortTextInputProps>,
-    ShortInputContextualProps {
-  placeholderIsLabel?: boolean
-}
+export interface ExplicitlyLabeledShortTextInputProps
+  extends WithInputElements<NaturalExplicitlyLabeledShortTextInputProps>,
+    ShortInputContextualProps {}
 
-interface ShortTextInputLabeledByPlaceholderProps
-  extends Omit<ExplicitlyLabeledShortTextInputProps, 'label'> {
-  label: string
-  placeholderIsLabel: true
-}
+export interface ShortTextInputLabeledByPlaceholderProps
+  extends NaturalShortTextInputLabeledByPlaceholderProps,
+    ShortInputContextualProps {}
 
 export type ShortTextInputProps =
   | ExplicitlyLabeledShortTextInputProps

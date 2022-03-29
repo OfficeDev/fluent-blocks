@@ -15,9 +15,20 @@ export type ShortTextInputType =
   | 'week'
   | 'datetime-local'
 
-export interface ShortTextInputProps extends TextInputProps {
+export interface ExplicitlyLabeledShortTextInputProps extends TextInputProps {
   inputType?: ShortTextInputType
   before?: InlineEntity
   after?: InlineEntity
   multiline?: false
+  placeholderIsLabel?: boolean
 }
+
+export interface ShortTextInputLabeledByPlaceholderProps
+  extends Omit<ExplicitlyLabeledShortTextInputProps, 'label'> {
+  label: string
+  placeholderIsLabel: true
+}
+
+export type ShortTextInputProps =
+  | ExplicitlyLabeledShortTextInputProps
+  | ShortTextInputLabeledByPlaceholderProps
