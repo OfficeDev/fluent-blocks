@@ -1,4 +1,4 @@
-import { memo, Suspense } from 'react'
+import { memo, Suspense, useState, useCallback } from 'react'
 import { ChatMessage as GraphChatMessage } from 'microsoft-graph'
 import useSwr from 'swr'
 import get from 'lodash/get'
@@ -32,8 +32,10 @@ const useChatStyles = makeStyles({
 const ChatMessages = ({ chatId }: { chatId: string }) => {
   const { graphGet, activeAccountId } = useGraph()
 
-  const fetcher = (params: string) =>
-    graphGet(params).then(({ value }) => value)
+  const fetcher = useCallback(
+    (params: string) => graphGet(params).then(({ value }) => value),
+    [graphGet]
+  )
   const { data, error } = useSwr(
     graphUri(GraphEntity.ListMessages, chatId),
     fetcher,
@@ -68,6 +70,43 @@ const ChatMessages = ({ chatId }: { chatId: string }) => {
   )
 }
 
+const Compose = ({ chatId }: { chatId: string }) => {
+  const { graphPost } = useGraph()
+  const [sending, setSending] = useState(false)
+  return (
+    <ShortInputs
+      inputs={[
+        {
+          actionId: 'compose',
+          label: 'Type a new message, then press ‘Enter’ to send',
+          placeholderIsLabel: true,
+          inputType: 'text',
+          type: 'text',
+          onAction: ({ value }: ShortTextInputActionPayload) => {
+            if (!sending) {
+              setSending(true)
+              graphPost(graphUri(GraphEntity.ListMessages, chatId), {
+                body: {
+                  type: 'text',
+                  content: value,
+                },
+              }).then(() => setSending(false))
+            }
+          },
+        },
+        // {
+        //   actionId: 'send',
+        //   type: 'action',
+        //   label: 'Send',
+        //   icon: 'send',
+        //   iconOnly: true,
+        //   variant: 'primary',
+        // },
+      ]}
+    />
+  )
+}
+
 const UnmemoizedChat = ({ chatId }: ChatProps) => {
   const chatStyles = useChatStyles()
   const commonStyles = useCommonStyles()
@@ -94,28 +133,7 @@ const UnmemoizedChat = ({ chatId }: ChatProps) => {
           <ChatMessages {...{ chatId }} />
         </Suspense>
       </div>
-      <ShortInputs
-        inputs={[
-          {
-            actionId: 'compose',
-            label: 'Type a new message, then press ‘Enter’ to send',
-            placeholderIsLabel: true,
-            inputType: 'text',
-            type: 'text',
-            onAction: ({ value }: ShortTextInputActionPayload) => {
-              console.log('[Send]', value)
-            },
-          },
-          // {
-          //   actionId: 'send',
-          //   type: 'action',
-          //   label: 'Send',
-          //   icon: 'send',
-          //   iconOnly: true,
-          //   variant: 'primary',
-          // },
-        ]}
-      />
+      <Compose chatId={chatId} />
     </div>
   )
 }

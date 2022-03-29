@@ -17,7 +17,7 @@ const FirstChat = (_: {}) => {
   const { graphGet } = useGraph()
   const fetcher = useCallback(
     (params: string) => graphGet(params).then(({ value }) => value[0]),
-    []
+    [graphGet]
   )
   const { data, error } = useSwr(graphUri(GraphEntity.ListMyChats), fetcher, {
     suspense: true,

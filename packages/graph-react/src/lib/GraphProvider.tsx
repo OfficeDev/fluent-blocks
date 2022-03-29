@@ -4,7 +4,6 @@ import { Client } from '@microsoft/microsoft-graph-client'
 import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser'
 import {
   MsalProvider,
-  MsalContext,
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from '@azure/msal-react'
@@ -70,17 +69,20 @@ export const GraphContext = createContext<GraphContextValue>(
 
 const UnmemoizedAuthenticatedGraphProvider = ({
   children,
+  msalInstance,
   ...props
-}: PropsWithChildren<Partial<GraphProviderProps>>) => {
-  const { instance } = useContext(MsalContext)
-  const accounts = instance.getAllAccounts()
+}: PropsWithChildren<
+  Partial<GraphProviderProps> & { msalInstance: PublicClientApplication }
+>) => {
+  console.log('[AuthenticatedGraphProvider]')
+  const accounts = msalInstance.getAllAccounts()
   if (accounts.length) {
-    instance.setActiveAccount(accounts[0])
+    msalInstance.setActiveAccount(accounts[0])
   }
   const authProvider = new AuthCodeMSALBrowserAuthenticationProvider(
-    instance as PublicClientApplication,
+    msalInstance as PublicClientApplication,
     {
-      account: instance.getActiveAccount()!,
+      account: msalInstance.getActiveAccount()!,
       scopes: props.scopes || defaultGraphProviderProps.scopes,
       interactionType: InteractionType.Popup,
     }
@@ -90,7 +92,7 @@ const UnmemoizedAuthenticatedGraphProvider = ({
   const graphPost = (params: string, payload: any) =>
     graphClient!.api(params).post(payload)
   const activeAccount =
-    instance.getActiveAccount()?.homeAccountId?.split('.') || null
+    msalInstance.getActiveAccount()?.homeAccountId?.split('.') || null
   return (
     <GraphContext.Provider
       value={{
@@ -110,9 +112,10 @@ const AuthenticatedGraphProvider = memo(UnmemoizedAuthenticatedGraphProvider)
 
 export const useGraph = () => useContext(GraphContext)
 
-export const GraphProvider = (
+const UnmemoizedGraphProvider = (
   props: PropsWithChildren<Partial<GraphProviderProps>>
 ) => {
+  console.log('[GraphProvider]')
   const msalInstance = new PublicClientApplication({
     auth: {
       clientId: props.clientId || defaultGraphProviderProps.clientId,
@@ -169,8 +172,10 @@ export const GraphProvider = (
         />
       </UnauthenticatedTemplate>
       <AuthenticatedTemplate>
-        <AuthenticatedGraphProvider {...props} />
+        <AuthenticatedGraphProvider {...props} msalInstance={msalInstance} />
       </AuthenticatedTemplate>
     </MsalProvider>
   )
 }
+
+export const GraphProvider = memo(UnmemoizedGraphProvider)
