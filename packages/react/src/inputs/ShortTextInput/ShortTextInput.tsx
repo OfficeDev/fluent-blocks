@@ -9,7 +9,7 @@ import {
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
 
-import { rem, sx, useCommonStyles, WithActionHandler } from '../../lib'
+import { rem, sx, useCommonStyles, WithUpdatingActionHandler } from '../../lib'
 import {
   ShortInputContextualProps,
   WithInputElements,
@@ -18,12 +18,12 @@ import { Inline, InlineContent } from '../../inlines'
 
 export interface ExplicitlyLabeledShortTextInputProps
   extends WithInputElements<NaturalExplicitlyLabeledShortTextInputProps>,
-    WithActionHandler<ShortTextInputActionPayload>,
+    WithUpdatingActionHandler<ShortTextInputActionPayload>,
     ShortInputContextualProps {}
 
 export interface ShortTextInputLabeledByPlaceholderProps
   extends NaturalShortTextInputLabeledByPlaceholderProps,
-    WithActionHandler<ShortTextInputActionPayload>,
+    WithUpdatingActionHandler<ShortTextInputActionPayload>,
     ShortInputContextualProps {}
 
 export type ShortTextInputProps =
@@ -55,7 +55,7 @@ export const ShortTextInput = ({
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
   const commonStyles = useCommonStyles()
-  const [internalValue, setInternalValue] = useState(initialValue)
+  const [internalValue, setInternalValue] = useState(initialValue || '')
   return (
     <div className={shortTextInputStyles.root}>
       <Label
@@ -71,21 +71,23 @@ export const ShortTextInput = ({
         {...{
           id: actionId,
           placeholder: placeholderIsLabel ? (label as string) : placeholder,
-          defaultValue: initialValue,
+          value: internalValue,
           type: inputType || 'text',
           onChange: (_e, { value }) => {
-            setInternalValue(value)
+            setInternalValue(value || '')
           },
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
           ...(onAction && {
             onKeyUp: ({ key }) =>
               key === 'Enter' &&
-              onAction({
-                type: 'activate',
-                actionId,
-                value: internalValue || '',
-              }),
+              setInternalValue(
+                onAction({
+                  type: 'activate',
+                  actionId,
+                  value: internalValue || '',
+                }) || ''
+              ),
           }),
         }}
         appearance={(() => {

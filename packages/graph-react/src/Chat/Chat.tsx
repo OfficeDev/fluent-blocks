@@ -4,10 +4,10 @@ import useSwr from 'swr'
 import get from 'lodash/get'
 import {
   ChatMessage,
-  ShortInputs,
   useCommonStyles,
   sx,
   BigMessage,
+  ShortTextInput,
 } from '@fluent-blocks/react'
 import { GraphEntity, graphUri, useGraph } from '../lib/GraphProvider'
 import { inlinesFromHtml } from '../lib/inlinesFromHtml'
@@ -22,10 +22,19 @@ const useChatStyles = makeStyles({
   root: {
     backgroundColor: 'var(--colorNeutralBackground3)',
     '--surface-background': 'var(--colorNeutralBackground1)',
-    ...sx.padding('16px'),
+    display: 'flex',
+    flexDirection: 'column',
+    ...sx.gap('.5rem'),
+    paddingBlockStart: '2rem',
+    maxHeight: 'calc(100vh - 5rem)',
   },
   messages: {
-    marginBlockEnd: '8px',
+    flexGrow: 1,
+    overflowY: 'auto',
+    ...sx.padding('1rem', 0),
+  },
+  compose: {
+    ...sx.padding('1rem', 0),
   },
 })
 
@@ -73,10 +82,11 @@ const ChatMessages = ({ chatId }: { chatId: string }) => {
 const Compose = ({ chatId }: { chatId: string }) => {
   const { graphPost } = useGraph()
   const [sending, setSending] = useState(false)
+  const chatStyles = useChatStyles()
   return (
-    <ShortInputs
-      inputs={[
-        {
+    <div className={chatStyles.compose}>
+      <ShortTextInput
+        {...{
           actionId: 'compose',
           label: 'Type a new message, then press ‘Enter’ to send',
           placeholderIsLabel: true,
@@ -91,19 +101,14 @@ const Compose = ({ chatId }: { chatId: string }) => {
                   content: value,
                 },
               }).then(() => setSending(false))
+              return ''
+            } else {
+              return value
             }
           },
-        },
-        // {
-        //   actionId: 'send',
-        //   type: 'action',
-        //   label: 'Send',
-        //   icon: 'send',
-        //   iconOnly: true,
-        //   variant: 'primary',
-        // },
-      ]}
-    />
+        }}
+      />
+    </div>
   )
 }
 
@@ -118,6 +123,7 @@ const UnmemoizedChat = ({ chatId }: ChatProps) => {
         commonStyles.centerBlock
       )}
     >
+      <Compose chatId={chatId} />
       <div className={chatStyles.messages}>
         <Suspense
           fallback={
@@ -133,7 +139,6 @@ const UnmemoizedChat = ({ chatId }: ChatProps) => {
           <ChatMessages {...{ chatId }} />
         </Suspense>
       </div>
-      <Compose chatId={chatId} />
     </div>
   )
 }
