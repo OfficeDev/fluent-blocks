@@ -113,7 +113,7 @@ importers:
     specifiers:
       '@babel/core': latest
       '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.4
-      '@fluent-blocks/schemas': workspace:9.0.0-alpha.3
+      '@fluent-blocks/schemas': workspace:9.0.0-alpha.4
       '@fluentui/react-components': latest
       '@storybook/addon-actions': latest
       '@storybook/addon-essentials': latest
