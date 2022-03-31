@@ -1,3 +1,4 @@
+import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
 import { Table } from './StorybookTable'
@@ -25,9 +26,22 @@ export const TableTemplate = (props) => (
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      label: fake('{{lorem.sentence}}'),
-      columns: {},
-      rows: {},
+      caption: fake('{{lorem.sentence}}'),
+      captionVisuallyHidden: true,
+      rowTitlingColumn: 'c1',
+      columns: {
+        c1: { title: 'Name' },
+        c2: { title: 'Office' },
+        c3: { title: 'Email' },
+      },
+      rows: range(32).reduce((acc, r) => {
+        acc[`r${r}`] = {
+          c1: { cell: fake('{{name.firstName}} {{name.lastName}}') },
+          c2: { cell: fake('{{address.city}}') },
+          c3: { cell: fake('{{internet.email}}') },
+        }
+        return acc
+      }, {}),
     }}
   >
     {seed(1234) || TableTemplate.bind({})}

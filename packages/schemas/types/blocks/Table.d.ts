@@ -42,9 +42,11 @@ export type TableActionPayload =
   | TableSelectedRowsActivateAction
 
 export interface TableProps {
-  label: string
+  caption: InlineSequenceOrString
+  captionVisuallyHidden?: boolean
   columns: Record<string, ColumnProps>
   rows: Record<string, RowProps>
+  rowTitlingColumn?: string
   truncate?: boolean
   selectable?: boolean
 }
