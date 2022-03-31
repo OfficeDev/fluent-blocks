@@ -6,6 +6,7 @@ import {
   WithActionHandler,
 } from '../../lib'
 import { TableActionPayload } from '@fluent-blocks/schemas'
+import { Button } from '../../inputs'
 
 export const Table = ({
   themeName,
@@ -17,7 +18,9 @@ export const Table = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 } & WithActionHandler<TableActionPayload>) => (
-    <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-      <NaturalTable {...props} />
-    </FluentBlocksProvider>
-  )
+  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
+    <Button type="action" label="Focus before" actionId="before" />
+    <NaturalTable {...props} />
+    <Button type="action" label="Focus after" actionId="before" />
+  </FluentBlocksProvider>
+)
