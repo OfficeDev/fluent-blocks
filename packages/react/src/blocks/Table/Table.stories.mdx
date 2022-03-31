@@ -1,0 +1,35 @@
+import { fake, seed } from 'faker/locale/en_US'
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+import { Table } from './StorybookTable'
+import { contextArgTypes } from '../../lib'
+
+import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+
+<Meta
+  title="Blocks/Table"
+  component={Table}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+/>
+
+export const TableTemplate = (props) => (
+  <Table {...props} iconSpriteUrl={iconSpriteUrl} />
+)
+
+# Table
+
+<Canvas withSource="none">
+  <Story
+    name="Table"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      label: fake('{{lorem.sentence}}'),
+      columns: {},
+      rows: {},
+    }}
+  >
+    {seed(1234) || TableTemplate.bind({})}
+  </Story>
+</Canvas>
