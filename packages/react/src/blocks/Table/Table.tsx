@@ -11,7 +11,7 @@ import {
   ColumnProps as NaturalColumnProps,
 } from '@fluent-blocks/schemas'
 import { InlineContent, InlineSequenceOrString } from '../../inlines'
-import { useCommonStyles } from '../../lib'
+import { key, useCommonStyles } from '../../lib'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
 export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
@@ -43,16 +43,17 @@ function isActionsCell(o: any): o is TableAction[] {
 }
 
 const useTableStyles = makeStyles({
+  root: { display: 'table' },
   inner: { display: 'contents' },
+  row: { display: 'table-row' },
+  cell: { display: 'table-cell' },
+  caption: { display: 'table-caption' },
 })
 
-export const Table = ({
-  caption,
-  captionVisuallyHidden,
-  columns,
-  rows,
-  rowTitlingColumn,
-}: TableProps) => {
+export const Table = (props: TableProps) => {
+  const { caption, captionVisuallyHidden, columns, rows, rowTitlingColumn } =
+    props
+  const tableId = key(props)
   const commonStyles = useCommonStyles()
   const tableStyles = useTableStyles()
   const colKeys = keys(columns)
@@ -73,54 +74,86 @@ export const Table = ({
   }
 
   return (
-    <table {...groupAttrs}>
-      <caption
-        className={cx(captionVisuallyHidden && commonStyles.visuallyHidden)}
+    <div
+      role="grid"
+      {...groupAttrs}
+      className={tableStyles.root}
+      aria-labelledby={`desc__${tableId}`}
+    >
+      <p
+        id={`desc__${tableId}`}
+        className={cx(
+          captionVisuallyHidden
+            ? commonStyles.visuallyHidden
+            : tableStyles.caption
+        )}
       >
         <InlineContent inlines={caption} />
-      </caption>
+      </p>
       <div {...rootInnerAttrs} className={tableStyles.inner}>
-        <thead>
-          <tr {...groupAttrs}>
-            {colKeys.map((colKey) => {
-              const column = columns[colKey]
-              return (
-                <th key={colKey} {...groupAttrs} scope="col">
-                  <InlineContent inlines={column.title} />
-                </th>
-              )
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {keys(rows).map((rowKey) => {
-            const row = rows[rowKey]
+        <div role="row" {...groupAttrs} className={tableStyles.row}>
+          {colKeys.map((colKey) => {
+            const column = columns[colKey]
             return (
-              <tr key={rowKey} {...groupAttrs}>
-                <div {...rowInnerAttrs} className={tableStyles.inner}>
-                  {colKeys.map((colKey) => {
-                    const cell = row[colKey]
-                    const cellContent = !cell ? null : isActionsCell(cell) ? (
-                      <ShortInputs inputs={cell} />
-                    ) : (
-                      <InlineContent inlines={cell.cell} />
-                    )
-                    return rowTitlingColumn === colKey ? (
-                      <th scope="row" key={colKey} {...groupAttrs}>
-                        {cellContent}
-                      </th>
-                    ) : (
-                      <td key={colKey} {...groupAttrs}>
-                        {cellContent}
-                      </td>
-                    )
-                  })}
-                </div>
-              </tr>
+              <div
+                role="columnheader"
+                key={colKey}
+                id={`ch__${colKey}`}
+                {...groupAttrs}
+                className={tableStyles.cell}
+              >
+                <InlineContent inlines={column.title} />
+              </div>
             )
           })}
-        </tbody>
+        </div>
+        {keys(rows).map((rowKey) => {
+          const row = rows[rowKey]
+          return (
+            <div
+              role="row"
+              key={rowKey}
+              {...(rowTitlingColumn && { 'aria-labelledby': `rh__${rowKey}` })}
+              {...groupAttrs}
+              className={tableStyles.row}
+            >
+              <div {...rowInnerAttrs} className={tableStyles.inner}>
+                {colKeys.map((colKey) => {
+                  const cell = row[colKey]
+                  const cellContent = !cell ? null : isActionsCell(cell) ? (
+                    <ShortInputs inputs={cell} />
+                  ) : (
+                    <InlineContent inlines={cell.cell} />
+                  )
+                  return rowTitlingColumn === colKey ? (
+                    <div
+                      role="rowheader"
+                      id={`rh__${rowKey}`}
+                      key={colKey}
+                      {...groupAttrs}
+                      className={tableStyles.cell}
+                    >
+                      {cellContent}
+                    </div>
+                  ) : (
+                    <div
+                      role="gridcell"
+                      key={colKey}
+                      aria-labelledby={`${
+                        rowTitlingColumn && `rh__${rowKey} `
+                      }ch__${colKey}`}
+                      {...groupAttrs}
+                      className={tableStyles.cell}
+                    >
+                      {cellContent}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
       </div>
-    </table>
+    </div>
   )
 }
