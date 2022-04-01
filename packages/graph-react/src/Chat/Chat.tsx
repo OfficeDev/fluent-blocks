@@ -1,4 +1,4 @@
-import { memo, Suspense, useState, useCallback } from 'react'
+import { memo, Suspense, useState, useCallback, useEffect, useRef } from 'react'
 import { ChatMessage as GraphChatMessage } from 'microsoft-graph'
 import useSwr from 'swr'
 import get from 'lodash/get'
@@ -26,10 +26,12 @@ const useChatStyles = makeStyles({
     flexDirection: 'column',
     ...sx.gap('.5rem'),
     paddingBlockStart: '2rem',
-    maxHeight: 'calc(100vh - 5rem)',
+    maxHeight: 'calc(100vh - 8.8rem)',
   },
   messages: {
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column-reverse',
     overflowY: 'auto',
     ...sx.padding('1rem', 0),
   },
@@ -45,14 +47,27 @@ const ChatMessages = ({ chatId }: { chatId: string }) => {
     (params: string) => graphGet(params).then(({ value }) => value),
     [graphGet]
   )
+
   const { data, error } = useSwr(
     graphUri(GraphEntity.ListMessages, chatId),
     fetcher,
     { suspense: true, refreshInterval: 1e3 }
   )
 
+  const messageIds = (data || []).map(({ id }: GraphChatMessage) => id)
+
+  const $messages = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if ($messages.current) {
+      $messages.current.scrollTop = 9999
+    }
+  }, messageIds)
+
+  const chatStyles = useChatStyles()
+
   return (
-    <>
+    <div ref={$messages} className={chatStyles.messages}>
       {(data || []).map((message: GraphChatMessage) => {
         const fromId = message.from?.user?.id
         const fromActiveUser =
@@ -75,7 +90,7 @@ const ChatMessages = ({ chatId }: { chatId: string }) => {
           />
         )
       })}
-    </>
+    </div>
   )
 }
 
@@ -123,22 +138,20 @@ const UnmemoizedChat = ({ chatId }: ChatProps) => {
         commonStyles.centerBlock
       )}
     >
+      <Suspense
+        fallback={
+          <BigMessage
+            message={{
+              variant: 'big',
+              title: 'Loading messages…',
+              viewportHeight: false,
+            }}
+          />
+        }
+      >
+        <ChatMessages {...{ chatId }} />
+      </Suspense>
       <Compose chatId={chatId} />
-      <div className={chatStyles.messages}>
-        <Suspense
-          fallback={
-            <BigMessage
-              message={{
-                variant: 'big',
-                title: 'Loading messages…',
-                viewportHeight: false,
-              }}
-            />
-          }
-        >
-          <ChatMessages {...{ chatId }} />
-        </Suspense>
-      </div>
     </div>
   )
 }

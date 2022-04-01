@@ -1,5 +1,5 @@
 import { createContext, memo, PropsWithChildren, useContext } from 'react'
-import { ShortInputs } from '@fluent-blocks/react'
+import { ShortInputs, View } from '@fluent-blocks/react'
 import { Client } from '@microsoft/microsoft-graph-client'
 import { AuthCodeMSALBrowserAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser'
 import {
@@ -154,21 +154,27 @@ const UnmemoizedGraphProvider = (
   return (
     <MsalProvider instance={msalInstance}>
       <UnauthenticatedTemplate>
-        <ShortInputs
-          variant="narrow-block"
-          inputs={[
-            {
-              actionId: 'msalLogin',
-              type: 'action',
-              variant: 'primary',
-              label: 'Sign in to view this demo',
-              onAction: () =>
-                msalInstance.loginPopup({
-                  ...defaultGraphProviderProps,
-                  ...props,
-                }),
-            },
-          ]}
+        <View
+          main={{
+            title: 'Sign in',
+            blocks: [
+              {
+                inputs: [
+                  {
+                    actionId: 'msalLogin',
+                    type: 'action',
+                    variant: 'primary',
+                    label: 'Sign in to view this demo',
+                    onAction: () =>
+                      msalInstance.loginPopup({
+                        ...defaultGraphProviderProps,
+                        ...props,
+                      }),
+                  },
+                ],
+              },
+            ],
+          }}
         />
       </UnauthenticatedTemplate>
       <AuthenticatedTemplate>

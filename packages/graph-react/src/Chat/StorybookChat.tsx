@@ -32,7 +32,6 @@ export const Chat = (_: ChatProps) => (
       accentScheme="teams"
       main={{
         title: 'Chat',
-        titleVisuallyHidden: true,
         blocks: [
           <Escape key="e1" contentMeetsAccessibilityAndDesignStandards>
             <Suspense
