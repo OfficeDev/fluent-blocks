@@ -17,7 +17,7 @@ export interface ColumnProps {
   minWidth?: number
   hideable?: boolean
   textSelectable?: boolean
-  hidePriority: number
+  hidePriority?: number
   sortVariant?: SortVariant
 }
 
