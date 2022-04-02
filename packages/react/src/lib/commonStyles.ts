@@ -41,6 +41,10 @@ export const useCommonStyles = makeStyles({
     whiteSpace: 'nowrap',
     width: '1px',
   },
+  blockSpacing: {
+    marginBlockStart: '0',
+    marginBlockEnd: '1rem',
+  },
 })
 
 export const useTextBlockStyles = makeStyles({
