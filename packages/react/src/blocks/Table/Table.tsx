@@ -1,9 +1,10 @@
+import { ReactElement } from 'react'
+import keys from 'lodash/keys'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import keys from 'lodash/keys'
 import { ButtonProps } from '../../inputs'
 import {
   TableProps as NaturalTableProps,
@@ -37,11 +38,13 @@ export interface RowProps {
   actions?: TableAction[]
 }
 
-export interface TableProps
-  extends Omit<NaturalTableProps, 'columns' | 'rows' | 'caption'> {
-  columns: Record<string, ColumnProps>
-  rows: Record<string, RowProps>
-  caption: InlineSequenceOrString
+export interface TableProps extends Omit<NaturalTableProps, 'table'> {
+  table: Omit<NaturalTableProps['table'], 'columns' | 'rows' | 'caption'> & {
+    columns: Record<string, ColumnProps>
+    rows: Record<string, RowProps>
+    caption: InlineSequenceOrString
+  }
+  contextualVariant?: 'block'
 }
 
 function isActionsCell(o: any): o is TableAction[] {
@@ -65,8 +68,15 @@ const useTableStyles = makeStyles({
 })
 
 export const Table = (props: TableProps) => {
-  const { caption, captionVisuallyHidden, columns, rows, rowTitlingColumn } =
-    props
+  const {
+    caption,
+    captionVisuallyHidden,
+    columns,
+    rows,
+    rowTitlingColumn,
+    widthVariant = 'viewportWidth',
+  } = props.table
+  const contextualVariant = props.contextualVariant || 'block'
   const tableId = key(props)
   const commonStyles = useCommonStyles()
   const tableStyles = useTableStyles()
@@ -92,7 +102,12 @@ export const Table = (props: TableProps) => {
     <div
       role="grid"
       {...groupAttrs}
-      className={cx(tableStyles.root, commonStyles.blockSpacing)}
+      className={cx(
+        tableStyles.root,
+        commonStyles.blockSpacing,
+        widthVariant === 'textWidth' && commonStyles.mainContentWidth,
+        contextualVariant === 'block' && commonStyles.centerBlock
+      )}
       aria-labelledby={`desc__${tableId}`}
     >
       <p
@@ -100,7 +115,9 @@ export const Table = (props: TableProps) => {
         className={cx(
           captionVisuallyHidden
             ? commonStyles.visuallyHidden
-            : tableStyles.caption
+            : tableStyles.caption,
+          commonStyles.mainContentWidth,
+          commonStyles.centerBlock
         )}
       >
         <InlineContent inlines={caption} />
@@ -178,4 +195,19 @@ export const Table = (props: TableProps) => {
       </div>
     </div>
   )
+}
+
+export type TableElement = ReactElement<TableProps, typeof Table>
+export type TablePropsOrElement = TableProps | TableElement
+
+function isTableProps(o: any): o is TableProps {
+  return 'table' in o
+}
+
+function isTableElement(o: any): o is TableElement {
+  return o?.type === Table
+}
+
+export function renderIfTable(o: any) {
+  return isTableProps(o) ? <Table {...o} /> : isTableElement(o) ? o : null
 }

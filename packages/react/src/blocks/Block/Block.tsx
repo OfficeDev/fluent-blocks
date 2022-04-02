@@ -22,6 +22,7 @@ import {
 import { LayoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 import { CardPropsOrElement, renderIfCard } from '../Card/Card'
 import { ToolbarPropsOrElement, renderIfToolbar } from '../Toolbar/Toolbar'
+import { TablePropsOrElement, renderIfTable } from '../Table/Table'
 
 export type BlockEntity =
   | ParagraphPropsOrElement
@@ -33,6 +34,7 @@ export type BlockEntity =
   | MultilineTextInputPropsOrElement
   | RadioGroupPropsOrElement
   | BigMessagePropsOrElement
+  | TablePropsOrElement
   | EscapeElement
 
 export type BlockSequence = BlockEntity[]
@@ -50,5 +52,6 @@ export const Block = (o: BlockEntity) =>
   renderIfMultilineTextInput(o) ||
   renderIfRadioGroup(o) ||
   renderIfBigMessage(o) ||
+  renderIfTable(o) ||
   renderIfEscape(o) ||
   invalidBlock(o)
