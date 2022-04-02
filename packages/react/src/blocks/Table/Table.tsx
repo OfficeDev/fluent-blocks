@@ -52,7 +52,8 @@ function isActionsCell(o: any): o is TableAction[] {
 }
 
 const useTableStyles = makeStyles({
-  root: { display: 'table' },
+  root: { overflowX: 'auto' },
+  grid: { display: 'table' },
   inner: { display: 'contents' },
   row: { display: 'table-row' },
   cell: { display: 'table-cell' },
@@ -100,98 +101,107 @@ export const Table = (props: TableProps) => {
 
   return (
     <div
-      role="grid"
-      {...groupAttrs}
+      role="none"
       className={cx(
         tableStyles.root,
         commonStyles.blockSpacing,
-        widthVariant === 'textWidth' && commonStyles.mainContentWidth,
-        contextualVariant === 'block' && commonStyles.centerBlock
+        widthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
-      aria-labelledby={`desc__${tableId}`}
     >
-      <p
-        id={`desc__${tableId}`}
+      <div
+        role="grid"
+        {...groupAttrs}
         className={cx(
-          captionVisuallyHidden
-            ? commonStyles.visuallyHidden
-            : tableStyles.caption,
-          commonStyles.mainContentWidth,
-          commonStyles.centerBlock
+          tableStyles.grid,
+          contextualVariant === 'block' && commonStyles.centerBlock
         )}
+        aria-labelledby={`desc__${tableId}`}
       >
-        <InlineContent inlines={caption} />
-      </p>
-      <div {...rootInnerAttrs} className={tableStyles.inner}>
-        <div
-          role="row"
-          {...groupAttrs}
-          className={tableStyles.row}
-          aria-label={translations.thead}
+        <p
+          id={`desc__${tableId}`}
+          className={cx(
+            captionVisuallyHidden
+              ? commonStyles.visuallyHidden
+              : tableStyles.caption,
+            commonStyles.mainContentWidth,
+            commonStyles.centerBlock
+          )}
         >
-          <div {...rowInnerAttrs} className={tableStyles.inner}>
-            {colKeys.map((colKey) => {
-              const column = columns[colKey]
-              return (
-                <div
-                  role="columnheader"
-                  key={colKey}
-                  id={`ch__${colKey}`}
-                  {...groupAttrs}
-                  className={cx(tableStyles.cell, tableStyles.theadCell)}
-                >
-                  <InlineContent inlines={column.title} />
-                </div>
-              )
-            })}
-          </div>
-        </div>
-        {keys(rows).map((rowKey) => {
-          const row = rows[rowKey]
-          return (
-            <div
-              role="row"
-              key={rowKey}
-              {...(rowTitlingColumn && { 'aria-labelledby': `rh__${rowKey}` })}
-              {...groupAttrs}
-              className={tableStyles.row}
-            >
-              <div {...rowInnerAttrs} className={tableStyles.inner}>
-                {colKeys.map((colKey) => {
-                  const cell = row[colKey]
-                  const cellContent = !cell ? null : isActionsCell(cell) ? (
-                    <ShortInputs inputs={cell} />
-                  ) : (
-                    <InlineContent inlines={cell.cell} />
-                  )
-                  return rowTitlingColumn === colKey ? (
-                    <div
-                      role="rowheader"
-                      id={`rh__${rowKey}`}
-                      key={colKey}
-                      {...groupAttrs}
-                      className={cx(tableStyles.cell, tableStyles.tbodyCell)}
-                    >
-                      {cellContent}
-                    </div>
-                  ) : (
-                    <div
-                      role="gridcell"
-                      key={colKey}
-                      aria-labelledby={`${
-                        rowTitlingColumn && `rh__${rowKey} `
-                      }ch__${colKey}`}
-                      {...groupAttrs}
-                      className={cx(tableStyles.cell, tableStyles.tbodyCell)}
-                    >
-                      {cellContent}
-                    </div>
-                  )
-                })}
-              </div>
+          <InlineContent inlines={caption} />
+        </p>
+        <div {...rootInnerAttrs} className={tableStyles.inner}>
+          <div
+            role="row"
+            {...groupAttrs}
+            className={tableStyles.row}
+            aria-label={translations.thead}
+          >
+            <div {...rowInnerAttrs} className={tableStyles.inner}>
+              {colKeys.map((colKey) => {
+                const column = columns[colKey]
+                return (
+                  <div
+                    role="columnheader"
+                    key={colKey}
+                    id={`ch__${colKey}`}
+                    {...groupAttrs}
+                    className={cx(tableStyles.cell, tableStyles.theadCell)}
+                  >
+                    <InlineContent inlines={column.title} />
+                  </div>
+                )
+              })}
             </div>
-          )
-        })}
+          </div>
+          {keys(rows).map((rowKey) => {
+            const row = rows[rowKey]
+            return (
+              <div
+                role="row"
+                key={rowKey}
+                {...(rowTitlingColumn && {
+                  'aria-labelledby': `rh__${rowKey}`,
+                })}
+                {...groupAttrs}
+                className={tableStyles.row}
+              >
+                <div {...rowInnerAttrs} className={tableStyles.inner}>
+                  {colKeys.map((colKey) => {
+                    const cell = row[colKey]
+                    const cellContent = !cell ? null : isActionsCell(cell) ? (
+                      <ShortInputs inputs={cell} />
+                    ) : (
+                      <InlineContent inlines={cell.cell} />
+                    )
+                    return rowTitlingColumn === colKey ? (
+                      <div
+                        role="rowheader"
+                        id={`rh__${rowKey}`}
+                        key={colKey}
+                        {...groupAttrs}
+                        className={cx(tableStyles.cell, tableStyles.tbodyCell)}
+                      >
+                        {cellContent}
+                      </div>
+                    ) : (
+                      <div
+                        role="gridcell"
+                        key={colKey}
+                        aria-labelledby={`${
+                          rowTitlingColumn && `rh__${rowKey} `
+                        }ch__${colKey}`}
+                        {...groupAttrs}
+                        className={cx(tableStyles.cell, tableStyles.tbodyCell)}
+                      >
+                        {cellContent}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
