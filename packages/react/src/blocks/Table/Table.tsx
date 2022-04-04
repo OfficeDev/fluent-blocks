@@ -1,17 +1,19 @@
-import { ReactElement } from 'react'
+import {
+  ReactElement,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import debounce from 'lodash/debounce'
 import keys from 'lodash/keys'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
 import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { ButtonProps } from '../../inputs'
-import {
-  TableProps as NaturalTableProps,
-  CellProps as NaturalCellProps,
-  ColumnProps as NaturalColumnProps,
-} from '@fluent-blocks/schemas'
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
+import { InlineContent } from '../../inlines'
 import {
   key,
   rem,
@@ -21,31 +23,8 @@ import {
 } from '../../lib'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
-export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
-  multiple?: boolean
-}
-
-export interface CellProps extends Omit<NaturalCellProps, 'cell'> {
-  cell: InlineSequenceOrString
-}
-
-export interface ColumnProps extends Omit<NaturalColumnProps, 'title'> {
-  title: InlineSequenceOrString
-}
-
-export interface RowProps {
-  [columnKey: string]: CellProps | TableAction[] | undefined
-  actions?: TableAction[]
-}
-
-export interface TableProps extends Omit<NaturalTableProps, 'table'> {
-  table: Omit<NaturalTableProps['table'], 'columns' | 'rows' | 'caption'> & {
-    columns: Record<string, ColumnProps>
-    rows: Record<string, RowProps>
-    caption: InlineSequenceOrString
-  }
-  contextualVariant?: 'block'
-}
+import { TableAction, TableProps } from './table-properties'
+import { getBreakpoints } from './tableBreakpoints'
 
 function isActionsCell(o: any): o is TableAction[] {
   return Array.isArray(o)
@@ -75,6 +54,7 @@ export const Table = (props: TableProps) => {
     columns,
     rows,
     rowTitlingColumn,
+    selectable = false,
     widthVariant = 'viewportWidth',
   } = props.table
   const contextualVariant = props.contextualVariant || 'block'
@@ -82,6 +62,7 @@ export const Table = (props: TableProps) => {
   const commonStyles = useCommonStyles()
   const tableStyles = useTableStyles()
   const colKeys = keys(columns)
+  const rowKeys = keys(rows)
   const { translations } = useFluentBlocksContext()
 
   const groupAttrs = {
@@ -99,9 +80,72 @@ export const Table = (props: TableProps) => {
     ...useArrowNavigationGroup({ axis: 'horizontal' }),
   }
 
+  const breakpoints = useMemo(
+    () =>
+      getBreakpoints(
+        columns,
+        rowKeys.findIndex((rowKey) => rows[rowKey].hasOwnProperty('actions')) >=
+          0,
+        selectable
+      ),
+    [rows, columns]
+  )
+
+  const $table = useRef<HTMLDivElement | null>(null)
+
+  const [inFlowColumns, setInFlowColumns] = useState<Set<string>>(
+    // start by displaying all columns (in case of SSR)
+    breakpoints.get(Infinity)!
+  )
+
+  const getNextColumnsInFlow = useCallback(() => {
+    if ($table.current) {
+      const widths = Array.from(breakpoints.keys()).sort(
+        (a: number, b: number) => a - b
+      )
+      const firstBreak = widths.findIndex(
+        (width) => width > $table.current!.clientWidth
+      )
+      // use the last width to not be greater than the client width, or zero if they all were
+      return breakpoints.get(widths[Math.max(0, firstBreak - 1)])
+    } else {
+      return breakpoints.get(Infinity)
+    }
+  }, [])
+
+  const debouncedUpdateTableLayout = useCallback(
+    debounce(
+      () => {
+        if ($table.current) {
+          const nextColumnsInFlow = getNextColumnsInFlow()
+          console.log('[Resize]', nextColumnsInFlow)
+          setInFlowColumns(nextColumnsInFlow!)
+        }
+      },
+      100,
+      { leading: false, trailing: true }
+    ),
+    []
+  )
+
+  useLayoutEffect(() => {
+    document.defaultView?.addEventListener('resize', debouncedUpdateTableLayout)
+    if ($table.current) {
+      const nextColumnsInFlow = getNextColumnsInFlow()
+      console.log('[Resize]', nextColumnsInFlow)
+      setInFlowColumns(nextColumnsInFlow!)
+    }
+    return () =>
+      document.defaultView?.removeEventListener(
+        'resize',
+        debouncedUpdateTableLayout
+      )
+  }, [])
+
   return (
     <div
       role="none"
+      ref={$table}
       className={cx(
         tableStyles.root,
         commonStyles.blockSpacing,
@@ -138,22 +182,26 @@ export const Table = (props: TableProps) => {
           >
             <div {...rowInnerAttrs} className={tableStyles.inner}>
               {colKeys.map((colKey) => {
-                const column = columns[colKey]
-                return (
-                  <div
-                    role="columnheader"
-                    key={colKey}
-                    id={`ch__${colKey}`}
-                    {...groupAttrs}
-                    className={cx(tableStyles.cell, tableStyles.theadCell)}
-                  >
-                    <InlineContent inlines={column.title} />
-                  </div>
-                )
+                if (inFlowColumns.has(colKey)) {
+                  const column = columns[colKey]
+                  return (
+                    <div
+                      role="columnheader"
+                      key={colKey}
+                      id={`ch__${colKey}`}
+                      {...groupAttrs}
+                      className={cx(tableStyles.cell, tableStyles.theadCell)}
+                    >
+                      <InlineContent inlines={column.title} />
+                    </div>
+                  )
+                } else {
+                  return null
+                }
               })}
             </div>
           </div>
-          {keys(rows).map((rowKey) => {
+          {rowKeys.map((rowKey) => {
             const row = rows[rowKey]
             return (
               <div
@@ -167,35 +215,45 @@ export const Table = (props: TableProps) => {
               >
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
                   {colKeys.map((colKey) => {
-                    const cell = row[colKey]
-                    const cellContent = !cell ? null : isActionsCell(cell) ? (
-                      <ShortInputs inputs={cell} />
-                    ) : (
-                      <InlineContent inlines={cell.cell} />
-                    )
-                    return rowTitlingColumn === colKey ? (
-                      <div
-                        role="rowheader"
-                        id={`rh__${rowKey}`}
-                        key={colKey}
-                        {...groupAttrs}
-                        className={cx(tableStyles.cell, tableStyles.tbodyCell)}
-                      >
-                        {cellContent}
-                      </div>
-                    ) : (
-                      <div
-                        role="gridcell"
-                        key={colKey}
-                        aria-labelledby={`${
-                          rowTitlingColumn && `rh__${rowKey} `
-                        }ch__${colKey}`}
-                        {...groupAttrs}
-                        className={cx(tableStyles.cell, tableStyles.tbodyCell)}
-                      >
-                        {cellContent}
-                      </div>
-                    )
+                    if (inFlowColumns.has(colKey)) {
+                      const cell = row[colKey]
+                      const cellContent = !cell ? null : isActionsCell(cell) ? (
+                        <ShortInputs inputs={cell} />
+                      ) : (
+                        <InlineContent inlines={cell.cell} />
+                      )
+                      return rowTitlingColumn === colKey ? (
+                        <div
+                          role="rowheader"
+                          id={`rh__${rowKey}`}
+                          key={colKey}
+                          {...groupAttrs}
+                          className={cx(
+                            tableStyles.cell,
+                            tableStyles.tbodyCell
+                          )}
+                        >
+                          {cellContent}
+                        </div>
+                      ) : (
+                        <div
+                          role="gridcell"
+                          key={colKey}
+                          aria-labelledby={`${
+                            rowTitlingColumn && `rh__${rowKey} `
+                          }ch__${colKey}`}
+                          {...groupAttrs}
+                          className={cx(
+                            tableStyles.cell,
+                            tableStyles.tbodyCell
+                          )}
+                        >
+                          {cellContent}
+                        </div>
+                      )
+                    } else {
+                      return null
+                    }
                   })}
                 </div>
               </div>

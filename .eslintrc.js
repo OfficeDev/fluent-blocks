@@ -131,7 +131,7 @@ const eslintrc = {
     'max-lines-per-function': [
       'warn',
       {
-        max: 75,
+        max: 120,
         skipComments: true,
         skipBlankLines: true,
       },

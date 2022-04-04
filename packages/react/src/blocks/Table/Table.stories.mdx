@@ -32,7 +32,7 @@ export const TableTemplate = (props) => (
       columns: {
         c1: { title: 'Name' },
         c2: { title: 'Office' },
-        c3: { title: 'Email' },
+        c3: { title: 'Email', hideable: true },
       },
       rows: range(32).reduce((acc, r) => {
         acc[`r${r}`] = {
