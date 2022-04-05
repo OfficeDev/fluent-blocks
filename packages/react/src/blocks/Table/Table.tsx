@@ -57,13 +57,14 @@ export const Table = (props: TableProps) => {
     selectable = false,
     widthVariant = 'viewportWidth',
   } = props.table
+  const { translations } = useFluentBlocksContext()
   const contextualVariant = props.contextualVariant || 'block'
   const tableId = key(props)
   const commonStyles = useCommonStyles()
   const tableStyles = useTableStyles()
   const colKeys = keys(columns)
   const rowKeys = keys(rows)
-  const { translations } = useFluentBlocksContext()
+  const columnOrder = ['selection', ...colKeys, 'overflow']
 
   const groupAttrs = {
     tabIndex: 0,
@@ -98,6 +99,11 @@ export const Table = (props: TableProps) => {
     breakpoints.get(Infinity)!
   )
 
+  const includeColumn = useCallback(
+    (colKey: string) => inFlowColumns.has(colKey),
+    [inFlowColumns]
+  )
+
   const getNextColumnsInFlow = useCallback(() => {
     if ($table.current) {
       const widths = Array.from(breakpoints.keys()).sort(
@@ -118,7 +124,7 @@ export const Table = (props: TableProps) => {
       () => {
         if ($table.current) {
           const nextColumnsInFlow = getNextColumnsInFlow()
-          console.log('[Resize]', nextColumnsInFlow)
+          console.log('[Resize]', nextColumnsInFlow, breakpoints)
           setInFlowColumns(nextColumnsInFlow!)
         }
       },
@@ -132,7 +138,7 @@ export const Table = (props: TableProps) => {
     document.defaultView?.addEventListener('resize', debouncedUpdateTableLayout)
     if ($table.current) {
       const nextColumnsInFlow = getNextColumnsInFlow()
-      console.log('[Resize]', nextColumnsInFlow)
+      console.log('[Init]', nextColumnsInFlow, breakpoints)
       setInFlowColumns(nextColumnsInFlow!)
     }
     return () =>
@@ -181,22 +187,35 @@ export const Table = (props: TableProps) => {
             aria-label={translations.thead}
           >
             <div {...rowInnerAttrs} className={tableStyles.inner}>
-              {colKeys.map((colKey) => {
-                if (inFlowColumns.has(colKey)) {
-                  const column = columns[colKey]
-                  return (
-                    <div
-                      role="columnheader"
-                      key={colKey}
-                      id={`ch__${colKey}`}
-                      {...groupAttrs}
-                      className={cx(tableStyles.cell, tableStyles.theadCell)}
-                    >
-                      <InlineContent inlines={column.title} />
-                    </div>
-                  )
-                } else {
-                  return null
+              {columnOrder.filter(includeColumn).map((colKey) => {
+                switch (colKey) {
+                  case 'overflow':
+                  case 'selection':
+                    return (
+                      <div
+                        role="columnheader"
+                        key={colKey}
+                        tabIndex={0}
+                        id={`ch__${colKey}`}
+                        className={cx(tableStyles.cell, tableStyles.theadCell)}
+                      >
+                        <span className={commonStyles.visuallyHidden}>
+                          {translations[colKey]}
+                        </span>
+                      </div>
+                    )
+                  default:
+                    return (
+                      <div
+                        role="columnheader"
+                        key={colKey}
+                        id={`ch__${colKey}`}
+                        {...groupAttrs}
+                        className={cx(tableStyles.cell, tableStyles.theadCell)}
+                      >
+                        <InlineContent inlines={columns[colKey].title} />
+                      </div>
+                    )
                 }
               })}
             </div>
@@ -207,46 +226,42 @@ export const Table = (props: TableProps) => {
               <div
                 role="row"
                 key={rowKey}
-                {...(rowTitlingColumn && {
-                  'aria-labelledby': `rh__${rowKey}`,
-                })}
+                aria-labelledby={`rh__${rowKey}`}
                 {...groupAttrs}
                 className={tableStyles.row}
               >
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
-                  {colKeys.map((colKey) => {
+                  {columnOrder.filter(includeColumn).map((colKey) => {
                     if (inFlowColumns.has(colKey)) {
                       const cell = row[colKey]
-                      const cellContent = !cell ? null : isActionsCell(cell) ? (
-                        <ShortInputs inputs={cell} />
-                      ) : (
-                        <InlineContent inlines={cell.cell} />
-                      )
+                      const cellContent =
+                        colKey === 'overflow' ? (
+                          <span>…</span>
+                        ) : colKey === 'selection' ? (
+                          <span>x</span>
+                        ) : !cell ? null : isActionsCell(cell) ? (
+                          <ShortInputs inputs={cell} />
+                        ) : (
+                          <InlineContent inlines={cell.cell} />
+                        )
+                      const cellElementProps = {
+                        key: colKey,
+                        ...groupAttrs,
+                        className: cx(tableStyles.cell, tableStyles.tbodyCell),
+                      }
                       return rowTitlingColumn === colKey ? (
                         <div
                           role="rowheader"
                           id={`rh__${rowKey}`}
-                          key={colKey}
-                          {...groupAttrs}
-                          className={cx(
-                            tableStyles.cell,
-                            tableStyles.tbodyCell
-                          )}
+                          {...cellElementProps}
                         >
                           {cellContent}
                         </div>
                       ) : (
                         <div
                           role="gridcell"
-                          key={colKey}
-                          aria-labelledby={`${
-                            rowTitlingColumn && `rh__${rowKey} `
-                          }ch__${colKey}`}
-                          {...groupAttrs}
-                          className={cx(
-                            tableStyles.cell,
-                            tableStyles.tbodyCell
-                          )}
+                          aria-labelledby={`rh__${rowKey} ch__${colKey}`}
+                          {...cellElementProps}
                         >
                           {cellContent}
                         </div>

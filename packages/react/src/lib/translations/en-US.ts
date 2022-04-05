@@ -3,4 +3,6 @@ export default {
   locale: 'en-US',
   more: 'More options',
   thead: 'Column titles',
+  overflow: 'Options',
+  selection: 'Selected',
 }

@@ -70,17 +70,19 @@ export function getBreakpoints(
     (acc: { cursor: number; breakpoints: Breakpoints }, column, i, arr) => {
       const minWidth = columnMinWidth(column.columnKey, columns)
       const cursor = acc.cursor + minWidth
+      const includeColumns = new Set(
+        Array.from(acc.breakpoints.get(acc.cursor) || baseSet).concat(
+          column.columnKey
+        )
+      )
+      if (hasActions || i + 1 < arr.length) {
+        includeColumns.add('overflow')
+      } else {
+        includeColumns.delete('overflow')
+      }
       return {
         cursor,
-        breakpoints: acc.breakpoints.set(
-          cursor,
-          new Set(
-            Array.from(acc.breakpoints.get(acc.cursor) || baseSet).concat([
-              column.columnKey,
-              ...(i + 1 < arr.length ? ['overflow'] : []),
-            ])
-          )
-        ),
+        breakpoints: acc.breakpoints.set(cursor, includeColumns),
       }
     },
     {

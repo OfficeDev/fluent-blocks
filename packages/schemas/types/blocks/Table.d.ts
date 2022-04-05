@@ -47,7 +47,7 @@ export interface TableProps {
     captionVisuallyHidden?: boolean
     columns: Record<string, ColumnProps>
     rows: Record<string, RowProps>
-    rowTitlingColumn?: string
+    rowTitlingColumn: string
     truncate?: boolean
     selectable?: boolean
     widthVariant?: 'viewportWidth' | 'textWidth'
