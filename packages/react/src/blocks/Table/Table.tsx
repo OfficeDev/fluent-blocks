@@ -25,6 +25,7 @@ import { ShortInputs } from '../ShortInputs/ShortInputs'
 
 import { TableAction, TableProps } from './table-properties'
 import { getBreakpoints } from './tableBreakpoints'
+import { Overflow } from '../../inputs'
 
 function isActionsCell(o: any): o is TableAction[] {
   return Array.isArray(o)
@@ -44,8 +45,21 @@ const useTableStyles = makeStyles({
     ...sx.padding(rem(12)),
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
   },
+  tbodyOverflowCell: {
+    ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
+  },
   caption: { display: 'table-caption' },
 })
+
+function getContentColumnsHidden(
+  inFlowColumns: Set<string>,
+  colKeys: string[]
+) {
+  const inFlowContentColumns = new Set(inFlowColumns)
+  inFlowContentColumns.delete('selection')
+  inFlowContentColumns.delete('overflow')
+  return inFlowContentColumns.size < colKeys.length
+}
 
 export const Table = (props: TableProps) => {
   const {
@@ -97,6 +111,8 @@ export const Table = (props: TableProps) => {
     // start by displaying all columns (in case of SSR)
     breakpoints.get(Infinity)!
   )
+  const [contentColumnsHidden, setContentColumnsHidden] =
+    useState<boolean>(false)
 
   const includeColumn = useCallback(
     (colKey: string) => inFlowColumns.has(colKey),
@@ -125,6 +141,9 @@ export const Table = (props: TableProps) => {
           const nextColumnsInFlow = getNextColumnsInFlow()
           console.log('[Resize]', nextColumnsInFlow, breakpoints)
           setInFlowColumns(nextColumnsInFlow!)
+          setContentColumnsHidden(
+            getContentColumnsHidden(nextColumnsInFlow!, colKeys)
+          )
         }
       },
       100,
@@ -139,6 +158,9 @@ export const Table = (props: TableProps) => {
       const nextColumnsInFlow = getNextColumnsInFlow()
       console.log('[Init]', nextColumnsInFlow, breakpoints)
       setInFlowColumns(nextColumnsInFlow!)
+      setContentColumnsHidden(
+        getContentColumnsHidden(nextColumnsInFlow!, colKeys)
+      )
     }
     return () =>
       document.defaultView?.removeEventListener(
@@ -237,7 +259,21 @@ export const Table = (props: TableProps) => {
                       const cell = row[colKey]
                       const cellContent =
                         colKey === 'overflow' ? (
-                          <span>…</span>
+                          contentColumnsHidden || row.actions ? (
+                            <Overflow
+                              overflow={[
+                                ...(contentColumnsHidden
+                                  ? [
+                                      {
+                                        type: 'action' as 'action',
+                                        label: translations.viewAllDetails,
+                                        actionId: `${rowKey}__details`,
+                                      },
+                                    ]
+                                  : []),
+                              ]}
+                            />
+                          ) : null
                         ) : colKey === 'selection' ? (
                           <span>x</span>
                         ) : !cell ? null : isActionsCell(cell) ? (
@@ -253,7 +289,12 @@ export const Table = (props: TableProps) => {
                           isActionsCell(cell)
                         ) && { tabIndex: 0 }),
                         ...groupAttrs,
-                        className: cx(tableStyles.cell, tableStyles.tbodyCell),
+                        className: cx(
+                          tableStyles.cell,
+                          colKey === 'overflow'
+                            ? tableStyles.tbodyOverflowCell
+                            : tableStyles.tbodyCell
+                        ),
                         'aria-colindex': ci + 1,
                         'aria-rowindex': ri + 2,
                       }

@@ -5,4 +5,5 @@ export default {
   thead: 'Column titles',
   overflow: 'Options',
   selection: 'Selected',
+  viewAllDetails: 'View all details',
 }
