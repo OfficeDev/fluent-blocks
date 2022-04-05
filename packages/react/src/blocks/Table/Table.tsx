@@ -166,6 +166,8 @@ export const Table = (props: TableProps) => {
           contextualVariant === 'block' && commonStyles.centerBlock
         )}
         aria-labelledby={`desc__${tableId}`}
+        aria-colcount={inFlowColumns.size}
+        aria-rowcount={rowKeys.length + 1}
       >
         <p
           id={`desc__${tableId}`}
@@ -187,18 +189,20 @@ export const Table = (props: TableProps) => {
             aria-label={translations.thead}
           >
             <div {...rowInnerAttrs} className={tableStyles.inner}>
-              {columnOrder.filter(includeColumn).map((colKey) => {
+              {columnOrder.filter(includeColumn).map((colKey, ci) => {
+                const cellElementProps = {
+                  role: 'columnheader',
+                  key: colKey,
+                  id: `ch__${colKey}`,
+                  'aria-colindex': ci + 1,
+                  'aria-rowindex': 1,
+                  className: cx(tableStyles.cell, tableStyles.theadCell),
+                }
                 switch (colKey) {
                   case 'overflow':
                   case 'selection':
                     return (
-                      <div
-                        role="columnheader"
-                        key={colKey}
-                        tabIndex={0}
-                        id={`ch__${colKey}`}
-                        className={cx(tableStyles.cell, tableStyles.theadCell)}
-                      >
+                      <div {...cellElementProps} tabIndex={0}>
                         <span className={commonStyles.visuallyHidden}>
                           {translations[colKey]}
                         </span>
@@ -206,13 +210,7 @@ export const Table = (props: TableProps) => {
                     )
                   default:
                     return (
-                      <div
-                        role="columnheader"
-                        key={colKey}
-                        id={`ch__${colKey}`}
-                        {...groupAttrs}
-                        className={cx(tableStyles.cell, tableStyles.theadCell)}
-                      >
+                      <div {...cellElementProps} {...groupAttrs}>
                         <InlineContent inlines={columns[colKey].title} />
                       </div>
                     )
@@ -220,7 +218,7 @@ export const Table = (props: TableProps) => {
               })}
             </div>
           </div>
-          {rowKeys.map((rowKey) => {
+          {rowKeys.map((rowKey, ri) => {
             const row = rows[rowKey]
             return (
               <div
@@ -231,7 +229,7 @@ export const Table = (props: TableProps) => {
                 className={tableStyles.row}
               >
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
-                  {columnOrder.filter(includeColumn).map((colKey) => {
+                  {columnOrder.filter(includeColumn).map((colKey, ci) => {
                     if (inFlowColumns.has(colKey)) {
                       const cell = row[colKey]
                       const cellContent =
@@ -248,11 +246,14 @@ export const Table = (props: TableProps) => {
                         key: colKey,
                         ...groupAttrs,
                         className: cx(tableStyles.cell, tableStyles.tbodyCell),
+                        'aria-colindex': ci + 1,
+                        'aria-rowindex': ri + 2,
                       }
                       return rowTitlingColumn === colKey ? (
                         <div
                           role="rowheader"
                           id={`rh__${rowKey}`}
+                          aria-describedby={`ch__${colKey}`}
                           {...cellElementProps}
                         >
                           {cellContent}
@@ -260,7 +261,11 @@ export const Table = (props: TableProps) => {
                       ) : (
                         <div
                           role="gridcell"
-                          aria-labelledby={`rh__${rowKey} ch__${colKey}`}
+                          {...{
+                            [colKey === 'selection' || colKey === 'overflow'
+                              ? 'aria-labelledby'
+                              : 'aria-describedby']: `rh__${rowKey} ch__${colKey}`,
+                          }}
                           {...cellElementProps}
                         >
                           {cellContent}
