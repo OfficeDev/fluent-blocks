@@ -67,7 +67,6 @@ export const Table = (props: TableProps) => {
   const columnOrder = ['selection', ...colKeys, 'overflow']
 
   const groupAttrs = {
-    tabIndex: 0,
     ...useFocusableGroup({ tabBehavior: 'limited' }),
   }
 
@@ -160,6 +159,7 @@ export const Table = (props: TableProps) => {
     >
       <div
         role="grid"
+        tabIndex={0}
         {...groupAttrs}
         className={cx(
           tableStyles.grid,
@@ -184,6 +184,7 @@ export const Table = (props: TableProps) => {
         <div {...rootInnerAttrs} className={tableStyles.inner}>
           <div
             role="row"
+            tabIndex={0}
             {...groupAttrs}
             className={tableStyles.row}
             aria-label={translations.thead}
@@ -192,6 +193,7 @@ export const Table = (props: TableProps) => {
               {columnOrder.filter(includeColumn).map((colKey, ci) => {
                 const cellElementProps = {
                   role: 'columnheader',
+                  tabIndex: 0,
                   key: colKey,
                   id: `ch__${colKey}`,
                   'aria-colindex': ci + 1,
@@ -223,6 +225,7 @@ export const Table = (props: TableProps) => {
             return (
               <div
                 role="row"
+                tabIndex={0}
                 key={rowKey}
                 aria-labelledby={`rh__${rowKey}`}
                 {...groupAttrs}
@@ -244,6 +247,11 @@ export const Table = (props: TableProps) => {
                         )
                       const cellElementProps = {
                         key: colKey,
+                        ...(!(
+                          colKey === 'selection' ||
+                          colKey === 'overflow' ||
+                          isActionsCell(cell)
+                        ) && { tabIndex: 0 }),
                         ...groupAttrs,
                         className: cx(tableStyles.cell, tableStyles.tbodyCell),
                         'aria-colindex': ci + 1,
