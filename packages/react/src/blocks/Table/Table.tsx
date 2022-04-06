@@ -12,7 +12,11 @@ import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import {
+  Button as FluentButton,
+  makeStyles,
+  mergeClasses as cx,
+} from '@fluentui/react-components'
 import { InlineContent } from '../../inlines'
 import {
   key,
@@ -20,12 +24,23 @@ import {
   sx,
   useCommonStyles,
   useFluentBlocksContext,
+  ActionHandler,
 } from '../../lib'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
-import { TableAction, TableProps } from './table-properties'
+import {
+  TableAction,
+  TableProps as NaturalTableProps,
+} from './table-properties'
 import { getBreakpoints } from './tableBreakpoints'
 import { Overflow } from '../../inputs'
+import { TableRowActivateAction } from '@fluent-blocks/schemas'
+
+export interface TableProps extends Omit<NaturalTableProps, 'table'> {
+  table: NaturalTableProps['table'] & {
+    onRowHeaderActivate?: ActionHandler<TableRowActivateAction>
+  }
+}
 
 function isActionsCell(o: any): o is TableAction[] {
   return Array.isArray(o)
@@ -45,8 +60,12 @@ const useTableStyles = makeStyles({
     ...sx.padding(rem(12)),
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
   },
-  tbodyOverflowCell: {
+  tbodyCellWithButtons: {
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
+  },
+  activableRowHeader: {
+    fontWeight: 'var(--fontWeightRegular)',
+    ...sx.textDecoration('underline'),
   },
   caption: { display: 'table-caption' },
 })
@@ -67,7 +86,8 @@ export const Table = (props: TableProps) => {
     captionVisuallyHidden,
     columns,
     rows,
-    rowTitlingColumn,
+    rowHeaderColumn,
+    onRowHeaderActivate,
     selectable = false,
     widthVariant = 'viewportWidth',
   } = props.table
@@ -174,6 +194,17 @@ export const Table = (props: TableProps) => {
       )
   }, [])
 
+  const rootRowHeaderActivate = useCallback(
+    ({ target }) =>
+      onRowHeaderActivate &&
+      onRowHeaderActivate({
+        type: 'activate',
+        actionId: 'activate',
+        row: target.getAttribute('data-row'),
+      }),
+    []
+  )
+
   return (
     <div
       role="none"
@@ -265,6 +296,11 @@ export const Table = (props: TableProps) => {
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
                   {columnOrder.filter(includeColumn).map((colKey, ci) => {
                     const cell = row[colKey]
+                    const cellIsActions = isActionsCell(cell)
+                    const cellHasButtons =
+                      colKey === 'overflow' ||
+                      cellIsActions ||
+                      (onRowHeaderActivate && rowHeaderColumn === colKey)
 
                     const cellContent =
                       colKey === 'overflow' ? (
@@ -287,7 +323,7 @@ export const Table = (props: TableProps) => {
                         ) : null
                       ) : colKey === 'selection' ? (
                         <span>x</span>
-                      ) : !cell ? null : isActionsCell(cell) ? (
+                      ) : !cell ? null : cellIsActions ? (
                         <ShortInputs inputs={cell} />
                       ) : (
                         <InlineContent inlines={cell.cell} />
@@ -295,30 +331,41 @@ export const Table = (props: TableProps) => {
 
                     const cellElementProps = {
                       key: colKey,
-                      ...(!(
-                        colKey === 'selection' ||
-                        colKey === 'overflow' ||
-                        isActionsCell(cell)
-                      ) && { tabIndex: 0 }),
+                      ...(!(colKey === 'selection' || cellHasButtons) && {
+                        tabIndex: 0,
+                      }),
                       ...groupAttrs,
                       className: cx(
                         tableStyles.cell,
-                        colKey === 'overflow'
-                          ? tableStyles.tbodyOverflowCell
+                        cellHasButtons
+                          ? tableStyles.tbodyCellWithButtons
                           : tableStyles.tbodyCell
                       ),
                       'aria-colindex': ci + 1,
                       'aria-rowindex': ri + 2,
                     }
 
-                    return rowTitlingColumn === colKey ? (
+                    return rowHeaderColumn === colKey ? (
                       <div
                         role="rowheader"
                         id={`rh__${rowKey}`}
                         aria-describedby={`ch__${colKey}`}
                         {...cellElementProps}
                       >
-                        {cellContent}
+                        {cellIsActions ? (
+                          cellContent
+                        ) : onRowHeaderActivate ? (
+                          <FluentButton
+                            className={tableStyles.activableRowHeader}
+                            appearance="transparent"
+                            data-row={rowKey}
+                            onClick={rootRowHeaderActivate}
+                          >
+                            {cellContent}
+                          </FluentButton>
+                        ) : (
+                          cellContent
+                        )}
                       </div>
                     ) : (
                       <div

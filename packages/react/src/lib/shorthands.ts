@@ -30,6 +30,17 @@ const sxExtensions = {
     flexDirection: direction,
     flexWrap: wrap,
   }),
+  textDecoration: (
+    line: CSS.TextDecorationLineProperty,
+    color?: CSS.TextDecorationColorProperty,
+    style?: CSS.TextDecorationStyleProperty,
+    thickness?: CSS.TextDecorationThicknessProperty<never>
+  ) => ({
+    textDecorationLine: line,
+    ...(color && { textDecorationColor: color }),
+    ...(style && { textDecorationStyle: style }),
+    ...(thickness && { textDecorationThickness: thickness }),
+  }),
 }
 
 export const sx: typeof sxExtensions & typeof FUIShorthands = {

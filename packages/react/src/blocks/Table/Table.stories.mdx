@@ -11,6 +11,7 @@ import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
   component={Table}
   argTypes={{
     ...contextArgTypes,
+    onRowHeaderActivate: { action: 'action' },
   }}
 />
 
@@ -28,7 +29,7 @@ export const TableTemplate = (props) => (
       accentScheme: 'teams',
       caption: fake('{{lorem.sentence}}'),
       captionVisuallyHidden: true,
-      rowTitlingColumn: 'c1',
+      rowHeaderColumn: 'c1',
       columns: {
         c1: { title: 'Name' },
         c2: { title: 'Office' },
@@ -43,7 +44,7 @@ export const TableTemplate = (props) => (
             actions: [
               {
                 type: 'action',
-                actionId: 'c2__copy',
+                actionId: `copy:r${r}`,
                 label: 'Copy',
                 icon: 'copy',
               },

@@ -4,6 +4,7 @@ import {
   AccentScheme,
   ActionHandler,
   FluentBlocksProvider,
+  MenuAction,
   ThemeName,
 } from '../../lib'
 import { Main } from '../../surfaces'
@@ -19,7 +20,7 @@ export const Toolbar = ({
   toolbar: Omit<ToolbarProps['toolbar'], 'buttonSize'>
   themeName: ThemeName
   accentScheme: AccentScheme
-  onAction: ActionHandler
+  onAction: ActionHandler<MenuAction>
   buttonSize: 'small' | 'medium' | 'large'
   iconSpriteUrl: string
 }) => (
