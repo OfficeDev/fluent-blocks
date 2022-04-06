@@ -42,9 +42,9 @@ importers:
 
   packages/icons:
     specifiers:
-      fluentui-svg-icon-sprites: 1.1.166
+      fluentui-svg-icon-sprites: 1.1.167
     devDependencies:
-      fluentui-svg-icon-sprites: 1.1.166
+      fluentui-svg-icon-sprites: 1.1.167
 
   packages/react:
     specifiers:
@@ -7882,8 +7882,8 @@ packages:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
     dev: true
 
-  /fluentui-svg-icon-sprites/1.1.166:
-    resolution: {integrity: sha512-jHXxkF3MQZsuPQZQwZ6xft9wU19jZhyORs1SY528Cdo/TsvKN8XptOeJgEIALsyFZbUNfPIz/MV7obDfo6YiRQ==}
+  /fluentui-svg-icon-sprites/1.1.167:
+    resolution: {integrity: sha512-ipajKozh5bPguiRYaN6kh0VKNBvcqaEWwCXDGLwVP9E/WIga7ejOwCn4Cuo+z03HNbXf5PXJssJk8oF4YG+wDQ==}
     engines: {node: '>=16.0.0 <17'}
     hasBin: true
     dependencies:

@@ -13,6 +13,6 @@
     "postinstall": "node ./scripts/postinstall.js"
   },
   "devDependencies": {
-    "fluentui-svg-icon-sprites": "1.1.166"
+    "fluentui-svg-icon-sprites": "1.1.167"
   }
 }
