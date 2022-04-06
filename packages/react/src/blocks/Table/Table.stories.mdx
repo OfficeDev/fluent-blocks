@@ -29,7 +29,6 @@ export const TableTemplate = (props) => (
       caption: fake('{{lorem.sentence}}'),
       captionVisuallyHidden: true,
       rowTitlingColumn: 'c1',
-      selectable: true,
       columns: {
         c1: { title: 'Name' },
         c2: { title: 'Office' },
@@ -40,6 +39,16 @@ export const TableTemplate = (props) => (
           c1: { cell: fake('{{name.firstName}} {{name.lastName}}') },
           c2: { cell: fake('{{address.city}}') },
           c3: { cell: fake('{{internet.email}}') },
+          ...(r % 5 === 1 && {
+            actions: [
+              {
+                type: 'action',
+                actionId: 'c2__copy',
+                label: 'Copy',
+                icon: 'copy',
+              },
+            ],
+          }),
         }
         return acc
       }, {}),

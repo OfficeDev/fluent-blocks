@@ -278,8 +278,10 @@ export const Table = (props: TableProps) => {
                                       label: translations.viewAllDetails,
                                       actionId: `${rowKey}__details`,
                                     },
+                                    { type: 'divider' as 'divider' },
                                   ]
                                 : []),
+                              ...(row.actions || []),
                             ]}
                           />
                         ) : null

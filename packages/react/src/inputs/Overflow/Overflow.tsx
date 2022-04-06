@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import noop from 'lodash/noop'
 import {
   Menu,
@@ -18,6 +17,7 @@ import {
   Sequence,
   useFluentBlocksContext,
   MenuAction,
+  ActionHandler,
 } from '../../lib'
 
 export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
@@ -31,18 +31,21 @@ function isAction(o: any): o is MenuAction {
 
 const defaultIconSize = 16
 
-const OverflowItem = (item: MenuItemEntity & { hidden?: boolean }) => {
-  const context = useFluentBlocksContext()
-
+const OverflowItem = (
+  item: MenuItemEntity & {
+    hidden?: boolean
+    contextOnAction?: ActionHandler<any>
+  }
+) => {
   const onItemActivate = isAction(item)
-    ? useCallback(() => {
+    ? () => {
         const payload = {
           type: 'activate' as 'activate',
           actionId: item.actionId,
         }
         item.onAction && item.onAction(payload)
-        context.onAction(payload)
-      }, [item])
+        item.contextOnAction && item.contextOnAction(payload)
+      }
     : noop
 
   switch (item.type) {
@@ -74,7 +77,7 @@ export const Overflow = ({
   iconSize = defaultIconSize,
   contextualHiddenFlags,
 }: OverflowProps) => {
-  const { translations } = useFluentBlocksContext()
+  const { translations, onAction } = useFluentBlocksContext()
   return (
     <Menu>
       <MenuTrigger>
@@ -93,7 +96,7 @@ export const Overflow = ({
           {Sequence<MenuItemEntity>(
             overflow,
             OverflowItem,
-            { iconSize },
+            { iconSize, contextOnAction: onAction },
             contextualHiddenFlags
           )}
         </MenuList>
