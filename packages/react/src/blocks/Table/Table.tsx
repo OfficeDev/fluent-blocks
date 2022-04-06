@@ -64,8 +64,13 @@ const useTableStyles = makeStyles({
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
   },
   activableRowHeader: {
-    fontWeight: 'var(--fontWeightRegular)',
-    ...sx.textDecoration('underline'),
+    fontWeight: 'var(--fontWeightMedium)',
+    '&:hover': {
+      ...sx.textDecoration('underline'),
+    },
+    '&:focus': {
+      ...sx.textDecoration('underline'),
+    },
   },
   caption: { display: 'table-caption' },
 })
@@ -164,7 +169,6 @@ export const Table = (props: TableProps) => {
       () => {
         if ($table.current) {
           const nextColumnsInFlow = getNextColumnsInFlow()
-          console.log('[Resize]', nextColumnsInFlow, breakpoints)
           setInFlowColumns(nextColumnsInFlow!)
           setContentColumnsHidden(
             getContentColumnsHidden(nextColumnsInFlow!, colKeys)
@@ -181,7 +185,6 @@ export const Table = (props: TableProps) => {
     document.defaultView?.addEventListener('resize', debouncedUpdateTableLayout)
     if ($table.current) {
       const nextColumnsInFlow = getNextColumnsInFlow()
-      console.log('[Init]', nextColumnsInFlow, breakpoints)
       setInFlowColumns(nextColumnsInFlow!)
       setContentColumnsHidden(
         getContentColumnsHidden(nextColumnsInFlow!, colKeys)
@@ -195,12 +198,12 @@ export const Table = (props: TableProps) => {
   }, [])
 
   const rootRowHeaderActivate = useCallback(
-    ({ target }) =>
+    ({ target: { dataset } }) =>
       onRowHeaderActivate &&
       onRowHeaderActivate({
         type: 'activate',
         actionId: 'activate',
-        row: target.getAttribute('data-row'),
+        row: dataset.row,
       }),
     []
   )
