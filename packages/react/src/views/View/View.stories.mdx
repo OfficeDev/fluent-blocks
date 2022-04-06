@@ -198,6 +198,33 @@ that time `View` will call its interaction callback with the update.
                   { label: [{ text: fakeTitle(fake) }], value: 'v2' },
                 ],
               },
+              {
+                table: {
+                  caption: `${fakeTitle(fake)}:`,
+                  rowHeaderColumn: 'c1',
+                  widthVariant: 'textWidth',
+                  columns: {
+                    c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
+                    c2: { title: 'Office' },
+                    c3: { title: 'Email', hideable: true },
+                  },
+                  rows: range(8).reduce((acc, r) => {
+                    acc[`r${r}`] = {
+                      c1: {
+                        cell: fake('{{name.firstName}} {{name.lastName}}'),
+                      },
+                      c2: {
+                        cell: [
+                          { icon: 'organization' },
+                          { text: fake(' {{address.city}}') },
+                        ],
+                      },
+                      c3: { cell: fake('{{internet.email}}') },
+                    }
+                    return acc
+                  }, {}),
+                },
+              },
             ],
             sections: range(2).map(() => ({
               title: [{ text: fakeTitle(fake) }],

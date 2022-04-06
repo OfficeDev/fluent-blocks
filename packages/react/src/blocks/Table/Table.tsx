@@ -215,6 +215,7 @@ export const Table = (props: TableProps) => {
       className={cx(
         tableStyles.root,
         commonStyles.blockSpacing,
+        commonStyles.centerBlock,
         widthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
     >
