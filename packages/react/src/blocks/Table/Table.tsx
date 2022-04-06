@@ -71,11 +71,15 @@ export const Table = (props: TableProps) => {
     selectable = false,
     widthVariant = 'viewportWidth',
   } = props.table
+
   const { translations } = useFluentBlocksContext()
+
   const contextualVariant = props.contextualVariant || 'block'
   const tableId = key(props)
+
   const commonStyles = useCommonStyles()
   const tableStyles = useTableStyles()
+
   const colKeys = keys(columns)
   const rowKeys = keys(rows)
   const columnOrder = ['selection', ...colKeys, 'overflow']
@@ -111,6 +115,7 @@ export const Table = (props: TableProps) => {
     // start by displaying all columns (in case of SSR)
     breakpoints.get(Infinity)!
   )
+
   const [contentColumnsHidden, setContentColumnsHidden] =
     useState<boolean>(false)
 
@@ -203,6 +208,7 @@ export const Table = (props: TableProps) => {
         >
           <InlineContent inlines={caption} />
         </p>
+
         <div {...rootInnerAttrs} className={tableStyles.inner}>
           <div
             role="row"
@@ -222,6 +228,7 @@ export const Table = (props: TableProps) => {
                   'aria-rowindex': 1,
                   className: cx(tableStyles.cell, tableStyles.theadCell),
                 }
+
                 switch (colKey) {
                   case 'overflow':
                   case 'selection':
@@ -242,8 +249,10 @@ export const Table = (props: TableProps) => {
               })}
             </div>
           </div>
+
           {rowKeys.map((rowKey, ri) => {
             const row = rows[rowKey]
+
             return (
               <div
                 role="row"
@@ -255,74 +264,73 @@ export const Table = (props: TableProps) => {
               >
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
                   {columnOrder.filter(includeColumn).map((colKey, ci) => {
-                    if (inFlowColumns.has(colKey)) {
-                      const cell = row[colKey]
-                      const cellContent =
-                        colKey === 'overflow' ? (
-                          contentColumnsHidden || row.actions ? (
-                            <Overflow
-                              overflow={[
-                                ...(contentColumnsHidden
-                                  ? [
-                                      {
-                                        type: 'action' as 'action',
-                                        label: translations.viewAllDetails,
-                                        actionId: `${rowKey}__details`,
-                                      },
-                                    ]
-                                  : []),
-                              ]}
-                            />
-                          ) : null
-                        ) : colKey === 'selection' ? (
-                          <span>x</span>
-                        ) : !cell ? null : isActionsCell(cell) ? (
-                          <ShortInputs inputs={cell} />
-                        ) : (
-                          <InlineContent inlines={cell.cell} />
-                        )
-                      const cellElementProps = {
-                        key: colKey,
-                        ...(!(
-                          colKey === 'selection' ||
-                          colKey === 'overflow' ||
-                          isActionsCell(cell)
-                        ) && { tabIndex: 0 }),
-                        ...groupAttrs,
-                        className: cx(
-                          tableStyles.cell,
-                          colKey === 'overflow'
-                            ? tableStyles.tbodyOverflowCell
-                            : tableStyles.tbodyCell
-                        ),
-                        'aria-colindex': ci + 1,
-                        'aria-rowindex': ri + 2,
-                      }
-                      return rowTitlingColumn === colKey ? (
-                        <div
-                          role="rowheader"
-                          id={`rh__${rowKey}`}
-                          aria-describedby={`ch__${colKey}`}
-                          {...cellElementProps}
-                        >
-                          {cellContent}
-                        </div>
+                    const cell = row[colKey]
+
+                    const cellContent =
+                      colKey === 'overflow' ? (
+                        contentColumnsHidden || row.actions ? (
+                          <Overflow
+                            overflow={[
+                              ...(contentColumnsHidden
+                                ? [
+                                    {
+                                      type: 'action' as 'action',
+                                      label: translations.viewAllDetails,
+                                      actionId: `${rowKey}__details`,
+                                    },
+                                  ]
+                                : []),
+                            ]}
+                          />
+                        ) : null
+                      ) : colKey === 'selection' ? (
+                        <span>x</span>
+                      ) : !cell ? null : isActionsCell(cell) ? (
+                        <ShortInputs inputs={cell} />
                       ) : (
-                        <div
-                          role="gridcell"
-                          {...{
-                            [colKey === 'selection' || colKey === 'overflow'
-                              ? 'aria-labelledby'
-                              : 'aria-describedby']: `rh__${rowKey} ch__${colKey}`,
-                          }}
-                          {...cellElementProps}
-                        >
-                          {cellContent}
-                        </div>
+                        <InlineContent inlines={cell.cell} />
                       )
-                    } else {
-                      return null
+
+                    const cellElementProps = {
+                      key: colKey,
+                      ...(!(
+                        colKey === 'selection' ||
+                        colKey === 'overflow' ||
+                        isActionsCell(cell)
+                      ) && { tabIndex: 0 }),
+                      ...groupAttrs,
+                      className: cx(
+                        tableStyles.cell,
+                        colKey === 'overflow'
+                          ? tableStyles.tbodyOverflowCell
+                          : tableStyles.tbodyCell
+                      ),
+                      'aria-colindex': ci + 1,
+                      'aria-rowindex': ri + 2,
                     }
+
+                    return rowTitlingColumn === colKey ? (
+                      <div
+                        role="rowheader"
+                        id={`rh__${rowKey}`}
+                        aria-describedby={`ch__${colKey}`}
+                        {...cellElementProps}
+                      >
+                        {cellContent}
+                      </div>
+                    ) : (
+                      <div
+                        role="gridcell"
+                        {...{
+                          [colKey === 'selection' || colKey === 'overflow'
+                            ? 'aria-labelledby'
+                            : 'aria-describedby']: `rh__${rowKey} ch__${colKey}`,
+                        }}
+                        {...cellElementProps}
+                      >
+                        {cellContent}
+                      </div>
+                    )
                   })}
                 </div>
               </div>
