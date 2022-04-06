@@ -49,7 +49,7 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
-      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.5
+      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.6
       '@fluent-blocks/schemas': workspace:9.0.0-alpha.4
       '@fluentui/react-components': latest
       '@fluentui/react-tabster': latest

@@ -79,7 +79,7 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.5",
+    "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.6",
     "@fluent-blocks/schemas": "workspace:9.0.0-alpha.4",
     "@fluentui/react-tabster": "latest",
     "lodash": "latest"
