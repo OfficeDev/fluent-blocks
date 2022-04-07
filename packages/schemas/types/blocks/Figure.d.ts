@@ -5,6 +5,6 @@ import { InlineSequenceOrString } from '../inlines'
 export interface FigureProps {
   media: MediaEntity
   caption?: InlineSequenceOrString
-  captionHidden?: boolean
+  captionVisuallyHidden?: boolean
   variant: 'viewportWidth' | 'textWidth' | 'narrow'
 }

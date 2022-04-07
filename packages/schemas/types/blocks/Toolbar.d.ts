@@ -1,19 +1,9 @@
 import { ButtonProps } from '../inputs'
-
-export type ToolbarAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'>
-
-export type ToolbarDivider = {
-  type: 'divider'
-  variant?: 'line'
-}
-
-export type ToolbarItemEntity = ToolbarAction | ToolbarDivider
-
-export type ToolbarItemSequence = ToolbarItemEntity[]
+import { MenuItemSequence } from '../lib/menu'
 
 export interface ToolbarProps {
   toolbar: {
-    items: ToolbarItemSequence
+    items: MenuItemSequence
     iconSize?: ButtonProps['iconSize']
     buttonSize?: ButtonProps['size']
   }

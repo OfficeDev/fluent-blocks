@@ -8,50 +8,24 @@ import {
 import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 import every from 'lodash/every'
-import noop from 'lodash/noop'
 
-import {
-  makeStyles,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  MenuPopover,
-  MenuTrigger,
-  Tooltip,
-  mergeClasses as cx,
-} from '@fluentui/react-components'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import {
-  ToolbarDivider,
-  ToolbarAction as NaturalToolbarAction,
-  ToolbarProps as NaturalToolbarProps,
-} from '@fluent-blocks/schemas'
+import { ToolbarProps as NaturalToolbarProps } from '@fluent-blocks/schemas'
 
-import { Button, ButtonActionPayload, ButtonProps } from '../../inputs'
+import { Button, ButtonActionPayload, Overflow } from '../../inputs'
 import {
+  MenuItemEntity,
+  MenuItemSequence,
   rem,
   Sequence,
   useCommonStyles,
-  useFluentBlocksContext,
   WithActionHandler,
 } from '../../lib'
-import { Icon } from '../../inlines'
-
-export interface ToolbarAction
-  extends NaturalToolbarAction,
-    Omit<
-      ButtonProps,
-      'type' | 'variant' | 'size' | 'iconSze' | 'contextualVariant'
-    > {}
-
-export type ToolbarItemEntity = ToolbarAction | ToolbarDivider
-
-export type ToolbarItemSequence = ToolbarItemEntity[]
 
 export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
   toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {
-    items: ToolbarItemSequence
+    items: MenuItemSequence
   }
   contextualVariant?: 'card' | 'block'
 }
@@ -98,47 +72,8 @@ const useToolbarStyles = makeStyles({
   },
 })
 
-const ToolbarItemInMenu = (
-  item: ToolbarItemEntity & Partial<ToolbarItemContextualOptions>
-) => {
-  const context = useFluentBlocksContext()
-
-  const onItemActivate = item.hasOwnProperty('actionId')
-    ? useCallback(() => {
-        const payload = {
-          type: 'activate' as 'activate',
-          actionId: (item as ToolbarAction).actionId,
-        }
-        item.onAction && item.onAction(payload)
-        context.onAction(payload)
-      }, [item])
-    : noop
-
-  switch (item.type) {
-    case 'action':
-      return item.hidden ? null : (
-        <MenuItem
-          {...(item.icon && {
-            icon: (
-              <Icon
-                icon={item.icon}
-                size={item.iconSize || defaultIconSize}
-                variant="outline"
-              />
-            ),
-          })}
-          onClick={onItemActivate}
-        >
-          {item.label}
-        </MenuItem>
-      )
-    default:
-      return null
-  }
-}
-
 const ToolbarItemInFlow = (
-  item: ToolbarItemEntity & Partial<ToolbarItemContextualOptions>
+  item: MenuItemEntity & Partial<ToolbarItemContextualOptions>
 ) => {
   switch (item.type) {
     case 'action':
@@ -165,7 +100,6 @@ export const Toolbar = ({
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
-  const { translations } = useFluentBlocksContext()
   const $toolbar = useRef<HTMLDivElement | null>(null)
   const [layoutNeedsUpdate, setLayoutNeedsUpdate] = useState(true)
   const [actionsInFlow, setActionsInFlow] = useState<Set<string>>(new Set())
@@ -240,7 +174,7 @@ export const Toolbar = ({
       )}
       ref={$toolbar}
     >
-      {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
+      {Sequence<MenuItemEntity, ToolbarItemContextualOptions>(
         toolbar.items,
         ToolbarItemInFlow,
         {
@@ -254,39 +188,21 @@ export const Toolbar = ({
               hidden: !actionsInFlow.has(get(item, 'actionId', false)),
             }))
       )}
-      <Menu>
-        <MenuTrigger>
-          <Tooltip content={translations.more} relationship="label" withArrow>
-            <MenuButton
-              appearance="transparent"
-              icon={
-                <Icon
-                  icon="more_horizontal"
-                  size={toolbar.iconSize || defaultIconSize}
-                  variant="outline"
-                />
-              }
-              size={toolbar.buttonSize || defaultButtonSize}
-              data-layout="required"
-              className={cx(
-                toolbarStyles.overflowTrigger,
-                !layoutNeedsUpdate && toolbarStyles['overflowTrigger--ready'],
-                hideOverflowTrigger && toolbarStyles['overflowTrigger--hidden']
-              )}
-            />
-          </Tooltip>
-        </MenuTrigger>
-        <MenuPopover>
-          <MenuList>
-            {Sequence<ToolbarItemEntity, ToolbarItemContextualOptions>(
-              toolbar.items,
-              ToolbarItemInMenu,
-              { iconSize: toolbar.iconSize },
-              menuItemHiddenFlags
-            )}
-          </MenuList>
-        </MenuPopover>
-      </Menu>
+      <div
+        data-layout="required"
+        className={cx(
+          toolbarStyles.overflowTrigger,
+          !layoutNeedsUpdate && toolbarStyles['overflowTrigger--ready'],
+          hideOverflowTrigger && toolbarStyles['overflowTrigger--hidden']
+        )}
+      >
+        <Overflow
+          overflow={toolbar.items}
+          contextualHiddenFlags={menuItemHiddenFlags}
+          iconSize={toolbar.iconSize || defaultIconSize}
+          buttonSize={toolbar.buttonSize || defaultButtonSize}
+        />
+      </div>
     </div>
   )
 }

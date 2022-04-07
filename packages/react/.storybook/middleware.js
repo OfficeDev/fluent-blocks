@@ -4,7 +4,7 @@ const expressMiddleWare = (router) => {
   router.use(
     '/sprites',
     createProxyMiddleware({
-      target: 'http://cdn.jsdelivr.net/npm/fluentui-svg-icon-sprites@1.1.163/',
+      target: 'http://cdn.jsdelivr.net/npm/fluentui-svg-icon-sprites@1.1.167/',
       changeOrigin: true,
       followRedirects: true,
     })

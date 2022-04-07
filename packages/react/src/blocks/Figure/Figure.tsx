@@ -23,7 +23,7 @@ const useFigureStyles = makeStyles({
 export const Figure = (props: FigureProps) => {
   const figureStyles = useFigureStyles()
   const commonStyles = useCommonStyles()
-  const { caption, captionHidden, variant = 'viewportWidth' } = props
+  const { caption, captionVisuallyHidden, variant = 'viewportWidth' } = props
   const labelId = caption && uniqueId('figcaption')
   return (
     <figure
@@ -45,7 +45,7 @@ export const Figure = (props: FigureProps) => {
           className={cx(
             commonStyles.centerBlock,
             commonStyles.mainContentWidth,
-            captionHidden && commonStyles.visuallyHidden
+            captionVisuallyHidden && commonStyles.visuallyHidden
           )}
         >
           <InlineContent inlines={caption} />
