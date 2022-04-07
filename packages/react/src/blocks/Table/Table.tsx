@@ -24,23 +24,12 @@ import {
   sx,
   useCommonStyles,
   useFluentBlocksContext,
-  ActionHandler,
 } from '../../lib'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
-import {
-  TableAction,
-  TableProps as NaturalTableProps,
-} from './table-properties'
+import { TableAction, TableProps } from './table-properties'
 import { getBreakpoints } from './tableBreakpoints'
 import { Overflow } from '../../inputs'
-import { TableRowActivateAction } from '@fluent-blocks/schemas'
-
-export interface TableProps extends Omit<NaturalTableProps, 'table'> {
-  table: NaturalTableProps['table'] & {
-    onRowHeaderActivate?: ActionHandler<TableRowActivateAction>
-  }
-}
 
 function isActionsCell(o: any): o is TableAction[] {
   return Array.isArray(o)
@@ -49,6 +38,7 @@ function isActionsCell(o: any): o is TableAction[] {
 const useTableStyles = makeStyles({
   root: { overflowX: 'auto' },
   grid: { display: 'table' },
+  'grid--fill': { minWidth: '100%' },
   inner: { display: 'contents' },
   row: { display: 'table-row' },
   cell: { display: 'table-cell' },
@@ -62,6 +52,9 @@ const useTableStyles = makeStyles({
   },
   tbodyCellWithButtons: {
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
+  },
+  tbodyCellAlignEnd: {
+    textAlign: 'end',
   },
   activableRowHeader: {
     fontWeight: 'var(--fontWeightMedium)',
@@ -94,7 +87,8 @@ export const Table = (props: TableProps) => {
     rowHeaderColumn,
     onRowHeaderActivate,
     selectable = false,
-    widthVariant = 'viewportWidth',
+    maxWidthVariant = 'viewportWidth',
+    minWidthVariant = 'fill',
   } = props.table
 
   const { translations } = useFluentBlocksContext()
@@ -216,7 +210,7 @@ export const Table = (props: TableProps) => {
         tableStyles.root,
         commonStyles.blockSpacing,
         commonStyles.centerBlock,
-        widthVariant === 'textWidth' && commonStyles.mainContentWidth
+        maxWidthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
     >
       <div
@@ -225,6 +219,7 @@ export const Table = (props: TableProps) => {
         {...groupAttrs}
         className={cx(
           tableStyles.grid,
+          minWidthVariant === 'fill' && tableStyles['grid--fill'],
           contextualVariant === 'block' && commonStyles.centerBlock
         )}
         aria-labelledby={`desc__${tableId}`}
@@ -343,7 +338,8 @@ export const Table = (props: TableProps) => {
                         tableStyles.cell,
                         cellHasButtons
                           ? tableStyles.tbodyCellWithButtons
-                          : tableStyles.tbodyCell
+                          : tableStyles.tbodyCell,
+                        colKey === 'overflow' && tableStyles.tbodyCellAlignEnd
                       ),
                       'aria-colindex': ci + 1,
                       'aria-rowindex': ri + 2,

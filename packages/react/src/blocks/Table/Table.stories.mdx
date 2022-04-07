@@ -30,6 +30,8 @@ export const TableTemplate = (props) => (
       caption: fake('{{lorem.sentence}}'),
       captionVisuallyHidden: true,
       rowHeaderColumn: 'c1',
+      minWidthVariant: 'auto',
+      maxWidthVariant: 'viewportWidth',
       columns: {
         c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
         c2: { title: 'Office' },

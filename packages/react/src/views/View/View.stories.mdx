@@ -202,7 +202,8 @@ that time `View` will call its interaction callback with the update.
                 table: {
                   caption: `${fakeTitle(fake)}:`,
                   rowHeaderColumn: 'c1',
-                  widthVariant: 'textWidth',
+                  maxWidthVariant: 'textWidth',
+                  minWidthVariant: 'fill',
                   columns: {
                     c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
                     c2: { title: 'Office' },

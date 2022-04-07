@@ -50,6 +50,7 @@ export interface TableProps {
     rowHeaderColumn: string
     truncate?: boolean
     selectable?: boolean
-    widthVariant?: 'viewportWidth' | 'textWidth'
+    maxWidthVariant?: 'viewportWidth' | 'textWidth'
+    minWidthVariant?: 'auto' | 'fill'
   }
 }
