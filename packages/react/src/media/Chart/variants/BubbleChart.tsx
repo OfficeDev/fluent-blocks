@@ -326,7 +326,7 @@ export const BubbleChart = memo(
             data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
-              (set.data as BubbleChartDatum[]).forEach(
+              (set.data as BubbleChartDatum[]).map(
                 (item: BubbleChartDatum, itemKey: number) => (
                   // Generated tooltips for screen readers
                   <div
