@@ -5,9 +5,11 @@ import {
   useMemo,
   useRef,
   useState,
+  MouseEvent,
 } from 'react'
 import debounce from 'lodash/debounce'
 import keys from 'lodash/keys'
+import get from 'lodash/get'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
@@ -198,12 +200,12 @@ export const Table = (props: TableProps) => {
   }, [])
 
   const rootRowHeaderActivate = useCallback(
-    ({ target: { dataset } }) =>
+    ({ target }: MouseEvent<HTMLButtonElement>) =>
       onRowHeaderActivate &&
       onRowHeaderActivate({
         type: 'activate',
         actionId: 'activate',
-        row: dataset.row,
+        row: get(target, ['dataset', 'row']),
       }),
     []
   )
