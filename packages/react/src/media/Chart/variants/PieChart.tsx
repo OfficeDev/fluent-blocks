@@ -327,23 +327,21 @@ export const PieChart = memo(
             data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
-              (set.data as number[]).forEach(
-                (item: number, itemKey: number) => (
-                  // Generated tooltips for screen readers
-                  <div
-                    key={itemKey}
-                    id={`${chartId}-tooltip-${setKey}-${itemKey}`}
-                  >
-                    <p>{item}</p>
-                    <span>
-                      {data.labels && Array.isArray(data.labels)
-                        ? translate(data.labels[setKey])
-                        : translate(data.labels)}
-                      : {set.data[itemKey]}
-                    </span>
-                  </div>
-                )
-              )
+              (set.data as number[]).map((item: number, itemKey: number) => (
+                // Generated tooltips for screen readers
+                <div
+                  key={itemKey}
+                  id={`${chartId}-tooltip-${setKey}-${itemKey}`}
+                >
+                  <p>{item}</p>
+                  <span>{`${
+                    data.labels && Array.isArray(data.labels)
+                      ? translate(data.labels[setKey])
+                      : translate(data.labels)
+                  }
+                      : ${set.data[itemKey]}`}</span>
+                </div>
+              ))
             )}
           </canvas>
         </div>
