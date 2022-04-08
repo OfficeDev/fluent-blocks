@@ -1,34 +1,34 @@
 import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
-import { Table } from './StorybookTable'
+import { List } from './StorybookList'
 import { contextArgTypes } from '../../lib'
 
 import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
 
 <Meta
-  title="Blocks/Table"
-  component={Table}
+  title="Blocks/List"
+  component={List}
   argTypes={{
     ...contextArgTypes,
     onRowHeaderActivate: { action: 'action' },
   }}
 />
 
-export const TableTemplate = (props) => (
-  <Table {...props} iconSpriteUrl={iconSpriteUrl} />
+export const ListTemplate = (props) => (
+  <List {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
-# Table
+# List
 
-The Table component displays a fairly static table as a block component. If you
-need to paginate the values, or provide users the ability to perform actions on
-multiple rows, or facilitate sorting or filtering, use the List
-component instead.
+The List component provides an interactive table as a block component which can
+paginate the rows, provide users the ability to perform actions on multiple
+rows, and facilitate sorting or filtering. Where these features aren’t needed,
+use Table to keep the full experience as smooth as possible.
 
 <Canvas withSource="none">
   <Story
-    name="Table"
+    name="List"
     args={{
       themeName: 'light',
       accentScheme: 'teams',
@@ -67,8 +67,8 @@ component instead.
       }, {}),
     }}
   >
-    {seed(1234) || TableTemplate.bind({})}
+    {seed(1234) || ListTemplate.bind({})}
   </Story>
 </Canvas>
 
-<ArgsTable story="Table" />
+<ArgsTable story="List" />

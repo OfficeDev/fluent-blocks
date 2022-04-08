@@ -27,13 +27,18 @@ import {
 } from '../../lib'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 
-import { TableAction, TableProps } from './table-properties'
+import {
+  TableAction,
+  TableProps as NaturalTableProps,
+} from './table-properties'
 import { getBreakpoints } from './tableBreakpoints'
 import { Overflow } from '../../inputs'
 
 function isActionsCell(o: any): o is TableAction[] {
   return Array.isArray(o)
 }
+
+export type TableProps = NaturalTableProps
 
 const useTableStyles = makeStyles({
   root: { overflowX: 'auto' },

@@ -23,6 +23,7 @@ import { LayoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 import { CardPropsOrElement, renderIfCard } from '../Card/Card'
 import { ToolbarPropsOrElement, renderIfToolbar } from '../Toolbar/Toolbar'
 import { TablePropsOrElement, renderIfTable } from '../Table/Table'
+import { ListPropsOrElement, renderIfList } from '../List/List'
 
 export type BlockEntity =
   | ParagraphPropsOrElement
@@ -35,6 +36,7 @@ export type BlockEntity =
   | RadioGroupPropsOrElement
   | BigMessagePropsOrElement
   | TablePropsOrElement
+  | ListPropsOrElement
   | EscapeElement
 
 export type BlockSequence = BlockEntity[]
@@ -53,5 +55,6 @@ export const Block = (o: BlockEntity) =>
   renderIfRadioGroup(o) ||
   renderIfBigMessage(o) ||
   renderIfTable(o) ||
+  renderIfList(o) ||
   renderIfEscape(o) ||
   invalidBlock(o)
