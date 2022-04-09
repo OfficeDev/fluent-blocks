@@ -22,6 +22,7 @@ import {
 import { InlineContent } from '../../inlines'
 import {
   key,
+  MenuItemSequence,
   rem,
   sx,
   useCommonStyles,
@@ -31,6 +32,7 @@ import { ShortInputs } from '../ShortInputs/ShortInputs'
 
 import {
   TableAction,
+  ListColumnProps,
   TableProps as NaturalTableProps,
 } from './table-properties'
 import { getBreakpoints } from './tableBreakpoints'
@@ -43,7 +45,12 @@ function isActionsCell(o: any): o is TableAction[] {
 export type TableProps = NaturalTableProps
 
 const useTableStyles = makeStyles({
-  root: { overflowX: 'auto' },
+  root: {
+    overflowX: 'auto',
+    ...sx.padding(rem(8)),
+    marginBlockStart: rem(-8),
+    marginBlockEnd: rem(-8),
+  },
   grid: { display: 'table' },
   'grid--fill': { minWidth: '100%' },
   inner: { display: 'contents' },
@@ -64,6 +71,7 @@ const useTableStyles = makeStyles({
     textAlign: 'end',
   },
   activableRowHeader: {
+    color: 'inherit',
     fontWeight: 'var(--fontWeightMedium)',
     '&:hover': {
       ...sx.textDecoration('underline'),
@@ -97,6 +105,10 @@ export const Table = (props: TableProps) => {
     maxWidthVariant = 'viewportWidth',
     minWidthVariant = 'fill',
   } = props.table
+
+  const sort = props.contextualSortProps?.setSort
+    ? props.contextualSortProps
+    : null
 
   const { translations } = useFluentBlocksContext()
 
@@ -209,6 +221,27 @@ export const Table = (props: TableProps) => {
     []
   )
 
+  const getSortOptions = useCallback(
+    (colKey: string, { sortVariant }: ListColumnProps): MenuItemSequence => {
+      switch (sortVariant) {
+        default:
+          return [
+            {
+              label: translations['sort--alphabetical-ascending'],
+              actionId: `${colKey}:sort--alphabetical-ascending`,
+              type: 'action',
+            },
+            {
+              label: translations['sort--alphabetical-descending'],
+              actionId: `${colKey}:sort--alphabetical-descending`,
+              type: 'action',
+            },
+          ]
+      }
+    },
+    [translations]
+  )
+
   return (
     <div
       role="none"
@@ -280,6 +313,15 @@ export const Table = (props: TableProps) => {
                     return (
                       <div {...cellElementProps} {...groupAttrs}>
                         <InlineContent inlines={columns[colKey].title} />
+                        {sort &&
+                          columns[colKey].hasOwnProperty('sortVariant') && (
+                            <Overflow
+                              buttonSize="small"
+                              triggerLabel={translations.sortOptions}
+                              overflow={getSortOptions(colKey, columns[colKey])}
+                              triggerIcon="arrow_sort"
+                            />
+                          )}
                       </div>
                     )
                 }

@@ -3,6 +3,7 @@ import {
   TableProps as NaturalTableProps,
   CellProps as NaturalCellProps,
   TableColumnProps as NaturalTableColumnProps,
+  SortVariant as NaturalSortVariant,
   TableRowActivateAction,
 } from '@fluent-blocks/schemas'
 import { InlineSequenceOrString } from '../../inlines'
@@ -17,7 +18,7 @@ export interface CellProps extends Omit<NaturalCellProps, 'cell'> {
 }
 
 export interface TableColumnProps
-  extends Omit<NaturalTableColumnProps, 'title' | 'sortVariant'> {
+  extends Omit<NaturalTableColumnProps, 'title'> {
   title: InlineSequenceOrString
 }
 
@@ -26,19 +27,30 @@ export interface RowProps {
   actions?: TableAction[]
 }
 
+export type SortPredicate = (a: any, b: any) => number
+
+export type SortVariant = NaturalSortVariant | SortPredicate
+
+export interface ListColumnProps extends TableColumnProps {
+  sortVariant?: SortVariant
+}
+
 export type SortOrder = 'ascending' | 'descending'
+
+export interface SortProps {
+  sortColumn: string
+  sortOrder: SortOrder
+}
 
 export interface TableProps extends Omit<NaturalTableProps, 'table'> {
   table: Omit<NaturalTableProps['table'], 'columns' | 'rows' | 'caption'> & {
-    columns: Record<string, TableColumnProps>
+    columns: Record<string, TableColumnProps | ListColumnProps>
     rows: Record<string, RowProps>
     caption: InlineSequenceOrString
     onRowHeaderActivate?: ActionHandler<TableRowActivateAction>
   }
   contextualVariant?: 'block'
-  contextualSortProps?: {
-    setSort: (column: string, sortOrder: SortOrder) => void
-    column?: string
-    sortOrder?: SortOrder
+  contextualSortProps?: Partial<SortProps> & {
+    setSort: (sortProps: SortProps | null) => void
   }
 }

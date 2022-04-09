@@ -2,7 +2,7 @@ import { TableInnerProps, TableColumnProps } from '../lib/tables'
 
 export type SortVariant = 'alphabetical' | 'numerical' | 'chronological'
 
-interface ListColumnProps extends TableColumnProps {
+export interface ListColumnProps extends TableColumnProps {
   sortVariant?: SortVariant
 }
 

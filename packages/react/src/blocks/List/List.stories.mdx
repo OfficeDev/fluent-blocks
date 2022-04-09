@@ -38,7 +38,10 @@ use Table to keep the full experience as smooth as possible.
       minWidthVariant: 'auto',
       maxWidthVariant: 'viewportWidth',
       columns: {
-        c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
+        c1: {
+          title: [{ text: 'Name ' }, { icon: 'info' }],
+          sortVariant: 'alphabetical',
+        },
         c2: { title: 'Office' },
         c3: { title: 'Email', hideable: true },
       },

@@ -23,6 +23,8 @@ import {
 export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
   overflow: MenuItemSequence
   contextualHiddenFlags?: { hidden?: boolean }[]
+  triggerIcon?: string
+  triggerLabel?: string
 }
 
 function isAction(o: any): o is MenuAction {
@@ -76,17 +78,19 @@ export const Overflow = ({
   buttonSize = 'medium',
   iconSize = defaultIconSize,
   contextualHiddenFlags,
+  triggerIcon = 'more_horizontal',
+  triggerLabel,
 }: OverflowProps) => {
   const { translations, onAction } = useFluentBlocksContext()
+  const label = triggerLabel || translations.more
   return (
     <Menu>
       <MenuTrigger>
-        <Tooltip content={translations.more} relationship="label" withArrow>
+        <Tooltip content={label} relationship="label" withArrow>
           <MenuButton
             appearance="transparent"
-            icon={
-              <Icon icon="more_horizontal" size={iconSize} variant="outline" />
-            }
+            style={{ color: 'inherit' }}
+            icon={<Icon icon={triggerIcon} size={iconSize} variant="outline" />}
             size={buttonSize}
           />
         </Tooltip>
