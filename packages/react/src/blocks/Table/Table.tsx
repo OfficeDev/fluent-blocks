@@ -327,8 +327,8 @@ export const Table = (props: TableProps) => {
                               triggerIcon={
                                 sort?.sortColumn === colKey
                                   ? sort?.sortOrder === 'ascending'
-                                    ? 'arrow_down'
-                                    : 'arrow_up'
+                                    ? 'arrow_up'
+                                    : 'arrow_down'
                                   : 'arrow_sort'
                               }
                             />
