@@ -19,4 +19,5 @@ export interface ButtonProps extends Omit<InputProps, 'label'> {
   iconPosition?: 'before' | 'after'
   iconSize?: IconSize
   iconVariant?: IconVariant
+  disabled?: boolean
 }

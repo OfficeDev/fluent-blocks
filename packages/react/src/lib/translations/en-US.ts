@@ -13,4 +13,6 @@ export default {
   'sort--numerical-descending': 'Greatest to least',
   'sort--chronological-ascending': 'Oldest to newest',
   'sort--chronological-descending': 'Newest to oldest',
+  'pagination--prev': 'Previous page',
+  'pagination--next': 'Next page',
 }

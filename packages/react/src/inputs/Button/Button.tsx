@@ -108,6 +108,7 @@ export const Button = ({
   onAction,
   selected,
   controls,
+  disabled,
   contextualVariant = 'block-inputs',
 }: ButtonProps) => {
   const context = useFluentBlocksContext()
@@ -129,6 +130,7 @@ export const Button = ({
     <FluentButton
       aria-label={label}
       appearance={variant}
+      disabled={disabled}
       size={derivedSize}
       className={cx(
         buttonStyles.root,
