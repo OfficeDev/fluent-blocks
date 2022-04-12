@@ -2,6 +2,7 @@ const path = require('path')
 const tsconfig = path.resolve(__dirname, '../tsconfig.json')
 
 module.exports = {
+  core: { builder: '@storybook/builder-vite' },
   stories: [
     '../src/**/*.stories.mdx',
     '../src/**/*.stories.@(ts|tsx)',

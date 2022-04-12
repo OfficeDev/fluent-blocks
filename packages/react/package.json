@@ -45,10 +45,12 @@
   "devDependencies": {
     "@babel/core": "latest",
     "@fluentui/react-components": "latest",
+    "@mdx-js/react": "^1.6.22",
     "@storybook/addon-actions": "next",
     "@storybook/addon-essentials": "next",
     "@storybook/addon-links": "next",
     "@storybook/addons": "next",
+    "@storybook/builder-vite": "latest",
     "@storybook/react": "next",
     "@storybook/theming": "next",
     "@types/chart.js": "^2.9.29",
@@ -76,7 +78,7 @@
     "ts-mocha": "latest",
     "ts-node": "latest",
     "typescript": ">=4.4.0 <5.0.0",
-    "webpack": "latest"
+    "vite": "latest"
   },
   "dependencies": {
     "@fluent-blocks/basic-icons": "workspace:9.0.0-alpha.6",
