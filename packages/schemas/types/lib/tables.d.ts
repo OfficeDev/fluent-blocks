@@ -44,7 +44,6 @@ export interface TableInnerProps {
   rows: Record<string, RowProps>
   rowHeaderColumn: string
   truncate?: boolean
-  selectable?: boolean
   maxWidthVariant?: 'viewportWidth' | 'textWidth'
   minWidthVariant?: 'auto' | 'fill'
 }

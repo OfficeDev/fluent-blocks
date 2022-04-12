@@ -8,6 +8,7 @@ export interface ListColumnProps extends TableColumnProps {
 
 interface ListInnerProps extends TableInnerProps {
   pageSize?: number
+  selectable?: boolean
 }
 
 export interface ListProps {

@@ -51,11 +51,17 @@ const useTableStyles = makeStyles({
     marginBlockStart: rem(-8),
     marginBlockEnd: rem(-8),
   },
-  grid: { display: 'table' },
+  grid: {},
   'grid--fill': { minWidth: '100%' },
   inner: { display: 'contents' },
-  row: { display: 'table-row' },
-  cell: { display: 'table-cell' },
+  row: { display: 'flex', width: '100%' },
+  cell: {
+    display: 'flex',
+    alignItems: 'center',
+    flexGrow: 1,
+    flexBasis: 0,
+    boxSizing: 'border-box',
+  },
   theadCell: {
     fontSize: rem(12),
     ...sx.padding(rem(8), rem(12)),
@@ -64,11 +70,11 @@ const useTableStyles = makeStyles({
     ...sx.padding(rem(12)),
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
   },
-  tbodyCellWithButtons: {
-    ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
+  tbodyCellWithButtonsContent: {
+    ...sx.margin(rem(-12)),
   },
   tbodyCellAlignEnd: {
-    textAlign: 'end',
+    justifyContent: 'flex-end',
   },
   activableRowHeader: {
     color: 'inherit',
@@ -80,7 +86,7 @@ const useTableStyles = makeStyles({
       ...sx.textDecoration('underline'),
     },
   },
-  caption: { display: 'table-caption' },
+  caption: {},
 })
 
 function getContentColumnsHidden(
@@ -93,6 +99,11 @@ function getContentColumnsHidden(
   return inFlowContentColumns.size < colKeys.length
 }
 
+const defaultMinWidth = 240
+const accessoryWidth = 32
+
+const colWidthClassName = (colKey: string) => `${colKey}-width`
+
 export const Table = (props: TableProps) => {
   const {
     caption,
@@ -101,7 +112,6 @@ export const Table = (props: TableProps) => {
     rows,
     rowHeaderColumn,
     onRowHeaderActivate,
-    selectable = false,
     maxWidthVariant = 'viewportWidth',
     minWidthVariant = 'fill',
   } = props.table
@@ -109,6 +119,8 @@ export const Table = (props: TableProps) => {
   const sort = props.contextualSortProps?.setSort
     ? props.contextualSortProps
     : null
+
+  const selectable = !!props.contextualSelectable
 
   const { translations } = useFluentBlocksContext()
 
@@ -258,6 +270,33 @@ export const Table = (props: TableProps) => {
         maxWidthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
     >
+      <style>
+        {Array.from(inFlowColumns).reduce((acc: string, colKey: string) => {
+          if (colKey === 'selection' || colKey === 'overflow') {
+            return `${acc}.${colWidthClassName(colKey)} { flex-basis: ${rem(
+              accessoryWidth
+            )}; flex-grow: 0; flex-shrink: 0; }`
+          } else {
+            const minWidth = get(columns, [colKey, 'minWidth'], defaultMinWidth)
+            return `${acc}.${colWidthClassName(colKey)} { min-width: ${rem(
+              minWidth
+            )}; flex-grow: ${minWidth}; }\n`
+          }
+        }, '')}
+      </style>
+      <p
+        id={`desc__${tableId}`}
+        className={cx(
+          captionVisuallyHidden
+            ? commonStyles.visuallyHidden
+            : tableStyles.caption,
+          commonStyles.mainContentWidth,
+          commonStyles.centerBlock
+        )}
+      >
+        <InlineContent inlines={caption} />
+      </p>
+
       <div
         role="grid"
         tabIndex={0}
@@ -271,19 +310,6 @@ export const Table = (props: TableProps) => {
         aria-colcount={inFlowColumns.size}
         aria-rowcount={rowKeys.length + 1}
       >
-        <p
-          id={`desc__${tableId}`}
-          className={cx(
-            captionVisuallyHidden
-              ? commonStyles.visuallyHidden
-              : tableStyles.caption,
-            commonStyles.mainContentWidth,
-            commonStyles.centerBlock
-          )}
-        >
-          <InlineContent inlines={caption} />
-        </p>
-
         <div {...rootInnerAttrs} className={tableStyles.inner}>
           <div
             role="row"
@@ -301,7 +327,10 @@ export const Table = (props: TableProps) => {
                   id: `ch__${colKey}`,
                   'aria-colindex': ci + 1,
                   'aria-rowindex': 1,
-                  className: cx(tableStyles.cell, tableStyles.theadCell),
+                  className: `${cx(
+                    tableStyles.cell,
+                    tableStyles.theadCell
+                  )} ${colWidthClassName(colKey)}`,
                 }
 
                 switch (colKey) {
@@ -364,26 +393,34 @@ export const Table = (props: TableProps) => {
                     const cellContent =
                       colKey === 'overflow' ? (
                         contentColumnsHidden || row.actions ? (
-                          <Overflow
-                            overflow={[
-                              ...(contentColumnsHidden
-                                ? [
-                                    {
-                                      type: 'action' as 'action',
-                                      label: translations.viewAllDetails,
-                                      actionId: `${rowKey}__details`,
-                                    },
-                                    { type: 'divider' as 'divider' },
-                                  ]
-                                : []),
-                              ...(row.actions || []),
-                            ]}
-                          />
+                          <div
+                            className={tableStyles.tbodyCellWithButtonsContent}
+                          >
+                            <Overflow
+                              overflow={[
+                                ...(contentColumnsHidden
+                                  ? [
+                                      {
+                                        type: 'action' as 'action',
+                                        label: translations.viewAllDetails,
+                                        actionId: `${rowKey}__details`,
+                                      },
+                                      { type: 'divider' as 'divider' },
+                                    ]
+                                  : []),
+                                ...(row.actions || []),
+                              ]}
+                            />
+                          </div>
                         ) : null
                       ) : colKey === 'selection' ? (
                         <span>x</span>
                       ) : !cell ? null : cellIsActions ? (
-                        <ShortInputs inputs={cell} />
+                        <div
+                          className={tableStyles.tbodyCellWithButtonsContent}
+                        >
+                          <ShortInputs inputs={cell} />
+                        </div>
                       ) : (
                         <InlineContent inlines={cell.cell} />
                       )
@@ -394,13 +431,11 @@ export const Table = (props: TableProps) => {
                         tabIndex: 0,
                       }),
                       ...groupAttrs,
-                      className: cx(
+                      className: `${cx(
                         tableStyles.cell,
-                        cellHasButtons
-                          ? tableStyles.tbodyCellWithButtons
-                          : tableStyles.tbodyCell,
+                        tableStyles.tbodyCell,
                         colKey === 'overflow' && tableStyles.tbodyCellAlignEnd
-                      ),
+                      )} ${colWidthClassName(colKey)}`,
                       'aria-colindex': ci + 1,
                       'aria-rowindex': ri + 2,
                     }
@@ -416,7 +451,10 @@ export const Table = (props: TableProps) => {
                           cellContent
                         ) : onRowHeaderActivate ? (
                           <FluentButton
-                            className={tableStyles.activableRowHeader}
+                            className={cx(
+                              tableStyles.activableRowHeader,
+                              tableStyles.tbodyCellWithButtonsContent
+                            )}
                             appearance="transparent"
                             data-row={rowKey}
                             onClick={rootRowHeaderActivate}
