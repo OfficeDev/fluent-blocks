@@ -20,10 +20,7 @@ module.exports = {
   },
   addons: [
     '@storybook/addon-links',
-    {
-      name: '@storybook/addon-essentials',
-      options: { backgrounds: false, outline: false },
-    },
+    '@storybook/addon-docs',
     './addons/expand-all/register.js',
   ],
 }
