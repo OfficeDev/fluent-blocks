@@ -1,14 +1,20 @@
+import { ReactElement, useState } from 'react'
+import isArray from 'lodash/isArray'
+import isFunction from 'lodash/isFunction'
+import { makeStyles } from '@fluentui/react-components'
 import { ListProps as NaturalListProps } from '@fluent-blocks/schemas'
+
 import {
   SortProps,
   ListColumnProps,
   TableProps,
+  CellProps,
+  TableAction,
 } from '../Table/table-properties'
 import { Table } from '../Table/Table'
-import { ReactElement, SetStateAction, Dispatch, useState } from 'react'
 import { Button } from '../../inputs'
 import { useFluentBlocksContext } from '../../lib'
-import { makeStyles } from '@fluentui/react-components'
+import { getInlineText } from '../../inlines'
 
 export interface ListProps extends Omit<NaturalListProps, 'list'> {
   list: Omit<TableProps['table'], 'columns'> & {
@@ -28,7 +34,7 @@ const useListStyles = makeStyles({
 
 interface PaginationProps {
   page: number
-  setPage: Dispatch<SetStateAction<number>>
+  setPage: (page: number) => void
   pageSize: number
   collectionSize: number
 }
@@ -59,9 +65,7 @@ const Pagination = ({
           variant: 'transparent',
           iconOnly: true,
           disabled: page < 1,
-          onAction: () => {
-            setPage(page - 1)
-          },
+          onAction: () => setPage(page - 1),
         }}
       />
       <span tabIndex={0}>{`${page + 1} / ${nPages}`}</span>
@@ -74,23 +78,48 @@ const Pagination = ({
           variant: 'transparent',
           iconOnly: true,
           disabled: page > nPages - 2,
-          onAction: () => {
-            setPage(page + 1)
-          },
+          onAction: () => setPage(page + 1),
         }}
       />
     </div>
   )
 }
 
+function alphabeticalSort(a: string, b: string): number {
+  return a.localeCompare(b)
+}
+
+function getCellText(cell: CellProps | TableAction[] | undefined): string {
+  return !cell || isArray(cell) ? '' : getInlineText(cell.cell)
+}
+
 export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
   const [sort, setSort] = useState<SortProps | null>(null)
   const [filter, setFilter] = useState<string | null>(null)
   const [page, setPage] = useState<number>(0)
-  const { pageSize = 16, rows } = list
+  const { pageSize = 16, rows, columns } = list
   const rowKeys = Object.keys(rows)
 
-  const tableRows = rowKeys
+  // todo: implement other sort types
+  const comparator = sort
+    ? isFunction(columns[sort.sortColumn].sortVariant)
+      ? (columns[sort.sortColumn].sortVariant as (
+          a: string,
+          b: string
+        ) => number)
+      : alphabeticalSort
+    : alphabeticalSort
+  const sortValence = sort?.sortOrder === 'ascending'
+  const sortedRowKeys = sort
+    ? rowKeys.sort((rowKeyA, rowKeyB) =>
+        comparator(
+          getCellText(rows[sortValence ? rowKeyA : rowKeyB][sort.sortColumn]),
+          getCellText(rows[sortValence ? rowKeyB : rowKeyA][sort.sortColumn])
+        )
+      )
+    : rowKeys
+
+  const tableRows = sortedRowKeys
     .slice(page * pageSize, (page + 1) * pageSize)
     .reduce((acc: TableProps['table']['rows'], rowKey) => {
       acc[rowKey] = rows[rowKey]

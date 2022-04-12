@@ -224,16 +224,21 @@ export const Table = (props: TableProps) => {
   const getSortOptions = useCallback(
     (colKey: string, { sortVariant }: ListColumnProps): MenuItemSequence => {
       switch (sortVariant) {
+        // todo: implement other sort types
         default:
           return [
             {
               label: translations['sort--alphabetical-ascending'],
               actionId: `${colKey}:sort--alphabetical-ascending`,
+              onAction: () =>
+                sort?.setSort({ sortColumn: colKey, sortOrder: 'ascending' }),
               type: 'action',
             },
             {
               label: translations['sort--alphabetical-descending'],
               actionId: `${colKey}:sort--alphabetical-descending`,
+              onAction: () =>
+                sort?.setSort({ sortColumn: colKey, sortOrder: 'descending' }),
               type: 'action',
             },
           ]
@@ -319,7 +324,13 @@ export const Table = (props: TableProps) => {
                               buttonSize="small"
                               triggerLabel={translations.sortOptions}
                               overflow={getSortOptions(colKey, columns[colKey])}
-                              triggerIcon="arrow_sort"
+                              triggerIcon={
+                                sort?.sortColumn === colKey
+                                  ? sort?.sortOrder === 'ascending'
+                                    ? 'arrow_down'
+                                    : 'arrow_up'
+                                  : 'arrow_sort'
+                              }
                             />
                           )}
                       </div>
