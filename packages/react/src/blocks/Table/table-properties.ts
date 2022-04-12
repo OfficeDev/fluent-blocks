@@ -53,5 +53,8 @@ export interface TableProps extends Omit<NaturalTableProps, 'table'> {
   contextualSortProps?: Partial<SortProps> & {
     setSort: (sortProps: SortProps | null) => void
   }
-  contextualSelectable?: false
+  contextualSelectionProps?: {
+    select?: boolean
+    selection?: Set<string>
+  }
 }

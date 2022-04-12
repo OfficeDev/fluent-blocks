@@ -120,7 +120,9 @@ export const Table = (props: TableProps) => {
     ? props.contextualSortProps
     : null
 
-  const selectable = !!props.contextualSelectable
+  const select = props.contextualSelectionProps?.select
+    ? props.contextualSelectionProps
+    : null
 
   const { translations } = useFluentBlocksContext()
 
@@ -154,7 +156,7 @@ export const Table = (props: TableProps) => {
         columns,
         rowKeys.findIndex((rowKey) => rows[rowKey].hasOwnProperty('actions')) >=
           0,
-        selectable
+        !!select
       ),
     [rows, columns]
   )
