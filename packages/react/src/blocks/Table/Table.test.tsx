@@ -1,5 +1,4 @@
 /* eslint func-names: 0 */
-
 import expect from 'expect'
 
 describe('Table', function () {
@@ -14,7 +13,7 @@ describe('Table', function () {
         expect(
           await this.page
             .locator(
-              '#root [role="grid"] >> text=7151084f-3323-408a-be7e-c96387020bfe'
+              '#root [role="grid"] [role="row"][aria-labelledby="rh__a326a593-e247-4601-8f83-839cec59bfda"] >> text=1cb6d758-e3f0-4e10-8579-dbd348e680fd'
             )
             .count()
         ).toEqual(1)
