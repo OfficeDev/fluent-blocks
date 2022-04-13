@@ -1,26 +1,27 @@
-import { ReactElement, useState } from 'react'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
-import { makeStyles } from '@fluentui/react-components'
-import { ListProps as NaturalListProps } from '@fluent-blocks/schemas'
+import { ReactElement, useState } from 'react'
 
-import {
-  SortProps,
-  ListColumnProps,
-  TableProps,
-  CellProps,
-  TableAction,
-} from '../Table/table-properties'
-import { Table } from '../Table/Table'
-import { Button } from '../../inputs'
-import { useFluentBlocksContext } from '../../lib'
+import { ListProps as NaturalListProps } from '@fluent-blocks/schemas'
+import { makeStyles } from '@fluentui/react-components'
+
 import { getInlineText } from '../../inlines'
+import { Button } from '../../inputs'
+import {
+  CellProps,
+  ListColumnProps,
+  SortProps,
+  TableAction,
+  TableProps,
+  useFluentBlocksContext,
+} from '../../lib'
+import { Table } from '../Table/Table'
 
 export interface ListProps extends Omit<NaturalListProps, 'list'> {
-  list: Omit<TableProps['table'], 'columns'> & {
-    columns: Record<string, ListColumnProps>
-    pageSize?: number
-  }
+  list: TableProps['table'] &
+    Omit<NaturalListProps['list'], 'columns'> & {
+      columns: Record<string, ListColumnProps>
+    }
   contextualVariant?: 'block'
 }
 
@@ -96,6 +97,7 @@ function getCellText(cell: CellProps | TableAction[] | undefined): string {
 export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
   const [sort, setSort] = useState<SortProps | null>(null)
   const [filter, setFilter] = useState<string | null>(null)
+  const [selection, setSelection] = useState<Set<string>>(new Set())
   const [page, setPage] = useState<number>(0)
   const { pageSize = 16, rows, columns } = list
   const rowKeys = Object.keys(rows)
@@ -131,6 +133,9 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
       <Table
         table={{ ...list, rows: tableRows }}
         contextualSortProps={{ setSort, ...sort }}
+        {...(list.selectable && {
+          contextualSelectionProps: { selection, setSelection },
+        })}
       />
       <Pagination
         {...{

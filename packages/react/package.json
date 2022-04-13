@@ -36,6 +36,7 @@
   },
   "peerDependencies": {
     "@fluentui/react-components": "latest",
+    "@fluentui/react-checkbox": "latest",
     "@types/react": ">=16.13.1 <19",
     "@types/react-dom": ">=16.13.1 <19",
     "chart.js": "^2.9.4",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@babel/core": "latest",
     "@fluentui/react-components": "latest",
+    "@fluentui/react-checkbox": "latest",
     "@storybook/addon-actions": "next",
     "@storybook/addon-essentials": "next",
     "@storybook/addon-links": "next",

@@ -1,10 +1,11 @@
-import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
-import { List } from './StorybookList'
-import { contextArgTypes } from '../../lib'
+import range from 'lodash/range'
 
 import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import { List } from './StorybookList'
 
 <Meta
   title="Blocks/List"
@@ -37,6 +38,7 @@ use Table to keep the full experience as smooth as possible.
       rowHeaderColumn: 'c1',
       minWidthVariant: 'auto',
       maxWidthVariant: 'viewportWidth',
+      selectable: true,
       columns: {
         c1: {
           title: [{ text: 'Name ' }, { icon: 'info' }],

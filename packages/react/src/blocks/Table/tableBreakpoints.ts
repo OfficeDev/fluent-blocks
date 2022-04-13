@@ -1,6 +1,6 @@
 import groupBy from 'lodash/groupBy'
 
-import { TableColumnProps } from './table-properties'
+import { TableColumnProps } from '../../lib'
 
 export const defaultMinWidth = 240
 export const accessoryWidth = 40

@@ -1,42 +1,43 @@
+import debounce from 'lodash/debounce'
+import get from 'lodash/get'
+import keys from 'lodash/keys'
 import {
+  ChangeEvent,
+  MouseEvent,
   ReactElement,
   useCallback,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  MouseEvent,
 } from 'react'
-import debounce from 'lodash/debounce'
-import keys from 'lodash/keys'
-import get from 'lodash/get'
+
+import { Checkbox } from '@fluentui/react-checkbox'
+import {
+  Button as FluentButton,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
-import {
-  Button as FluentButton,
-  makeStyles,
-  mergeClasses as cx,
-} from '@fluentui/react-components'
+
 import { InlineContent } from '../../inlines'
+import { Overflow } from '../../inputs'
 import {
-  key,
+  ListColumnProps,
   MenuItemSequence,
+  TableProps as NaturalTableProps,
+  TableAction,
+  key,
   rem,
   sx,
   useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
-
-import {
-  TableAction,
-  ListColumnProps,
-  TableProps as NaturalTableProps,
-} from './table-properties'
 import { getBreakpoints } from './tableBreakpoints'
-import { Overflow } from '../../inputs'
 
 function isActionsCell(o: any): o is TableAction[] {
   return Array.isArray(o)
@@ -99,7 +100,7 @@ function getContentColumnsHidden(
   return inFlowContentColumns.size < colKeys.length
 }
 
-const defaultMinWidth = 240
+const defaultMinWidth = 120
 const accessoryWidth = 32
 
 const colWidthClassName = (colKey: string) => `${colKey}-width`
@@ -120,7 +121,7 @@ export const Table = (props: TableProps) => {
     ? props.contextualSortProps
     : null
 
-  const select = props.contextualSelectionProps?.select
+  const select = props.contextualSelectionProps?.setSelection
     ? props.contextualSelectionProps
     : null
 
@@ -158,7 +159,7 @@ export const Table = (props: TableProps) => {
           0,
         !!select
       ),
-    [rows, columns]
+    [rows, columns, select]
   )
 
   const $table = useRef<HTMLDivElement | null>(null)
@@ -233,6 +234,20 @@ export const Table = (props: TableProps) => {
         row: get(target, ['dataset', 'row']),
       }),
     []
+  )
+
+  const rootSelectActivate = useCallback(
+    ({ target }: ChangeEvent<EventTarget>) => {
+      const rowKey = get(target, ['dataset', 'row'])
+      if (rowKey && select) {
+        const nextSelection = new Set(select.selection)
+        nextSelection[get(target, ['checked'], false) ? 'add' : 'delete'](
+          rowKey
+        )
+        select.setSelection(nextSelection)
+      }
+    },
+    [select]
   )
 
   const getSortOptions = useCallback(
@@ -416,7 +431,12 @@ export const Table = (props: TableProps) => {
                           </div>
                         ) : null
                       ) : colKey === 'selection' ? (
-                        <span>x</span>
+                        <Checkbox
+                          checked={!!select?.selection.has(rowKey)}
+                          data-row={rowKey}
+                          onChange={rootSelectActivate}
+                          className={tableStyles.tbodyCellWithButtonsContent}
+                        />
                       ) : !cell ? null : cellIsActions ? (
                         <div
                           className={tableStyles.tbodyCellWithButtonsContent}
@@ -429,7 +449,7 @@ export const Table = (props: TableProps) => {
 
                     const cellElementProps = {
                       key: colKey,
-                      ...(!(colKey === 'selection' || cellHasButtons) && {
+                      ...(!cellHasButtons && {
                         tabIndex: 0,
                       }),
                       ...groupAttrs,

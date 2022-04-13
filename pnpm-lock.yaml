@@ -53,6 +53,7 @@ importers:
       '@babel/core': latest
       '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.6
       '@fluent-blocks/schemas': workspace:9.0.0-alpha.4
+      '@fluentui/react-checkbox': latest
       '@fluentui/react-components': latest
       '@fluentui/react-tabster': latest
       '@storybook/addon-actions': next
@@ -95,6 +96,7 @@ importers:
       lodash: 4.17.21
     devDependencies:
       '@babel/core': 7.17.9
+      '@fluentui/react-checkbox': 9.0.0-beta.10_7eb32be8ac1649a04791b344762f8238
       '@fluentui/react-components': 9.0.0-rc.6_7eb32be8ac1649a04791b344762f8238
       '@storybook/addon-actions': 6.5.0-alpha.62_react-dom@18.0.0+react@18.0.0
       '@storybook/addon-essentials': 6.5.0-alpha.62_c6f04e24729c88ba9efe6183bf067522

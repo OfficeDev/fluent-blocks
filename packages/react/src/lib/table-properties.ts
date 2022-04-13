@@ -1,13 +1,14 @@
-import { ButtonProps } from '../../inputs'
 import {
-  TableProps as NaturalTableProps,
   CellProps as NaturalCellProps,
-  TableColumnProps as NaturalTableColumnProps,
   SortVariant as NaturalSortVariant,
+  TableColumnProps as NaturalTableColumnProps,
+  TableProps as NaturalTableProps,
   TableRowActivateAction,
 } from '@fluent-blocks/schemas'
-import { InlineSequenceOrString } from '../../inlines'
-import { ActionHandler } from '../../lib'
+
+import { InlineSequenceOrString } from '../inlines'
+import { ButtonProps } from '../inputs'
+import { ActionHandler } from './index'
 
 export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
   multiple?: boolean
@@ -54,7 +55,7 @@ export interface TableProps extends Omit<NaturalTableProps, 'table'> {
     setSort: (sortProps: SortProps | null) => void
   }
   contextualSelectionProps?: {
-    select?: boolean
-    selection?: Set<string>
+    selection: Set<string>
+    setSelection: (selection: Set<string>) => void
   }
 }
