@@ -70,6 +70,14 @@ use Table to keep the full experience as smooth as possible.
         }
         return acc
       }, {}),
+      listActions: [
+        {
+          type: 'action',
+          actionId: 'add',
+          label: 'Add',
+          icon: 'add',
+        },
+      ],
     }}
   >
     {seed(1234) || ListTemplate.bind({})}

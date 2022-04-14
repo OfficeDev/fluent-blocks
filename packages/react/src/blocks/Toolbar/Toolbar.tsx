@@ -1,3 +1,6 @@
+import debounce from 'lodash/debounce'
+import every from 'lodash/every'
+import get from 'lodash/get'
 import {
   ReactElement,
   useCallback,
@@ -5,29 +8,25 @@ import {
   useRef,
   useState,
 } from 'react'
-import debounce from 'lodash/debounce'
-import get from 'lodash/get'
-import every from 'lodash/every'
-
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
 import { ToolbarProps as NaturalToolbarProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Button, ButtonActionPayload, Overflow } from '../../inputs'
 import {
   MenuItemEntity,
   MenuItemSequence,
-  rem,
   Sequence,
-  useCommonStyles,
   WithActionHandler,
+  rem,
+  useCommonStyles,
 } from '../../lib'
 
 export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
   toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {
     items: MenuItemSequence
   }
-  contextualVariant?: 'card' | 'block'
+  contextualVariant?: 'block' | 'viewportWidth'
 }
 
 type ToolbarItemContextualOptions = Pick<

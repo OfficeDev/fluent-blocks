@@ -10,17 +10,20 @@ import { Button } from '../../inputs'
 import {
   CellProps,
   ListColumnProps,
+  MenuActionSequence,
   SortProps,
   TableAction,
   TableProps,
   useFluentBlocksContext,
 } from '../../lib'
 import { Table } from '../Table/Table'
+import { Toolbar } from '../Toolbar/Toolbar'
 
 export interface ListProps extends Omit<NaturalListProps, 'list'> {
   list: TableProps['table'] &
-    Omit<NaturalListProps['list'], 'columns'> & {
+    Omit<NaturalListProps['list'], 'columns' | 'listActions'> & {
       columns: Record<string, ListColumnProps>
+      listActions?: MenuActionSequence
     }
   contextualVariant?: 'block'
 }
@@ -130,6 +133,18 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
 
   return (
     <>
+      {list.listActions && (
+        <Toolbar
+          toolbar={{
+            items: list.listActions,
+            iconSize: list.iconSize,
+            buttonSize: list.buttonSize,
+          }}
+          contextualVariant={
+            list.maxWidthVariant === 'textWidth' ? 'block' : 'viewportWidth'
+          }
+        />
+      )}
       <Table
         table={{ ...list, rows: tableRows }}
         contextualSortProps={{ setSort, ...sort }}

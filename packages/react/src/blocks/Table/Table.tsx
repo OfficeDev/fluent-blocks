@@ -301,19 +301,6 @@ export const Table = (props: TableProps) => {
           }
         }, '')}
       </style>
-      <p
-        id={`desc__${tableId}`}
-        className={cx(
-          captionVisuallyHidden
-            ? commonStyles.visuallyHidden
-            : tableStyles.caption,
-          commonStyles.mainContentWidth,
-          commonStyles.centerBlock
-        )}
-      >
-        <InlineContent inlines={caption} />
-      </p>
-
       <div
         role="grid"
         tabIndex={0}
@@ -507,6 +494,18 @@ export const Table = (props: TableProps) => {
           })}
         </div>
       </div>
+      <p
+        id={`desc__${tableId}`}
+        className={cx(
+          captionVisuallyHidden
+            ? commonStyles.visuallyHidden
+            : tableStyles.caption,
+          commonStyles.mainContentWidth,
+          commonStyles.centerBlock
+        )}
+      >
+        <InlineContent inlines={caption} />
+      </p>
     </div>
   )
 }
