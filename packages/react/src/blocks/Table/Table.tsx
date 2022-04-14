@@ -12,6 +12,7 @@ import {
   useState,
 } from 'react'
 
+import { TableRowActivateAction } from '@fluent-blocks/schemas'
 import { Checkbox } from '@fluentui/react-checkbox'
 import {
   Button as FluentButton,
@@ -127,7 +128,7 @@ export const Table = (props: TableProps) => {
     ? props.contextualSelectionProps
     : null
 
-  const { translations } = useFluentBlocksContext()
+  const { translations, onAction: contextOnAction } = useFluentBlocksContext()
 
   const contextualVariant = props.contextualVariant || 'block'
   const tableId = key(props)
@@ -228,14 +229,19 @@ export const Table = (props: TableProps) => {
   }, [])
 
   const rootRowHeaderActivate = useCallback(
-    ({ target }: MouseEvent<HTMLButtonElement>) =>
-      props.onAction &&
-      props.onAction({
-        type: 'activate',
-        actionId: 'activate',
-        row: get(target, ['dataset', 'row']),
-      }),
-    []
+    ({ target }: MouseEvent<HTMLButtonElement>) => {
+      const row = get(target, ['dataset', 'row'])
+      if (row) {
+        const payload: TableRowActivateAction = {
+          type: 'activate',
+          actionId: 'activate',
+          row: get(target, ['dataset', 'row']),
+        }
+        props.onAction && props.onAction(payload)
+        contextOnAction && contextOnAction(payload)
+      }
+    },
+    [props.onAction, contextOnAction]
   )
 
   const rootSelectActivate = useCallback(
