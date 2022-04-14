@@ -1,9 +1,10 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import { MultilineTextInputProps as NaturalMultilineTextInputProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Placeholder, useCommonStyles } from '../../lib'
-import { WithInputElements } from '../input-properties'
+import { WithInputElements } from '../../props'
 
 export interface MultilineTextInputProps
   extends WithInputElements<NaturalMultilineTextInputProps> {}

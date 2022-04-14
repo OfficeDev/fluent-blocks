@@ -4,6 +4,7 @@ export * from './inputs'
 export * from './media'
 export * from './surfaces'
 export * from './views'
+export * from './props'
 
 export { Escape } from './lib/Escape'
 export { FluentBlocksProvider } from './lib/FluentBlocksProvider'

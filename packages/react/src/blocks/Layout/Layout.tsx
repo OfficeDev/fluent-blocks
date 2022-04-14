@@ -1,11 +1,10 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+
 import { Sequence, sx } from '../../lib'
-
-import { LayoutProps } from './layout-properties'
-
+import { LayoutProps } from '../../props'
+import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
 import {
   DashboardPropsOrElement,
   renderIfDashboard,

@@ -1,13 +1,13 @@
 import { ReactElement } from 'react'
-import { makeStyles } from '@fluentui/react-components'
-import { ShortTextInputProps as NaturalShortTextInputProps } from '@fluent-blocks/schemas'
 
+import { ShortTextInputProps as NaturalShortTextInputProps } from '@fluent-blocks/schemas'
+import { makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
 
-import { rem, sx } from '../../lib'
-import { WithInputElements } from '../input-properties'
 import { Inline, InlineContent } from '../../inlines'
+import { rem, sx } from '../../lib'
+import { WithInputElements } from '../../props'
 
 export interface ShortTextInputProps
   extends WithInputElements<NaturalShortTextInputProps> {

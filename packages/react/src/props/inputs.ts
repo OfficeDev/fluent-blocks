@@ -1,9 +1,9 @@
 import {
+  InlineSequenceOrString as NaturalInlineSequenceOrString,
   InputProps as NaturalInputProps,
   InputInitialValueProps as NaturalInputWithInitialStringValue,
-  TextInputProps as NaturalTextInputProps,
   LabeledValueProps as NaturalLabeledValueProps,
-  InlineSequenceOrString as NaturalInlineSequenceOrString,
+  TextInputProps as NaturalTextInputProps,
 } from '@fluent-blocks/schemas'
 
 import { InlineSequenceOrString } from '../inlines'

@@ -26,20 +26,21 @@ import {
 import { InlineContent } from '../../inlines'
 import { Overflow } from '../../inputs'
 import {
-  ListColumnProps,
-  MenuItemSequence,
-  TableProps as NaturalTableProps,
-  TableAction,
   key,
   rem,
   sx,
   useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
+import {
+  ListColumnProps,
+  MenuItemSequence,
+  TableProps as NaturalTableProps,
+} from '../../props'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 import { getBreakpoints } from './tableBreakpoints'
 
-function isActionsCell(o: any): o is TableAction[] {
+function isActionsCell(o: any): o is string[] {
   return Array.isArray(o)
 }
 
@@ -111,8 +112,9 @@ export const Table = (props: TableProps) => {
     captionVisuallyHidden,
     columns,
     rows,
+    rowActions = {},
     rowHeaderColumn,
-    onRowHeaderActivate,
+    rowsAreActivable,
     maxWidthVariant = 'viewportWidth',
     minWidthVariant = 'fill',
   } = props.table
@@ -227,8 +229,8 @@ export const Table = (props: TableProps) => {
 
   const rootRowHeaderActivate = useCallback(
     ({ target }: MouseEvent<HTMLButtonElement>) =>
-      onRowHeaderActivate &&
-      onRowHeaderActivate({
+      props.onAction &&
+      props.onAction({
         type: 'activate',
         actionId: 'activate',
         row: get(target, ['dataset', 'row']),
@@ -392,7 +394,7 @@ export const Table = (props: TableProps) => {
                     const cellHasButtons =
                       colKey === 'overflow' ||
                       cellIsActions ||
-                      (onRowHeaderActivate && rowHeaderColumn === colKey)
+                      (rowsAreActivable && rowHeaderColumn === colKey)
 
                     const cellContent =
                       colKey === 'overflow' ? (
@@ -412,7 +414,15 @@ export const Table = (props: TableProps) => {
                                       { type: 'divider' as 'divider' },
                                     ]
                                   : []),
-                                ...(row.actions || []),
+                                ...(row.actions
+                                  ?.filter((actionId) =>
+                                    rowActions.hasOwnProperty(actionId)
+                                  )
+                                  .map((actionId) => ({
+                                    ...rowActions[actionId],
+                                    actionId,
+                                    payload: { rows: [rowKey] },
+                                  })) || []),
                               ]}
                             />
                           </div>
@@ -428,7 +438,17 @@ export const Table = (props: TableProps) => {
                         <div
                           className={tableStyles.tbodyCellWithButtonsContent}
                         >
-                          <ShortInputs inputs={cell} />
+                          <ShortInputs
+                            inputs={cell
+                              .filter((actionId) =>
+                                rowActions.hasOwnProperty(actionId)
+                              )
+                              .map((actionId) => ({
+                                ...rowActions[actionId],
+                                actionId,
+                                payload: { rows: [rowKey] },
+                              }))}
+                          />
                         </div>
                       ) : (
                         <InlineContent inlines={cell.cell} />
@@ -458,7 +478,7 @@ export const Table = (props: TableProps) => {
                       >
                         {cellIsActions ? (
                           cellContent
-                        ) : onRowHeaderActivate ? (
+                        ) : rowsAreActivable ? (
                           <FluentButton
                             className={cx(
                               tableStyles.activableRowHeader,

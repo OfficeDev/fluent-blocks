@@ -13,14 +13,12 @@ import { ToolbarProps as NaturalToolbarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Button, ButtonActionPayload, Overflow } from '../../inputs'
+import { Sequence, rem, useCommonStyles } from '../../lib'
 import {
   MenuItemEntity,
   MenuItemSequence,
-  Sequence,
   WithActionHandler,
-  rem,
-  useCommonStyles,
-} from '../../lib'
+} from '../../props'
 
 export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
   toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {

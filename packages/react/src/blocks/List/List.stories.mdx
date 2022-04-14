@@ -8,11 +8,10 @@ import { contextArgTypes } from '../../lib'
 import { List } from './StorybookList'
 
 <Meta
-  title="Blocks/List"
+  title="Blocks/Lists & Tables"
   component={List}
   argTypes={{
     ...contextArgTypes,
-    onRowHeaderActivate: { action: 'action' },
   }}
 />
 
@@ -38,6 +37,7 @@ use Table to keep the full experience as smooth as possible.
       rowHeaderColumn: 'c1',
       minWidthVariant: 'auto',
       maxWidthVariant: 'viewportWidth',
+      rowsAreActivable: true,
       selectable: true,
       columns: {
         c1: {
@@ -46,6 +46,14 @@ use Table to keep the full experience as smooth as possible.
         },
         c2: { title: 'Office' },
         c3: { title: 'Email', hideable: true },
+      },
+      rowActions: {
+        copy: {
+          type: 'action',
+          actionId: 'copy',
+          label: 'Copy',
+          icon: 'copy',
+        },
       },
       rows: range(32).reduce((acc, r) => {
         acc[`r${r}`] = {
@@ -58,14 +66,7 @@ use Table to keep the full experience as smooth as possible.
           },
           c3: { cell: fake('{{internet.email}}') },
           ...(r % 5 === 1 && {
-            actions: [
-              {
-                type: 'action',
-                actionId: `copy:r${r}`,
-                label: 'Copy',
-                icon: 'copy',
-              },
-            ],
+            actions: ['copy'],
           }),
         }
         return acc

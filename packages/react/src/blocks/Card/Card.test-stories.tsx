@@ -1,8 +1,9 @@
-import { Card } from './Card'
-import { CardProps } from './card-properties'
 import { Parameters } from '@storybook/addons'
-import { Paragraph } from '../Paragraph/Paragraph'
+
 import { Escape } from '../../lib'
+import { CardProps } from '../../props/card-properties'
+import { Paragraph } from '../Paragraph/Paragraph'
+import { Card } from './Card'
 
 export default {
   title: 'Tests/Card',

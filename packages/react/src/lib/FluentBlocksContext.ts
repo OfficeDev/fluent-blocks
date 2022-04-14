@@ -1,8 +1,8 @@
-import { createContext, useContext } from 'react'
 import noop from 'lodash/noop'
+import { createContext, useContext } from 'react'
 
-import { AccentScheme, getTheme, ThemeName } from './theme'
-import { ActionHandler } from './action-properties'
+import { ActionHandler } from '../props'
+import { AccentScheme, ThemeName, getTheme } from './theme'
 import { Translations, defaultTranslations } from './translations'
 
 export type FluentPatternsBlocksData = {

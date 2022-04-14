@@ -3,12 +3,12 @@ import {
   SortVariant as NaturalSortVariant,
   TableColumnProps as NaturalTableColumnProps,
   TableProps as NaturalTableProps,
-  TableRowActivateAction,
+  TableActionPayload,
 } from '@fluent-blocks/schemas'
 
 import { InlineSequenceOrString } from '../inlines'
 import { ButtonProps } from '../inputs'
-import { ActionHandler } from './index'
+import { WithActionHandler } from './actions'
 
 export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
   multiple?: boolean
@@ -24,8 +24,8 @@ export interface TableColumnProps
 }
 
 export interface RowProps {
-  [columnKey: string]: CellProps | TableAction[] | undefined
-  actions?: TableAction[]
+  [columnKey: string]: CellProps | string[] | undefined
+  actions?: string[]
 }
 
 export type SortPredicate = (a: any, b: any) => number
@@ -43,12 +43,17 @@ export interface SortProps {
   sortOrder: SortOrder
 }
 
-export interface TableProps extends Omit<NaturalTableProps, 'table'> {
-  table: Omit<NaturalTableProps['table'], 'columns' | 'rows' | 'caption'> & {
+export interface TableProps
+  extends Omit<NaturalTableProps, 'table'>,
+    WithActionHandler<TableActionPayload> {
+  table: Omit<
+    NaturalTableProps['table'],
+    'columns' | 'rows' | 'caption' | 'rowActions'
+  > & {
     columns: Record<string, TableColumnProps | ListColumnProps>
     rows: Record<string, RowProps>
+    rowActions: Record<string, Omit<TableAction, 'actionId'>>
     caption: InlineSequenceOrString
-    onRowHeaderActivate?: ActionHandler<TableRowActivateAction>
   }
   contextualVariant?: 'block'
   contextualSortProps?: Partial<SortProps> & {

@@ -1,6 +1,8 @@
 import { ButtonProps } from '../inputs'
 
-export type MenuAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'>
+export type MenuAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
+  payload?: Record<string, string | string[]>
+}
 
 export type MenuActionSequence = MenuAction[]
 

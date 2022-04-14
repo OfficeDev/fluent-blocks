@@ -1,14 +1,13 @@
 import { AccentScheme, ThemeName } from '@fluent-blocks/schemas'
 
+import { SectionContentProps } from '../../blocks'
 import {
   FluentBlocksProvider,
-  WithActionHandler,
   Translations,
   defaultTranslations,
 } from '../../lib'
-
+import { WithActionHandler } from '../../props'
 import { Main } from '../../surfaces'
-import { SectionContentProps } from '../../blocks'
 
 export interface ViewProps extends WithActionHandler<any> {
   main: SectionContentProps

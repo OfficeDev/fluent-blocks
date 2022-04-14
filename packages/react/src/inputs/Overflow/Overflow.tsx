@@ -1,24 +1,24 @@
 import noop from 'lodash/noop'
+
+import { OverflowProps as NaturalOverflowProps } from '@fluent-blocks/schemas'
 import {
   Menu,
   MenuButton,
+  MenuItem,
   MenuList,
   MenuPopover,
   MenuTrigger,
   Tooltip,
-  MenuItem,
 } from '@fluentui/react-components'
-import { OverflowProps as NaturalOverflowProps } from '@fluent-blocks/schemas'
 
 import { Icon } from '../../inlines'
+import { Sequence, useFluentBlocksContext } from '../../lib'
 import {
-  MenuItemSequence,
-  MenuItemEntity,
-  Sequence,
-  useFluentBlocksContext,
-  MenuAction,
   ActionHandler,
-} from '../../lib'
+  MenuAction,
+  MenuItemEntity,
+  MenuItemSequence,
+} from '../../props'
 
 export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
   overflow: MenuItemSequence
@@ -44,6 +44,7 @@ const OverflowItem = (
         const payload = {
           type: 'activate' as 'activate',
           actionId: item.actionId,
+          ...item.payload,
         }
         item.onAction && item.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)
@@ -83,7 +84,7 @@ export const Overflow = ({
 }: OverflowProps) => {
   const { translations, onAction } = useFluentBlocksContext()
   const label = triggerLabel || translations.more
-  return (
+  return overflow.length ? (
     <Menu>
       <MenuTrigger>
         <Tooltip content={label} relationship="label" withArrow>
@@ -106,5 +107,5 @@ export const Overflow = ({
         </MenuList>
       </MenuPopover>
     </Menu>
-  )
+  ) : null
 }

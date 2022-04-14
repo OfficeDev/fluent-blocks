@@ -6,7 +6,7 @@ export {
   CellProps,
   TableColumnProps,
   TableRowActivateAction,
-  TableSelectedRowsActivateAction,
+  TableSelectedRowsAction,
   TableActionPayload,
 } from '../lib/tables'
 

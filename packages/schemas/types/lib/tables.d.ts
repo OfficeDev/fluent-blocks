@@ -4,7 +4,7 @@ import { ActionPayload } from './actions'
 
 export interface RowProps {
   [columnKey: string]: CellProps | TableAction[] | undefined
-  actions?: TableAction[]
+  actions?: string[]
 }
 
 export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
@@ -28,21 +28,23 @@ export interface TableRowActivateAction extends ActionPayload {
   row: string
 }
 
-export interface TableSelectedRowsActivateAction extends ActionPayload {
+export interface TableSelectedRowsAction extends ActionPayload {
   type: 'activate'
   rows: string[]
 }
 
 export type TableActionPayload =
   | TableRowActivateAction
-  | TableSelectedRowsActivateAction
+  | TableSelectedRowsAction
 
 export interface TableInnerProps {
   caption: InlineSequenceOrString
   captionVisuallyHidden?: boolean
   columns: Record<string, TableColumnProps>
   rows: Record<string, RowProps>
+  rowActions: Record<string, Omit<TableAction, 'actionId'>>
   rowHeaderColumn: string
+  rowsAreActivable?: boolean
   truncate?: boolean
   maxWidthVariant?: 'viewportWidth' | 'textWidth'
   minWidthVariant?: 'auto' | 'fill'

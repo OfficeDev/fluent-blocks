@@ -1,12 +1,13 @@
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 
 import { ListProps as NaturalListProps } from '@fluent-blocks/schemas'
 import { makeStyles } from '@fluentui/react-components'
 
 import { getInlineText } from '../../inlines'
 import { Button } from '../../inputs'
+import { useFluentBlocksContext } from '../../lib'
 import {
   CellProps,
   ListColumnProps,
@@ -14,8 +15,7 @@ import {
   SortProps,
   TableAction,
   TableProps,
-  useFluentBlocksContext,
-} from '../../lib'
+} from '../../props'
 import { Table } from '../Table/Table'
 import { Toolbar } from '../Toolbar/Toolbar'
 
@@ -104,6 +104,14 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
   const [page, setPage] = useState<number>(0)
   const { pageSize = 16, rows, columns } = list
   const rowKeys = Object.keys(rows)
+
+  const commonActions = useMemo(() => {
+    if (selection.size) {
+      return Array.from(selection)
+    } else {
+      return []
+    }
+  }, [selection])
 
   // todo: implement other sort types
   const comparator = sort

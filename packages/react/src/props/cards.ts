@@ -1,12 +1,14 @@
 import { CardProps as NaturalCardProps } from '@fluent-blocks/schemas'
 
-import { HeadingPropsOrElement } from '../Heading/Heading'
-import { ParagraphPropsOrElement } from '../Paragraph/Paragraph'
-import { FigurePropsOrElement } from '../Figure/Figure'
-import { TabsPropsOrElement } from '../Tabs/Tabs'
-import { ShortInputsPropsOrElement } from '../ShortInputs/ShortInputs'
-import { DescriptionListPropsOrElement } from '../DescriptionList/DescriptionList'
-import { EscapeElement } from '../../lib'
+import {
+  DescriptionListPropsOrElement,
+  FigurePropsOrElement,
+  HeadingPropsOrElement,
+  ParagraphPropsOrElement,
+  ShortInputsPropsOrElement,
+  TabsPropsOrElement,
+} from '../blocks'
+import { EscapeElement } from '../lib'
 
 export type CardContentItemEntity =
   | HeadingPropsOrElement
