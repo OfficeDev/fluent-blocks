@@ -26,6 +26,9 @@ const useButtonStyles = makeStyles({
   root: {
     ...sx.margin(0),
     flexShrink: 0,
+    textOverflow: 'ellipsis',
+    minWidth: rem(32),
+    maxWidth: '100%',
   },
   fill: {
     width: '100%',
@@ -85,7 +88,6 @@ const useButtonStyles = makeStyles({
     },
   },
   toolbarItemInFlow: {
-    minWidth: rem(32),
     order: 1,
   },
   toolbarItemNeedsUpdate: {

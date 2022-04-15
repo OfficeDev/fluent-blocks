@@ -12,8 +12,18 @@ import {
 import { ToolbarProps as NaturalToolbarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
-import { Button, ButtonActionPayload, Overflow } from '../../inputs'
-import { Sequence, rem, useCommonStyles } from '../../lib'
+import {
+  Button,
+  ButtonActionPayload,
+  Overflow,
+  ShortTextInput,
+} from '../../inputs'
+import {
+  Sequence,
+  rem,
+  useCommonStyles,
+  useFluentBlocksContext,
+} from '../../lib'
 import {
   MenuItemEntity,
   MenuItemSequence,
@@ -46,6 +56,11 @@ const useToolbarStyles = makeStyles({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  find: {
+    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   'root--small': {
     height: rem(24),
   },
@@ -58,13 +73,13 @@ const useToolbarStyles = makeStyles({
   flexDivider: {
     flexGrow: 1,
   },
-  overflowTrigger: {
+  requiredInFlow: {
     order: 0,
   },
-  'overflowTrigger--ready': {
+  'requiredInFlow--ready': {
     order: 2,
   },
-  'overflowTrigger--hidden': {
+  'requiredInFlow--hidden': {
     display: 'none',
   },
 })
@@ -97,6 +112,7 @@ export const Toolbar = ({
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
+  const { translations } = useFluentBlocksContext()
   const $toolbar = useRef<HTMLDivElement | null>(null)
   const [layoutNeedsUpdate, setLayoutNeedsUpdate] = useState(true)
   const [actionsInFlow, setActionsInFlow] = useState<Set<string>>(new Set())
@@ -190,9 +206,9 @@ export const Toolbar = ({
       <div
         data-layout="required"
         className={cx(
-          toolbarStyles.overflowTrigger,
-          !layoutNeedsUpdate && toolbarStyles['overflowTrigger--ready'],
-          hideOverflowTrigger && toolbarStyles['overflowTrigger--hidden']
+          toolbarStyles.requiredInFlow,
+          !layoutNeedsUpdate && toolbarStyles['requiredInFlow--ready'],
+          hideOverflowTrigger && toolbarStyles['requiredInFlow--hidden']
         )}
       >
         <Overflow
@@ -202,6 +218,28 @@ export const Toolbar = ({
           buttonSize={toolbar.buttonSize || defaultButtonSize}
         />
       </div>
+      {toolbar.find && (
+        <div
+          data-layout="required"
+          className={cx(
+            toolbarStyles.requiredInFlow,
+            toolbarStyles.find,
+            !layoutNeedsUpdate && toolbarStyles['requiredInFlow--ready']
+          )}
+        >
+          <ShortTextInput
+            {...{
+              actionId: toolbar.find,
+              type: 'text',
+              inputType: 'search',
+              labelVisuallyHidden: true,
+              label: translations['list__find'],
+              placeholder: translations['list__find'],
+              after: { icon: 'document_search' },
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }

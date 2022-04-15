@@ -19,6 +19,7 @@ export interface TextInputProps
     InputInitialValueProps {
   type: 'text'
   placeholder?: string
+  labelVisuallyHidden?: boolean
 }
 
 export interface LabeledValueProps {

@@ -19,6 +19,8 @@ export const ListTemplate = (props) => (
   <List {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
+export const cities = range(4).map(() => fake('{{address.city}}'))
+
 # List
 
 The List component provides an interactive table as a block component which can
@@ -37,14 +39,15 @@ use Table to keep the full experience as smooth as possible.
       rowHeaderColumn: 'c1',
       minWidthVariant: 'auto',
       maxWidthVariant: 'viewportWidth',
-      rowsAreActivable: true,
+      rowsActivable: true,
       selectable: true,
       columns: {
         c1: {
           title: [{ text: 'Name ' }, { icon: 'info' }],
           sortVariant: 'alphabetical',
+          findable: true,
         },
-        c2: { title: 'Office' },
+        c2: { title: 'Office', filterable: true },
         c3: { title: 'Email', hideable: true },
       },
       rowActions: {
@@ -61,7 +64,7 @@ use Table to keep the full experience as smooth as possible.
           c2: {
             cell: [
               { icon: 'organization' },
-              { text: fake(' {{address.city}}') },
+              { text: ` ${cities[r % cities.length]}` },
             ],
           },
           c3: { cell: fake('{{internet.email}}') },

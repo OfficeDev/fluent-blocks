@@ -1,6 +1,8 @@
+import findIndex from 'lodash/findIndex'
 import get from 'lodash/get'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
+import isString from 'lodash/isString'
 import { ReactElement, useMemo, useState } from 'react'
 
 import { ListProps as NaturalListProps } from '@fluent-blocks/schemas'
@@ -99,12 +101,19 @@ function getCellText(cell: CellProps | TableAction[] | undefined): string {
 }
 
 export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
-  const [sort, setSort] = useState<SortProps | null>(null)
-  const [filter, setFilter] = useState<string | null>(null)
-  const [selection, setSelection] = useState<Set<string>>(new Set())
-  const [page, setPage] = useState<number>(0)
   const { pageSize = 16, rows, columns, rowActions } = list
   const rowKeys = Object.keys(rows)
+  const colKeys = Object.keys(columns)
+
+  const [sort, setSort] = useState<SortProps | null>(null)
+  const [selection, setSelection] = useState<Set<string>>(new Set())
+  const [page, setPage] = useState<number>(0)
+  const [find, setFind] = useState<string | null>(
+    findIndex(colKeys, (colKey) => get(columns, [colKey, 'findable'], false)) >=
+      0
+      ? ''
+      : null
+  )
 
   const commonActions = useMemo(() => {
     if (selection.size) {
@@ -168,19 +177,20 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
             items: [
               ...(list.listActions || []),
               ...Object.keys(rowActions).map((actionId) => ({
-                  actionId,
-                  ...rowActions[actionId],
-                  ...(commonActions.has(actionId)
-                    ? {
-                        payload: { rows: Array.from(selection) },
-                      }
-                    : {
-                        hidden: true,
-                      }),
-                })),
+                actionId,
+                ...rowActions[actionId],
+                ...(commonActions.has(actionId)
+                  ? {
+                      payload: { rows: Array.from(selection) },
+                    }
+                  : {
+                      hidden: true,
+                    }),
+              })),
             ],
             iconSize: list.iconSize,
             buttonSize: list.buttonSize,
+            ...(isString(find) && { find: 'list-managed-find' }),
           }}
           contextualVariant={
             list.maxWidthVariant === 'textWidth' ? 'block' : 'viewportWidth'

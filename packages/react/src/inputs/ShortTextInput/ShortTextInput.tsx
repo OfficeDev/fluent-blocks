@@ -1,12 +1,12 @@
 import { ReactElement } from 'react'
 
 import { ShortTextInputProps as NaturalShortTextInputProps } from '@fluent-blocks/schemas'
-import { makeStyles } from '@fluentui/react-components'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
 
 import { Inline, InlineContent } from '../../inlines'
-import { rem, sx } from '../../lib'
+import { rem, sx, useCommonStyles } from '../../lib'
 import { WithInputElements } from '../../props'
 
 export interface ShortTextInputProps
@@ -33,12 +33,20 @@ export const ShortTextInput = ({
   before,
   after,
   initialValue,
+  labelVisuallyHidden,
   contextualVariant = 'block-inputs',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
+  const commonStyles = useCommonStyles()
   return (
     <div className={shortTextInputStyles.root}>
-      <Label htmlFor={actionId} className={shortTextInputStyles.label}>
+      <Label
+        htmlFor={actionId}
+        className={cx(
+          shortTextInputStyles.label,
+          labelVisuallyHidden && commonStyles.visuallyHidden
+        )}
+      >
         <InlineContent inlines={label} />
       </Label>
       <Input

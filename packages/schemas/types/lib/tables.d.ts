@@ -44,8 +44,8 @@ export interface TableInnerProps {
   rows: Record<string, RowProps>
   rowActions: Record<string, Omit<TableAction, 'actionId'>>
   rowHeaderColumn: string
-  rowsAreActivable?: boolean
-  truncate?: boolean
+  rowsActivable?: boolean
+  wrap?: boolean
   maxWidthVariant?: 'viewportWidth' | 'textWidth'
   minWidthVariant?: 'auto' | 'fill'
 }

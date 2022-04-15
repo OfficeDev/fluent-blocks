@@ -59,8 +59,6 @@ const useTableStyles = makeStyles({
   inner: { display: 'contents' },
   row: { display: 'flex', width: '100%' },
   cell: {
-    display: 'flex',
-    alignItems: 'center',
     flexGrow: 1,
     flexBasis: 0,
     boxSizing: 'border-box',
@@ -74,13 +72,24 @@ const useTableStyles = makeStyles({
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
   },
   tbodyCellWithButtonsContent: {
-    ...sx.margin(rem(-12)),
+    ...sx.margin(rem(-8)),
+  },
+  tbodyCellWithTextContent: {
+    whiteSpace: 'nowrap',
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
   },
   tbodyCellAlignEnd: {
     justifyContent: 'flex-end',
   },
   activableRowHeader: {
     color: 'inherit',
+    display: 'inline-block',
+    minWidth: rem(32),
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    marginInlineStart: rem(-12),
+    marginInlineEnd: rem(-12),
     fontWeight: 'var(--fontWeightMedium)',
     '&:hover': {
       ...sx.textDecoration('underline'),
@@ -103,7 +112,7 @@ function getContentColumnsHidden(
 }
 
 const defaultMinWidth = 120
-const accessoryWidth = 32
+const accessoryWidth = 40
 
 const colWidthClassName = (colKey: string) => `${colKey}-width`
 
@@ -115,7 +124,7 @@ export const Table = (props: TableProps) => {
     rows,
     rowActions = {},
     rowHeaderColumn,
-    rowsAreActivable,
+    rowsActivable,
     maxWidthVariant = 'viewportWidth',
     minWidthVariant = 'fill',
   } = props.table
@@ -308,6 +317,20 @@ export const Table = (props: TableProps) => {
             )}; flex-grow: ${minWidth}; }\n`
           }
         }, '')}
+        {`.row-width { min-width: ${rem(
+          Array.from(inFlowColumns).reduce((acc: number, colKey: string) => {
+            if (colKey === 'selection' || colKey === 'overflow') {
+              return acc + accessoryWidth
+            } else {
+              const minWidth = get(
+                columns,
+                [colKey, 'minWidth'],
+                defaultMinWidth
+              )
+              return acc + minWidth
+            }
+          }, 0)
+        )} }`}
       </style>
       <div
         role="grid"
@@ -327,7 +350,7 @@ export const Table = (props: TableProps) => {
             role="row"
             tabIndex={0}
             {...groupAttrs}
-            className={tableStyles.row}
+            className={`${tableStyles.row} row-width`}
             aria-label={translations.thead}
           >
             <div {...rowInnerAttrs} className={tableStyles.inner}>
@@ -391,7 +414,7 @@ export const Table = (props: TableProps) => {
                 key={rowKey}
                 aria-labelledby={`rh__${rowKey}`}
                 {...groupAttrs}
-                className={tableStyles.row}
+                className={`${tableStyles.row} row-width`}
               >
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
                   {columnOrder.filter(includeColumn).map((colKey, ci) => {
@@ -400,7 +423,7 @@ export const Table = (props: TableProps) => {
                     const cellHasButtons =
                       colKey === 'overflow' ||
                       cellIsActions ||
-                      (rowsAreActivable && rowHeaderColumn === colKey)
+                      (rowsActivable && rowHeaderColumn === colKey)
 
                     const cellContent =
                       colKey === 'overflow' ? (
@@ -469,6 +492,8 @@ export const Table = (props: TableProps) => {
                       className: `${cx(
                         tableStyles.cell,
                         tableStyles.tbodyCell,
+                        !(cellHasButtons || colKey === 'selection') &&
+                          tableStyles.tbodyCellWithTextContent,
                         colKey === 'overflow' && tableStyles.tbodyCellAlignEnd
                       )} ${colWidthClassName(colKey)}`,
                       'aria-colindex': ci + 1,
@@ -484,7 +509,7 @@ export const Table = (props: TableProps) => {
                       >
                         {cellIsActions ? (
                           cellContent
-                        ) : rowsAreActivable ? (
+                        ) : rowsActivable ? (
                           <FluentButton
                             className={cx(
                               tableStyles.activableRowHeader,

@@ -15,4 +15,5 @@ export default {
   'sort--chronological-descending': 'Newest to oldest',
   'pagination--prev': 'Previous page',
   'pagination--next': 'Next page',
+  list__find: 'Find in this list',
 }

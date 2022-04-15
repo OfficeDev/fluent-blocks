@@ -6,6 +6,8 @@ export type SortVariant = 'alphabetical' | 'numerical' | 'chronological'
 
 export interface ListColumnProps extends TableColumnProps {
   sortVariant?: SortVariant
+  filterable?: boolean
+  findable?: boolean
 }
 
 interface ListInnerProps
