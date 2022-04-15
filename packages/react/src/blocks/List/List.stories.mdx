@@ -50,9 +50,9 @@ use Table to keep the full experience as smooth as possible.
       rowActions: {
         copy: {
           type: 'action',
-          actionId: 'copy',
           label: 'Copy',
           icon: 'copy',
+          multiple: true,
         },
       },
       rows: range(32).reduce((acc, r) => {

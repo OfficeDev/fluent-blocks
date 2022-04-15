@@ -110,15 +110,20 @@ export const Button = ({
   selected,
   controls,
   disabled,
+  payload,
   contextualVariant = 'block-inputs',
 }: ButtonProps) => {
-  const context = useFluentBlocksContext()
+  const { onAction: contextOnAction } = useFluentBlocksContext()
 
   const onButtonActivate = useCallback(() => {
-    const payload = { type: 'activate' as 'activate', actionId }
-    onAction && onAction(payload)
-    context.onAction(payload)
-  }, [onAction, actionId])
+    const actionPayload = {
+      type: 'activate' as 'activate',
+      actionId,
+      ...payload,
+    }
+    onAction && onAction(actionPayload)
+    contextOnAction && contextOnAction(actionPayload)
+  }, [onAction, actionId, payload])
 
   const buttonStyles = useButtonStyles()
 

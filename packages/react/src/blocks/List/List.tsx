@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
 import { ReactElement, useMemo, useState } from 'react'
@@ -102,14 +103,34 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
   const [filter, setFilter] = useState<string | null>(null)
   const [selection, setSelection] = useState<Set<string>>(new Set())
   const [page, setPage] = useState<number>(0)
-  const { pageSize = 16, rows, columns } = list
+  const { pageSize = 16, rows, columns, rowActions } = list
   const rowKeys = Object.keys(rows)
 
   const commonActions = useMemo(() => {
     if (selection.size) {
-      return Array.from(selection)
+      const selectionArr = Array.from(selection)
+      const nextCommonActions = new Set(
+        get(rows, [selectionArr[0], 'actions'], []).filter((actionId) =>
+          get(rowActions, [actionId, 'multiple'], false)
+        )
+      )
+      if (nextCommonActions.size > 0 && selection.size > 1) {
+        for (let i = 1; i < selectionArr.length; i += 1) {
+          const currentRowActions = new Set(
+            get(rows, [selectionArr[i], 'actions'], []).filter((actionId) =>
+              get(rowActions, [actionId, 'multiple'], false)
+            )
+          )
+          nextCommonActions.forEach((actionId) => {
+            if (!currentRowActions.has(actionId)) {
+              nextCommonActions.delete(actionId)
+            }
+          })
+        }
+      }
+      return nextCommonActions
     } else {
-      return []
+      return new Set()
     }
   }, [selection])
 
@@ -141,10 +162,23 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
 
   return (
     <>
-      {list.listActions && (
+      {(list.listActions?.length || commonActions.size) && (
         <Toolbar
           toolbar={{
-            items: list.listActions,
+            items: [
+              ...(list.listActions || []),
+              ...Object.keys(rowActions).map((actionId) => ({
+                  actionId,
+                  ...rowActions[actionId],
+                  ...(commonActions.has(actionId)
+                    ? {
+                        payload: { rows: Array.from(selection) },
+                      }
+                    : {
+                        hidden: true,
+                      }),
+                })),
+            ],
             iconSize: list.iconSize,
             buttonSize: list.buttonSize,
           }}

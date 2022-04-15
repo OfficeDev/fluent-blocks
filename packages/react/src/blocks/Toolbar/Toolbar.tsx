@@ -155,8 +155,9 @@ export const Toolbar = ({
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
     : toolbar.items.map((item) => ({
-        hidden: actionsInFlow.has(get(item, 'actionId', false)),
+        hidden: item.hidden || actionsInFlow.has(get(item, 'actionId', false)),
       }))
+
   const hideOverflowTrigger = menuItemHiddenFlags
     ? every(menuItemHiddenFlags, (flags) => flags.hidden)
     : false
@@ -182,7 +183,8 @@ export const Toolbar = ({
         layoutNeedsUpdate
           ? undefined
           : toolbar.items.map((item) => ({
-              hidden: !actionsInFlow.has(get(item, 'actionId', false)),
+              hidden:
+                item.hidden || !actionsInFlow.has(get(item, 'actionId', false)),
             }))
       )}
       <div

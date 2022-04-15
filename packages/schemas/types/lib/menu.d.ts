@@ -1,13 +1,14 @@
 import { ButtonProps } from '../inputs'
 
 export type MenuAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
-  payload?: Record<string, string | string[]>
+  hidden?: boolean
 }
 
 export type MenuActionSequence = MenuAction[]
 
 export type MenuDivider = {
   type: 'divider'
+  hidden?: boolean
   variant?: 'line'
 }
 
