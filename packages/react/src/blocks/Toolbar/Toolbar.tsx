@@ -245,7 +245,7 @@ export const Toolbar = ({
               after: { icon: 'document_search' },
               contextualVariant: 'toolbar-item',
               ...(contextualFindProps?.onAction && {
-                onAction: contextualFindProps.onAction,
+                onAction: (payload) => contextualFindProps.onAction(payload),
               }),
             }}
           />

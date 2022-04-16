@@ -71,10 +71,7 @@ export const ShortTextInput = ({
         type: 'change' as 'change',
         value: debouncedValue,
       }
-      // todo: wtf is going on here, why is it only calling contextOnAction
-      //  and why can't I set a debugger?
-      onAction && onAction(payload)
-      contextOnAction(payload)
+      onAction ? onAction(payload) : contextOnAction(payload)
     } else {
       didMount.current = true
     }
