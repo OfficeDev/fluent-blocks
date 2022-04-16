@@ -236,6 +236,7 @@ export const Toolbar = ({
               label: translations['list__find'],
               placeholder: translations['list__find'],
               after: { icon: 'document_search' },
+              contextualVariant: 'toolbar-item',
             }}
           />
         </div>

@@ -1,22 +1,23 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import { ShortInputsProps as NaturalShortInputsProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import {
+  ButtonPropsOrElement,
+  ShortTextInputPropsOrElement,
+  renderIfButton,
+  renderIfShortTextInput,
+} from '../../inputs'
+import {
   EscapeElement,
+  Sequence,
   invalidShortInput,
   rem,
   renderIfEscape,
-  Sequence,
   sx,
   useCommonStyles,
 } from '../../lib'
-import {
-  ButtonPropsOrElement,
-  renderIfButton,
-  renderIfShortTextInput,
-  ShortTextInputPropsOrElement,
-} from '../../inputs'
 
 export type ShortInputEntity =
   | ShortTextInputPropsOrElement
@@ -84,9 +85,7 @@ export const ShortInputs = (props: ShortInputsProps) => {
       >
         {Sequence<ShortInputEntity>(inputs, ShortInput, {
           contextualVariant:
-            variant === 'narrow-block'
-              ? 'narrow-inputs'
-              : `${contextualVariant}-inputs`,
+            variant === 'narrow-block' ? 'narrow-inputs' : 'block-inputs',
         })}
       </div>
     </div>

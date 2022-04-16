@@ -7,17 +7,21 @@ import { Input, Label } from '@fluentui/react-components/unstable'
 
 import { Inline, InlineContent } from '../../inlines'
 import { rem, sx, useCommonStyles } from '../../lib'
-import { WithInputElements } from '../../props'
+import { ShortInputContextualProps, WithInputElements } from '../../props'
 
 export interface ShortTextInputProps
-  extends WithInputElements<NaturalShortTextInputProps> {
-  contextualVariant?: 'block-inputs' | 'card'
+  extends WithInputElements<NaturalShortTextInputProps>,
+    ShortInputContextualProps {
+  contextualElevationVariant?: 'surface' | 'elevated'
 }
 
 const useShortTextInputStyles = makeStyles({
   root: {
     minWidth: rem(140),
     ...sx.flex(1, 0, '0'),
+  },
+  'root--toolbar-item': {
+    ...sx.flex(0, 1, rem(240)),
   },
   label: {
     color: 'var(--surface-foreground)',
@@ -35,11 +39,18 @@ export const ShortTextInput = ({
   initialValue,
   labelVisuallyHidden,
   contextualVariant = 'block-inputs',
+  contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
   const commonStyles = useCommonStyles()
   return (
-    <div className={shortTextInputStyles.root}>
+    <div
+      className={cx(
+        shortTextInputStyles.root,
+        contextualVariant === 'toolbar-item' &&
+          shortTextInputStyles['root--toolbar-item']
+      )}
+    >
       <Label
         htmlFor={actionId}
         className={cx(
@@ -59,8 +70,8 @@ export const ShortTextInput = ({
           ...(after && { contentAfter: Inline(after) }),
         }}
         appearance={(() => {
-          switch (contextualVariant) {
-            case 'card':
+          switch (contextualElevationVariant) {
+            case 'elevated':
               return 'filledDarker'
             default:
               return 'filledLighter'
