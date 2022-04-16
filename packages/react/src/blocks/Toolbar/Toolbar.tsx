@@ -9,7 +9,10 @@ import {
   useState,
 } from 'react'
 
-import { ToolbarProps as NaturalToolbarProps } from '@fluent-blocks/schemas'
+import {
+  ToolbarProps as NaturalToolbarProps,
+  SingleValueInputActionPayload,
+} from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import {
@@ -35,6 +38,9 @@ export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
     items: MenuItemSequence
   }
   contextualVariant?: 'block' | 'viewportWidth'
+  contextualFindProps?: {
+    onAction: (payload: SingleValueInputActionPayload) => void
+  }
 }
 
 type ToolbarItemContextualOptions = Pick<
@@ -109,6 +115,7 @@ const ToolbarItemInFlow = (
 export const Toolbar = ({
   toolbar,
   contextualVariant = 'block',
+  contextualFindProps,
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
@@ -237,6 +244,9 @@ export const Toolbar = ({
               placeholder: translations['list__find'],
               after: { icon: 'document_search' },
               contextualVariant: 'toolbar-item',
+              ...(contextualFindProps?.onAction && {
+                onAction: contextualFindProps.onAction,
+              }),
             }}
           />
         </div>

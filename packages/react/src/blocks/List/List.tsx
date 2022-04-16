@@ -115,6 +115,8 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
       : null
   )
 
+  console.log('find', find)
+
   const commonActions = useMemo(() => {
     if (selection.size) {
       const selectionArr = Array.from(selection)
@@ -195,6 +197,10 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
           contextualVariant={
             list.maxWidthVariant === 'textWidth' ? 'block' : 'viewportWidth'
           }
+          contextualFindProps={{
+            // todo: why is this not getting called?
+            onAction: ({ value }) => setFind(value),
+          }}
         />
       )}
       <Table
