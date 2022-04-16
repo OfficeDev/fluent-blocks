@@ -1,16 +1,31 @@
-import { ReactElement } from 'react'
+import get from 'lodash/get'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 
-import { ShortTextInputProps as NaturalShortTextInputProps } from '@fluent-blocks/schemas'
+import {
+  ShortTextInputProps as NaturalShortTextInputProps,
+  SingleValueInputActionPayload,
+} from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Input, Label } from '@fluentui/react-components/unstable'
 
 import { Inline, InlineContent } from '../../inlines'
-import { rem, sx, useCommonStyles } from '../../lib'
-import { ShortInputContextualProps, WithInputElements } from '../../props'
+import {
+  rem,
+  sx,
+  useCommonStyles,
+  useDebounce,
+  useFluentBlocksContext,
+} from '../../lib'
+import {
+  ShortInputContextualProps,
+  WithActionHandler,
+  WithInputElements,
+} from '../../props'
 
 export interface ShortTextInputProps
   extends WithInputElements<NaturalShortTextInputProps>,
+    WithActionHandler<SingleValueInputActionPayload>,
     ShortInputContextualProps {
   contextualElevationVariant?: 'surface' | 'elevated'
 }
@@ -38,11 +53,31 @@ export const ShortTextInput = ({
   after,
   initialValue,
   labelVisuallyHidden,
+  onAction,
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
   const commonStyles = useCommonStyles()
+  const [value, setValue] = useState(initialValue || '')
+  const debouncedValue = useDebounce(value, 400)
+  const didMount = useRef(false)
+  const { onAction: contextOnAction } = useFluentBlocksContext()
+
+  useEffect(() => {
+    if (didMount.current) {
+      const payload = {
+        actionId,
+        type: 'change' as 'change',
+        value: debouncedValue,
+      }
+      onAction && onAction(payload)
+      contextOnAction && contextOnAction(payload)
+    } else {
+      didMount.current = true
+    }
+  }, [debouncedValue])
+
   return (
     <div
       className={cx(
@@ -64,19 +99,17 @@ export const ShortTextInput = ({
         {...{
           id: actionId,
           placeholder,
-          defaultValue: initialValue,
+          value,
+          onChange: ({ target }) => setValue(get(target, 'value', '')),
           type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
         }}
-        appearance={(() => {
-          switch (contextualElevationVariant) {
-            case 'elevated':
-              return 'filledDarker'
-            default:
-              return 'filledLighter'
-          }
-        })()}
+        appearance={
+          contextualElevationVariant === 'elevated'
+            ? 'filledDarker'
+            : 'filledLighter'
+        }
       />
     </div>
   )

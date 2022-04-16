@@ -1,4 +1,5 @@
 import { InlineSequenceOrString } from '../inlines'
+import { ActionPayload } from '../lib/actions'
 
 export interface InputProps {
   label: InlineSequenceOrString
@@ -20,6 +21,16 @@ export interface TextInputProps
   type: 'text'
   placeholder?: string
   labelVisuallyHidden?: boolean
+}
+
+export interface SingleValueInputActionPayload extends ActionPayload {
+  type: 'change'
+  value: string
+}
+
+export interface MultipleValueInputActionPayload extends ActionPayload {
+  type: 'change'
+  value: string[]
 }
 
 export interface LabeledValueProps {
