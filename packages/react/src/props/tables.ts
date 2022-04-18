@@ -1,5 +1,6 @@
 import {
   CellProps as NaturalCellProps,
+  ListColumnProps as NaturalListColumnProps,
   SortVariant as NaturalSortVariant,
   TableColumnProps as NaturalTableColumnProps,
   TableProps as NaturalTableProps,
@@ -32,7 +33,9 @@ export type SortPredicate = (a: any, b: any) => number
 
 export type SortVariant = NaturalSortVariant | SortPredicate
 
-export interface ListColumnProps extends TableColumnProps {
+export interface ListColumnProps
+  extends TableColumnProps,
+    Omit<NaturalListColumnProps, 'sortVariant' | 'title'> {
   sortVariant?: SortVariant
 }
 

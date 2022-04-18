@@ -143,6 +143,20 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
     }
   }, [selection])
 
+  const findableColumns = colKeys.filter((colKey) => columns[colKey].findable)
+  const lowercaseFindQuery = find?.toLowerCase()
+  const findMatchedRowKeys =
+    find && findableColumns.length
+      ? rowKeys.filter(
+          (rowKey) =>
+            findIndex(findableColumns, (colKey) =>
+              getCellText(rows[rowKey][colKey])
+                .toLowerCase()
+                .includes(lowercaseFindQuery!)
+            ) >= 0
+        )
+      : rowKeys
+
   // todo: implement other sort types
   const comparator = sort
     ? isFunction(columns[sort.sortColumn].sortVariant)
@@ -154,13 +168,13 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
     : alphabeticalSort
   const sortValence = sort?.sortOrder === 'ascending'
   const sortedRowKeys = sort
-    ? rowKeys.sort((rowKeyA, rowKeyB) =>
+    ? findMatchedRowKeys.sort((rowKeyA, rowKeyB) =>
         comparator(
           getCellText(rows[sortValence ? rowKeyA : rowKeyB][sort.sortColumn]),
           getCellText(rows[sortValence ? rowKeyB : rowKeyA][sort.sortColumn])
         )
       )
-    : rowKeys
+    : findMatchedRowKeys
 
   const tableRows = sortedRowKeys
     .slice(page * pageSize, (page + 1) * pageSize)
@@ -190,13 +204,19 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
             ],
             iconSize: list.iconSize,
             buttonSize: list.buttonSize,
-            ...(isString(find) && { find: 'list-managed-find' }),
+            ...(isString(find) &&
+              findableColumns.length && { find: 'list-managed-find' }),
           }}
           contextualVariant={
             list.maxWidthVariant === 'textWidth' ? 'block' : 'viewportWidth'
           }
           contextualFindProps={{
-            onAction: ({ value }) => setFind(value),
+            onAction: ({ value }) => {
+              setFind(value)
+              if (value) {
+                setPage(0)
+              }
+            },
           }}
         />
       )}
@@ -212,7 +232,7 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
           page,
           setPage,
           pageSize,
-          collectionSize: rowKeys.length,
+          collectionSize: sortedRowKeys.length,
         }}
       />
     </>
