@@ -12,6 +12,14 @@ import { List } from './StorybookList'
   component={List}
   argTypes={{
     ...contextArgTypes,
+    caption: { name: 'Caption', control: { type: 'text' } },
+    captionVisuallyHidden: { name: 'Caption visually hidden' },
+    rowHeaderColumn: { name: 'ID of row header column' },
+    minWidthVariant: { name: 'Min-width variant' },
+    maxWidthVariant: { name: 'Max-width variant' },
+    rowsActivable: { name: 'Rows can be activated' },
+    selectable: { name: 'Selectable' },
+    wrap: { name: 'Wrap' },
   }}
 />
 
@@ -41,7 +49,7 @@ use Table to keep the full experience as smooth as possible.
       maxWidthVariant: 'viewportWidth',
       rowsActivable: true,
       selectable: true,
-      wrap: true,
+      wrap: false,
       columns: {
         c1: {
           title: [{ text: 'Name ' }, { icon: 'info' }],

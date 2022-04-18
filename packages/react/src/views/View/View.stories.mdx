@@ -1,11 +1,12 @@
-import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
-import fakeTitle from '../../lib/fakeTitle'
-import { View } from './View'
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
-import { contextArgTypes } from '../../lib'
+import range from 'lodash/range'
 
 import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import fakeTitle from '../../lib/fakeTitle'
+import { View } from './View'
 
 <Meta
   title="Views/View"
@@ -200,7 +201,8 @@ that time `View` will call its interaction callback with the update.
               },
               {
                 table: {
-                  caption: `${fakeTitle(fake)}:`,
+                  caption: `${fakeTitle(fake)}`,
+                  captionVisuallyHidden: true,
                   rowHeaderColumn: 'c1',
                   maxWidthVariant: 'textWidth',
                   minWidthVariant: 'fill',
