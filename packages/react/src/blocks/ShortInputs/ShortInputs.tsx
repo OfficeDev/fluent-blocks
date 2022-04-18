@@ -85,7 +85,9 @@ export const ShortInputs = (props: ShortInputsProps) => {
       >
         {Sequence<ShortInputEntity>(inputs, ShortInput, {
           contextualVariant:
-            variant === 'narrow-block' ? 'narrow-inputs' : 'block-inputs',
+            variant === 'narrow-block'
+              ? 'narrow-inputs'
+              : `${contextualVariant}-inputs`,
         })}
       </div>
     </div>
