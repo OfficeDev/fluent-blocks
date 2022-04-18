@@ -119,6 +119,7 @@ const eslintrc = {
       },
     ],
     'lodash/chaining': ['warn', 'never'],
+    'lodash/import-scope': ['warn', 'method'],
     'arrow-body-style': 'warn',
     // "arrow-parens": ["warn", "as-needed"], // this conflicts with Prettier formatting
     complexity: ['warn', 24],
