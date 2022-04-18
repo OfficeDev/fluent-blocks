@@ -79,6 +79,13 @@ const useTableStyles = makeStyles({
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
   },
+  rowHeaderButtonWrap: {
+    textAlign: 'left',
+    whiteSpace: 'normal',
+    height: 'auto',
+    paddingBlockStart: rem(4),
+    paddingBlockEnd: rem(4),
+  },
   tbodyCellAlignEnd: {
     justifyContent: 'flex-end',
   },
@@ -127,6 +134,7 @@ export const Table = (props: TableProps) => {
     rowsActivable,
     maxWidthVariant = 'viewportWidth',
     minWidthVariant = 'fill',
+    wrap,
   } = props.table
 
   const sort = props.contextualSortProps?.setSort
@@ -492,7 +500,7 @@ export const Table = (props: TableProps) => {
                       className: `${cx(
                         tableStyles.cell,
                         tableStyles.tbodyCell,
-                        !(cellHasButtons || colKey === 'selection') &&
+                        !(cellHasButtons || colKey === 'selection' || wrap) &&
                           tableStyles.tbodyCellWithTextContent,
                         colKey === 'overflow' && tableStyles.tbodyCellAlignEnd
                       )} ${colWidthClassName(colKey)}`,
@@ -513,7 +521,8 @@ export const Table = (props: TableProps) => {
                           <FluentButton
                             className={cx(
                               tableStyles.activableRowHeader,
-                              tableStyles.tbodyCellWithButtonsContent
+                              tableStyles.tbodyCellWithButtonsContent,
+                              wrap && tableStyles.rowHeaderButtonWrap
                             )}
                             appearance="transparent"
                             data-row={rowKey}
