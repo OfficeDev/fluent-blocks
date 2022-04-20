@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@fluent-blocks/basic-icons": "9.0.0",
+    "@fluent-blocks/react": "9.0.0",
+    "@fluent-blocks/schemas": "9.0.0"
+  },
+  "changesets": []
+}
