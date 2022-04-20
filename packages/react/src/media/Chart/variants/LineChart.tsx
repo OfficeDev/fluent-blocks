@@ -1,19 +1,20 @@
 import { Chart } from 'chart.js'
-import { memo, useEffect, useRef, useContext } from 'react'
-import { ChartData } from '../chart-types'
-import {
-  tooltipTrigger,
-  tooltipAxisYLine,
-  chartConfig,
-  axesConfig,
-  setTooltipColorScheme,
-  hexToRgb,
-  useChartId,
-} from '../chart-utils'
-import { lineChartPatterns, useChartColors } from '../chart-patterns'
+import { memo, useContext, useEffect, useRef } from 'react'
+
 import { FluentBlocksContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
+import { lineChartPatterns, useChartColors } from '../chart-patterns'
 import { useChartStyles } from '../chart-styles'
+import { ChartData } from '../chart-types'
+import {
+  axesConfig,
+  chartConfig,
+  hexToRgb,
+  setTooltipColorScheme,
+  tooltipAxisYLine,
+  tooltipTrigger,
+  useChartId,
+} from '../chart-utils'
 
 /**
  * @internal
@@ -386,7 +387,6 @@ export const LineChart = memo(
               userSelect: 'none',
             }}
             aria-label={label}
-            data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
               (set.data as number[]).map((item: number, itemKey: number) => (
