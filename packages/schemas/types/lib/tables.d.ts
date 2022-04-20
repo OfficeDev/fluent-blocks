@@ -42,8 +42,8 @@ export interface TableInnerProps {
   captionVisuallyHidden?: boolean
   columns: Record<string, TableColumnProps>
   rows: Record<string, RowProps>
-  rowActions: Record<string, Omit<TableAction, 'actionId'>>
   rowHeaderColumn: string
+  rowActions?: Record<string, Omit<TableAction, 'actionId'>>
   rowsActivable?: boolean
   wrap?: boolean
   maxWidthVariant?: 'viewportWidth' | 'textWidth'

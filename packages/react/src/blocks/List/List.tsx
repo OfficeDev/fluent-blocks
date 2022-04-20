@@ -190,9 +190,9 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
           toolbar={{
             items: [
               ...(list.listActions || []),
-              ...Object.keys(rowActions).map((actionId) => ({
+              ...Object.keys(rowActions || []).map((actionId) => ({
                 actionId,
-                ...rowActions[actionId],
+                ...rowActions![actionId],
                 ...(commonActions.has(actionId)
                   ? {
                       payload: { rows: Array.from(selection) },

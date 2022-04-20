@@ -55,7 +55,7 @@ export interface TableProps
   > & {
     columns: Record<string, TableColumnProps | ListColumnProps>
     rows: Record<string, RowProps>
-    rowActions: Record<string, Omit<TableAction, 'actionId'>>
+    rowActions?: Record<string, Omit<TableAction, 'actionId'>>
     caption: InlineSequenceOrString
   }
   contextualVariant?: 'block'
