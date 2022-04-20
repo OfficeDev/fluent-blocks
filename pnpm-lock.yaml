@@ -4,7 +4,8 @@ importers:
 
   .:
     specifiers:
-      '@changesets/cli': ^2.22.0
+      '@changesets/changelog-github': latest
+      '@changesets/cli': latest
       '@trivago/prettier-plugin-sort-imports': latest
       '@types/eslint': latest
       '@typescript-eslint/eslint-plugin': latest
@@ -23,6 +24,7 @@ importers:
       prettier: latest
       typescript: '>=4.4.0 <5.0.0'
     devDependencies:
+      '@changesets/changelog-github': 0.4.4
       '@changesets/cli': 2.22.0
       '@trivago/prettier-plugin-sort-imports': 3.2.0_prettier@2.6.2
       '@types/eslint': 8.4.1
@@ -1663,6 +1665,16 @@ packages:
       '@changesets/types': 5.0.0
     dev: true
 
+  /@changesets/changelog-github/0.4.4:
+    resolution: {integrity: sha512-htSILqCkyYtTB5/LoVKwx7GCJQGxAiBcYbfUKWiz/QoDARuM01owYtMXhV6/iytJZq/Dqqz3PjMZUNB4MphpbQ==}
+    dependencies:
+      '@changesets/get-github-info': 0.5.0
+      '@changesets/types': 5.0.0
+      dotenv: 8.6.0
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
   /@changesets/cli/2.22.0:
     resolution: {integrity: sha512-4bA3YoBkd5cm5WUxmrR2N9WYE7EeQcM+R3bVYMUj2NvffkQVpU3ckAI+z8UICoojq+HRl2OEwtz+S5UBmYY4zw==}
     hasBin: true
@@ -1727,6 +1739,15 @@ packages:
       chalk: 2.4.2
       fs-extra: 7.0.1
       semver: 5.7.1
+    dev: true
+
+  /@changesets/get-github-info/0.5.0:
+    resolution: {integrity: sha512-vm5VgHwrxkMkUjFyn3UVNKLbDp9YMHd3vMf1IyJoa/7B+6VpqmtAaXyDS0zBLfN5bhzVCHrRnj4GcZXXcqrFTw==}
+    dependencies:
+      dataloader: 1.4.0
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
     dev: true
 
   /@changesets/get-release-plan/3.0.8:
@@ -6480,6 +6501,10 @@ packages:
     dependencies:
       es5-ext: 0.10.60
       type: 1.2.0
+    dev: true
+
+  /dataloader/1.4.0:
+    resolution: {integrity: sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==}
     dev: true
 
   /debug/2.6.9:
