@@ -1,6 +1,6 @@
 import groupBy from 'lodash/groupBy'
 
-import { ColumnProps } from './table-properties'
+import { TableColumnProps } from '../../props'
 
 export const defaultMinWidth = 240
 export const accessoryWidth = 40
@@ -11,7 +11,7 @@ export type Breakpoints = Map<number, Set<string>>
 
 export const columnMinWidth = (
   columnKey: string,
-  columns: { [columnKey: string]: ColumnProps }
+  columns: { [columnKey: string]: TableColumnProps }
 ) => {
   switch (columnKey) {
     case 'overflow':
@@ -22,13 +22,13 @@ export const columnMinWidth = (
   }
 }
 
-interface PreparedColumn extends ColumnProps {
+interface PreparedColumn extends TableColumnProps {
   columnKey: string
 }
 
 export function getBreakpoints(
   columns: {
-    [columnKey: string]: ColumnProps
+    [columnKey: string]: TableColumnProps
   },
   hasActions: boolean,
   selectable: boolean

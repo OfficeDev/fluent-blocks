@@ -1,17 +1,17 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { RadioGroupProps as NaturalRadioGroupProps } from '@fluent-blocks/schemas'
 
+import { RadioGroupProps as NaturalRadioGroupProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import {
   RadioGroup as FluentRadioGroup,
-  Radio,
   Label,
+  Radio,
 } from '@fluentui/react-components/unstable'
 
-import { makeLabelId, useCommonStyles } from '../../lib'
-import { WithInputElements } from '../input-properties'
 import { InlineContent } from '../../inlines'
+import { makeLabelId, useCommonStyles } from '../../lib'
+import { WithInputElements } from '../../props'
 
 export interface RadioGroupProps
   extends WithInputElements<NaturalRadioGroupProps> {}

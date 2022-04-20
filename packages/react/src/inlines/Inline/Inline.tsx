@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 import isString from 'lodash/isString'
 import {
   InlineEntity as NaturalInlineEntity,
@@ -27,6 +28,22 @@ export type InlineSequenceOrString = string | InlineSequence
 export interface InlineContentProps
   extends Omit<NaturalInlineContentProps, 'inlines'> {
   inlines: InlineSequenceOrString
+}
+
+export function getInlineText(
+  inlineSequenceOrString: InlineSequenceOrString
+): string {
+  if (isString(inlineSequenceOrString)) {
+    return inlineSequenceOrString
+  } else {
+    return (inlineSequenceOrString as InlineSequence).reduce(
+      (acc: string, inline) => {
+        const textValue = isString(inline) ? inline : get(inline, 'props', '')
+        return acc + textValue
+      },
+      ''
+    )
+  }
 }
 
 function renderAsTextIfString(o: any) {

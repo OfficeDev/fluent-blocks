@@ -1,0 +1,111 @@
+import { fake, seed } from 'faker/locale/en_US'
+import range from 'lodash/range'
+
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { List } from './StorybookList'
+
+<Meta
+  title="Blocks/Lists & Tables"
+  component={List}
+  argTypes={{
+    ...contextArgTypes,
+    caption: { name: 'Caption', control: { type: 'text' } },
+    captionVisuallyHidden: { name: 'Caption visually hidden' },
+    rowHeaderColumn: { name: 'ID of row header column' },
+    minWidthVariant: { name: 'Min-width variant' },
+    maxWidthVariant: { name: 'Max-width variant' },
+    rowsActivable: { name: 'Rows can be activated' },
+    selectable: { name: 'Selectable' },
+    wrap: { name: 'Wrap' },
+  }}
+/>
+
+export const ListTemplate = (props) => (
+  <List {...props} iconSpriteUrl={iconSpriteUrl} />
+)
+
+export const cities = range(4).map(() => fake('{{address.city}}'))
+
+# List
+
+The List component provides an interactive table as a block component which can
+paginate the rows, provide users the ability to perform actions on multiple
+rows, and facilitate sorting or filtering. Where these features aren’t needed,
+use Table to keep the full experience as smooth as possible.
+
+<Canvas withSource="none">
+  <Story
+    name="List"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      caption: fake('{{lorem.sentence}}'),
+      captionVisuallyHidden: true,
+      rowHeaderColumn: 'c1',
+      minWidthVariant: 'auto',
+      maxWidthVariant: 'viewportWidth',
+      rowsActivable: true,
+      selectable: true,
+      wrap: false,
+      columns: {
+        c1: {
+          title: [{ text: 'Name ' }, { icon: 'info' }],
+          sortVariant: 'alphabetical',
+          findable: true,
+        },
+        c2: { title: 'Office' },
+        c3: { title: 'Email', hideable: true },
+      },
+      rowActions: {
+        copy: {
+          type: 'action',
+          label: 'Copy',
+          icon: 'copy',
+          multiple: true,
+        },
+      },
+      rows: range(32).reduce((acc, r) => {
+        acc[`r${r}`] = {
+          c1: {
+            cell:
+              r % 3 === 0
+                ? fake('{{lorem.sentence}} {{lorem.sentence}}')
+                : fake('{{name.firstName}} {{name.lastName}}'),
+          },
+          c2: {
+            cell: [
+              { icon: 'organization' },
+              {
+                text: ` ${
+                  r % 5 === 0
+                    ? fake('{{lorem.sentence}} {{lorem.sentence}}')
+                    : cities[r % cities.length]
+                }`,
+              },
+            ],
+          },
+          c3: { cell: fake('{{internet.email}}') },
+          ...(r % 5 === 1 && {
+            actions: ['copy'],
+          }),
+        }
+        return acc
+      }, {}),
+      listActions: [
+        {
+          type: 'action',
+          actionId: 'add',
+          label: 'Add',
+          icon: 'add',
+        },
+      ],
+    }}
+  >
+    {seed(1234) || ListTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="List" />

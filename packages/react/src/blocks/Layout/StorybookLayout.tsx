@@ -1,7 +1,7 @@
-import { LayoutProps } from './layout-properties'
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-import { Main } from '../../surfaces'
 import { InlineSequenceOrString } from '../../inlines'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { LayoutProps } from '../../props/layout-properties'
+import { Main } from '../../surfaces'
 
 export const Layout = ({
   themeName,

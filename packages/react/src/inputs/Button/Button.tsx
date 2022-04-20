@@ -1,18 +1,19 @@
 import { ReactElement, useCallback } from 'react'
+
+import {
+  ButtonActionPayload as NaturalButtonActionPayload,
+  ButtonProps as NaturalButtonProps,
+} from '@fluent-blocks/schemas'
 import {
   Button as FluentButton,
   Tooltip,
-  makeStyles,
   mergeClasses as cx,
+  makeStyles,
 } from '@fluentui/react-components'
-import {
-  ButtonProps as NaturalButtonProps,
-  ButtonActionPayload as NaturalButtonActionPayload,
-} from '@fluent-blocks/schemas'
 
-import { WithActionHandler, useFluentBlocksContext, rem, sx } from '../../lib'
 import { Icon } from '../../inlines'
-import { ShortInputContextualProps } from '../input-properties'
+import { rem, sx, useFluentBlocksContext } from '../../lib'
+import { ShortInputContextualProps, WithActionHandler } from '../../props'
 
 export type ButtonActionPayload = NaturalButtonActionPayload
 
@@ -24,7 +25,9 @@ export interface ButtonProps
 const useButtonStyles = makeStyles({
   root: {
     ...sx.margin(0),
-    flexShrink: 0,
+    textOverflow: 'ellipsis',
+    minWidth: rem(32),
+    maxWidth: '100%',
   },
   fill: {
     width: '100%',
@@ -84,7 +87,6 @@ const useButtonStyles = makeStyles({
     },
   },
   toolbarItemInFlow: {
-    minWidth: rem(32),
     order: 1,
   },
   toolbarItemNeedsUpdate: {
@@ -108,15 +110,21 @@ export const Button = ({
   onAction,
   selected,
   controls,
+  disabled,
+  payload,
   contextualVariant = 'block-inputs',
 }: ButtonProps) => {
-  const context = useFluentBlocksContext()
+  const { onAction: contextOnAction } = useFluentBlocksContext()
 
   const onButtonActivate = useCallback(() => {
-    const payload = { type: 'activate' as 'activate', actionId }
-    onAction && onAction(payload)
-    context.onAction(payload)
-  }, [onAction, actionId])
+    const actionPayload = {
+      type: 'activate' as 'activate',
+      actionId,
+      ...payload,
+    }
+    onAction && onAction(actionPayload)
+    contextOnAction && contextOnAction(actionPayload)
+  }, [onAction, actionId, payload])
 
   const buttonStyles = useButtonStyles()
 
@@ -129,6 +137,7 @@ export const Button = ({
     <FluentButton
       aria-label={label}
       appearance={variant}
+      disabled={disabled}
       size={derivedSize}
       className={cx(
         buttonStyles.root,

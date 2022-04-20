@@ -1,22 +1,26 @@
-import { ReactElement, useState } from 'react'
 import uniqueId from 'lodash/uniqueId'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { ReactElement, useState } from 'react'
+
 import {
   TabsItemProps as NaturalTabsItemProps,
   TabsProps as NaturalTabsProps,
 } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
+import { Button, ButtonProps } from '../../inputs'
 import {
   EscapeElement,
+  Sequence,
   invalidTabPanelItem,
   rem,
   renderIfEscape,
-  Sequence,
   sx,
   useCommonStyles,
 } from '../../lib'
-
-import { ButtonProps, Button } from '../../inputs'
+import {
+  DescriptionListPropsOrElement,
+  renderIfDescriptionList,
+} from '../DescriptionList/DescriptionList'
 import { FigurePropsOrElement, renderIfFigure } from '../Figure/Figure'
 import { HeadingPropsOrElement, renderIfHeading } from '../Heading/Heading'
 import {
@@ -24,13 +28,9 @@ import {
   renderIfParagraph,
 } from '../Paragraph/Paragraph'
 import {
-  renderIfShortInputs,
   ShortInputsPropsOrElement,
+  renderIfShortInputs,
 } from '../ShortInputs/ShortInputs'
-import {
-  DescriptionListPropsOrElement,
-  renderIfDescriptionList,
-} from '../DescriptionList/DescriptionList'
 
 export interface TabProps
   extends Omit<
@@ -85,8 +85,8 @@ const useTabsStyles = makeStyles({
     paddingBlockEnd: rem(2),
   },
   tabListCardContext: {
-    marginInlineStart: '-.5rem',
-    marginInlineEnd: '-.5rem',
+    marginInlineStart: '-.25rem',
+    marginInlineEnd: '-.25rem',
   },
   tabListCenter: {
     justifyContent: 'center',

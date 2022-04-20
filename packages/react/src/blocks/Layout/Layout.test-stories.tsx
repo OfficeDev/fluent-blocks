@@ -1,8 +1,9 @@
-import { Layout } from './Layout'
-import { LayoutProps } from './layout-properties'
 import { Parameters } from '@storybook/addons'
-import { Paragraph } from '../Paragraph/Paragraph'
+
 import { Escape } from '../../lib'
+import { LayoutProps } from '../../props/layout-properties'
+import { Paragraph } from '../Paragraph/Paragraph'
+import { Layout } from './Layout'
 
 export default {
   title: 'Tests/Layout',

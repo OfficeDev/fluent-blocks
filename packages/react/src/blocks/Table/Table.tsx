@@ -1,59 +1,69 @@
+import debounce from 'lodash/debounce'
+import get from 'lodash/get'
+import keys from 'lodash/keys'
 import {
+  ChangeEvent,
+  MouseEvent,
   ReactElement,
   useCallback,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  MouseEvent,
 } from 'react'
-import debounce from 'lodash/debounce'
-import keys from 'lodash/keys'
-import get from 'lodash/get'
+
+import { TableRowActivateAction } from '@fluent-blocks/schemas'
+import {
+  Button as FluentButton,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
+// todo: fix this import when it stabilizes
+import { Checkbox } from '@fluentui/react-components/unstable'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
-import {
-  Button as FluentButton,
-  makeStyles,
-  mergeClasses as cx,
-} from '@fluentui/react-components'
+
 import { InlineContent } from '../../inlines'
+import { Overflow } from '../../inputs'
 import {
   key,
   rem,
   sx,
   useCommonStyles,
   useFluentBlocksContext,
-  ActionHandler,
 } from '../../lib'
-import { ShortInputs } from '../ShortInputs/ShortInputs'
-
 import {
-  TableAction,
+  ListColumnProps,
+  MenuItemSequence,
   TableProps as NaturalTableProps,
-} from './table-properties'
+} from '../../props'
+import { ShortInputs } from '../ShortInputs/ShortInputs'
 import { getBreakpoints } from './tableBreakpoints'
-import { Overflow } from '../../inputs'
-import { TableRowActivateAction } from '@fluent-blocks/schemas'
 
-export interface TableProps extends Omit<NaturalTableProps, 'table'> {
-  table: NaturalTableProps['table'] & {
-    onRowHeaderActivate?: ActionHandler<TableRowActivateAction>
-  }
-}
-
-function isActionsCell(o: any): o is TableAction[] {
+function isActionsCell(o: any): o is string[] {
   return Array.isArray(o)
 }
 
+export type TableProps = NaturalTableProps
+
 const useTableStyles = makeStyles({
-  root: { overflowX: 'auto' },
-  grid: { display: 'table' },
+  root: {
+    overflowX: 'auto',
+    ...sx.padding(rem(8)),
+    marginBlockStart: rem(-8),
+    marginBlockEnd: rem(-8),
+  },
+  grid: {},
+  'grid--fill': { minWidth: '100%' },
   inner: { display: 'contents' },
-  row: { display: 'table-row' },
-  cell: { display: 'table-cell' },
+  row: { display: 'flex', width: '100%' },
+  cell: {
+    flexGrow: 1,
+    flexBasis: 0,
+    boxSizing: 'border-box',
+  },
   theadCell: {
     fontSize: rem(12),
     ...sx.padding(rem(8), rem(12)),
@@ -62,10 +72,32 @@ const useTableStyles = makeStyles({
     ...sx.padding(rem(12)),
     ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
   },
-  tbodyCellWithButtons: {
-    ...sx.borderBottom('1px', 'solid', 'var(--colorNeutralStroke2)'),
+  tbodyCellWithButtonsContent: {
+    ...sx.margin(rem(-8)),
+  },
+  tbodyCellWithTextContent: {
+    whiteSpace: 'nowrap',
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  rowHeaderButtonWrap: {
+    textAlign: 'left',
+    whiteSpace: 'normal',
+    height: 'auto',
+    paddingBlockStart: rem(4),
+    paddingBlockEnd: rem(4),
+  },
+  tbodyCellAlignEnd: {
+    justifyContent: 'flex-end',
   },
   activableRowHeader: {
+    color: 'inherit',
+    display: 'inline-block',
+    minWidth: rem(32),
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    marginInlineStart: rem(-12),
+    marginInlineEnd: rem(-12),
     fontWeight: 'var(--fontWeightMedium)',
     '&:hover': {
       ...sx.textDecoration('underline'),
@@ -74,7 +106,7 @@ const useTableStyles = makeStyles({
       ...sx.textDecoration('underline'),
     },
   },
-  caption: { display: 'table-caption' },
+  caption: {},
 })
 
 function getContentColumnsHidden(
@@ -87,19 +119,34 @@ function getContentColumnsHidden(
   return inFlowContentColumns.size < colKeys.length
 }
 
+const defaultMinWidth = 120
+const accessoryWidth = 40
+
+const colWidthClassName = (colKey: string) => `${colKey}-width`
+
 export const Table = (props: TableProps) => {
   const {
     caption,
     captionVisuallyHidden,
     columns,
     rows,
+    rowActions = {},
     rowHeaderColumn,
-    onRowHeaderActivate,
-    selectable = false,
-    widthVariant = 'viewportWidth',
+    rowsActivable,
+    maxWidthVariant = 'viewportWidth',
+    minWidthVariant = 'fill',
+    wrap,
   } = props.table
 
-  const { translations } = useFluentBlocksContext()
+  const sort = props.contextualSortProps?.setSort
+    ? props.contextualSortProps
+    : null
+
+  const select = props.contextualSelectionProps?.setSelection
+    ? props.contextualSelectionProps
+    : null
+
+  const { translations, onAction: contextOnAction } = useFluentBlocksContext()
 
   const contextualVariant = props.contextualVariant || 'block'
   const tableId = key(props)
@@ -131,9 +178,9 @@ export const Table = (props: TableProps) => {
         columns,
         rowKeys.findIndex((rowKey) => rows[rowKey].hasOwnProperty('actions')) >=
           0,
-        selectable
+        !!select
       ),
-    [rows, columns]
+    [rows, columns, select]
   )
 
   const $table = useRef<HTMLDivElement | null>(null)
@@ -200,14 +247,59 @@ export const Table = (props: TableProps) => {
   }, [])
 
   const rootRowHeaderActivate = useCallback(
-    ({ target }: MouseEvent<HTMLButtonElement>) =>
-      onRowHeaderActivate &&
-      onRowHeaderActivate({
-        type: 'activate',
-        actionId: 'activate',
-        row: get(target, ['dataset', 'row']),
-      }),
-    []
+    ({ target }: MouseEvent<HTMLButtonElement>) => {
+      const row = get(target, ['dataset', 'row'])
+      if (row) {
+        const payload: TableRowActivateAction = {
+          type: 'activate',
+          actionId: 'activate',
+          row: get(target, ['dataset', 'row']),
+        }
+        props.onAction && props.onAction(payload)
+        contextOnAction && contextOnAction(payload)
+      }
+    },
+    [props.onAction, contextOnAction]
+  )
+
+  const rootSelectActivate = useCallback(
+    ({ target }: ChangeEvent<EventTarget>) => {
+      const rowKey = get(target, ['dataset', 'row'])
+      if (rowKey && select) {
+        const nextSelection = new Set(select.selection)
+        nextSelection[get(target, ['checked'], false) ? 'add' : 'delete'](
+          rowKey
+        )
+        select.setSelection(nextSelection)
+      }
+    },
+    [select]
+  )
+
+  const getSortOptions = useCallback(
+    (colKey: string, { sortVariant }: ListColumnProps): MenuItemSequence => {
+      switch (sortVariant) {
+        // todo: implement other sort types
+        default:
+          return [
+            {
+              label: translations['sort--alphabetical-ascending'],
+              actionId: `${colKey}:sort--alphabetical-ascending`,
+              onAction: () =>
+                sort?.setSort({ sortColumn: colKey, sortOrder: 'ascending' }),
+              type: 'action',
+            },
+            {
+              label: translations['sort--alphabetical-descending'],
+              actionId: `${colKey}:sort--alphabetical-descending`,
+              onAction: () =>
+                sort?.setSort({ sortColumn: colKey, sortOrder: 'descending' }),
+              type: 'action',
+            },
+          ]
+      }
+    },
+    [translations]
   )
 
   return (
@@ -218,40 +310,56 @@ export const Table = (props: TableProps) => {
         tableStyles.root,
         commonStyles.blockSpacing,
         commonStyles.centerBlock,
-        widthVariant === 'textWidth' && commonStyles.mainContentWidth
+        maxWidthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
     >
+      <style>
+        {Array.from(inFlowColumns).reduce((acc: string, colKey: string) => {
+          if (colKey === 'selection' || colKey === 'overflow') {
+            return `${acc}.${colWidthClassName(colKey)} { flex-basis: ${rem(
+              accessoryWidth
+            )}; flex-grow: 0; flex-shrink: 0; }`
+          } else {
+            const minWidth = get(columns, [colKey, 'minWidth'], defaultMinWidth)
+            return `${acc}.${colWidthClassName(colKey)} { min-width: ${rem(
+              minWidth
+            )}; flex-grow: ${minWidth}; }\n`
+          }
+        }, '')}
+        {`.row-width { min-width: ${rem(
+          Array.from(inFlowColumns).reduce((acc: number, colKey: string) => {
+            if (colKey === 'selection' || colKey === 'overflow') {
+              return acc + accessoryWidth
+            } else {
+              const minWidth = get(
+                columns,
+                [colKey, 'minWidth'],
+                defaultMinWidth
+              )
+              return acc + minWidth
+            }
+          }, 0)
+        )} }`}
+      </style>
       <div
         role="grid"
         tabIndex={0}
         {...groupAttrs}
         className={cx(
           tableStyles.grid,
+          minWidthVariant === 'fill' && tableStyles['grid--fill'],
           contextualVariant === 'block' && commonStyles.centerBlock
         )}
         aria-labelledby={`desc__${tableId}`}
         aria-colcount={inFlowColumns.size}
         aria-rowcount={rowKeys.length + 1}
       >
-        <p
-          id={`desc__${tableId}`}
-          className={cx(
-            captionVisuallyHidden
-              ? commonStyles.visuallyHidden
-              : tableStyles.caption,
-            commonStyles.mainContentWidth,
-            commonStyles.centerBlock
-          )}
-        >
-          <InlineContent inlines={caption} />
-        </p>
-
         <div {...rootInnerAttrs} className={tableStyles.inner}>
           <div
             role="row"
             tabIndex={0}
             {...groupAttrs}
-            className={tableStyles.row}
+            className={`${tableStyles.row} row-width`}
             aria-label={translations.thead}
           >
             <div {...rowInnerAttrs} className={tableStyles.inner}>
@@ -263,7 +371,10 @@ export const Table = (props: TableProps) => {
                   id: `ch__${colKey}`,
                   'aria-colindex': ci + 1,
                   'aria-rowindex': 1,
-                  className: cx(tableStyles.cell, tableStyles.theadCell),
+                  className: `${cx(
+                    tableStyles.cell,
+                    tableStyles.theadCell
+                  )} ${colWidthClassName(colKey)}`,
                 }
 
                 switch (colKey) {
@@ -280,6 +391,21 @@ export const Table = (props: TableProps) => {
                     return (
                       <div {...cellElementProps} {...groupAttrs}>
                         <InlineContent inlines={columns[colKey].title} />
+                        {sort &&
+                          columns[colKey].hasOwnProperty('sortVariant') && (
+                            <Overflow
+                              buttonSize="small"
+                              triggerLabel={translations.sortOptions}
+                              overflow={getSortOptions(colKey, columns[colKey])}
+                              triggerIcon={
+                                sort?.sortColumn === colKey
+                                  ? sort?.sortOrder === 'ascending'
+                                    ? 'arrow_up'
+                                    : 'arrow_down'
+                                  : 'arrow_sort'
+                              }
+                            />
+                          )}
                       </div>
                     )
                 }
@@ -297,7 +423,7 @@ export const Table = (props: TableProps) => {
                 key={rowKey}
                 aria-labelledby={`rh__${rowKey}`}
                 {...groupAttrs}
-                className={tableStyles.row}
+                className={`${tableStyles.row} row-width`}
               >
                 <div {...rowInnerAttrs} className={tableStyles.inner}>
                   {columnOrder.filter(includeColumn).map((colKey, ci) => {
@@ -306,47 +432,79 @@ export const Table = (props: TableProps) => {
                     const cellHasButtons =
                       colKey === 'overflow' ||
                       cellIsActions ||
-                      (onRowHeaderActivate && rowHeaderColumn === colKey)
+                      (rowsActivable && rowHeaderColumn === colKey)
 
                     const cellContent =
                       colKey === 'overflow' ? (
                         contentColumnsHidden || row.actions ? (
-                          <Overflow
-                            overflow={[
-                              ...(contentColumnsHidden
-                                ? [
-                                    {
-                                      type: 'action' as 'action',
-                                      label: translations.viewAllDetails,
-                                      actionId: `${rowKey}__details`,
-                                    },
-                                    { type: 'divider' as 'divider' },
-                                  ]
-                                : []),
-                              ...(row.actions || []),
-                            ]}
-                          />
+                          <div
+                            className={tableStyles.tbodyCellWithButtonsContent}
+                          >
+                            <Overflow
+                              overflow={[
+                                ...(contentColumnsHidden
+                                  ? [
+                                      {
+                                        type: 'action' as 'action',
+                                        label: translations.viewAllDetails,
+                                        actionId: `${rowKey}__details`,
+                                      },
+                                      { type: 'divider' as 'divider' },
+                                    ]
+                                  : []),
+                                ...(row.actions
+                                  ?.filter((actionId) =>
+                                    rowActions.hasOwnProperty(actionId)
+                                  )
+                                  .map((actionId) => ({
+                                    ...rowActions[actionId],
+                                    actionId,
+                                    payload: { rows: [rowKey] },
+                                  })) || []),
+                              ]}
+                            />
+                          </div>
                         ) : null
                       ) : colKey === 'selection' ? (
-                        <span>x</span>
+                        <Checkbox
+                          checked={!!select?.selection.has(rowKey)}
+                          data-row={rowKey}
+                          onChange={rootSelectActivate}
+                          className={tableStyles.tbodyCellWithButtonsContent}
+                        />
                       ) : !cell ? null : cellIsActions ? (
-                        <ShortInputs inputs={cell} />
+                        <div
+                          className={tableStyles.tbodyCellWithButtonsContent}
+                        >
+                          <ShortInputs
+                            inputs={cell
+                              .filter((actionId) =>
+                                rowActions.hasOwnProperty(actionId)
+                              )
+                              .map((actionId) => ({
+                                ...rowActions[actionId],
+                                actionId,
+                                payload: { rows: [rowKey] },
+                              }))}
+                          />
+                        </div>
                       ) : (
                         <InlineContent inlines={cell.cell} />
                       )
 
                     const cellElementProps = {
                       key: colKey,
-                      ...(!(colKey === 'selection' || cellHasButtons) && {
+                      ...(!cellHasButtons && {
                         tabIndex: 0,
                       }),
                       ...groupAttrs,
-                      className: cx(
+                      className: `${cx(
                         tableStyles.cell,
-                        cellHasButtons
-                          ? tableStyles.tbodyCellWithButtons
-                          : tableStyles.tbodyCell
-                      ),
+                        tableStyles.tbodyCell,
+                        !(cellHasButtons || colKey === 'selection' || wrap) &&
+                          tableStyles.tbodyCellWithTextContent,
+                        colKey === 'overflow' && tableStyles.tbodyCellAlignEnd
+                      )} ${colWidthClassName(colKey)}`,
                       'aria-colindex': ci + 1,
                       'aria-rowindex': ri + 2,
                     }
@@ -360,9 +518,13 @@ export const Table = (props: TableProps) => {
                       >
                         {cellIsActions ? (
                           cellContent
-                        ) : onRowHeaderActivate ? (
+                        ) : rowsActivable ? (
                           <FluentButton
-                            className={tableStyles.activableRowHeader}
+                            className={cx(
+                              tableStyles.activableRowHeader,
+                              tableStyles.tbodyCellWithButtonsContent,
+                              wrap && tableStyles.rowHeaderButtonWrap
+                            )}
                             appearance="transparent"
                             data-row={rowKey}
                             onClick={rootRowHeaderActivate}
@@ -393,6 +555,18 @@ export const Table = (props: TableProps) => {
           })}
         </div>
       </div>
+      <p
+        id={`desc__${tableId}`}
+        className={cx(
+          captionVisuallyHidden
+            ? commonStyles.visuallyHidden
+            : tableStyles.caption,
+          commonStyles.mainContentWidth,
+          commonStyles.centerBlock
+        )}
+      >
+        <InlineContent inlines={caption} />
+      </p>
     </div>
   )
 }

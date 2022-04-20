@@ -1,3 +1,6 @@
+import debounce from 'lodash/debounce'
+import every from 'lodash/every'
+import get from 'lodash/get'
 import {
   ReactElement,
   useCallback,
@@ -5,29 +8,39 @@ import {
   useRef,
   useState,
 } from 'react'
-import debounce from 'lodash/debounce'
-import get from 'lodash/get'
-import every from 'lodash/every'
 
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import {
+  ToolbarProps as NaturalToolbarProps,
+  SingleValueInputActionPayload,
+} from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
-import { ToolbarProps as NaturalToolbarProps } from '@fluent-blocks/schemas'
-
-import { Button, ButtonActionPayload, Overflow } from '../../inputs'
+import {
+  Button,
+  ButtonActionPayload,
+  Overflow,
+  ShortTextInput,
+} from '../../inputs'
+import {
+  Sequence,
+  rem,
+  useCommonStyles,
+  useFluentBlocksContext,
+} from '../../lib'
 import {
   MenuItemEntity,
   MenuItemSequence,
-  rem,
-  Sequence,
-  useCommonStyles,
   WithActionHandler,
-} from '../../lib'
+} from '../../props'
 
 export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
   toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {
     items: MenuItemSequence
   }
-  contextualVariant?: 'card' | 'block'
+  contextualVariant?: 'block' | 'viewportWidth'
+  contextualFindProps?: {
+    onAction: (payload: SingleValueInputActionPayload) => void
+  }
 }
 
 type ToolbarItemContextualOptions = Pick<
@@ -49,6 +62,11 @@ const useToolbarStyles = makeStyles({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  find: {
+    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   'root--small': {
     height: rem(24),
   },
@@ -61,13 +79,13 @@ const useToolbarStyles = makeStyles({
   flexDivider: {
     flexGrow: 1,
   },
-  overflowTrigger: {
+  requiredInFlow: {
     order: 0,
   },
-  'overflowTrigger--ready': {
+  'requiredInFlow--ready': {
     order: 2,
   },
-  'overflowTrigger--hidden': {
+  'requiredInFlow--hidden': {
     display: 'none',
   },
 })
@@ -97,9 +115,11 @@ const ToolbarItemInFlow = (
 export const Toolbar = ({
   toolbar,
   contextualVariant = 'block',
+  contextualFindProps,
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
+  const { translations } = useFluentBlocksContext()
   const $toolbar = useRef<HTMLDivElement | null>(null)
   const [layoutNeedsUpdate, setLayoutNeedsUpdate] = useState(true)
   const [actionsInFlow, setActionsInFlow] = useState<Set<string>>(new Set())
@@ -158,8 +178,9 @@ export const Toolbar = ({
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
     : toolbar.items.map((item) => ({
-        hidden: actionsInFlow.has(get(item, 'actionId', false)),
+        hidden: item.hidden || actionsInFlow.has(get(item, 'actionId', false)),
       }))
+
   const hideOverflowTrigger = menuItemHiddenFlags
     ? every(menuItemHiddenFlags, (flags) => flags.hidden)
     : false
@@ -185,15 +206,16 @@ export const Toolbar = ({
         layoutNeedsUpdate
           ? undefined
           : toolbar.items.map((item) => ({
-              hidden: !actionsInFlow.has(get(item, 'actionId', false)),
+              hidden:
+                item.hidden || !actionsInFlow.has(get(item, 'actionId', false)),
             }))
       )}
       <div
         data-layout="required"
         className={cx(
-          toolbarStyles.overflowTrigger,
-          !layoutNeedsUpdate && toolbarStyles['overflowTrigger--ready'],
-          hideOverflowTrigger && toolbarStyles['overflowTrigger--hidden']
+          toolbarStyles.requiredInFlow,
+          !layoutNeedsUpdate && toolbarStyles['requiredInFlow--ready'],
+          hideOverflowTrigger && toolbarStyles['requiredInFlow--hidden']
         )}
       >
         <Overflow
@@ -203,6 +225,32 @@ export const Toolbar = ({
           buttonSize={toolbar.buttonSize || defaultButtonSize}
         />
       </div>
+      {toolbar.find && (
+        <div
+          data-layout="required"
+          className={cx(
+            toolbarStyles.requiredInFlow,
+            toolbarStyles.find,
+            !layoutNeedsUpdate && toolbarStyles['requiredInFlow--ready']
+          )}
+        >
+          <ShortTextInput
+            {...{
+              actionId: toolbar.find,
+              type: 'text',
+              inputType: 'search',
+              labelVisuallyHidden: true,
+              label: translations['list__find'],
+              placeholder: translations['list__find'],
+              after: { icon: 'document_search' },
+              contextualVariant: 'toolbar-item',
+              ...(contextualFindProps?.onAction && {
+                onAction: (payload) => contextualFindProps.onAction(payload),
+              }),
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }

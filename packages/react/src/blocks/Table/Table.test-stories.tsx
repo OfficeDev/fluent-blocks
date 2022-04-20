@@ -1,5 +1,6 @@
-import { Table, TableProps } from './Table'
 import { Parameters } from '@storybook/addons'
+
+import { Table, TableProps } from './Table'
 
 export default {
   title: 'Tests/Table',
@@ -16,6 +17,7 @@ export const TableJsonTest: typeof TableTemplate & {
 TableJsonTest.args = {
   table: {
     caption: '7151084f-3323-408a-be7e-c96387020bfe',
+    rowHeaderColumn: 'af8724f0-1ae7-431f-be7f-b35a276284e3',
     columns: {
       'af8724f0-1ae7-431f-be7f-b35a276284e3': {
         title: '8f296c70-0eac-4f1f-aa9c-2d3fcbca64f6',

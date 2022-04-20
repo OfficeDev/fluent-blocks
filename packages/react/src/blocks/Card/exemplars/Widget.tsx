@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+
 import {
   HeadingLevel,
   WidgetProps as NaturalWidgetProps,
@@ -6,9 +7,8 @@ import {
 
 import { InlineSequenceOrString } from '../../../inlines'
 import { ButtonProps } from '../../../inputs'
-
+import { CardProps } from '../../../props'
 import { Card } from '../Card'
-import { CardProps } from '../card-properties'
 
 export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
   widget: Omit<

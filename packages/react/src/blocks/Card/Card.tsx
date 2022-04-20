@@ -1,26 +1,26 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Card as FluentCard } from '@fluentui/react-components/unstable'
 
 import {
+  Sequence,
   invalidCardContentItem,
   rem,
   renderIfEscape,
-  Sequence,
+  sx,
   useCommonStyles,
   useFluentBlocksContext,
-  sx,
 } from '../../lib'
-import { renderIfParagraph } from '../Paragraph/Paragraph'
-import { renderIfHeading } from '../Heading/Heading'
-import { renderIfFigure } from '../Figure/Figure'
-import { renderIfTabs } from '../Tabs/Tabs'
-import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
+import { CardContentItemEntity, CardProps } from '../../props'
 import { renderIfDescriptionList } from '../DescriptionList/DescriptionList'
-import { renderIfWidget, WidgetPropsOrElement } from './exemplars/Widget'
-import { CardContentItemEntity, CardProps } from './card-properties'
+import { renderIfFigure } from '../Figure/Figure'
+import { renderIfHeading } from '../Heading/Heading'
+import { renderIfParagraph } from '../Paragraph/Paragraph'
+import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
+import { renderIfTabs } from '../Tabs/Tabs'
+import { WidgetPropsOrElement, renderIfWidget } from './exemplars/Widget'
 
 const CardContentItem = (o: CardContentItemEntity) =>
   renderIfHeading(o) ||

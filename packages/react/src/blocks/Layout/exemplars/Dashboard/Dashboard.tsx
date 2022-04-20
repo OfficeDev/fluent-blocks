@@ -1,9 +1,10 @@
 import { ReactElement } from 'react'
+
 import { DashboardProps as NaturalDashboardProps } from '@fluent-blocks/schemas'
 
-import { Layout } from '../../Layout'
-import { LayoutProps } from '../../layout-properties'
+import { LayoutProps } from '../../../../props'
 import { WidgetPropsOrElement } from '../../../Card/exemplars/Widget'
+import { Layout } from '../../Layout'
 import { LayoutItemProps } from '../../LayoutItem'
 
 export interface DashboardProps

@@ -1,17 +1,20 @@
+import { ListProps } from './List'
+import {
+  AccentScheme,
+  ActionHandler,
+  ThemeName,
+  WithActionHandler,
+} from '../../lib'
 import { TableActionPayload } from '@fluent-blocks/schemas'
-
-import { AccentScheme, ThemeName } from '../../lib'
-import { ActionHandler, WithActionHandler } from '../../props'
 import { View } from '../../views'
-import { TableProps } from './Table'
 
-export const Table = ({
+export const List = ({
   themeName,
   accentScheme,
   iconSpriteUrl,
   onAction,
   ...props
-}: TableProps['table'] & {
+}: ListProps['list'] & {
   themeName: ThemeName
   accentScheme: AccentScheme
   iconSpriteUrl: string
@@ -19,6 +22,6 @@ export const Table = ({
 } & WithActionHandler<TableActionPayload>) => (
   <View
     {...{ themeName, accentScheme, iconSpriteUrl, onAction }}
-    main={{ title: ' ', blocks: [{ table: props }] }}
+    main={{ title: ' ', blocks: [{ list: props }] }}
   />
 )

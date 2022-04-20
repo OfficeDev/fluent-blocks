@@ -8,11 +8,10 @@ import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { Table } from './StorybookTable'
 
 <Meta
-  title="Blocks/Table"
+  title="Blocks/Lists & Tables"
   component={Table}
   argTypes={{
     ...contextArgTypes,
-    onRowHeaderActivate: { action: 'action' },
   }}
 />
 
@@ -21,6 +20,11 @@ export const TableTemplate = (props) => (
 )
 
 # Table
+
+The Table component displays a fairly static table as a block component. If you
+need to paginate the values, or provide users the ability to perform actions on
+multiple rows, or facilitate sorting or filtering, use the List
+component instead.
 
 <Canvas withSource="none">
   <Story
@@ -31,10 +35,21 @@ export const TableTemplate = (props) => (
       caption: fake('{{lorem.sentence}}'),
       captionVisuallyHidden: true,
       rowHeaderColumn: 'c1',
+      minWidthVariant: 'auto',
+      maxWidthVariant: 'viewportWidth',
+      rowsActivable: true,
       columns: {
         c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
         c2: { title: 'Office' },
         c3: { title: 'Email', hideable: true },
+      },
+      rowActions: {
+        copy: {
+          type: 'action',
+          actionId: 'copy',
+          label: 'Copy',
+          icon: 'copy',
+        },
       },
       rows: range(32).reduce((acc, r) => {
         acc[`r${r}`] = {
@@ -47,14 +62,7 @@ export const TableTemplate = (props) => (
           },
           c3: { cell: fake('{{internet.email}}') },
           ...(r % 5 === 1 && {
-            actions: [
-              {
-                type: 'action',
-                actionId: `copy:r${r}`,
-                label: 'Copy',
-                icon: 'copy',
-              },
-            ],
+            actions: ['copy'],
           }),
         }
         return acc

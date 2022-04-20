@@ -1,28 +1,30 @@
 import noop from 'lodash/noop'
+
+import { OverflowProps as NaturalOverflowProps } from '@fluent-blocks/schemas'
 import {
   Menu,
   MenuButton,
+  MenuItem,
   MenuList,
   MenuPopover,
   MenuTrigger,
   Tooltip,
-  MenuItem,
 } from '@fluentui/react-components'
-import { OverflowProps as NaturalOverflowProps } from '@fluent-blocks/schemas'
 
 import { Icon } from '../../inlines'
+import { Sequence, useFluentBlocksContext } from '../../lib'
 import {
-  MenuItemSequence,
-  MenuItemEntity,
-  Sequence,
-  useFluentBlocksContext,
-  MenuAction,
   ActionHandler,
-} from '../../lib'
+  MenuAction,
+  MenuItemEntity,
+  MenuItemSequence,
+} from '../../props'
 
 export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
   overflow: MenuItemSequence
   contextualHiddenFlags?: { hidden?: boolean }[]
+  triggerIcon?: string
+  triggerLabel?: string
 }
 
 function isAction(o: any): o is MenuAction {
@@ -42,6 +44,7 @@ const OverflowItem = (
         const payload = {
           type: 'activate' as 'activate',
           actionId: item.actionId,
+          ...item.payload,
         }
         item.onAction && item.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)
@@ -76,17 +79,19 @@ export const Overflow = ({
   buttonSize = 'medium',
   iconSize = defaultIconSize,
   contextualHiddenFlags,
+  triggerIcon = 'more_horizontal',
+  triggerLabel,
 }: OverflowProps) => {
   const { translations, onAction } = useFluentBlocksContext()
-  return (
+  const label = triggerLabel || translations.more
+  return overflow.length ? (
     <Menu>
       <MenuTrigger>
-        <Tooltip content={translations.more} relationship="label" withArrow>
+        <Tooltip content={label} relationship="label" withArrow>
           <MenuButton
             appearance="transparent"
-            icon={
-              <Icon icon="more_horizontal" size={iconSize} variant="outline" />
-            }
+            style={{ color: 'inherit' }}
+            icon={<Icon icon={triggerIcon} size={iconSize} variant="outline" />}
             size={buttonSize}
           />
         </Tooltip>
@@ -102,5 +107,5 @@ export const Overflow = ({
         </MenuList>
       </MenuPopover>
     </Menu>
-  )
+  ) : null
 }
