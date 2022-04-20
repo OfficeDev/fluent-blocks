@@ -2,7 +2,7 @@ name: 'Deploy main to Chromatic'
 
 on:
   push:
-    branches: [ 'main', '!dependabot' ]
+    branches: [ latest, '!dependabot' ]
 
 jobs:
   deploy:
