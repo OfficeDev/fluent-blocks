@@ -1,10 +1,10 @@
-import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs'
 import { seed } from 'faker/locale/en_US'
 
-import { Toolbar } from './StorybookToolbar'
-import { contextArgTypes } from '../../lib'
-
 import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import { Toolbar } from './StorybookToolbar'
 
 <Meta
   title="Blocks/Toolbar"
@@ -31,6 +31,9 @@ import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
         type: { summary: 'ToolbarProps' },
       },
     },
+  }}
+  parameters={{
+    chromatic: { delay: 1000 },
   }}
 />
 
