@@ -43,7 +43,7 @@ jobs:
       - name: Publish to NPM
         uses: changesets/action@v1
         with:
-          version: pnpm changeset:version
+          version: pnpm changeset:version-next
           publish: pnpm publish:next
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
