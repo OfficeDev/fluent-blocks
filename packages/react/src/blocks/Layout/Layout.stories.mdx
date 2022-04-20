@@ -1,12 +1,12 @@
-import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
-import fakeTitle from '../../lib/fakeTitle'
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
-
-import { Layout } from './StorybookLayout'
-import { contextArgTypes } from '../../lib'
+import range from 'lodash/range'
 
 import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import fakeTitle from '../../lib/fakeTitle'
+import { Layout } from './StorybookLayout'
 
 <Meta
   title="Blocks/Layout"
@@ -155,6 +155,7 @@ The `Layout` component is a block which can arrange its content items such that 
         ],
       },
     }}
+    parameters={{ chromatic: { delay: 1000 } }}
   >
     {seed(1234) || LayoutTemplate.bind({})}
   </Story>
