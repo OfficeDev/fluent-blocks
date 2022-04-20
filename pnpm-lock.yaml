@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@changesets/cli': ^2.22.0
+      '@changesets/cli': ^2.21.1
       '@trivago/prettier-plugin-sort-imports': latest
       '@types/eslint': latest
       '@typescript-eslint/eslint-plugin': latest
@@ -51,9 +51,8 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
-      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.7
+      '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.6
       '@fluent-blocks/schemas': workspace:9.0.0-alpha.4
-      '@fluentui/react-checkbox': latest
       '@fluentui/react-components': latest
       '@fluentui/react-tabster': latest
       '@storybook/addon-actions': next
@@ -96,7 +95,6 @@ importers:
       lodash: 4.17.21
     devDependencies:
       '@babel/core': 7.17.9
-      '@fluentui/react-checkbox': 9.0.0-beta.11_7eb32be8ac1649a04791b344762f8238
       '@fluentui/react-components': 9.0.0-rc.7_7eb32be8ac1649a04791b344762f8238
       '@storybook/addon-actions': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addon-essentials': 6.5.0-alpha.64_c6f04e24729c88ba9efe6183bf067522
