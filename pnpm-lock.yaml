@@ -53,7 +53,6 @@ importers:
       '@babel/core': latest
       '@fluent-blocks/basic-icons': workspace:9.0.0-alpha.7
       '@fluent-blocks/schemas': workspace:9.0.0-alpha.4
-      '@fluentui/react-checkbox': latest
       '@fluentui/react-components': latest
       '@fluentui/react-tabster': latest
       '@storybook/addon-actions': next
@@ -96,13 +95,12 @@ importers:
       lodash: 4.17.21
     devDependencies:
       '@babel/core': 7.17.9
-      '@fluentui/react-checkbox': 9.0.0-beta.11_7eb32be8ac1649a04791b344762f8238
       '@fluentui/react-components': 9.0.0-rc.7_7eb32be8ac1649a04791b344762f8238
       '@storybook/addon-actions': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/addon-essentials': 6.5.0-alpha.64_c6f04e24729c88ba9efe6183bf067522
+      '@storybook/addon-essentials': 6.5.0-alpha.64_aa3444bafbe6f799b2635a33033c1179
       '@storybook/addon-links': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addons': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/react': 6.5.0-alpha.64_307b26606d6bd4152a308276bea0b449
+      '@storybook/react': 6.5.0-alpha.64_0ac01cd7b1dbd6d7f529c86ca2f9dd63
       '@storybook/theming': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@types/chart.js': 2.9.35
       '@types/faker': 5.5.9
@@ -2849,7 +2847,7 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/addon-controls/6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941:
+  /@storybook/addon-controls/6.5.0-alpha.64_48599b1349bc061bc04165e403427ada:
     resolution: {integrity: sha512-UV1zFM0YddkI28iLB8QoX4HvV82YyShLM+9ZK7dsoEztoDQVCcRUcNP/lBw6IvUcL+EQGJeGd/jXtr1lZiFCsw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2864,7 +2862,7 @@ packages:
       '@storybook/api': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/client-logger': 6.5.0-alpha.64
       '@storybook/components': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/csf': 0.0.2--canary.7c6c115.0
       '@storybook/node-logger': 6.5.0-alpha.64
       '@storybook/store': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
@@ -2883,7 +2881,7 @@ packages:
       - webpack-command
     dev: true
 
-  /@storybook/addon-docs/6.5.0-alpha.64_c6f04e24729c88ba9efe6183bf067522:
+  /@storybook/addon-docs/6.5.0-alpha.64_aa3444bafbe6f799b2635a33033c1179:
     resolution: {integrity: sha512-tDJ1bnwbL7vejN+XM8KAv5s72q/RLBUMEtk1r46dX5+FjKf1FPQq1Gl9paW1pI6VK69Zxnj18VKyXKwR1o9XUw==}
     peerDependencies:
       '@storybook/mdx2-csf': '*'
@@ -2904,7 +2902,7 @@ packages:
       '@storybook/addons': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/api': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/components': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/core-events': 6.5.0-alpha.64
       '@storybook/csf': 0.0.2--canary.7c6c115.0
       '@storybook/docs-tools': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
@@ -2938,7 +2936,7 @@ packages:
       - webpack-command
     dev: true
 
-  /@storybook/addon-essentials/6.5.0-alpha.64_c6f04e24729c88ba9efe6183bf067522:
+  /@storybook/addon-essentials/6.5.0-alpha.64_aa3444bafbe6f799b2635a33033c1179:
     resolution: {integrity: sha512-lbV8UqO1J4edHqnTqjVg6Jhcdn2/NeRWyQKwcBmNdoAW3FEO9IbEqU0RjsThRK6/no830bueGl6mFwkR4QiJrg==}
     peerDependencies:
       '@babel/core': ^7.9.6
@@ -2998,15 +2996,15 @@ packages:
       '@babel/core': 7.17.9
       '@storybook/addon-actions': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addon-backgrounds': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/addon-controls': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
-      '@storybook/addon-docs': 6.5.0-alpha.64_c6f04e24729c88ba9efe6183bf067522
+      '@storybook/addon-controls': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
+      '@storybook/addon-docs': 6.5.0-alpha.64_aa3444bafbe6f799b2635a33033c1179
       '@storybook/addon-measure': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addon-outline': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addon-toolbars': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addon-viewport': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/addons': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/api': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/node-logger': 6.5.0-alpha.64
       core-js: 3.21.1
       react: 18.0.0
@@ -3195,7 +3193,7 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/builder-webpack4/6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941:
+  /@storybook/builder-webpack4/6.5.0-alpha.64_48599b1349bc061bc04165e403427ada:
     resolution: {integrity: sha512-UwJjJqQZ5fioJehhBp2suqIISqZ/3kvQLi/qALd4vbNLxASyIDJW8CVVToZOssy9CBT++U26y4MDesSlSJ5EBQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -3213,7 +3211,7 @@ packages:
       '@storybook/client-api': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/client-logger': 6.5.0-alpha.64
       '@storybook/components': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/core-events': 6.5.0-alpha.64
       '@storybook/node-logger': 6.5.0-alpha.64
       '@storybook/preview-web': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
@@ -3419,7 +3417,7 @@ packages:
       webpack: 5.72.0
     dev: true
 
-  /@storybook/core-common/6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941:
+  /@storybook/core-common/6.5.0-alpha.64_48599b1349bc061bc04165e403427ada:
     resolution: {integrity: sha512-swgyGESCi9mPBcu0D7uMZzxiN0iZXQ4XVminsrp4dGzQ2nf2vFsF/258wVHrAN55CocbvM9UQhxIf6T0WTP5OQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -3463,7 +3461,7 @@ packages:
       express: 4.17.3
       file-system-cache: 1.0.5
       find-up: 5.0.0
-      fork-ts-checker-webpack-plugin: 6.5.1_498b960d4c14289abb4491cb02bb9c18
+      fork-ts-checker-webpack-plugin: 6.5.1_typescript@4.6.2+webpack@4.46.0
       fs-extra: 9.1.0
       glob: 7.2.0
       handlebars: 4.7.7
@@ -3496,7 +3494,7 @@ packages:
       core-js: 3.21.1
     dev: true
 
-  /@storybook/core-server/6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941:
+  /@storybook/core-server/6.5.0-alpha.64_48599b1349bc061bc04165e403427ada:
     resolution: {integrity: sha512-NIx775Djpb9ofK3dQWipNaovcudNdDcsDyukcAxsvCcDEWP9y9sXiw6JUf5FLQD/d68R+9mvA/WACyTvNhTbQA==}
     peerDependencies:
       '@storybook/builder-webpack5': '*'
@@ -3513,13 +3511,13 @@ packages:
         optional: true
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@storybook/builder-webpack4': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/builder-webpack4': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/core-client': 6.5.0-alpha.64_0fb10562cd661f60eb846784f1c6a197
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/core-events': 6.5.0-alpha.64
       '@storybook/csf': 0.0.2--canary.7c6c115.0
       '@storybook/csf-tools': 6.5.0-alpha.64
-      '@storybook/manager-webpack4': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/manager-webpack4': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/node-logger': 6.5.0-alpha.64
       '@storybook/semver': 7.3.2
       '@storybook/store': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
@@ -3571,7 +3569,7 @@ packages:
       - webpack-command
     dev: true
 
-  /@storybook/core/6.5.0-alpha.64_e9da2d0c1ef23975692d1510fed6b893:
+  /@storybook/core/6.5.0-alpha.64_cd2b4e7a7dcd846bfac16990743e4f9c:
     resolution: {integrity: sha512-XFX0s0/maKFVRLYCazgEc6FBigLLW9LF4bj3OJpiyCyE7V804p/PkQ2MKjaQMkWusqzYqJ7zHv8KwCl1GJFprg==}
     peerDependencies:
       '@storybook/builder-webpack5': '*'
@@ -3589,7 +3587,7 @@ packages:
         optional: true
     dependencies:
       '@storybook/core-client': 6.5.0-alpha.64_cd2b4e7a7dcd846bfac16990743e4f9c
-      '@storybook/core-server': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-server': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
       typescript: 4.6.2
@@ -3654,7 +3652,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/manager-webpack4/6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941:
+  /@storybook/manager-webpack4/6.5.0-alpha.64_48599b1349bc061bc04165e403427ada:
     resolution: {integrity: sha512-Cn8l2UJN+XAz8FzNBdaeROsu48fz/NsC07bFEwTsjKRWliGAtwa8Kkt0GhyVVss0Y41jgpRz44Ba6T3lpI9zYA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -3669,7 +3667,7 @@ packages:
       '@babel/preset-react': 7.16.7_@babel+core@7.17.9
       '@storybook/addons': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/core-client': 6.5.0-alpha.64_0fb10562cd661f60eb846784f1c6a197
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/node-logger': 6.5.0-alpha.64
       '@storybook/theming': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/ui': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
@@ -3791,7 +3789,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/react/6.5.0-alpha.64_307b26606d6bd4152a308276bea0b449:
+  /@storybook/react/6.5.0-alpha.64_0ac01cd7b1dbd6d7f529c86ca2f9dd63:
     resolution: {integrity: sha512-AL4VCNcofLPAI3TfkEivzNwoI8mmE2ypgvu3ULP3ISDHF+QDqE1cBx9STYiSlwzZnqeNK8K1/pBbZ1rM49VTCg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -3826,8 +3824,8 @@ packages:
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.5_a6ddf6349bbfbae23464eb7cd0d9bae7
       '@storybook/addons': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/client-logger': 6.5.0-alpha.64
-      '@storybook/core': 6.5.0-alpha.64_e9da2d0c1ef23975692d1510fed6b893
-      '@storybook/core-common': 6.5.0-alpha.64_e8fac9a166d5a425697600d8c7251941
+      '@storybook/core': 6.5.0-alpha.64_cd2b4e7a7dcd846bfac16990743e4f9c
+      '@storybook/core-common': 6.5.0-alpha.64_48599b1349bc061bc04165e403427ada
       '@storybook/csf': 0.0.2--canary.7c6c115.0
       '@storybook/docs-tools': 6.5.0-alpha.64_react-dom@18.0.0+react@18.0.0
       '@storybook/node-logger': 6.5.0-alpha.64
@@ -7831,7 +7829,7 @@ packages:
       worker-rpc: 0.1.1
     dev: true
 
-  /fork-ts-checker-webpack-plugin/6.5.1_498b960d4c14289abb4491cb02bb9c18:
+  /fork-ts-checker-webpack-plugin/6.5.1_typescript@4.6.2+webpack@4.46.0:
     resolution: {integrity: sha512-x1wumpHOEf4gDROmKTaB6i4/Q6H3LwmjVO7fIX47vBwlZbtPjU33hgoMuD/Q/y6SU8bnuYSoN6ZQOLshGp0T/g==}
     engines: {node: '>=10', yarn: '>=1.0.0'}
     peerDependencies:
@@ -7851,7 +7849,6 @@ packages:
       chokidar: 3.5.3
       cosmiconfig: 6.0.0
       deepmerge: 4.2.2
-      eslint: 8.13.0
       fs-extra: 9.1.0
       glob: 7.2.0
       memfs: 3.4.1

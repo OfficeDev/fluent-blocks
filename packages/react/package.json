@@ -35,7 +35,6 @@
     "pnpm": "^6"
   },
   "peerDependencies": {
-    "@fluentui/react-checkbox": "latest",
     "@fluentui/react-components": "latest",
     "@types/react": ">=16.13.1 <19",
     "@types/react-dom": ">=16.13.1 <19",
@@ -45,7 +44,6 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-checkbox": "latest",
     "@fluentui/react-components": "latest",
     "@storybook/addon-actions": "next",
     "@storybook/addon-essentials": "next",

@@ -13,12 +13,13 @@ import {
 } from 'react'
 
 import { TableRowActivateAction } from '@fluent-blocks/schemas'
-import { Checkbox } from '@fluentui/react-checkbox'
 import {
   Button as FluentButton,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
+// todo: fix this import when it stabilizes
+import { Checkbox } from '@fluentui/react-components/unstable'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
