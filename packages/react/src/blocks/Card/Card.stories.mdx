@@ -1,12 +1,12 @@
-import range from 'lodash/range'
 import { fake, seed } from 'faker/locale/en_US'
-import fakeTitle from '../../lib/fakeTitle'
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+import range from 'lodash/range'
 
-import { BlockCard, LayoutCard } from './StorybookCard'
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
 import { contextArgTypes } from '../../lib'
-
-import iconSpriteUrl from '@fluent-blocks/basic-icons/basic-icons.svg'
+import fakeTitle from '../../lib/fakeTitle'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { BlockCard, LayoutCard } from './StorybookCard'
 
 <Meta
   title="Blocks/Card"

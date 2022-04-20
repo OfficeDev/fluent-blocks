@@ -41,7 +41,9 @@ const useShortTextInputStyles = makeStyles({
   label: {
     color: 'var(--surface-foreground)',
   },
-  input: {},
+  input: {
+    width: '100%',
+  },
 })
 
 export const ShortTextInput = ({
@@ -103,6 +105,7 @@ export const ShortTextInput = ({
           type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
+          className: shortTextInputStyles.input,
         }}
         appearance={
           contextualElevationVariant === 'elevated'
