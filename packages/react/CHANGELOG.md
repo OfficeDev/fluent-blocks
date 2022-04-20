@@ -1,5 +1,17 @@
 # @fluent-blocks/react
 
+## 9.1.0-next.1
+
+### Minor Changes
+
+- [`1502a39`](https://github.com/OfficeDev/fluent-blocks/commit/1502a39e6e225886b377b381349645e5f7763838) Thanks [@thure](https://github.com/thure)! - Automate prereleases.
+
+### Patch Changes
+
+- Updated dependencies [[`1502a39`](https://github.com/OfficeDev/fluent-blocks/commit/1502a39e6e225886b377b381349645e5f7763838)]:
+  - @fluent-blocks/basic-icons@9.1.0-next.1
+  - @fluent-blocks/schemas@9.1.0-next.1
+
 ## 9.0.0
 
 ### Major Changes
