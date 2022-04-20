@@ -14,9 +14,8 @@
     "test": "pnpm run test -r --if-present",
     "changeset:add": "pnpm exec changeset add",
     "changeset:version-latest": "pnpm exec changeset pre exit && pnpm exec changeset version && pnpm install --lockfile-only",
-    "publish:latest": "pnpm exec changeset publish",
     "changeset:version-next": "pnpm exec changeset version && pnpm install --lockfile-only",
-    "publish:next": "pnpm exec changeset publish --tag next"
+    "changeset:publish": "pnpm exec changeset publish"
   },
   "engines": {
     "node": ">=12.0.0 <17.0.0",
