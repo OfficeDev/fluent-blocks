@@ -1,22 +1,22 @@
-import { memo, useEffect, useRef, useContext } from 'react'
 import { Chart } from 'chart.js'
-import { FluentBlocksContext, useTranslations } from '../../../lib'
+import { memo, useContext, useEffect, useRef } from 'react'
 
-import {
-  tooltipTrigger,
-  chartConfig,
-  axesConfig,
-  setTooltipColorScheme,
-  useChartId,
-} from '../chart-utils'
+import { FluentBlocksContext, useTranslations } from '../../../lib'
+import { Legend } from '../Legend'
 import {
   buildPattern,
   chartBubbleDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { BubbleChartDatum, ChartData } from '../chart-types'
-import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
+import { BubbleChartDatum, ChartData } from '../chart-types'
+import {
+  axesConfig,
+  chartConfig,
+  setTooltipColorScheme,
+  tooltipTrigger,
+  useChartId,
+} from '../chart-utils'
 
 /**
  * @internal
@@ -323,7 +323,6 @@ export const BubbleChart = memo(
             style={{ userSelect: 'none' }}
             tabIndex={0}
             aria-label={label}
-            data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
               (set.data as BubbleChartDatum[]).map(

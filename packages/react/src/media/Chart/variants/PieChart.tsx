@@ -1,26 +1,26 @@
-import { memo, useEffect, useRef, useContext } from 'react'
 import Chart from 'chart.js'
-import update from 'lodash/update'
-import isNumber from 'lodash/isNumber'
 import cloneDeep from 'lodash/cloneDeep'
+import isNumber from 'lodash/isNumber'
+import update from 'lodash/update'
+import { memo, useContext, useEffect, useRef } from 'react'
 
 import { FluentBlocksContext, useTranslations } from '../../../lib'
-import {
-  tooltipTrigger,
-  chartConfig,
-  axesConfig,
-  setTooltipColorScheme,
-  usNumberFormat,
-  useChartId,
-} from '../chart-utils'
+import { Legend } from '../Legend'
 import {
   buildPattern,
   chartBarDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { ChartData } from '../chart-types'
-import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
+import { ChartData } from '../chart-types'
+import {
+  axesConfig,
+  chartConfig,
+  setTooltipColorScheme,
+  tooltipTrigger,
+  usNumberFormat,
+  useChartId,
+} from '../chart-utils'
 
 export type PieChartProps = {
   data: ChartData
@@ -324,7 +324,6 @@ export const PieChart = memo(
             style={{ userSelect: 'none' }}
             tabIndex={0}
             aria-label={label}
-            data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
               (set.data as number[]).map((item: number, itemKey: number) => (

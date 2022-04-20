@@ -1,23 +1,24 @@
 import { Chart } from 'chart.js'
-import { memo, useEffect, useRef, useContext } from 'react'
-import { ChartData } from '../chart-types'
-import {
-  tooltipTrigger,
-  chartConfig,
-  axesConfig,
-  setTooltipColorScheme,
-  horizontalBarValue,
-  usNumberFormat,
-  useChartId,
-} from '../chart-utils'
+import { memo, useContext, useEffect, useRef } from 'react'
+
+import { FluentBlocksContext, useTranslations } from '../../../lib'
+import { Legend } from '../Legend'
 import {
   buildPattern,
   chartBarDataPointPatterns,
   useChartColors,
 } from '../chart-patterns'
-import { FluentBlocksContext, useTranslations } from '../../../lib'
-import { Legend } from '../Legend'
 import { useChartStyles } from '../chart-styles'
+import { ChartData } from '../chart-types'
+import {
+  axesConfig,
+  chartConfig,
+  horizontalBarValue,
+  setTooltipColorScheme,
+  tooltipTrigger,
+  usNumberFormat,
+  useChartId,
+} from '../chart-utils'
 
 /**
  * @internal
@@ -338,7 +339,6 @@ export const HorizontalBarChart = memo(
               userSelect: 'none',
             }}
             aria-label={label}
-            data-chromatic="ignore"
           >
             {data.datasets.map((set, setKey) =>
               (set.data as number[]).map((item: number, itemKey: number) => (
