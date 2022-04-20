@@ -3,9 +3,9 @@
   "changelog": ["@changesets/changelog-github", { "repo": "OfficeDev/fluent-blocks" }],
   "commit": false,
   "fixed": [],
-  "linked": [["@fluentui/blocks-schemas", "@fluentui/react-blocks"]],
+  "linked": [["@fluent-blocks/schemas", "@fluent-blocks/react"]],
   "access": "public",
-  "baseBranch": "main",
+  "baseBranch": "latest",
   "updateInternalDependencies": "patch",
   "ignore": []
 }

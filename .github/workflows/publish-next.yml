@@ -1,8 +1,8 @@
-name: 'Deploy main to Chromatic'
+name: 'Publish next to Chromatic and NPM'
 
 on:
   push:
-    branches: [ latest, '!dependabot' ]
+    branches: [ next, '!dependabot' ]
 
 jobs:
   deploy:
@@ -39,3 +39,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
+
+      - name: Publish to NPM
+        uses: changesets/action@v1
+        with:
+          publish: pnpm publish:next
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
