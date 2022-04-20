@@ -6,5 +6,7 @@
     "@fluent-blocks/react": "9.0.0",
     "@fluent-blocks/schemas": "9.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "tame-glasses-pretend"
+  ]
 }
