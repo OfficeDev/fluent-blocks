@@ -25,4 +25,5 @@ module.exports = {
     },
     './addons/expand-all/register.js',
   ],
+  staticDirs: ['./public'],
 }
