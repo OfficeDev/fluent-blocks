@@ -1,9 +1,11 @@
 {
   "name": "@fluent-blocks/schemas",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "main": "index.d.ts",
   "types": "types/index.d.ts",
-  "files": [ "types" ],
+  "files": [
+    "types"
+  ],
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",

@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -79,8 +79,8 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluent-blocks/basic-icons": "workspace:8.0.0",
-    "@fluent-blocks/schemas": "workspace:8.0.0",
+    "@fluent-blocks/basic-icons": "workspace:9.0.0",
+    "@fluent-blocks/schemas": "workspace:9.0.0",
     "@fluentui/react-tabster": "latest",
     "lodash": "latest"
   }
