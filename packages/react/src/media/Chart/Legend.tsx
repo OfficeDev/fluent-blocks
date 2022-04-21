@@ -1,15 +1,15 @@
 import { MouseEventHandler, useEffect, useRef } from 'react'
+
 import {
   Button,
-  makeStyles,
-  Theme,
   Text,
+  Theme,
   mergeClasses as cx,
+  makeStyles,
 } from '@fluentui/react-components'
 
-import { sx, ThemeName, useTranslations } from '../../lib'
-
-import { legendLabels, Pattern } from './chart-patterns'
+import { ThemeName, sx, useTranslations } from '../../lib'
+import { Pattern, legendLabels } from './chart-patterns'
 import { ChartData, ChartDataset } from './chart-types'
 
 export type LegendProps = {
@@ -61,9 +61,7 @@ const useLegendItemStyles = makeStyles({
 const useLegendStyles = makeStyles({
   root: {
     display: 'flex',
-    ...sx.flexFlow('row', 'nowrap'),
-    overflowX: 'auto',
-    overflowY: 'hidden',
+    ...sx.flexFlow('row', 'wrap'),
   },
 })
 
