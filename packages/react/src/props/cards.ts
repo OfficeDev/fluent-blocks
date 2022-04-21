@@ -9,7 +9,9 @@ import {
   TablePropsOrElement,
   TabsPropsOrElement,
 } from '../blocks'
+import { InlineSequenceOrString } from '../inlines'
 import { EscapeElement } from '../lib'
+import { MenuActionSequence } from './menus'
 
 export type CardContentItemEntity =
   | HeadingPropsOrElement
@@ -24,6 +26,10 @@ export type CardContentItemEntity =
 export type CardContentItemSequence = CardContentItemEntity[]
 
 export interface CardProps extends Omit<NaturalCardProps, 'card'> {
-  card: CardContentItemSequence
+  card: Omit<NaturalCardProps['card'], 'title' | 'headerActions' | 'body'> & {
+    title: InlineSequenceOrString
+    headerActions?: MenuActionSequence
+    body: CardContentItemSequence
+  }
   contextualVariant?: 'block' | 'layout'
 }

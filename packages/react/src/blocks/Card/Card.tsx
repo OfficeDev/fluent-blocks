@@ -7,6 +7,7 @@ import { Card as FluentCard } from '@fluentui/react-components/unstable'
 import {
   Sequence,
   invalidCardContentItem,
+  key,
   rem,
   renderIfEscape,
   sx,
@@ -16,7 +17,7 @@ import {
 import { CardContentItemEntity, CardProps } from '../../props'
 import { renderIfDescriptionList } from '../DescriptionList/DescriptionList'
 import { renderIfFigure } from '../Figure/Figure'
-import { renderIfHeading } from '../Heading/Heading'
+import { Heading, renderIfHeading } from '../Heading/Heading'
 import { renderIfParagraph } from '../Paragraph/Paragraph'
 import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
 import { renderIfTabs } from '../Tabs/Tabs'
@@ -35,7 +36,6 @@ const CardContentItem = (o: CardContentItemEntity) =>
 const useCardStyles = makeStyles({
   root: {
     boxSizing: 'border-box',
-    ...sx.padding(rem(12)),
     ...sx.border('1px', 'solid', 'transparent'),
   },
   hc: {
@@ -56,6 +56,7 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   const commonStyles = useCommonStyles()
   const cardStyles = useCardStyles()
   const { themeName } = useFluentBlocksContext()
+  const id = key(card)
   return (
     <FluentCard
       className={cx(
@@ -67,9 +68,16 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         contextualVariant === 'block' && cardStyles.blockCard,
         contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}
-      tabIndex={0}
+      aria-labelledby={id}
     >
-      {Sequence<CardContentItemEntity>(card, CardContentItem, {
+      <Heading
+        paragraph={card.title}
+        level={3}
+        contextualVariant="card"
+        contextualId={id}
+        visuallyHidden={card.titleVisuallyHidden}
+      />
+      {Sequence<CardContentItemEntity>(card.body, CardContentItem, {
         contextualVariant: 'card',
       })}
     </FluentCard>

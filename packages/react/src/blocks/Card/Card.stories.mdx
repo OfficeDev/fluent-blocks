@@ -53,13 +53,10 @@ used to group content as a regular Block element as well.
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      card: [
-        {
-          paragraph: [{ text: 'This is a Card as a regular Block element.' }],
-          level: 1,
-        },
-        { paragraph: [{ text: fake('{{lorem.paragraph}}') }] },
-      ],
+      card: {
+        title: [{ text: 'This is a Card as a regular Block element.' }],
+        body: [{ paragraph: [{ text: fake('{{lorem.paragraph}}') }] }],
+      },
     }}
   >
     {seed(1234) || CardBlockTemplate.bind({})}
@@ -76,13 +73,10 @@ used to group content as a regular Block element as well.
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      card: [
-        {
-          paragraph: [{ text: 'This is a Card as a layout item.' }],
-          level: 1,
-        },
-        { paragraph: [{ text: fake('{{lorem.paragraph}}') }] },
-      ],
+      card: {
+        title: [{ text: 'This is a Card as a layout item.' }],
+        body: [{ paragraph: [{ text: fake('{{lorem.paragraph}}') }] }],
+      },
     }}
   >
     {seed(1234) || CardLayoutTemplate.bind({})}
