@@ -8,16 +8,18 @@ import {
 import { InlineSequenceOrString } from '../../../inlines'
 import { ButtonProps } from '../../../inputs'
 import { CardProps } from '../../../props'
+import { TabsProps } from '../../Tabs/Tabs'
 import { Card } from '../Card'
 
 export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
   widget: Omit<
     NaturalWidgetProps['widget'],
-    'title' | 'abstract' | 'footerAction'
+    'title' | 'abstract' | 'footerAction' | 'tabs'
   > & {
     title?: InlineSequenceOrString
     abstract?: InlineSequenceOrString
     footerAction?: Omit<ButtonProps, 'type' | 'variant' | 'iconOnly'>
+    tabs: TabsProps['tabs']
   }
   contextualVariant?: CardProps['contextualVariant']
 }

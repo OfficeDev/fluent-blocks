@@ -32,6 +32,7 @@ import {
   ShortInputsPropsOrElement,
   renderIfShortInputs,
 } from '../ShortInputs/ShortInputs'
+import { TablePropsOrElement, renderIfTable } from '../Table/Table'
 
 export interface TabProps
   extends Omit<
@@ -50,6 +51,7 @@ export type TabPanelItemEntity =
   | FigurePropsOrElement
   | ShortInputsPropsOrElement
   | DescriptionListPropsOrElement
+  | TablePropsOrElement
   | EscapeElement
 
 export type TabPanelItemSequence = TabPanelItemEntity[]
@@ -60,6 +62,7 @@ const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfFigure(o) ||
   renderIfShortInputs(o) ||
   renderIfDescriptionList(o) ||
+  renderIfTable(o) ||
   renderIfEscape(o) ||
   invalidTabPanelItem(o)
 

@@ -92,29 +92,72 @@ The `Layout` component is a block which can arrange its content items such that 
                 abstract: [{ text: fakeTitle(fake) }],
                 tabs: range(2).map((j) => ({
                   tab: { label: fakeTitle(fake) },
-                  panel: [
-                    {
-                      media: {
-                        label: 'Demo chart',
-                        chart: {
-                          type: ['line', 'doughnut'][i === 0 ? 1 : j],
-                          data: {
-                            labels: ['Jan', 'Feb', 'March', 'April', 'May'],
-                            datasets: [
-                              {
-                                label: 'Laptops',
-                                data: [1860, 7700, 4100, 3012, 2930],
+                  panel:
+                    j === 0
+                      ? [
+                          {
+                            media: {
+                              label: fakeTitle(fake),
+                              chart: {
+                                type: ['line', 'doughnut'][i === 0 ? 1 : j],
+                                data: {
+                                  labels: [
+                                    'Jan',
+                                    'Feb',
+                                    'March',
+                                    'April',
+                                    'May',
+                                  ],
+                                  datasets: [
+                                    {
+                                      label: 'Laptops',
+                                      data: [1860, 7700, 4100, 3012, 2930],
+                                    },
+                                    {
+                                      label: 'Watches',
+                                      data: [1200, 3600, 2480, 5049, 4596],
+                                    },
+                                  ],
+                                },
                               },
-                              {
-                                label: 'Watches',
-                                data: [1200, 3600, 2480, 5049, 4596],
-                              },
-                            ],
+                            },
                           },
-                        },
-                      },
-                    },
-                  ],
+                        ]
+                      : [
+                          {
+                            table: {
+                              caption: fakeTitle(fake),
+                              captionVisuallyHidden: true,
+                              rowHeaderColumn: 'c1',
+                              maxWidthVariant: 'textWidth',
+                              minWidthVariant: 'fill',
+                              columns: {
+                                c1: {
+                                  title: [{ text: 'Name ' }, { icon: 'info' }],
+                                },
+                                c2: { title: 'Office' },
+                                c3: { title: 'Email', hideable: true },
+                              },
+                              rows: range(8).reduce((acc, r) => {
+                                acc[`r${r}`] = {
+                                  c1: {
+                                    cell: fake(
+                                      '{{name.firstName}} {{name.lastName}}'
+                                    ),
+                                  },
+                                  c2: {
+                                    cell: [
+                                      { icon: 'organization' },
+                                      { text: fake(' {{address.city}}') },
+                                    ],
+                                  },
+                                  c3: { cell: fake('{{internet.email}}') },
+                                }
+                                return acc
+                              }, {}),
+                            },
+                          },
+                        ],
                 })),
                 footerAction: {
                   label: fakeTitle(fake),

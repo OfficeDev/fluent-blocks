@@ -1,9 +1,10 @@
+import { DescriptionListProps } from './DescriptionList'
+import { FigureProps } from './Figure'
 import { HeadingProps } from './Heading'
 import { ParagraphProps } from './Paragraph'
-import { FigureProps } from './Figure'
-import { TabsProps } from './Tabs'
 import { ShortInputsProps } from './ShortInputs'
-import { DescriptionListProps } from './DescriptionList'
+import { TableProps } from './Table'
+import { TabsProps } from './Tabs'
 
 export type CardContentItemEntity =
   | HeadingProps
@@ -12,6 +13,7 @@ export type CardContentItemEntity =
   | TabsProps
   | ShortInputsProps
   | DescriptionListProps
+  | TableProps
 
 export type CardContentItemSequence = CardContentItemEntity[]
 

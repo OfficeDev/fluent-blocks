@@ -6,6 +6,7 @@ import {
   HeadingPropsOrElement,
   ParagraphPropsOrElement,
   ShortInputsPropsOrElement,
+  TablePropsOrElement,
   TabsPropsOrElement,
 } from '../blocks'
 import { EscapeElement } from '../lib'
@@ -17,6 +18,7 @@ export type CardContentItemEntity =
   | TabsPropsOrElement
   | ShortInputsPropsOrElement
   | DescriptionListPropsOrElement
+  | TablePropsOrElement
   | EscapeElement
 
 export type CardContentItemSequence = CardContentItemEntity[]
