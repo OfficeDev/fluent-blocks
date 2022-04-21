@@ -12,7 +12,7 @@
     "lint-ci": "eslint --max-warnings 0 packages/react/src/**/*.{ts,tsx} packages/react/.storybook/*.js",
     "lint-staged": "lint-staged",
     "test": "pnpm run test -r --if-present",
-    "changeset:add": "pnpm exec changeset add",
+    "change": "pnpm exec changeset add",
     "changeset:version-latest": "pnpm exec changeset pre exit && pnpm exec changeset version && pnpm install --lockfile-only",
     "changeset:version-next": "pnpm exec changeset version && pnpm install --lockfile-only",
     "changeset:publish": "pnpm exec changeset publish"
