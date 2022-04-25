@@ -21,7 +21,7 @@ export interface CardProps {
   card: {
     title: InlineSequenceOrString
     titleVisuallyHidden?: boolean
-    headerActions?: MenuActionSequence
+    actions?: MenuActionSequence
     body: CardContentItemSequence
   }
 }

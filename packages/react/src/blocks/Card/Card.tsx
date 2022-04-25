@@ -4,6 +4,7 @@ import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Card as FluentCard } from '@fluentui/react-components/unstable'
 
+import { Overflow } from '../../inputs'
 import {
   Sequence,
   invalidCardContentItem,
@@ -37,6 +38,9 @@ const useCardStyles = makeStyles({
   root: {
     boxSizing: 'border-box',
     ...sx.border('1px', 'solid', 'transparent'),
+    '& > :not(.fui-CardPreview)': {
+      ...sx.margin('0 !important'),
+    },
   },
   hc: {
     ...sx.borderColor('var(--colorNeutralForeground1)'),
@@ -49,6 +53,19 @@ const useCardStyles = makeStyles({
     marginInlineEnd: 'auto',
     marginBlockStart: rem(20),
     marginBlockEnd: rem(20),
+  },
+  headingRow: {
+    display: 'flex',
+    paddingBlockStart: rem(8),
+  },
+  headingText: {
+    ...sx.flex(1, 1, 'auto'),
+    marginBlockStart: rem(4),
+    marginBlockEnd: rem(8),
+  },
+  cardContentSpacing: {
+    paddingInlineStart: rem(16),
+    paddingInlineEnd: rem(16),
   },
 })
 
@@ -70,16 +87,31 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
       )}
       aria-labelledby={id}
     >
-      <Heading
-        paragraph={card.title}
-        level={3}
-        contextualVariant="card"
-        contextualId={id}
-        visuallyHidden={card.titleVisuallyHidden}
-      />
-      {Sequence<CardContentItemEntity>(card.body, CardContentItem, {
-        contextualVariant: 'card',
-      })}
+      <div
+        role="none"
+        className={cx(cardStyles.cardContentSpacing, cardStyles.headingRow)}
+      >
+        <div
+          role="none"
+          className={cx(
+            cardStyles.headingText,
+            card.titleVisuallyHidden && commonStyles.visuallyHidden
+          )}
+        >
+          <Heading
+            paragraph={card.title}
+            level={3}
+            contextualVariant="card"
+            contextualId={id}
+          />
+        </div>
+        {card.actions && <Overflow overflow={card.actions} />}
+      </div>
+      <div role="none" className={cardStyles.cardContentSpacing}>
+        {Sequence<CardContentItemEntity>(card.body, CardContentItem, {
+          contextualVariant: 'card',
+        })}
+      </div>
     </FluentCard>
   )
 }

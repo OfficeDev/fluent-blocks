@@ -26,9 +26,9 @@ export type CardContentItemEntity =
 export type CardContentItemSequence = CardContentItemEntity[]
 
 export interface CardProps extends Omit<NaturalCardProps, 'card'> {
-  card: Omit<NaturalCardProps['card'], 'title' | 'headerActions' | 'body'> & {
+  card: Omit<NaturalCardProps['card'], 'title' | 'actions' | 'body'> & {
     title: InlineSequenceOrString
-    headerActions?: MenuActionSequence
+    actions?: MenuActionSequence
     body: CardContentItemSequence
   }
   contextualVariant?: 'block' | 'layout'

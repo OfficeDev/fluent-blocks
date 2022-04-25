@@ -229,7 +229,7 @@ that time `View` will call its interaction callback with the update.
                 },
               },
             ],
-            sections: range(2).map(() => ({
+            sections: range(2).map((r) => ({
               title: [{ text: fakeTitle(fake) }],
               blocks: [
                 ...range(3).map(() => ({
@@ -241,6 +241,14 @@ that time `View` will call its interaction callback with the update.
                   card: {
                     title: fakeTitle(fake),
                     body: [{ paragraph: fake('{{lorem.paragraph}}') }],
+                    actions: [
+                      {
+                        type: 'action',
+                        actionId: `edit:card-${r}`,
+                        label: 'Edit',
+                        icon: 'edit',
+                      },
+                    ],
                   },
                 },
               ],
@@ -274,6 +282,8 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
         blocks: [
           {
             card: {
+              title: 'How to get started',
+              titleVisuallyHidden: true,
               body: [
                 {
                   tabs: [

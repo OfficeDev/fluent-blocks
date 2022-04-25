@@ -3,4 +3,4 @@
 '@fluent-blocks/schemas': minor
 ---
 
-Adjust cart content constituents to handle 280px viewport widths. Add 'flush' variant to Main.
+Adjust card content constituents to handle 280px viewport widths. Add 'flush' variant to Main.
