@@ -1,8 +1,6 @@
 import { Parameters } from '@storybook/addons'
 
-import { Escape } from '../../lib'
-import { LayoutProps } from '../../props/layout-properties'
-import { Paragraph } from '../Paragraph/Paragraph'
+import { LayoutProps } from '../../props'
 import { Layout } from './Layout'
 
 export default {
@@ -22,7 +20,12 @@ LayoutJsonTest.args = {
     variant: 'grid',
     items: [
       {
-        item: { card: [{ paragraph: '7ff644a3-eb27-4e97-8978-5d7b3d569388' }] },
+        item: {
+          card: {
+            title: '',
+            body: [{ paragraph: '7ff644a3-eb27-4e97-8978-5d7b3d569388' }],
+          },
+        },
       },
     ],
   },

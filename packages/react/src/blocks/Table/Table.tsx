@@ -348,7 +348,7 @@ export const Table = (props: TableProps) => {
       <div role="none" className={tableStyles.rootSpacingAdjust}>
         <div role="none" className={tableStyles.rootInner}>
           <div
-            role="none"
+            role="grid"
             className={cx(
               tableStyles.grid,
               minWidthVariant === 'fill' && tableStyles['grid--fill'],

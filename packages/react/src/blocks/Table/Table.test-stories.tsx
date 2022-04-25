@@ -1,6 +1,7 @@
 import { Parameters } from '@storybook/addons'
 
-import { Table, TableProps } from './Table'
+import { TableProps } from '../../props'
+import { Table } from './Table'
 
 export default {
   title: 'Tests/Table',
