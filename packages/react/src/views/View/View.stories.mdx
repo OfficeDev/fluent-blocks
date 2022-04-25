@@ -238,13 +238,10 @@ that time `View` will call its interaction callback with the update.
                   })),
                 })),
                 {
-                  card: [
-                    {
-                      paragraph: fakeTitle(fake),
-                      level: 3,
-                    },
-                    { paragraph: fake('{{lorem.paragraph}}') },
-                  ],
+                  card: {
+                    title: fakeTitle(fake),
+                    body: [{ paragraph: fake('{{lorem.paragraph}}') }],
+                  },
                 },
               ],
             })),
@@ -276,124 +273,127 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
         message: { media: { label: 'Hello', illustration: 'hello' } },
         blocks: [
           {
-            card: [
-              {
-                tabs: [
-                  {
-                    tab: { label: '1. Build your app locally' },
-                    panel: [
-                      { paragraph: 'Change this code', level: 2 },
-                      {
-                        paragraph: [
-                          'The front end is a ',
-                          { text: 'create-react-app', variant: 'code' },
-                          '. The entry point is ',
-                          { text: 'tabs/src/index.tsx', variant: 'code' },
-                          '. Just save any file and this page will reload automatically.',
-                        ],
-                      },
-                      {
-                        paragraph: 'Get the current user',
-                        level: 2,
-                      },
-                      {
-                        paragraph:
-                          'Access basic information about the user like this:',
-                      },
-                      {
-                        caption:
-                          'Javascript code for accessing the user’s basic information',
-                        captionVisuallyHidden: true,
-                        media: {
-                          label:
-                            'Typescript code for fetching Teams user credentials',
-                          code: 'const credential = new TeamsUserCredential();\nconst user = await credential.getUserInfo();',
+            card: {
+              body: [
+                {
+                  tabs: [
+                    {
+                      tab: { label: '1. Build your app locally' },
+                      panel: [
+                        { paragraph: 'Change this code', level: 2 },
+                        {
+                          paragraph: [
+                            'The front end is a ',
+                            { text: 'create-react-app', variant: 'code' },
+                            '. The entry point is ',
+                            { text: 'tabs/src/index.tsx', variant: 'code' },
+                            '. Just save any file and this page will reload automatically.',
+                          ],
                         },
-                      },
-                      {
-                        paragraph: 'Get the user’s profile photo',
-                        level: 2,
-                      },
-                      {
-                        paragraph:
-                          'Click below to authorize this app to read your profile photo using Microsoft Graph.',
-                      },
-                      {
-                        inputs: [
-                          {
-                            type: 'action',
-                            actionId: 'auth',
-                            label: 'Authorize',
-                            variant: 'primary',
+                        {
+                          paragraph: 'Get the current user',
+                          level: 2,
+                        },
+                        {
+                          paragraph:
+                            'Access basic information about the user like this:',
+                        },
+                        {
+                          caption:
+                            'Javascript code for accessing the user’s basic information',
+                          captionVisuallyHidden: true,
+                          media: {
+                            label:
+                              'Typescript code for fetching Teams user credentials',
+                            code: 'const credential = new TeamsUserCredential();\nconst user = await credential.getUserInfo();',
                           },
-                        ],
-                        variant: 'narrow-block',
-                      },
-                    ],
-                  },
-                  {
-                    tab: { label: '2. Provision & deploy to the cloud' },
-                    panel: [
-                      {
-                        paragraph: 'Deploy to the cloud',
-                        level: 2,
-                      },
-                      {
-                        paragraph:
-                          'Before publishing your app to Teams App Catalog, you may want to provision and deploy your app’s resources to the cloud to make sure your app will be running smoothly!',
-                      },
-                      {
-                        paragraph: [
-                          'To provision your resources, you can either use our CLI command ',
-                          { text: 'teamsfx provision', variant: 'code' },
-                          ' or apply “Teams: Provision in the cloud” in Command palette.',
-                        ],
-                      },
-                      {
-                        paragraph: [
-                          'To deploy your app, you can either use our CLI command ',
-                          { text: 'teamsfx deploy', variant: 'code' },
-                          ' or apply “Teams: Deploy to the cloud” in Command palette.',
-                        ],
-                      },
-                      {
-                        media: {
-                          light: 'https://i.ibb.co/LdW9rHH/deploy.png',
-                          dark: 'https://i.ibb.co/LdW9rHH/deploy.png',
-                          highContrast: 'https://i.ibb.co/LdW9rHH/deploy.png',
-                          label:
-                            'Screenshot of deploying in Visual Studio Code.',
                         },
-                      },
-                    ],
-                  },
-                  {
-                    tab: { label: '3. Publish to Teams' },
-                    panel: [
-                      {
-                        paragraph: 'Publish to Teams',
-                        level: 2,
-                      },
-                      {
-                        paragraph:
-                          'Your app’s resources and infrastructure are deployed and ready? Publish and register your app to Teams app catalog to share your app with others in your organization!',
-                      },
-                      {
-                        media: {
-                          light: 'https://i.ibb.co/pj5VzYQ/publish.png',
-                          dark: 'https://i.ibb.co/pj5VzYQ/publish.png',
-                          highContrast: 'https://i.ibb.co/pj5VzYQ/publish.png',
-                          label:
-                            'Screenshot of publishing in Visual Studio Code.',
+                        {
+                          paragraph: 'Get the user’s profile photo',
+                          level: 2,
                         },
-                      },
-                    ],
-                  },
-                ],
-                label: 'Steps to get started',
-                tabListVariant: 'center',
-              },
-            ],
+                        {
+                          paragraph:
+                            'Click below to authorize this app to read your profile photo using Microsoft Graph.',
+                        },
+                        {
+                          inputs: [
+                            {
+                              type: 'action',
+                              actionId: 'auth',
+                              label: 'Authorize',
+                              variant: 'primary',
+                            },
+                          ],
+                          variant: 'narrow-block',
+                        },
+                      ],
+                    },
+                    {
+                      tab: { label: '2. Provision & deploy to the cloud' },
+                      panel: [
+                        {
+                          paragraph: 'Deploy to the cloud',
+                          level: 2,
+                        },
+                        {
+                          paragraph:
+                            'Before publishing your app to Teams App Catalog, you may want to provision and deploy your app’s resources to the cloud to make sure your app will be running smoothly!',
+                        },
+                        {
+                          paragraph: [
+                            'To provision your resources, you can either use our CLI command ',
+                            { text: 'teamsfx provision', variant: 'code' },
+                            ' or apply “Teams: Provision in the cloud” in Command palette.',
+                          ],
+                        },
+                        {
+                          paragraph: [
+                            'To deploy your app, you can either use our CLI command ',
+                            { text: 'teamsfx deploy', variant: 'code' },
+                            ' or apply “Teams: Deploy to the cloud” in Command palette.',
+                          ],
+                        },
+                        {
+                          media: {
+                            light: 'https://i.ibb.co/LdW9rHH/deploy.png',
+                            dark: 'https://i.ibb.co/LdW9rHH/deploy.png',
+                            highContrast: 'https://i.ibb.co/LdW9rHH/deploy.png',
+                            label:
+                              'Screenshot of deploying in Visual Studio Code.',
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      tab: { label: '3. Publish to Teams' },
+                      panel: [
+                        {
+                          paragraph: 'Publish to Teams',
+                          level: 2,
+                        },
+                        {
+                          paragraph:
+                            'Your app’s resources and infrastructure are deployed and ready? Publish and register your app to Teams app catalog to share your app with others in your organization!',
+                        },
+                        {
+                          media: {
+                            light: 'https://i.ibb.co/pj5VzYQ/publish.png',
+                            dark: 'https://i.ibb.co/pj5VzYQ/publish.png',
+                            highContrast:
+                              'https://i.ibb.co/pj5VzYQ/publish.png',
+                            label:
+                              'Screenshot of publishing in Visual Studio Code.',
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                  label: 'Steps to get started',
+                  tabListVariant: 'center',
+                },
+              ],
+            },
           },
         ],
       },
