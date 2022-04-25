@@ -38,8 +38,8 @@ const useCardStyles = makeStyles({
   root: {
     boxSizing: 'border-box',
     ...sx.border('1px', 'solid', 'transparent'),
-    '& > :not(.fui-CardPreview)': {
-      ...sx.margin('0 !important'),
+    '& > .fuib-CardContentItem:not(.fui-CardPreview)': {
+      ...sx.margin(0),
     },
   },
   hc: {
@@ -89,7 +89,10 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
     >
       <div
         role="none"
-        className={cx(cardStyles.cardContentSpacing, cardStyles.headingRow)}
+        className={`${cx(
+          cardStyles.cardContentSpacing,
+          cardStyles.headingRow
+        )} fuib-CardContentItem`}
       >
         <div
           role="none"
@@ -107,7 +110,10 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         </div>
         {card.actions && <Overflow overflow={card.actions} />}
       </div>
-      <div role="none" className={cardStyles.cardContentSpacing}>
+      <div
+        role="none"
+        className={`${cardStyles.cardContentSpacing} fuib-CardContentItem`}
+      >
         {Sequence<CardContentItemEntity>(card.body, CardContentItem, {
           contextualVariant: 'card',
         })}
