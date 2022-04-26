@@ -34,13 +34,12 @@ export interface ShortInputsProps
 
 const useShortInputsStyles = makeStyles({
   root: {
-    marginBlockStart: '.5rem',
-    marginBlockEnd: '1rem',
+    marginBlockStart: 0,
+    marginBlockEnd: rem(12),
   },
   cardContext: {
     marginInlineStart: '-.5rem',
     marginInlineEnd: '-.5rem',
-    marginBlockEnd: 0,
   },
   'shortInputSequence--flex': {
     display: 'flex',

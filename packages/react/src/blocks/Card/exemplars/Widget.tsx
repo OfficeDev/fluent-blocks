@@ -8,16 +8,18 @@ import {
 import { InlineSequenceOrString } from '../../../inlines'
 import { ButtonProps } from '../../../inputs'
 import { CardProps } from '../../../props'
+import { TabsProps } from '../../Tabs/Tabs'
 import { Card } from '../Card'
 
 export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
   widget: Omit<
     NaturalWidgetProps['widget'],
-    'title' | 'abstract' | 'footerAction'
+    'title' | 'abstract' | 'footerAction' | 'tabs'
   > & {
-    title?: InlineSequenceOrString
+    title: InlineSequenceOrString
     abstract?: InlineSequenceOrString
     footerAction?: Omit<ButtonProps, 'type' | 'variant' | 'iconOnly'>
+    tabs: TabsProps['tabs']
   }
   contextualVariant?: CardProps['contextualVariant']
 }
@@ -31,14 +33,16 @@ export const widgetCard = ({
   widget: { title, abstract, label, tabs, footerAction },
   contextualVariant,
 }: WidgetProps): CardProps => ({
-  card: [
-    ...(title ? [{ paragraph: title, level: 3 as HeadingLevel }] : []),
-    ...(abstract ? [{ paragraph: abstract }] : []),
-    ...(tabs ? (tabs.length > 1 ? [{ tabs, label }] : tabs[0].panel) : []),
-    ...(footerAction
-      ? [{ inputs: [{ ...footerAction, ...widgetFooterActionProps }] }]
-      : []),
-  ],
+  card: {
+    title,
+    body: [
+      ...(abstract ? [{ paragraph: abstract }] : []),
+      ...(tabs ? (tabs.length > 1 ? [{ tabs, label }] : tabs[0].panel) : []),
+      ...(footerAction
+        ? [{ inputs: [{ ...footerAction, ...widgetFooterActionProps }] }]
+        : []),
+    ],
+  },
   contextualVariant,
 })
 

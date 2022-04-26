@@ -30,7 +30,6 @@ export type ShortInputContextualVariant =
   | 'block-inputs'
   | 'card-inputs'
   | 'narrow-inputs'
-  | 'tabs'
   | 'toolbar-item'
   | 'toolbar-item--needs-update'
   | 'toolbar-item--hidden'
