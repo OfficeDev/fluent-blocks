@@ -82,10 +82,7 @@ const useTabsStyles = makeStyles({
     overflowX: 'hidden',
     overflowY: 'hidden',
   },
-  tabListCardContext: {
-    marginInlineStart: rem(-8),
-    marginInlineEnd: rem(-8),
-  },
+  tabListCardContext: {},
   tabListCenter: {
     justifyContent: 'center',
   },
