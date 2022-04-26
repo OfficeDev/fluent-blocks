@@ -89,6 +89,9 @@ const useTabsStyles = makeStyles({
   tabListCenter: {
     justifyContent: 'center',
   },
+  tabList: {
+    marginBlockEnd: rem(8),
+  },
   tabs: {
     flexGrow: 1,
   },
@@ -120,6 +123,7 @@ export const Tabs = ({
           setActiveTab(itemIds.indexOf(value as string))
         }}
         className={cx(
+          tabsStyles.tabList,
           contextualVariant === 'card' && tabsStyles.tabListCardContext
         )}
       >
