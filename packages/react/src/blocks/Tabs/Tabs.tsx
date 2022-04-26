@@ -92,6 +92,9 @@ const useTabsStyles = makeStyles({
   tabs: {
     flexGrow: 1,
   },
+  tab: {
+    flexShrink: 1,
+  },
 })
 
 function tabId(itemId: string) {
@@ -125,7 +128,12 @@ export const Tabs = ({
         )}
       >
         {tabs.map((tabItem, t) => (
-          <Tab key={itemIds[t]} value={itemIds[t]} id={tabId(itemIds[t])}>
+          <Tab
+            key={itemIds[t]}
+            value={itemIds[t]}
+            id={tabId(itemIds[t])}
+            className={tabsStyles.tab}
+          >
             {tabItem.tab.label}
           </Tab>
         ))}

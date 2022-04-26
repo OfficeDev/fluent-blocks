@@ -28,6 +28,7 @@ const useButtonStyles = makeStyles({
     textOverflow: 'ellipsis',
     minWidth: rem(32),
     maxWidth: '100%',
+    flexShrink: 0,
   },
   fill: {
     width: '100%',
