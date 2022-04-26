@@ -52,7 +52,7 @@ export const useTextBlockStyles = makeStyles({
   root: {
     lineHeight: 20 / 14,
     marginBlockStart: 0,
-    marginBlockEnd: rem(12),
+    marginBlockEnd: rem(8),
   },
   code: {
     ...sx.padding('.5rem', '1rem'),
