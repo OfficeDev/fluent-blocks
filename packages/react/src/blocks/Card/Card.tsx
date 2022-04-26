@@ -41,6 +41,7 @@ const useCardStyles = makeStyles({
     '& > .fuib-CardContentItem:not(.fui-CardPreview)': {
       ...sx.margin(0),
     },
+    paddingBlockEnd: rem(4),
   },
   hc: {
     ...sx.borderColor('var(--colorNeutralForeground1)'),
@@ -61,7 +62,6 @@ const useCardStyles = makeStyles({
   headingText: {
     ...sx.flex(1, 1, 'auto'),
     marginBlockStart: rem(4),
-    marginBlockEnd: rem(8),
   },
   cardContentSpacing: {
     paddingInlineStart: rem(16),

@@ -35,7 +35,7 @@ export interface ShortInputsProps
 const useShortInputsStyles = makeStyles({
   root: {
     marginBlockStart: 0,
-    marginBlockEnd: '1rem',
+    marginBlockEnd: rem(12),
   },
   cardContext: {
     marginInlineStart: '-.5rem',

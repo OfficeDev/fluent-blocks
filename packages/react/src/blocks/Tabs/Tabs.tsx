@@ -5,7 +5,7 @@ import {
   TabsItemProps as NaturalTabsItemProps,
   TabsProps as NaturalTabsProps,
 } from '@fluent-blocks/schemas'
-import { makeStyles } from '@fluentui/react-components'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Tab, TabList } from '@fluentui/react-components/unstable'
 
@@ -82,15 +82,9 @@ const useTabsStyles = makeStyles({
     overflowX: 'hidden',
     overflowY: 'hidden',
   },
-  tabList: {
-    display: 'flex',
-    ...sx.flexFlow('row', 'nowrap'),
-    paddingBlockStart: rem(2),
-    paddingBlockEnd: rem(2),
-  },
   tabListCardContext: {
-    marginInlineStart: '-.25rem',
-    marginInlineEnd: '-.25rem',
+    marginInlineStart: rem(-8),
+    marginInlineEnd: rem(-8),
   },
   tabListCenter: {
     justifyContent: 'center',
@@ -111,6 +105,7 @@ export const Tabs = ({
   tabs,
   label,
   tabVariant = 'transparent',
+  contextualVariant = 'block',
 }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(0)
   const itemIds = tabs.map(() => uniqueId('tabItem'))
@@ -124,6 +119,9 @@ export const Tabs = ({
         onTabSelect={(_e, { value }) => {
           setActiveTab(itemIds.indexOf(value as string))
         }}
+        className={cx(
+          contextualVariant === 'card' && tabsStyles.tabListCardContext
+        )}
       >
         {tabs.map((tabItem, t) => (
           <Tab key={itemIds[t]} value={itemIds[t]} id={tabId(itemIds[t])}>
