@@ -1,6 +1,6 @@
-// The following is a combination of 3 files retrieved from CSSWG’s CSS Color 4
-// module. It was modified to support TypeScript types adapted for the Fluent
-// Blocks `colors` package and formatted to meet its style criteria.
+// The following is a combination of several files retrieved from CSSWG’s
+// CSS Color 4 module. It was modified to support TypeScript types adapted for
+// the Fluent Blocks `colors` package and formatted to meet its style criteria.
 import { Vec2, Vec3, Vec4 } from './types'
 
 // [willshown]: Adjusted to export a TypeScript module. Retrieved on 24 May 2021
@@ -462,11 +462,11 @@ export function LCH_to_Lab(LCH: Vec3) {
  */
 export function rgbToHsv(rgb: Vec3) {
   const [r, g, b] = rgb
-  const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b)
-  let h: number;
-    let s;
-    const v = max
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  let h: number
+  let s
+  const v = max
 
   const d = max - min
   s = max == 0 ? 0 : d / max
@@ -642,13 +642,22 @@ export function hslToRgb(hue: number, sat: number, light: number) {
 }
 
 export function hueToChannel(t1: number, t2: number, hue: number): number {
-  if (hue < 0) {hue += 6}
-  if (hue >= 6) {hue -= 6}
+  if (hue < 0) {
+    hue += 6
+  }
+  if (hue >= 6) {
+    hue -= 6
+  }
 
-  if (hue < 1) {return (t2 - t1) * hue + t1}
-  else if (hue < 3) {return t2}
-  else if (hue < 4) {return (t2 - t1) * (4 - hue) + t1}
-  else {return t1}
+  if (hue < 1) {
+    return (t2 - t1) * hue + t1
+  } else if (hue < 3) {
+    return t2
+  } else if (hue < 4) {
+    return (t2 - t1) * (4 - hue) + t1
+  } else {
+    return t1
+  }
 }
 
 // These are the naive algorithms from CS Color 4
@@ -661,10 +670,10 @@ export function naive_CMYK_to_sRGB(CMYK: Vec4) {
   // because the naive algorithm does not generate out of gamut colors
   // neither does it generate accurate simulations of practical CMYK colors
 
-  const cyan = CMYK[0];
-    const magenta = CMYK[1];
-    const yellow = CMYK[2];
-    const black = CMYK[3]
+  const cyan = CMYK[0]
+  const magenta = CMYK[1]
+  const yellow = CMYK[2]
+  const black = CMYK[3]
 
   const red = 1 - Math.min(1, cyan * (1 - black) + black)
   const green = 1 - Math.min(1, magenta * (1 - black) + black)
@@ -682,9 +691,9 @@ export function naive_sRGB_to_CMYK(RGB: Vec3) {
   // the naive algorithm does not generate out of gamut colors
   // neither does it generate accurate simulations of practical CMYK colors
 
-  const red = RGB[0];
-    const green = RGB[1];
-    const blue = RGB[2]
+  const red = RGB[0]
+  const green = RGB[1]
+  const blue = RGB[2]
 
   const black = 1 - Math.max(red, green, blue)
   const cyan = black == 1.0 ? 0 : (1 - red - black) / (1 - black)
@@ -726,4 +735,48 @@ export function XYZ_to_uv(XYZ: Vec3) {
   const Z = XYZ[2]
   const denom = X + 15 * Y + 3 * Z
   return [(4 * X) / denom, (9 * Y) / denom] as Vec2
+}
+
+// [willshown]: Truncated to export only relevant functions and adjusted to export a TypeScript
+// module, some additional adjustments to remove alpha support. Retrieved on 24 May 2021
+// from https://raw.githubusercontent.com/LeaVerou/css.land/master/lch/lch.js
+
+function is_LCH_inside_sRGB(l: number, c: number, h: number): boolean {
+  const ε = 0.000005
+  const rgb = LCH_to_sRGB([+l, +c, +h])
+  return rgb.reduce(
+    (a: boolean, b: number) => a && b >= 0 - ε && b <= 1 + ε,
+    true
+  )
+}
+
+export function snap_into_gamut(_l: number, a: number, b: number): Vec3 {
+  // Moves an LCH color into the sRGB gamut
+  // by holding the l and h steady,
+  // and adjusting the c via binary-search
+  // until the color is on the sRGB boundary.
+
+  // .0001 chosen fairly arbitrarily as "close enough"
+  const ε = 0.0001
+
+  let [l, c, h] = Lab_to_LCH([_l, a, b])
+
+  if (is_LCH_inside_sRGB(l, c, h)) {
+    return [_l, a, b]
+  }
+
+  let hiC = c
+  let loC = 0
+  c /= 2
+
+  while (hiC - loC > ε) {
+    if (is_LCH_inside_sRGB(l, c, h)) {
+      loC = c
+    } else {
+      hiC = c
+    }
+    c = (hiC + loC) / 2
+  }
+
+  return LCH_to_Lab([l, c, h])
 }
