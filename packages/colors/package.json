@@ -27,5 +27,8 @@
   },
   "devDependencies": {
     "just-scripts": "latest"
+  },
+  "dependencies": {
+    "nanoid": "latest"
   }
 }
