@@ -1,5 +1,6 @@
 import { LAB_to_sRGB, LCH_to_Lab, Lab_to_LCH, snap_into_gamut } from './csswg'
-import { Palette, Vec3 } from './types'
+import { getPointOnCurvePath, getPointsOnCurvePath } from './geometry'
+import { CurvedHelixPath, Palette, Vec3 } from './types'
 
 function targetLightnessForRange(t: number, range = [0, 100]): number {
   const delta = range[1] - range[0]
@@ -89,17 +90,6 @@ function paletteShadesToHex(paletteShades: Vec3[]): string[] {
   return paletteShades.map(Lab_to_hex)
 }
 
-export type Curve = [Vec3, Vec3, Vec3]
-
-export interface CurvePath {
-  curves: Curve[]
-}
-
-export interface CurvedHelixPath extends CurvePath {
-  torsion?: number
-  torsionT0?: number
-}
-
 function getPointOnHelix(
   pointOnCurve: Vec3,
   torsion = 0,
@@ -111,23 +101,13 @@ function getPointOnHelix(
   return LCH_to_Lab([l, c, h + hueOffset])
 }
 
-function getPointOnCurvePath(curvePath: CurvePath, t: number): Vec3 {
-  // todo: implement based on CurvePath.prototype.getPoint.call(curvedHelixPath, t)
-  return [0, 0, 0]
-}
-
-function getPointsOnCurvePath(curvePath: CurvePath, divisions: number): Vec3[] {
-  // todo: implement based on CurvePath.prototype.getPoints.call(curvedHelixPath, divisions)
-  return [[0, 0, 0]]
-}
-
 function getPointOnCurvedHelixPathWithinGamut(
   curvedHelixPath: CurvedHelixPath,
   t: number
 ): Vec3 {
   return snap_into_gamut(
     getPointOnHelix(
-      getPointOnCurvePath(curvedHelixPath, t),
+      getPointOnCurvePath(curvedHelixPath, t)!,
       curvedHelixPath.torsion,
       curvedHelixPath.torsionT0
     )
@@ -151,8 +131,8 @@ export function curvePathFromPalette({
 
   return {
     curves: [
-      [blackPosition, darkControlPosition, keyColorPosition],
-      [keyColorPosition, lightControlPosition, whitePosition],
+      { points: [blackPosition, darkControlPosition, keyColorPosition] },
+      { points: [keyColorPosition, lightControlPosition, whitePosition] },
     ],
     torsion: hueTorsion,
     torsionT0: l,
