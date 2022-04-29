@@ -4,12 +4,12 @@ import { Palette, Vec3 } from './types'
 function targetLightnessForRange(t: number, range = [0, 100]): number {
   const delta = range[1] - range[0]
   const offset = range[0]
-  const line = t * delta + offset
-  return Math.max(range[0], Math.min(range[1], line))
+  const linearInterpolation = t * delta + offset
+  return Math.max(range[0], Math.min(range[1], linearInterpolation))
 }
 
 function paletteShadesFromCurvePoints(
-  curvePoints: Vector3[],
+  curvePoints: Vec3[],
   nShades: number,
   range = [0, 100]
 ): Vec3[] {
@@ -24,17 +24,12 @@ function paletteShadesFromCurvePoints(
   for (let i = 0; i < nShades; i++) {
     const l = targetLightnessForRange(i / (nShades - 1), range)
 
-    while (l > curvePoints[c + 1].z) {
+    while (l > curvePoints[c + 1][0]) {
       c++
     }
 
-    const a1 = curvePoints[c].x
-    const b1 = curvePoints[c].y
-    const l1 = curvePoints[c].z
-
-    const a2 = curvePoints[c + 1].x
-    const b2 = curvePoints[c + 1].y
-    const l2 = curvePoints[c + 1].z
+    const [l1, a1, b1] = curvePoints[c]
+    const [l2, a2, b2] = curvePoints[c + 1]
 
     const u = (l - l1) / (l2 - l1)
 
@@ -42,10 +37,10 @@ function paletteShadesFromCurvePoints(
       l1 + (l2 - l1) * u,
       a1 + (a2 - a1) * u,
       b1 + (b2 - b1) * u,
-    ]
+    ] as Vec3
   }
 
-  return paletteShades.map(([l, a, b]) => snap_into_gamut(l, a, b))
+  return paletteShades.map(snap_into_gamut)
 }
 
 export function paletteShadesFromCurve(
@@ -54,10 +49,16 @@ export function paletteShadesFromCurve(
   curveDepth = 12,
   range = [0, 100]
 ): Vec3[] {
-  const curvePoints = curve
-    .getPoints(Math.ceil((curveDepth * (1 + Math.abs(curve.torsion || 1))) / 2))
-    .map((curvePoint) => rotatePointHue(curvePoint, curve.torsion, curve.torsionL0)) // getPoints gets a depth of 2 * n + 1
-  return paletteShadesFromCurvePoints(curvePoints, nShades, range)
+  return paletteShadesFromCurvePoints(
+    getPointsOnCurvePath(
+      curve,
+      Math.ceil((curveDepth * (1 + Math.abs(curve.torsion || 1))) / 2)
+    ).map((curvePoint: Vec3) =>
+      getPointOnHelix(curvePoint, curve.torsion, curve.torsionT0)
+    ),
+    nShades,
+    range
+  )
 }
 
 export function sRGB_to_hex(rgb: Vec3): string {
@@ -88,36 +89,49 @@ function paletteShadesToHex(paletteShades: Vec3[]): string[] {
   return paletteShades.map(Lab_to_hex)
 }
 
-export interface CurvedHelixPath extends CurvePath<Vector3> {
-  torsion?: number
-  torsionL0?: number
+export type Curve = [Vec3, Vec3, Vec3]
+
+export interface CurvePath {
+  curves: Curve[]
 }
 
-function rotatePointHue(point: Vector3, torsion = 0, torsionL0 = 50): Vector3 {
-  const t = point.z
+export interface CurvedHelixPath extends CurvePath {
+  torsion?: number
+  torsionT0?: number
+}
 
-  const hueOffset = torsion * (t - torsionL0)
+function getPointOnHelix(
+  pointOnCurve: Vec3,
+  torsion = 0,
+  torsionT0 = 50
+): Vec3 {
+  const t = pointOnCurve[0]
+  const [l, c, h] = Lab_to_LCH(pointOnCurve)
+  const hueOffset = torsion * (t - torsionT0)
+  return LCH_to_Lab([l, c, h + hueOffset])
+}
 
-  const [l1, c1, h1] = Lab_to_LCH([point.z, point.x, point.y])
-  const [l2, a2, b2] = LCH_to_Lab([l1, c1, h1 + hueOffset])
+function getPointOnCurvePath(curvePath: CurvePath, t: number): Vec3 {
+  // todo: implement based on CurvePath.prototype.getPoint.call(curvedHelixPath, t)
+  return [0, 0, 0]
+}
 
-  point.set(a2, b2, l2)
-
-  return point
+function getPointsOnCurvePath(curvePath: CurvePath, divisions: number): Vec3[] {
+  // todo: implement based on CurvePath.prototype.getPoints.call(curvedHelixPath, divisions)
+  return [[0, 0, 0]]
 }
 
 function getPointOnCurvedHelixPathWithinGamut(
-  this: CurvedHelixPath,
+  curvedHelixPath: CurvedHelixPath,
   t: number
-): Vector3 {
-  const point = rotatePointHue(
-    CurvePath.prototype.getPoint.call(this, t),
-    this.torsion,
-    this.torsionL0
+): Vec3 {
+  return snap_into_gamut(
+    getPointOnHelix(
+      getPointOnCurvePath(curvedHelixPath, t),
+      curvedHelixPath.torsion,
+      curvedHelixPath.torsionT0
+    )
   )
-  const [l, a, b] = snap_into_gamut(point.z, point.x, point.y)
-  point.set(a, b, l)
-  return point
 }
 
 export function curvePathFromPalette({
@@ -126,35 +140,23 @@ export function curvePathFromPalette({
   lightCp,
   hueTorsion,
 }: Palette): CurvedHelixPath {
-  const blackPos = new Vector3(0, 0, 0)
-  const whitePos = new Vector3(0, 0, 100)
-  const [l, a, b] = LCH_to_Lab(keyColor)
-  const keyColorPos = new Vector3(a, b, l)
+  const blackPosition = [0, 0, 0]
+  const whitePosition = [100, 0, 0]
+  const keyColorPosition = LCH_to_Lab(keyColor)
+  const [l, a, b] = keyColorPosition
 
-  const curve = new CurvePath<Vector3>() as CurvedHelixPath
+  const darkControlPosition = [l * (1 - darkCp), a, b]
 
-  const darkControlPos = new Vector3(
-    keyColorPos.x,
-    keyColorPos.y,
-    keyColorPos.z * (1 - darkCp)
-  )
+  const lightControlPosition = [l + (100 - l) * lightCp, a, b]
 
-  curve.add(new QuadraticBezierCurve3(blackPos, darkControlPos, keyColorPos))
-
-  const lightControlPos = new Vector3(
-    keyColorPos.x,
-    keyColorPos.y,
-    keyColorPos.z + (100 - keyColorPos.z) * lightCp
-  )
-
-  curve.add(new QuadraticBezierCurve3(keyColorPos, lightControlPos, whitePos))
-
-  curve.torsion = hueTorsion
-  curve.torsionL0 = l
-
-  curve.getPoint = getPointOnCurvedHelixPathWithinGamut
-
-  return curve
+  return {
+    curves: [
+      [blackPosition, darkControlPosition, keyColorPosition],
+      [keyColorPosition, lightControlPosition, whitePosition],
+    ],
+    torsion: hueTorsion,
+    torsionT0: l,
+  } as CurvedHelixPath
 }
 
 export function cssGradientFromCurve(

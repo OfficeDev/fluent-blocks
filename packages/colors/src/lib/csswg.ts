@@ -75,7 +75,7 @@ export function lin_sRGB(RGB: Vec3) {
   // Extended transfer function:
   // for negative values,  linear portion is extended on reflection of axis,
   // then reflected power function is used.
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -94,7 +94,7 @@ export function gam_sRGB(RGB: Vec3) {
   // Extended transfer function:
   // For negative values, linear portion extends on reflection
   // of axis, then uses reflected pow below that
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -180,7 +180,7 @@ export function lin_ProPhoto(RGB: Vec3) {
   // Transfer curve is gamma 1.8 with a small linear portion
   // Extended transfer function
   const Et2 = 16 / 512
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -198,7 +198,7 @@ export function gam_ProPhoto(RGB: Vec3) {
   // Transfer curve is gamma 1.8 with a small linear portion
   // TODO for negative values, extend linear portion on reflection of axis, then add pow below that
   const Et = 1 / 512
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -240,7 +240,7 @@ export function lin_a98rgb(RGB: Vec3) {
   // convert an array of a98-rgb values in the range 0.0 - 1.0
   // to linear light (un-companded) form.
   // negative values are also now accepted
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -252,7 +252,7 @@ export function gam_a98rgb(RGB: Vec3) {
   // convert an array of linear-light a98-rgb  in the range 0.0-1.0
   // to gamma corrected form
   // negative values are also now accepted
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -298,7 +298,7 @@ export function lin_2020(RGB: Vec3) {
   const α = 1.09929682680944
   const β = 0.018053968510807
 
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -318,7 +318,7 @@ export function gam_2020(RGB: Vec3) {
   const α = 1.09929682680944
   const β = 0.018053968510807
 
-  return RGB.map(function (val) {
+  return RGB.map((val) => {
     const sign = val < 0 ? -1 : 1
     const abs = Math.abs(val)
 
@@ -465,13 +465,12 @@ export function rgbToHsv(rgb: Vec3) {
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
   let h: number
-  let s
   const v = max
 
   const d = max - min
-  s = max == 0 ? 0 : d / max
+  const s = max === 0 ? 0 : d / max
 
-  if (max == min) {
+  if (max === min) {
     h = 0 // achromatic
   } else {
     switch (max) {
@@ -629,11 +628,7 @@ export function hslToRgb(hue: number, sat: number, light: number) {
   //  have been normalized to the range [0, 1]. It returns an array of three numbers
   //  representing the red, green, and blue channels of the colors,
   //  normalized to the range [0, 1]
-  if (light <= 0.5) {
-    var t2 = light * (sat + 1)
-  } else {
-    var t2 = light + sat - light * sat
-  }
+  const t2 = light <= 0.5 ? light * (sat + 1) : light + sat - light * sat
   const t1 = light * 2 - t2
   const r = hueToChannel(t1, t2, hue + 2)
   const g = hueToChannel(t1, t2, hue)
@@ -696,9 +691,9 @@ export function naive_sRGB_to_CMYK(RGB: Vec3) {
   const blue = RGB[2]
 
   const black = 1 - Math.max(red, green, blue)
-  const cyan = black == 1.0 ? 0 : (1 - red - black) / (1 - black)
-  const magenta = black == 1.0 ? 0 : (1 - green - black) / (1 - black)
-  const yellow = black == 1.0 ? 0 : (1 - blue - black) / (1 - black)
+  const cyan = black === 1.0 ? 0 : (1 - red - black) / (1 - black)
+  const magenta = black === 1.0 ? 0 : (1 - green - black) / (1 - black)
+  const yellow = black === 1.0 ? 0 : (1 - blue - black) / (1 - black)
 
   return [cyan, magenta, yellow, black] as Vec4
 }
@@ -750,7 +745,7 @@ function is_LCH_inside_sRGB(l: number, c: number, h: number): boolean {
   )
 }
 
-export function snap_into_gamut(_l: number, a: number, b: number): Vec3 {
+export function snap_into_gamut(Lab: Vec3): Vec3 {
   // Moves an LCH color into the sRGB gamut
   // by holding the l and h steady,
   // and adjusting the c via binary-search
@@ -759,10 +754,13 @@ export function snap_into_gamut(_l: number, a: number, b: number): Vec3 {
   // .0001 chosen fairly arbitrarily as "close enough"
   const ε = 0.0001
 
-  let [l, c, h] = Lab_to_LCH([_l, a, b])
+  const LCH = Lab_to_LCH(Lab)
+  const l = LCH[0]
+  let c = LCH[1]
+  const h = LCH[2]
 
   if (is_LCH_inside_sRGB(l, c, h)) {
-    return [_l, a, b]
+    return Lab
   }
 
   let hiC = c
