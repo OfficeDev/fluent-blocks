@@ -1,1 +1,2 @@
-export const Hello = 'Hello'
+export * from './lib/palettes'
+export * from './lib/types.d'

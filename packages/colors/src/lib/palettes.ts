@@ -1,6 +1,15 @@
-import { LAB_to_sRGB, LCH_to_Lab, Lab_to_LCH, snap_into_gamut } from './csswg'
+import {
+  LAB_to_sRGB,
+  LCH_to_Lab,
+  Lab_to_LCH,
+  sRGB_to_LCH,
+  snap_into_gamut,
+} from './csswg'
 import { getPointOnCurvePath, getPointsOnCurvePath } from './geometry'
 import { CurvedHelixPath, Palette, Vec3 } from './types'
+
+// This file contains functions that combine geometry and color math to create
+// and work with palette curves.
 
 function targetLightnessForRange(t: number, range = [0, 100]): number {
   const delta = range[1] - range[0]
@@ -46,9 +55,9 @@ function paletteShadesFromCurvePoints(
 
 export function paletteShadesFromCurve(
   curve: CurvedHelixPath,
-  nShades = 8,
-  curveDepth = 12,
-  range = [0, 100]
+  nShades = 16,
+  range = [0, 100],
+  curveDepth = 24
 ): Vec3[] {
   return paletteShadesFromCurvePoints(
     getPointsOnCurvePath(
@@ -84,6 +93,10 @@ export function hex_to_sRGB(hex: string): Vec3 {
         parseInt(aRgbHex[3], 16) / 255,
       ]
     : [0, 0, 0]
+}
+
+export function hex_to_LCH(hex: string): Vec3 {
+  return sRGB_to_LCH(hex_to_sRGB(hex))
 }
 
 function paletteShadesToHex(paletteShades: Vec3[]): string[] {
@@ -126,7 +139,6 @@ export function curvePathFromPalette({
   const [l, a, b] = keyColorPosition
 
   const darkControlPosition = [l * (1 - darkCp), a, b]
-
   const lightControlPosition = [l + (100 - l) * lightCp, a, b]
 
   return {
@@ -141,11 +153,28 @@ export function curvePathFromPalette({
 
 export function cssGradientFromCurve(
   curve: CurvedHelixPath,
-  nShades = 8,
-  curveDepth = 12
+  nShades = 16,
+  range = [0, 100],
+  curveDepth = 24
 ) {
   const hexes = paletteShadesToHex(
-    paletteShadesFromCurve(curve, curveDepth, nShades)
+    paletteShadesFromCurve(curve, nShades, range, curveDepth)
   )
   return `linear-gradient(to right, ${hexes.join(', ')})`
+}
+
+export function hexColorsFromPalette(
+  palette: Palette,
+  nShades = 16,
+  range = [0, 100],
+  curveDepth = 24
+): string[] {
+  return paletteShadesToHex(
+    paletteShadesFromCurve(
+      curvePathFromPalette(palette),
+      nShades,
+      range,
+      curveDepth
+    )
+  )
 }

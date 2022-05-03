@@ -1,0 +1,41 @@
+import { fake, seed } from 'faker/locale/en_US'
+import range from 'lodash/range'
+
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '..'
+import { StorybookColorProvider } from './StorybookColorProvider'
+
+<Meta
+  title="Facets/Color"
+  component={StorybookColorProvider}
+  argTypes={{
+    keyColor: {
+      name: 'Key color',
+      control: { type: 'color' },
+    },
+    ...contextArgTypes,
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const ColorTemplate = (props) => <StorybookColorProvider {...props} />
+
+# Color
+
+Fluent Blocks can
+
+<Canvas withSource="none">
+  <Story
+    name="Color"
+    args={{
+      keyColor: '#ff0000',
+    }}
+  >
+    {seed(1234) || ColorTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Color" />

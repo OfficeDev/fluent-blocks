@@ -2,6 +2,10 @@ import { Curve, CurvePath, Vec3 } from './types'
 
 const curveResolution = 128
 
+// Many of these functions are ported from ThreeJS, which is distributed under
+// the MIT license. Retrieved from https://github.com/mrdoob/three.js on
+// 14 October 2021.
+
 function distanceTo(v1: Vec3, v2: Vec3) {
   return Math.sqrt(distanceToSquared(v1, v2))
 }
@@ -127,9 +131,9 @@ function getCurveUtoTMapping(curve: Curve, u: number, distance?: number) {
 
   // binary search for the index with largest value smaller than target u distance
 
-  let low = 0;
-    let high = il - 1;
-    let comparison
+  let low = 0
+  let high = il - 1
+  let comparison
 
   while (low <= high) {
     i = Math.floor(low + (high - low) / 2) // less likely to overflow, though probably not issue here, JS doesn't really have integers, all numbers are floats
