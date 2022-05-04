@@ -11,6 +11,14 @@ import { CurvedHelixPath, Palette, Vec3 } from './types'
 // This file contains functions that combine geometry and color math to create
 // and work with palette curves.
 
+/**
+ * When distributing output shades along the curve, for each shade’s lightness a
+ * logarithmically distributed value is averaged with a linearly distributed
+ * value to this degree between zero and one, zero meaning use the logarithmic
+ * value, one meaning use the linear value.
+ */
+const defaultLinearity = 0.75
+
 function getLinearSpace(min: number, max: number, n: number) {
   const result = []
   const delta = (max - min) / n
@@ -20,14 +28,7 @@ function getLinearSpace(min: number, max: number, n: number) {
   return result
 }
 
-/**
- * A logarithmically distributed value is averaged with a linearly distributed
- * value to this degree between zero and one, zero meaning use the logarithmic
- * value, one meaning use the linear value.
- */
-const defaultLinearity = 0.75
-
-const getLogSpace = (min = 0, max = 100, n = 16) => {
+const getLogSpace = (min: number, max: number, n: number) => {
   const a = min <= 0 ? 0 : Math.log(min)
   const b = Math.log(max)
   const delta = (b - a) / n
