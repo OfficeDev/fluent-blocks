@@ -134,7 +134,7 @@ used to group content as a regular Block element as well.
         },
       },
     }}
-    parameters={{ chromatic: { delay: 1000 } }}
+    parameters={{ chromatic: { delay: 1000, diffThreshold: 0.2 } }}
   >
     {seed(1234) || CardLayoutTemplate.bind({})}
   </Story>
