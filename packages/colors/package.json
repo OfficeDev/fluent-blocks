@@ -29,6 +29,7 @@
     "just-scripts": "latest"
   },
   "dependencies": {
+    "@stdlib/array-logspace": "latest",
     "nanoid": "latest"
   }
 }

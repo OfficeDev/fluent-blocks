@@ -29,7 +29,8 @@ export type NamedPalette = Palette & { name: string }
 export type PaletteConfig = {
   range: [number, number]
   nShades: number
-  shadeNames: Record<number, string>
+  linearity?: number
+  shadeNames?: Record<number, string>
 }
 
 export type Theme = {

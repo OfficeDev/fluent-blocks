@@ -1,3 +1,5 @@
+import getLogSpace from '@stdlib/array-logspace'
+
 import {
   LAB_to_sRGB,
   LCH_to_Lab,
@@ -11,17 +13,27 @@ import { CurvedHelixPath, Palette, Vec3 } from './types'
 // This file contains functions that combine geometry and color math to create
 // and work with palette curves.
 
-function targetLightnessForRange(t: number, range = [0, 100]): number {
-  const delta = range[1] - range[0]
-  const offset = range[0]
-  const linearInterpolation = t * delta + offset
-  return Math.max(range[0], Math.min(range[1], linearInterpolation))
+function getLinearSpace(min: number, max: number, n: number) {
+  const result = []
+  const delta = (max - min) / n
+  for (let i = 0; i < n; i++) {
+    result[i] = min + delta * i
+  }
+  return result
 }
+
+/**
+ * A logarithmically distributed value is averaged with a linearly distributed
+ * value to this degree between zero and one, zero meaning use the logarithmic
+ * value, one meaning use the linear value.
+ */
+const defaultLinearity = 0.75
 
 function paletteShadesFromCurvePoints(
   curvePoints: Vec3[],
   nShades: number,
-  range = [0, 100]
+  range = [0, 100],
+  linearity = defaultLinearity
 ): Vec3[] {
   if (curvePoints.length <= 2) {
     return []
@@ -29,10 +41,24 @@ function paletteShadesFromCurvePoints(
 
   const paletteShades = []
 
+  const logLightness = getLogSpace(
+    Math.log10(range[0]),
+    Math.log10(range[1]),
+    nShades
+  )
+
+  const linearLightness = getLinearSpace(range[0], range[1], nShades)
+
   let c = 0
 
   for (let i = 0; i < nShades; i++) {
-    const l = targetLightnessForRange(i / (nShades - 1), range)
+    const l = Math.min(
+      range[1],
+      Math.max(
+        range[0],
+        logLightness[i] * (1 - linearity) + linearLightness[i] * linearity
+      )
+    )
 
     while (l > curvePoints[c + 1][0]) {
       c++
@@ -57,6 +83,7 @@ export function paletteShadesFromCurve(
   curve: CurvedHelixPath,
   nShades = 16,
   range = [0, 100],
+  linearity = defaultLinearity,
   curveDepth = 24
 ): Vec3[] {
   return paletteShadesFromCurvePoints(
@@ -67,7 +94,8 @@ export function paletteShadesFromCurve(
       getPointOnHelix(curvePoint, curve.torsion, curve.torsionT0)
     ),
     nShades,
-    range
+    range,
+    linearity
   )
 }
 
@@ -155,10 +183,11 @@ export function cssGradientFromCurve(
   curve: CurvedHelixPath,
   nShades = 16,
   range = [0, 100],
+  linearity = defaultLinearity,
   curveDepth = 24
 ) {
   const hexes = paletteShadesToHex(
-    paletteShadesFromCurve(curve, nShades, range, curveDepth)
+    paletteShadesFromCurve(curve, nShades, range, linearity, curveDepth)
   )
   return `linear-gradient(to right, ${hexes.join(', ')})`
 }
@@ -167,6 +196,7 @@ export function hexColorsFromPalette(
   palette: Palette,
   nShades = 16,
   range = [0, 100],
+  linearity = defaultLinearity,
   curveDepth = 24
 ): string[] {
   return paletteShadesToHex(
@@ -174,6 +204,7 @@ export function hexColorsFromPalette(
       curvePathFromPalette(palette),
       nShades,
       range,
+      linearity,
       curveDepth
     )
   )

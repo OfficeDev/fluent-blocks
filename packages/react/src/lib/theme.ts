@@ -1,7 +1,11 @@
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 
-import { hexColorsFromPalette, hex_to_LCH } from '@fluent-blocks/colors'
+import {
+  PaletteConfig,
+  hexColorsFromPalette,
+  hex_to_LCH,
+} from '@fluent-blocks/colors'
 import {
   AccentScheme as NaturalAccentScheme,
   ThemeName as NaturalThemeName,
@@ -36,12 +40,19 @@ function getFullLCHPalette({ keyColor, ...props }: Palette) {
   }
 }
 
+const defaultPaletteConfig: PaletteConfig = {
+  // The nShades and range values are based on a brand color audit
+  nShades: 16,
+  range: [1.42, 83.57],
+  linearity: 0.77,
+}
+
 function getBrandTokensFromPalette(palette: Palette) {
   const hexColors = hexColorsFromPalette(
     getFullLCHPalette(palette),
-    // The nShades and range values are based on a brand color audit
-    16,
-    [1.42, 83.57]
+    defaultPaletteConfig.nShades,
+    defaultPaletteConfig.range,
+    defaultPaletteConfig.linearity
   )
   return hexColors.reduce((acc: Record<string, string>, hexColor, h) => {
     acc[`${(h + 1) * 10}`] = hexColor

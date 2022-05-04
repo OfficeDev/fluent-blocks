@@ -1,9 +1,7 @@
-import { fake, seed } from 'faker/locale/en_US'
-import range from 'lodash/range'
+import { seed } from 'faker/locale/en_US'
 
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
-import { contextArgTypes } from '..'
 import { StorybookColorProvider } from './StorybookColorProvider'
 
 <Meta
@@ -13,8 +11,22 @@ import { StorybookColorProvider } from './StorybookColorProvider'
     keyColor: {
       name: 'Key color',
       control: { type: 'color' },
+      table: {
+        type: { summary: 'HexString | Vec3' },
+      },
     },
-    ...contextArgTypes,
+    themeName: {
+      name: 'Theme (excluding high-contrast, which does not use accent colors)',
+      options: ['light', 'dark'],
+      control: {
+        type: 'inline-radio',
+        labels: { light: 'Light', dark: 'Dark' },
+      },
+      table: {
+        type: { summary: 'ThemeName' },
+        defaultValue: { summary: 'light' },
+      },
+    },
   }}
   parameters={{
     viewMode: 'docs',
@@ -31,7 +43,8 @@ Fluent Blocks can
   <Story
     name="Color"
     args={{
-      keyColor: '#ff0000',
+      keyColor: '#55d700',
+      themeName: 'light',
     }}
   >
     {seed(1234) || ColorTemplate.bind({})}
