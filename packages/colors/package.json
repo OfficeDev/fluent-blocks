@@ -17,9 +17,9 @@
     "types": "types/index.d.ts"
   },
   "files": [
-    "basic-icons.json",
-    "basic-icons.svg",
-    "scripts/postinstall.js"
+    "cjs",
+    "esm",
+    "types"
   ],
   "scripts": {
     "prepublishOnly": "pnpm build",
