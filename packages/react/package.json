@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.1.0-next.2",
+  "version": "9.1.0-next.3",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -80,8 +80,8 @@
   },
   "dependencies": {
     "@fluent-blocks/basic-icons": "workspace:9.1.0-next.2",
-    "@fluent-blocks/colors": "workspace:9.1.0-next.0",
-    "@fluent-blocks/schemas": "workspace:9.1.0-next.2",
+    "@fluent-blocks/colors": "workspace:9.1.0-next.1",
+    "@fluent-blocks/schemas": "workspace:9.1.0-next.3",
     "@fluentui/react-tabster": "latest",
     "lodash": "latest"
   }
