@@ -1,5 +1,3 @@
-import getLogSpace from '@stdlib/array-logspace'
-
 import {
   LAB_to_sRGB,
   LCH_to_Lab,
@@ -28,6 +26,19 @@ function getLinearSpace(min: number, max: number, n: number) {
  * value, one meaning use the linear value.
  */
 const defaultLinearity = 0.75
+
+const getLogSpace = (min = 0, max = 100, n = 16) => {
+  const a = min <= 0 ? 0 : Math.log(min)
+  const b = Math.log(max)
+  const delta = (b - a) / n
+
+  const result = [Math.pow(Math.E, a)]
+  for (let i = 1; i < n; i += 1) {
+    result.push(Math.pow(Math.E, a + delta * i))
+  }
+  result.push(Math.pow(Math.E, b))
+  return result
+}
 
 function paletteShadesFromCurvePoints(
   curvePoints: Vec3[],
