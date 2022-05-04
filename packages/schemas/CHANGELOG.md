@@ -1,5 +1,14 @@
 # @fluent-blocks/schemas
 
+## 9.1.0-next.3
+
+### Patch Changes
+
+- [#97](https://github.com/OfficeDev/fluent-blocks/pull/97) [`c7d1e68`](https://github.com/OfficeDev/fluent-blocks/commit/c7d1e68f2e0b12a8ad68c7d5a26697c5dbba1e77) Thanks [@thure](https://github.com/thure)! - Update logo.
+
+- Updated dependencies [[`6d8cae3`](https://github.com/OfficeDev/fluent-blocks/commit/6d8cae381bcc38274a39817a3264a1df020f8dea)]:
+  - @fluent-blocks/colors@9.1.0-next.1
+
 ## 9.1.0-next.2
 
 ### Minor Changes
