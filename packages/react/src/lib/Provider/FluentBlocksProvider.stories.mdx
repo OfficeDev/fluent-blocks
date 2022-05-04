@@ -11,9 +11,27 @@ import { StorybookColorProvider } from './StorybookColorProvider'
     keyColor: {
       name: 'Key color',
       control: { type: 'color' },
-      table: {
-        type: { summary: 'HexString | Vec3' },
+      table: { type: { summary: 'HexString | Vec3' } },
+    },
+    lightCp: {
+      name: 'Chroma control point toward white',
+      control: { type: 'range', min: 0, max: 1, step: 0.001 },
+      table: { defaultValue: { summary: 0.33 } },
+    },
+    darkCp: {
+      name: 'Chroma control point toward black',
+      control: { type: 'range', min: 0, max: 1, step: 0.001 },
+      table: { defaultValue: { summary: 0.67 } },
+    },
+    hueTorsion: {
+      name: 'Hue torsion (helical)',
+      control: {
+        type: 'range',
+        min: -Math.PI.toFixed(2),
+        max: Math.PI.toFixed(2),
+        step: 0.01,
       },
+      table: { defaultValue: { summary: 0 } },
     },
     themeName: {
       name: 'Theme (excluding high-contrast, which does not use accent colors)',
@@ -37,13 +55,30 @@ export const ColorTemplate = (props) => <StorybookColorProvider {...props} />
 
 # Color
 
-Fluent Blocks can
+Fluent Blocks allows you to specify an accent color palette that **may be
+accessible\*** with very little effort on your part. In the
+`FluentBlocksProvider`’s `accentScheme` prop, instead of a named built-in scheme
+(which is guaranteed to be accessible), you can provide a config object of the
+accent scheme that you want instead.
+
+Minimally, a palette config object must contain `keyColor`, usually a hex color
+value. You can also configure the palette’s other properties. A full explanation
+is available in the [Lab curved color system tool](https://github.com/thure/cielab-curved-palette/#readme)’s readme.
+
+**(\*)** Currently minimum color contrast cannot be guaranteed. We are working on a
+solution that can deliver a guarantee. In the meantime, if you use a custom
+accent palette, please confirm there is
+[sufficient color contrast](https://webaim.org/articles/contrast/) on the
+components you use, in both light and dark themes.
 
 <Canvas withSource="none">
   <Story
     name="Color"
     args={{
-      keyColor: '#55d700',
+      keyColor: '#e38651',
+      lightCp: 0.8,
+      darkCp: 0.85,
+      hueTorsion: 1.8,
       themeName: 'light',
     }}
   >

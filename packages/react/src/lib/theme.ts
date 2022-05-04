@@ -30,7 +30,7 @@ function isPalette(o: any): o is Palette {
   return isObject(o) && 'keyColor' in o
 }
 
-function getFullLCHPalette({ keyColor, ...props }: Palette) {
+export function getFullLCHPalette({ keyColor, ...props }: Palette) {
   return {
     keyColor: isString(keyColor) ? hex_to_LCH(keyColor) : keyColor,
     darkCp: 2 / 3,
@@ -40,7 +40,7 @@ function getFullLCHPalette({ keyColor, ...props }: Palette) {
   }
 }
 
-const defaultPaletteConfig: PaletteConfig = {
+export const defaultPaletteConfig: PaletteConfig = {
   // The nShades and range values are based on a brand color audit
   nShades: 16,
   range: [1.42, 83.57],
