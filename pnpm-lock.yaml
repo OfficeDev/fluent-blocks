@@ -62,6 +62,7 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
+      '@babel/preset-env': latest
       '@fluent-blocks/basic-icons': workspace:9.1.0-next.2
       '@fluent-blocks/colors': workspace:9.1.0-next.1
       '@fluent-blocks/schemas': workspace:9.1.0-next.3
@@ -69,10 +70,16 @@ importers:
       '@fluentui/react-tabster': latest
       '@mdx-js/react': ^1.6.22
       '@storybook/addon-actions': next
+      '@storybook/addon-backgrounds': next
+      '@storybook/addon-docs': next
       '@storybook/addon-essentials': next
       '@storybook/addon-links': next
+      '@storybook/addon-measure': next
+      '@storybook/addon-outline': next
       '@storybook/addons': next
       '@storybook/builder-vite': latest
+      '@storybook/client-api': next
+      '@storybook/client-logger': next
       '@storybook/core-common': next
       '@storybook/react': next
       '@storybook/theming': next
@@ -112,13 +119,20 @@ importers:
       lodash: 4.17.21
     devDependencies:
       '@babel/core': 7.17.10
+      '@babel/preset-env': 7.17.10_@babel+core@7.17.10
       '@fluentui/react-components': 9.0.0-rc.10_7eb32be8ac1649a04791b344762f8238
       '@mdx-js/react': 1.6.22_react@18.0.0
       '@storybook/addon-actions': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
+      '@storybook/addon-backgrounds': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
+      '@storybook/addon-docs': 6.5.0-beta.7_e3feb2a21a9c71584b2caf1d2c8be1ae
       '@storybook/addon-essentials': 6.5.0-beta.7_e3feb2a21a9c71584b2caf1d2c8be1ae
       '@storybook/addon-links': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
+      '@storybook/addon-measure': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
+      '@storybook/addon-outline': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
       '@storybook/addons': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
       '@storybook/builder-vite': 0.1.33_9354e0cfc0f1ff484917efe6b5c858a3
+      '@storybook/client-api': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
+      '@storybook/client-logger': 6.5.0-beta.7
       '@storybook/core-common': 6.5.0-beta.7_bde4d6e9fe388079bf866f1a8d09687c
       '@storybook/react': 6.5.0-beta.7_e3feb2a21a9c71584b2caf1d2c8be1ae
       '@storybook/theming': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
@@ -1217,8 +1231,8 @@ packages:
       - supports-color
     dev: true
 
-  /@babel/plugin-transform-named-capturing-groups-regex/7.16.8_@babel+core@7.17.10:
-    resolution: {integrity: sha512-j3Jw+n5PvpmhRR+mrgIh04puSANCk/T/UA3m3P1MjJkhlK906+ApHhDIqBQDdOgL/r1UYpz4GNclTXxyZrYGSw==}
+  /@babel/plugin-transform-named-capturing-groups-regex/7.17.10_@babel+core@7.17.10:
+    resolution: {integrity: sha512-v54O6yLaJySCs6mGzaVOUw9T967GnH38T6CQSAtnzdNPwu84l2qAjssKzo/WSO8Yi7NF+7ekm5cVbF/5qiIgNA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -1451,8 +1465,8 @@ packages:
       '@babel/helper-plugin-utils': 7.16.7
     dev: true
 
-  /@babel/preset-env/7.16.11_@babel+core@7.17.10:
-    resolution: {integrity: sha512-qcmWG8R7ZW6WBRPZK//y+E3Cli151B20W1Rv7ln27vuPaXU/8TKms6jFdiJtF7UDTxcrb7mZd88tAeK9LjdT8g==}
+  /@babel/preset-env/7.17.10_@babel+core@7.17.10:
+    resolution: {integrity: sha512-YNgyBHZQpeoBSRBg0xixsZzfT58Ze1iZrajvv0lJc70qDDGuGfonEnMGfWeSY0mQ3JTuCWFbMkzFRVafOyJx4g==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1511,7 +1525,7 @@ packages:
       '@babel/plugin-transform-modules-commonjs': 7.17.9_@babel+core@7.17.10
       '@babel/plugin-transform-modules-systemjs': 7.17.8_@babel+core@7.17.10
       '@babel/plugin-transform-modules-umd': 7.16.7_@babel+core@7.17.10
-      '@babel/plugin-transform-named-capturing-groups-regex': 7.16.8_@babel+core@7.17.10
+      '@babel/plugin-transform-named-capturing-groups-regex': 7.17.10_@babel+core@7.17.10
       '@babel/plugin-transform-new-target': 7.16.7_@babel+core@7.17.10
       '@babel/plugin-transform-object-super': 7.16.7_@babel+core@7.17.10
       '@babel/plugin-transform-parameters': 7.16.7_@babel+core@7.17.10
@@ -1530,7 +1544,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.3.1_@babel+core@7.17.10
       babel-plugin-polyfill-corejs3: 0.5.2_@babel+core@7.17.10
       babel-plugin-polyfill-regenerator: 0.3.1_@babel+core@7.17.10
-      core-js-compat: 3.21.1
+      core-js-compat: 3.22.4
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -3167,7 +3181,7 @@ packages:
         optional: true
     dependencies:
       '@babel/plugin-transform-react-jsx': 7.17.3_@babel+core@7.17.10
-      '@babel/preset-env': 7.16.11_@babel+core@7.17.10
+      '@babel/preset-env': 7.17.10_@babel+core@7.17.10
       '@jest/transform': 26.6.2
       '@mdx-js/react': 1.6.22_react@18.0.0
       '@storybook/addons': 6.5.0-beta.7_react-dom@18.0.0+react@18.0.0
@@ -3809,7 +3823,7 @@ packages:
       '@babel/plugin-transform-parameters': 7.16.7_@babel+core@7.17.10
       '@babel/plugin-transform-shorthand-properties': 7.16.7_@babel+core@7.17.10
       '@babel/plugin-transform-spread': 7.16.7_@babel+core@7.17.10
-      '@babel/preset-env': 7.16.11_@babel+core@7.17.10
+      '@babel/preset-env': 7.17.10_@babel+core@7.17.10
       '@babel/preset-react': 7.16.7_@babel+core@7.17.10
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.10
       '@babel/register': 7.17.7_@babel+core@7.17.10
@@ -3982,7 +3996,7 @@ packages:
       '@babel/generator': 7.17.10
       '@babel/parser': 7.17.10
       '@babel/plugin-transform-react-jsx': 7.17.3_@babel+core@7.17.10
-      '@babel/preset-env': 7.16.11_@babel+core@7.17.10
+      '@babel/preset-env': 7.17.10_@babel+core@7.17.10
       '@babel/traverse': 7.17.10
       '@babel/types': 7.17.10
       '@mdx-js/mdx': 1.6.22
@@ -4011,7 +4025,7 @@ packages:
       '@babel/generator': 7.17.10
       '@babel/parser': 7.17.10
       '@babel/plugin-transform-react-jsx': 7.17.3_@babel+core@7.17.10
-      '@babel/preset-env': 7.16.11_@babel+core@7.17.10
+      '@babel/preset-env': 7.17.10_@babel+core@7.17.10
       '@babel/traverse': 7.17.10
       '@babel/types': 7.17.10
       '@storybook/csf': 0.0.2--canary.4566f4d.1
@@ -4115,7 +4129,7 @@ packages:
     dependencies:
       '@babel/generator': 7.17.10
       '@babel/parser': 7.17.10
-      '@babel/preset-env': 7.16.11_@babel+core@7.17.10
+      '@babel/preset-env': 7.17.10_@babel+core@7.17.10
       '@babel/types': 7.17.10
       '@mdx-js/mdx': 1.6.22
       '@types/lodash': 4.14.182
@@ -5653,8 +5667,8 @@ packages:
     resolution: {integrity: sha512-eM9d/swFopRt5gdJ7jrpCwgvEMIayITpojhkkSMRsFHYuH5bkSQ4p/9qTEHtmNudUZh22Tehu7I6CxAW0IXTKA==}
     hasBin: true
     dependencies:
-      browserslist: 4.20.2
-      caniuse-lite: 1.0.30001327
+      browserslist: 4.20.3
+      caniuse-lite: 1.0.30001338
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       picocolors: 0.2.1
@@ -5790,7 +5804,7 @@ packages:
     dependencies:
       '@babel/core': 7.17.10
       '@babel/helper-define-polyfill-provider': 0.1.5_@babel+core@7.17.10
-      core-js-compat: 3.21.1
+      core-js-compat: 3.22.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5802,7 +5816,7 @@ packages:
     dependencies:
       '@babel/core': 7.17.10
       '@babel/helper-define-polyfill-provider': 0.3.1_@babel+core@7.17.10
-      core-js-compat: 3.21.1
+      core-js-compat: 3.22.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6084,6 +6098,18 @@ packages:
       picocolors: 1.0.0
     dev: true
 
+  /browserslist/4.20.3:
+    resolution: {integrity: sha512-NBhymBQl1zM0Y5dQT/O+xiLP9/rzOIQdKM/eMJBAq7yBgaB6krIYLGejrwVYnSHZdqjscB1SPuAjHwxjvN6Wdg==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+    dependencies:
+      caniuse-lite: 1.0.30001338
+      electron-to-chromium: 1.4.137
+      escalade: 3.1.1
+      node-releases: 2.0.4
+      picocolors: 1.0.0
+    dev: true
+
   /bser/2.1.1:
     resolution: {integrity: sha512-gQxTNE/GAfIIrmHLUE3oJyp5FO6HRBfhjnw4/wMmA63ZGDJnWBmgY/lyQBpnDUkGmAhbSe39tx2d/iTOAfglwQ==}
     dependencies:
@@ -6266,6 +6292,10 @@ packages:
 
   /caniuse-lite/1.0.30001327:
     resolution: {integrity: sha512-1/Cg4jlD9qjZzhbzkzEaAC2JHsP0WrOc8Rd/3a3LuajGzGWR/hD7TVyvq99VqmTy99eVh8Zkmdq213OgvgXx7w==}
+    dev: true
+
+  /caniuse-lite/1.0.30001338:
+    resolution: {integrity: sha512-1gLHWyfVoRDsHieO+CaeYe7jSo/MT7D7lhaXUiwwbuR5BwQxORs0f1tAwUSQr3YbxRXJvxHM/PA5FfPQRnsPeQ==}
     dev: true
 
   /capture-exit/2.0.0:
@@ -6771,10 +6801,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /core-js-compat/3.21.1:
-    resolution: {integrity: sha512-gbgX5AUvMb8gwxC7FLVWYT7Kkgu/y7+h/h1X43yJkNqhlK2fuYyQimqvKGNZFAY6CKii/GFKJ2cp/1/42TN36g==}
+  /core-js-compat/3.22.4:
+    resolution: {integrity: sha512-dIWcsszDezkFZrfm1cnB4f/J85gyhiCpxbgBdohWCDtSVuAaChTSpPV7ldOQf/Xds2U5xCIJZOK82G4ZPAIswA==}
     dependencies:
-      browserslist: 4.20.2
+      browserslist: 4.20.3
       semver: 7.0.0
     dev: true
 
@@ -7403,6 +7433,10 @@ packages:
 
   /electron-to-chromium/1.4.106:
     resolution: {integrity: sha512-ZYfpVLULm67K7CaaGP7DmjyeMY4naxsbTy+syVVxT6QHI1Ww8XbJjmr9fDckrhq44WzCrcC5kH3zGpdusxwwqg==}
+    dev: true
+
+  /electron-to-chromium/1.4.137:
+    resolution: {integrity: sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==}
     dev: true
 
   /elliptic/6.5.4:
@@ -11340,6 +11374,10 @@ packages:
     resolution: {integrity: sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==}
     dev: true
 
+  /node-releases/2.0.4:
+    resolution: {integrity: sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==}
+    dev: true
+
   /node-version-matches/2.0.1:
     resolution: {integrity: sha512-oqk6+05FC0dNVY5NuXuhPEMq+m1b9ZjS9SIhVE9EjwCHZspnmjSO8npbKAEieinR8GeEgbecoQcYIvI/Kwcf6Q==}
     engines: {node: '>=8'}
@@ -14973,7 +15011,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.1
       acorn: 8.7.1
       acorn-import-assertions: 1.8.0_acorn@8.7.1
-      browserslist: 4.20.2
+      browserslist: 4.20.3
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.9.2
       es-module-lexer: 0.9.3
