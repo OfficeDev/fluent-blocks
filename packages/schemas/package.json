@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/schemas",
-  "version": "9.0.0",
+  "version": "9.1.0-next.3",
   "main": "index.d.ts",
   "types": "types/index.d.ts",
   "files": [
@@ -15,5 +15,8 @@
   "engines": {
     "node": ">=12.0.0 <17.0.0",
     "pnpm": "^6"
+  },
+  "dependencies": {
+    "@fluent-blocks/colors": "workspace:9.1.0-next.1"
   }
 }

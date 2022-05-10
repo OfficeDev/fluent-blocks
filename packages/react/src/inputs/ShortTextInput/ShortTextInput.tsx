@@ -43,6 +43,7 @@ const useShortTextInputStyles = makeStyles({
   },
   input: {
     width: '100%',
+    '& .fuib-Icon': { fontSize: '1rem' },
   },
 })
 

@@ -28,63 +28,10 @@ const useButtonStyles = makeStyles({
     textOverflow: 'ellipsis',
     minWidth: rem(32),
     maxWidth: '100%',
+    flexShrink: 0,
   },
   fill: {
     width: '100%',
-  },
-  tab: {
-    position: 'relative',
-    fontWeight: 'var(--fontWeightRegular)',
-    color: 'var(--colorNeutralForeground2)',
-    ...sx.transition('color', '.2s', 'linear'),
-    '&:after': {
-      content: '""',
-      position: 'absolute',
-      insetBlockEnd: 0,
-      insetInlineStart: rem(12),
-      insetInlineEnd: rem(12),
-      height: rem(2),
-      ...sx.borderRadius('var(--borderRadiusCircular)'),
-      backgroundColor: 'var(--colorTransparentBackground)',
-      ...sx.transition(
-        'background-color, inset-inline-start, inset-inline-end',
-        '.2s, .2s, .2s',
-        'linear, ease-in-out, ease-in-out'
-      ),
-    },
-    '&:hover': {
-      color: 'var(--colorNeutralForeground1)',
-      '&:after': {
-        backgroundColor: 'var(--colorNeutralStroke1)',
-      },
-    },
-    '&:active': {
-      color: 'inherit',
-      '&:after': {
-        backgroundColor: 'var(--colorBrandForeground1)',
-      },
-    },
-  },
-  tabSelected: {
-    fontWeight: 'var(--fontWeightSemibold)',
-    '&:after': {
-      backgroundColor: 'var(--colorBrandForeground1)',
-    },
-    '&:hover': {
-      '&:after': {
-        backgroundColor: 'var(--colorBrandForeground1)',
-        insetInlineStart: rem(4),
-        insetInlineEnd: rem(4),
-      },
-    },
-    '&:active': {
-      color: 'inherit',
-      '&:after': {
-        insetInlineStart: rem(4),
-        insetInlineEnd: rem(4),
-        backgroundColor: 'var(--colorCompoundBrandStrokePressed)',
-      },
-    },
   },
   toolbarItemInFlow: {
     order: 1,
@@ -142,8 +89,6 @@ export const Button = ({
       className={cx(
         buttonStyles.root,
         contextualVariant === 'narrow-inputs' && buttonStyles.fill,
-        contextualVariant === 'tabs' && buttonStyles.tab,
-        contextualVariant === 'tabs' && selected && buttonStyles.tabSelected,
         contextualVariant.startsWith('toolbar-item') &&
           buttonStyles.toolbarItemInFlow,
         contextualVariant === 'toolbar-item--needs-update' &&
@@ -157,13 +102,7 @@ export const Button = ({
           <Icon
             icon={icon}
             size={derivedIconSize}
-            variant={
-              contextualVariant === 'tabs'
-                ? selected
-                  ? 'filled'
-                  : 'outline'
-                : iconVariant || 'outline'
-            }
+            variant={iconVariant || 'outline'}
           />
         ),
       })}
@@ -171,10 +110,6 @@ export const Button = ({
       id={`${contextualVariant}__${actionId}`}
       {...(selected && { 'aria-selected': selected })}
       {...(controls && { 'aria-controls': controls })}
-      {...(contextualVariant === 'tabs' && {
-        role: 'tab',
-        ...(!selected && { tabIndex: -1 }),
-      })}
     >
       {iconOnly ? null : label}
     </FluentButton>

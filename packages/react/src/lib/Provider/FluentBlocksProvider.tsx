@@ -1,11 +1,12 @@
 import { PropsWithChildren } from 'react'
+
 import { FluentProvider } from '@fluentui/react-components'
 
-import { getTheme } from './theme'
+import { getTheme } from '../theme'
 import {
-  defaultContext,
   FluentBlocksContext,
   FluentPatternsBlocksData,
+  defaultContext,
 } from './FluentBlocksContext'
 
 export const FluentBlocksProvider = ({

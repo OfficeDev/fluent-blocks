@@ -1,4 +1,4 @@
-<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react/.storybook/public/brandImage.svg" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg" width="320" />
 
 ### [Open Storybook ↗︎][storybook]
 
@@ -21,7 +21,7 @@ Using TypeScript and an IDE that supports type inspections will make using this 
 1. Add `react@17`, `react-dom@17`, and `@fluentui/react-components@latest` if they’re not in your project already
 2. Add `chart.js@^2.9.4` if you want to use charts from this package
 3. Depending on your package manager, you may need to add `@fluent-blocks/basic-icons` to use icons
-4. Finally, install this package, `@fluent-blocks/react@alpha`, using your package manager
+4. Finally, install this package, `@fluent-blocks/react`, using your package manager
 
 Now anywhere you can use React, you can use Fluent Blocks. If you want to delegate the entire viewport to Fluent Blocks, use the `View` component on its own:
 

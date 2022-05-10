@@ -6,8 +6,10 @@ import {
   TabsProps as NaturalTabsProps,
 } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+// todo: fix this import when it stabilizes
+import { Tab, TabList } from '@fluentui/react-components/unstable'
 
-import { Button, ButtonProps } from '../../inputs'
+import { ButtonProps } from '../../inputs'
 import {
   EscapeElement,
   Sequence,
@@ -15,7 +17,6 @@ import {
   rem,
   renderIfEscape,
   sx,
-  useCommonStyles,
 } from '../../lib'
 import {
   DescriptionListPropsOrElement,
@@ -31,6 +32,7 @@ import {
   ShortInputsPropsOrElement,
   renderIfShortInputs,
 } from '../ShortInputs/ShortInputs'
+import { TablePropsOrElement, renderIfTable } from '../Table/Table'
 
 export interface TabProps
   extends Omit<
@@ -49,6 +51,7 @@ export type TabPanelItemEntity =
   | FigurePropsOrElement
   | ShortInputsPropsOrElement
   | DescriptionListPropsOrElement
+  | TablePropsOrElement
   | EscapeElement
 
 export type TabPanelItemSequence = TabPanelItemEntity[]
@@ -59,6 +62,7 @@ const TabPanelItem = (o: TabPanelItemEntity) =>
   renderIfFigure(o) ||
   renderIfShortInputs(o) ||
   renderIfDescriptionList(o) ||
+  renderIfTable(o) ||
   renderIfEscape(o) ||
   invalidTabPanelItem(o)
 
@@ -78,21 +82,18 @@ const useTabsStyles = makeStyles({
     overflowX: 'hidden',
     overflowY: 'hidden',
   },
-  tabList: {
-    display: 'flex',
-    ...sx.flexFlow('row', 'nowrap'),
-    paddingBlockStart: rem(2),
-    paddingBlockEnd: rem(2),
-  },
-  tabListCardContext: {
-    marginInlineStart: '-.25rem',
-    marginInlineEnd: '-.25rem',
-  },
+  tabListCardContext: {},
   tabListCenter: {
     justifyContent: 'center',
   },
+  tabList: {
+    marginBlockEnd: rem(8),
+  },
   tabs: {
     flexGrow: 1,
+  },
+  tab: {
+    flexShrink: 1,
   },
 })
 
@@ -107,44 +108,36 @@ export const Tabs = ({
   tabs,
   label,
   tabVariant = 'transparent',
-  tabListVariant = 'start',
   contextualVariant = 'block',
 }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(0)
   const itemIds = tabs.map(() => uniqueId('tabItem'))
   const tabsStyles = useTabsStyles()
-  const commonStyles = useCommonStyles()
   return (
     <div aria-label={label} className={tabsStyles.tabs}>
-      <div className={cx(commonStyles.centerBlock, tabsStyles.tabScrollCtx)}>
-        <div
-          role="tablist"
-          className={cx(
-            tabsStyles.tabList,
-            tabListVariant === 'center' && tabsStyles.tabListCenter,
-            contextualVariant === 'card' && tabsStyles.tabListCardContext
-          )}
-        >
-          {tabs.map((tabItem, t) => (
-            <Button
-              key={itemIds[t]}
-              {...{
-                ...tabItem.tab,
-                type: 'action',
-                actionId: tabId(itemIds[t]),
-                variant: tabVariant,
-                contextualVariant: 'tabs',
-                selected: activeTab === t,
-                controls: panelId(itemIds[t]),
-                size: contextualVariant === 'block' ? 'medium' : 'small',
-                onAction: () => {
-                  setActiveTab(t)
-                },
-              }}
-            />
-          ))}
-        </div>
-      </div>
+      <TabList
+        appearance={tabVariant}
+        selectedValue={itemIds[activeTab]}
+        size="small"
+        onTabSelect={(_e, { value }) => {
+          setActiveTab(itemIds.indexOf(value as string))
+        }}
+        className={cx(
+          tabsStyles.tabList,
+          contextualVariant === 'card' && tabsStyles.tabListCardContext
+        )}
+      >
+        {tabs.map((tabItem, t) => (
+          <Tab
+            key={itemIds[t]}
+            value={itemIds[t]}
+            id={tabId(itemIds[t])}
+            className={tabsStyles.tab}
+          >
+            {tabItem.tab.label}
+          </Tab>
+        ))}
+      </TabList>
       {tabs.map((tabItem, t) => (
         <div
           key={itemIds[t]}

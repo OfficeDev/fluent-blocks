@@ -1,5 +1,4 @@
 import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-
 import { Main } from '../../surfaces'
 import { DescriptionListProps } from './DescriptionList'
 
@@ -17,11 +16,15 @@ export const DescriptionList = ({
     <Main
       blocks={[
         {
-          card: [
-            {
-              ...props,
-            },
-          ],
+          card: {
+            title: '',
+            titleVisuallyHidden: true,
+            body: [
+              {
+                ...props,
+              },
+            ],
+          },
         },
       ]}
       title={[{ text: ' ' }]}

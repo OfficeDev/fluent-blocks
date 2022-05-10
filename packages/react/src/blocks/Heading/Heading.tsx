@@ -1,10 +1,10 @@
-import { createElement, ReactElement } from 'react'
-import { mergeClasses as cx } from '@fluentui/react-components'
+import { ReactElement, createElement } from 'react'
+
 import { HeadingProps as NaturalHeadingProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx } from '@fluentui/react-components'
 
 import { InlineContent } from '../../inlines'
 import { useCommonStyles, useTextBlockStyles } from '../../lib'
-
 import { ParagraphProps } from '../Paragraph/Paragraph'
 
 export interface HeadingProps
@@ -12,7 +12,13 @@ export interface HeadingProps
     Omit<NaturalHeadingProps, 'paragraph'> {}
 
 export const Heading = (props: HeadingProps) => {
-  const { paragraph, level = 6, contextualVariant = 'block' } = props
+  const {
+    paragraph,
+    level = 6,
+    contextualVariant = 'block',
+    contextualId,
+    visuallyHidden,
+  } = props
   const content = <InlineContent inlines={paragraph} />
   const textStyles = useTextBlockStyles()
   const commonStyles = useCommonStyles()
@@ -22,7 +28,8 @@ export const Heading = (props: HeadingProps) => {
     textStyles.root,
     commonStyles.centerBlock,
     commonStyles.mainContentWidth,
-    textStyles.heading
+    textStyles.heading,
+    visuallyHidden && commonStyles.visuallyHidden
   )
 
   const className = (() => {
@@ -44,7 +51,11 @@ export const Heading = (props: HeadingProps) => {
     }
   })()
 
-  return createElement(elementName, { className }, content) as JSX.Element
+  return createElement(
+    elementName,
+    { className, id: contextualId },
+    content
+  ) as JSX.Element
 }
 
 export type HeadingElement = ReactElement<HeadingProps, typeof Heading>
