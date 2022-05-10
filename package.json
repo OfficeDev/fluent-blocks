@@ -11,7 +11,7 @@
     "prepare": "husky install",
     "lint-ci": "eslint --max-warnings 0 packages/react/src/**/*.{ts,tsx} packages/react/.storybook/*.js",
     "lint-staged": "lint-staged",
-    "test": "pnpm run test -r --if-present",
+    "test": "pnpm run --filter \"@fluent-blocks/*\" --if-present test",
     "change": "pnpm exec changeset add",
     "changeset:version": "pnpm exec changeset version && pnpm install --lockfile-only",
     "changeset:publish": "pnpm exec changeset publish"
