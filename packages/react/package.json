@@ -36,7 +36,7 @@
     "pnpm": "^6"
   },
   "peerDependencies": {
-    "@fluentui/react-components": "latest",
+    "@fluentui/react-components": "9.0.0-rc.10",
     "@types/react": ">=16.13.1 <19",
     "@types/react-dom": ">=16.13.1 <19",
     "chart.js": "^2.9.4",
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-components": "^9.0.0-rc.10",
+    "@fluentui/react-components": "9.0.0-rc.10",
     "@storybook/addon-actions": "next",
     "@storybook/addon-essentials": "next",
     "@storybook/addon-links": "next",
@@ -83,7 +83,7 @@
     "@fluent-blocks/basic-icons": "workspace:9.1.0",
     "@fluent-blocks/colors": "workspace:9.1.0",
     "@fluent-blocks/schemas": "workspace:9.1.0",
-    "@fluentui/react-tabster": "latest",
-    "lodash": "latest"
+    "@fluentui/react-tabster": "9.0.0-rc.9",
+    "lodash": "^4.17.21"
   }
 }
