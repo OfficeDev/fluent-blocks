@@ -2,7 +2,7 @@ name: 'Publish latest to Chromatic and NPM'
 
 on:
   push:
-    branches: [ latest, '!dependabot' ]
+    branches: [ latest, next, '!dependabot' ]
 
 jobs:
   deploy:
@@ -44,7 +44,7 @@ jobs:
       - name: Publish to NPM
         uses: changesets/action@v1
         with:
-          version: pnpm changeset:version-latest
+          version: pnpm changeset:version
           publish: pnpm changeset:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
