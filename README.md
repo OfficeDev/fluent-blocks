@@ -1,4 +1,4 @@
-<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react/.storybook/public/brandImage.svg" width="320" />
 
 Fluent Blocks makes it easy to use [Fluent][figma-fluent] & [UI Kit][figma-uikit] designs in app development.
 

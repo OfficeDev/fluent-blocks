@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.1.0-next.4",
+  "version": "9.0.0",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -21,7 +21,6 @@
   "scripts": {
     "prepublishOnly": "pnpm build",
     "build": "just-scripts build",
-    "fluentui:upgrade": "pnpm update @fluentui/react-components",
     "storybook:upgrade": "pnpm update \"@storybook/*\"",
     "storybook:build": "node ./scripts/prebuildsb.js && build-storybook",
     "storybook:start": "start-storybook -p 4000",
@@ -45,7 +44,7 @@
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-components": "^9.0.0-rc.10",
+    "@fluentui/react-components": "latest",
     "@storybook/addon-actions": "next",
     "@storybook/addon-essentials": "next",
     "@storybook/addon-links": "next",
@@ -80,9 +79,8 @@
     "webpack": "latest"
   },
   "dependencies": {
-    "@fluent-blocks/basic-icons": "workspace:9.1.0-next.2",
-    "@fluent-blocks/colors": "workspace:9.1.0-next.1",
-    "@fluent-blocks/schemas": "workspace:9.1.0-next.3",
+    "@fluent-blocks/basic-icons": "workspace:9.0.0",
+    "@fluent-blocks/schemas": "workspace:9.0.0",
     "@fluentui/react-tabster": "latest",
     "lodash": "latest"
   }

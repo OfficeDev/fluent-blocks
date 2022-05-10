@@ -39,13 +39,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
-          exitOnceUploaded: true
 
       - name: Publish to NPM
         uses: changesets/action@v1
         with:
-          version: pnpm changeset:version-next
-          publish: pnpm changeset:publish
+          version: pnpm changeset:version
+          publish: pnpm publish:next
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

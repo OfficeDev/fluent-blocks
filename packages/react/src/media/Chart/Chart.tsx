@@ -1,17 +1,16 @@
+import { ReactElement } from 'react'
 import { Chart as ChartJS } from 'chart.js'
 import set from 'lodash/set'
-import { ReactElement } from 'react'
-
 import { ChartProps } from '@fluent-blocks/schemas'
-import { makeStyles } from '@fluentui/react-components'
 
 import { invalidChart } from '../../lib'
-import { BubbleChart } from './variants/BubbleChart'
+
+import { PieChart } from './variants/PieChart'
+import { VerticalBarChart } from './variants/VerticalBarChart'
 import { HorizontalBarChart } from './variants/HorizontalBarChart'
 import { LineChart } from './variants/LineChart'
-import { PieChart } from './variants/PieChart'
 import { StackedLineChart } from './variants/StackedLineChart'
-import { VerticalBarChart } from './variants/VerticalBarChart'
+import { BubbleChart } from './variants/BubbleChart'
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(
@@ -20,13 +19,7 @@ set(
   `Segoe UI, system-ui, sans-serif`
 )
 
-const useChartStyles = makeStyles({
-  root: {
-    '& canvas': { width: '100% !important' },
-  },
-})
-
-function ChartInner(props: ChartProps) {
+export function Chart(props: ChartProps) {
   const { chart, label } = props
   switch (chart.type) {
     case 'pie':
@@ -52,11 +45,6 @@ function ChartInner(props: ChartProps) {
     default:
       return invalidChart(props)
   }
-}
-
-export function Chart(props: ChartProps) {
-  const chartStyles = useChartStyles()
-  return <div className={chartStyles.root}>{ChartInner(props)}</div>
 }
 
 export type ChartElement = ReactElement<ChartProps, typeof Chart>

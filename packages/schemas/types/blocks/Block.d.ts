@@ -1,10 +1,10 @@
-import { MultilineTextInputProps, RadioGroupProps } from '../inputs'
 import { BigMessageProps } from './BigMessage'
-import { CardProps } from './Card'
-import { FigureProps } from './Figure'
-import { LayoutProps } from './Layout'
 import { ParagraphProps } from './Paragraph'
+import { LayoutProps } from './Layout'
+import { FigureProps } from './Figure'
+import { CardProps } from './Card'
 import { ShortInputsProps } from './ShortInputs'
+import { MultilineTextInputProps, RadioGroupProps } from '../inputs'
 
 export type BlockEntity =
   | ParagraphProps
@@ -15,5 +15,3 @@ export type BlockEntity =
   | MultilineTextInputProps
   | RadioGroupProps
   | BigMessageProps
-
-export type BlockSequence = BlockEntity[]

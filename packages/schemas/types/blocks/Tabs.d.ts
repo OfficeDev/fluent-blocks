@@ -1,10 +1,9 @@
 import { ButtonProps } from '../inputs'
-import { DescriptionListProps } from './DescriptionList'
 import { FigureProps } from './Figure'
 import { HeadingProps } from './Heading'
-import { ParagraphProps } from './Paragraph'
 import { ShortInputsProps } from './ShortInputs'
-import { TableProps } from './Table'
+import { ParagraphProps } from './Paragraph'
+import { DescriptionListProps } from './DescriptionList'
 
 export type TabProps = Omit<
   ButtonProps,
@@ -17,7 +16,6 @@ export type TabPanelItemEntity =
   | FigureProps
   | ShortInputsProps
   | DescriptionListProps
-  | TableProps
 
 export type TabPanelItemSequence = TabPanelItemEntity[]
 

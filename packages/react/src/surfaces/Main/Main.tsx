@@ -1,12 +1,8 @@
-import { MainProps as NaturalMainProps } from '@fluent-blocks/schemas'
-import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
 
-import { Section, SectionContentProps } from '../../blocks'
 import { rem, useCommonStyles } from '../../lib'
 
-export interface MainProps
-  extends Pick<NaturalMainProps, 'variant'>,
-    SectionContentProps {}
+import { Section, SectionContentProps } from '../../blocks'
 
 const useMainSectionStyles = makeStyles({
   root: {
@@ -18,13 +14,9 @@ const useMainSectionStyles = makeStyles({
     paddingInlineStart: '1rem',
     paddingInlineEnd: '1rem',
   },
-  'root--flush': {
-    paddingInlineStart: 0,
-    paddingInlineEnd: 0,
-  },
 })
 
-export const Main = (props: MainProps) => {
+export const Main = (props: SectionContentProps) => {
   const mainStyles = useMainSectionStyles()
   const commonStyles = useCommonStyles()
   return (
@@ -32,11 +24,7 @@ export const Main = (props: MainProps) => {
       {...props}
       as="main"
       level={1}
-      className={cx(
-        commonStyles.baseSurface,
-        mainStyles.root,
-        props.variant === 'flush' && mainStyles['root--flush']
-      )}
+      className={cx(commonStyles.baseSurface, mainStyles.root)}
     />
   )
 }

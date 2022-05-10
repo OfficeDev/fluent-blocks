@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 
-import { FluentBlocksContext } from '../Provider/FluentBlocksContext'
+import { FluentBlocksContext } from '../FluentBlocksContext'
+
 import enUS from './en-US'
 
 export type Dir = 'ltr' | 'rtl'

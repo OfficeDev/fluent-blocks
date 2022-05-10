@@ -4,11 +4,9 @@ import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 // todo: fix this import when it stabilizes
 import { Card as FluentCard } from '@fluentui/react-components/unstable'
 
-import { Overflow } from '../../inputs'
 import {
   Sequence,
   invalidCardContentItem,
-  key,
   rem,
   renderIfEscape,
   sx,
@@ -18,10 +16,9 @@ import {
 import { CardContentItemEntity, CardProps } from '../../props'
 import { renderIfDescriptionList } from '../DescriptionList/DescriptionList'
 import { renderIfFigure } from '../Figure/Figure'
-import { Heading, renderIfHeading } from '../Heading/Heading'
+import { renderIfHeading } from '../Heading/Heading'
 import { renderIfParagraph } from '../Paragraph/Paragraph'
 import { renderIfShortInputs } from '../ShortInputs/ShortInputs'
-import { renderIfTable } from '../Table/Table'
 import { renderIfTabs } from '../Tabs/Tabs'
 import { WidgetPropsOrElement, renderIfWidget } from './exemplars/Widget'
 
@@ -32,18 +29,14 @@ const CardContentItem = (o: CardContentItemEntity) =>
   renderIfTabs(o) ||
   renderIfShortInputs(o) ||
   renderIfDescriptionList(o) ||
-  renderIfTable(o) ||
   renderIfEscape(o) ||
   invalidCardContentItem(o)
 
 const useCardStyles = makeStyles({
   root: {
     boxSizing: 'border-box',
+    ...sx.padding(rem(12)),
     ...sx.border('1px', 'solid', 'transparent'),
-    '& > .fuib-CardContentItem:not(.fui-CardPreview)': {
-      ...sx.margin(0),
-    },
-    paddingBlockEnd: rem(4),
   },
   hc: {
     ...sx.borderColor('var(--colorNeutralForeground1)'),
@@ -57,25 +50,12 @@ const useCardStyles = makeStyles({
     marginBlockStart: rem(20),
     marginBlockEnd: rem(20),
   },
-  headingRow: {
-    display: 'flex',
-    paddingBlockStart: rem(8),
-  },
-  headingText: {
-    ...sx.flex(1, 1, 'auto'),
-    marginBlockStart: rem(4),
-  },
-  cardContentSpacing: {
-    paddingInlineStart: rem(16),
-    paddingInlineEnd: rem(16),
-  },
 })
 
 export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
   const commonStyles = useCommonStyles()
   const cardStyles = useCardStyles()
   const { themeName } = useFluentBlocksContext()
-  const id = key(card)
   return (
     <FluentCard
       className={cx(
@@ -87,39 +67,11 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         contextualVariant === 'block' && cardStyles.blockCard,
         contextualVariant === 'layout' && cardStyles.layoutItemCard
       )}
-      aria-labelledby={id}
+      tabIndex={0}
     >
-      <div
-        role="none"
-        className={`${cx(
-          cardStyles.cardContentSpacing,
-          cardStyles.headingRow
-        )} fuib-CardContentItem`}
-      >
-        <div
-          role="none"
-          className={cx(
-            cardStyles.headingText,
-            card.titleVisuallyHidden && commonStyles.visuallyHidden
-          )}
-        >
-          <Heading
-            paragraph={card.title}
-            level={3}
-            contextualVariant="card"
-            contextualId={id}
-          />
-        </div>
-        {card.actions && <Overflow overflow={card.actions} />}
-      </div>
-      <div
-        role="none"
-        className={`${cardStyles.cardContentSpacing} fuib-CardContentItem`}
-      >
-        {Sequence<CardContentItemEntity>(card.body, CardContentItem, {
-          contextualVariant: 'card',
-        })}
-      </div>
+      {Sequence<CardContentItemEntity>(card, CardContentItem, {
+        contextualVariant: 'card',
+      })}
     </FluentCard>
   )
 }

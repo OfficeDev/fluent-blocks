@@ -9,11 +9,10 @@ import {
   MenuPopover,
   MenuTrigger,
   Tooltip,
-  makeStyles,
 } from '@fluentui/react-components'
 
 import { Icon } from '../../inlines'
-import { Sequence, sx, useFluentBlocksContext } from '../../lib'
+import { Sequence, useFluentBlocksContext } from '../../lib'
 import {
   ActionHandler,
   MenuAction,
@@ -33,13 +32,6 @@ function isAction(o: any): o is MenuAction {
 }
 
 const defaultIconSize = 16
-
-const useOverflowStyles = makeStyles({
-  trigger: {
-    color: 'inherit',
-    ...sx.flex(0, 0, 'auto'),
-  },
-})
 
 const OverflowItem = (
   item: MenuItemEntity & {
@@ -91,7 +83,6 @@ export const Overflow = ({
   triggerLabel,
 }: OverflowProps) => {
   const { translations, onAction } = useFluentBlocksContext()
-  const overflowStyles = useOverflowStyles()
   const label = triggerLabel || translations.more
   return overflow.length ? (
     <Menu>
@@ -99,7 +90,7 @@ export const Overflow = ({
         <Tooltip content={label} relationship="label" withArrow>
           <MenuButton
             appearance="transparent"
-            className={overflowStyles.trigger}
+            style={{ color: 'inherit' }}
             icon={<Icon icon={triggerIcon} size={iconSize} variant="outline" />}
             size={buttonSize}
           />

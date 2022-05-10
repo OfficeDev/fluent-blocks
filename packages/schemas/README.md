@@ -1,4 +1,4 @@
-<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@main/packages/react/.storybook/public/brandImage.svg" width="320" />
 
 This package contains the TypeScript types that specify the platform-agnostic API surface for Fluent Blocks. It used to export JSON and Zod schemas, and it will again soon.
 

@@ -1,7 +1,6 @@
 import { makeStyles } from '@fluentui/react-components'
-
-import { sx } from './shorthands'
 import { rem } from './units'
+import { sx } from './shorthands'
 
 export const useCommonStyles = makeStyles({
   mainContentWidth: {
@@ -51,7 +50,7 @@ export const useCommonStyles = makeStyles({
 export const useTextBlockStyles = makeStyles({
   root: {
     lineHeight: 20 / 14,
-    marginBlockStart: 0,
+    marginBlockStart: rem(4),
     marginBlockEnd: rem(8),
   },
   code: {
@@ -65,9 +64,7 @@ export const useTextBlockStyles = makeStyles({
     lineHeight: 24 / 18,
   },
   cardSpacing: {
-    marginInlineStart: 0,
-    marginInlineEnd: 0,
-    marginBlockStart: 0,
+    ...sx.margin(0),
   },
   h1: {
     fontSize: rem(24),

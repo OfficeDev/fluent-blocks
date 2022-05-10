@@ -7,4 +7,4 @@ export * from './views'
 export * from './props'
 
 export { Escape } from './lib/Escape'
-export { FluentBlocksProvider } from './lib/Provider/FluentBlocksProvider'
+export { FluentBlocksProvider } from './lib/FluentBlocksProvider'

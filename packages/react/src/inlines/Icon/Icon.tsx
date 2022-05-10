@@ -1,9 +1,8 @@
-import get from 'lodash/get'
 import { ReactElement } from 'react'
-
-import basicIcons from '@fluent-blocks/basic-icons'
-import { IconProps, IconSize, IconVariant } from '@fluent-blocks/schemas'
+import get from 'lodash/get'
 import { makeStyles } from '@fluentui/react-components'
+import { IconVariant, IconSize, IconProps } from '@fluent-blocks/schemas'
+import basicIcons from '@fluent-blocks/basic-icons'
 
 import { useFluentBlocksContext } from '../../lib'
 
@@ -33,7 +32,7 @@ function spriteHref(
   }
 }
 
-const iconToTextRatio = 1.25
+const iconToTextRatio = 1.16
 
 const useIconStyles = makeStyles({
   root: {
@@ -49,7 +48,7 @@ export const Icon = (props: IconProps) => {
   const iconStyles = useIconStyles()
   const { iconSpriteUrl } = useFluentBlocksContext()
   return (
-    <svg className={`${iconStyles.root} fuib-Icon`} data-chromatic="ignore">
+    <svg className={iconStyles.root} data-chromatic="ignore">
       <use href={spriteHref(icon, size, variant, iconSpriteUrl)} />
     </svg>
   )
