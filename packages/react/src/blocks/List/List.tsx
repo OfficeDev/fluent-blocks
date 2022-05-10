@@ -188,7 +188,7 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
       {(list.listActions?.length || commonActions.size) && (
         <Toolbar
           toolbar={{
-            items: [
+            menu: [
               ...(list.listActions || []),
               ...Object.keys(rowActions || []).map((actionId) => ({
                 actionId,

@@ -1,5 +1,6 @@
-import { Toolbar, ToolbarProps } from './Toolbar'
 import { Parameters } from '@storybook/addons'
+
+import { Toolbar, ToolbarProps } from './Toolbar'
 
 export default {
   title: 'Tests/Toolbar',
@@ -15,7 +16,7 @@ export const ToolbarJsonTest: typeof DescriptionListTemplate & {
 
 ToolbarJsonTest.args = {
   toolbar: {
-    items: [
+    menu: [
       {
         type: 'action',
         actionId: '51e6eeb9',

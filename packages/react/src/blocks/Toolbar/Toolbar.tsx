@@ -34,8 +34,8 @@ import {
 } from '../../props'
 
 export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
-  toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {
-    items: MenuItemSequence
+  toolbar: Omit<NaturalToolbarProps['toolbar'], 'menu'> & {
+    menu: MenuItemSequence
   }
   contextualVariant?: 'block' | 'viewportWidth'
   contextualFindProps?: {
@@ -177,7 +177,7 @@ export const Toolbar = ({
 
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
-    : toolbar.items.map((item) => ({
+    : toolbar.menu.map((item) => ({
         hidden: item.hidden || actionsInFlow.has(get(item, 'actionId', false)),
       }))
 
@@ -196,7 +196,7 @@ export const Toolbar = ({
       ref={$toolbar}
     >
       {Sequence<MenuItemEntity, ToolbarItemContextualOptions>(
-        toolbar.items,
+        toolbar.menu,
         ToolbarItemInFlow,
         {
           iconSize: toolbar.iconSize,
@@ -205,7 +205,7 @@ export const Toolbar = ({
         },
         layoutNeedsUpdate
           ? undefined
-          : toolbar.items.map((item) => ({
+          : toolbar.menu.map((item) => ({
               hidden:
                 item.hidden || !actionsInFlow.has(get(item, 'actionId', false)),
             }))
@@ -219,7 +219,7 @@ export const Toolbar = ({
         )}
       >
         <Overflow
-          overflow={toolbar.items}
+          overflow={toolbar.menu}
           contextualHiddenFlags={menuItemHiddenFlags}
           iconSize={toolbar.iconSize || defaultIconSize}
           buttonSize={toolbar.buttonSize || defaultButtonSize}

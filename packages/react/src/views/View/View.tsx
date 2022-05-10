@@ -1,19 +1,14 @@
-import { AccentScheme, ThemeName } from '@fluent-blocks/schemas'
+import { ViewProps as NaturalViewProps } from '@fluent-blocks/schemas'
 
 import { SectionContentProps } from '../../blocks'
-import {
-  FluentBlocksProvider,
-  Translations,
-  defaultTranslations,
-} from '../../lib'
+import { FluentBlocksProvider, defaultTranslations } from '../../lib'
 import { WithActionHandler } from '../../props'
 import { Main } from '../../surfaces'
 
-export interface ViewProps extends WithActionHandler<any> {
+export interface ViewProps
+  extends Omit<NaturalViewProps, 'main'>,
+    WithActionHandler<any> {
   main: SectionContentProps
-  themeName?: ThemeName
-  accentScheme?: AccentScheme
-  translations?: Translations
   iconSpriteUrl?: string
 }
 

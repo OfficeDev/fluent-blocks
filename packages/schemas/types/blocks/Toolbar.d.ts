@@ -24,13 +24,13 @@ export interface FilterProps {
 
 export interface ToolbarProps {
   toolbar: {
-    items: MenuItemSequence
+    menu: MenuItemSequence
     iconSize?: ButtonProps['iconSize']
     buttonSize?: ButtonProps['size']
+    filter?: FilterProps
     /**
      * An actionId
      */
     find?: string
-    filter?: FilterProps
   }
 }
