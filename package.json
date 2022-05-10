@@ -22,8 +22,8 @@
     "pnpm": "^6"
   },
   "devDependencies": {
-    "@changesets/cli": "latest",
     "@changesets/changelog-github": "latest",
+    "@changesets/cli": "latest",
     "@trivago/prettier-plugin-sort-imports": "latest",
     "@types/eslint": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
