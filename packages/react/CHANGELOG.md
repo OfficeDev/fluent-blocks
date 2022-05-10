@@ -1,5 +1,15 @@
 # @fluent-blocks/react
 
+## 9.1.0-next.4
+
+### Minor Changes
+
+- [#103](https://github.com/OfficeDev/fluent-blocks/pull/103) [`eb833bf`](https://github.com/OfficeDev/fluent-blocks/commit/eb833bfc1d9fe42cb6d5f5ff341257ab85959eb9) Thanks [@thure](https://github.com/thure)! - Fix no-longer-unstable import and peg to a specific version of react-components.
+
+### Patch Changes
+
+- [#104](https://github.com/OfficeDev/fluent-blocks/pull/104) [`7237a03`](https://github.com/OfficeDev/fluent-blocks/commit/7237a034792a446890ec837779963ee88e8d556b) Thanks [@thure](https://github.com/thure)! - Add an intro to the Storybook.
+
 ## 9.1.0-next.3
 
 ### Patch Changes
