@@ -23,7 +23,7 @@
     "build": "just-scripts build",
     "fluentui:upgrade": "pnpm update @fluentui/react-components",
     "storybook:upgrade": "pnpm update \"@storybook/*\"",
-    "storybook:build": "node ./scripts/prebuildsb.js && build-storybook",
+    "storybook:build": "cd ../icons && pnpm bundle && cd .. && cp icons/basic-icons.svg react/.storybook/public/basic-icons.svg && cd react && build-storybook",
     "storybook:start": "start-storybook -p 4000",
     "storybook:start-ci": "start-storybook -p 4000 --ci --quiet",
     "dev": "pnpm storybook:start",
