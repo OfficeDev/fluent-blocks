@@ -32,15 +32,6 @@ jobs:
           version: 6.31.0
           run_install: true
 
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        with:
-          workingDir: packages/react
-          token: ${{ secrets.GITHUB_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: storybook:build
-          exitOnceUploaded: true
-
       - name: Publish to NPM
         uses: changesets/action@v1
         with:
@@ -49,3 +40,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          workingDir: packages/react
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: storybook:build
+          exitOnceUploaded: true
