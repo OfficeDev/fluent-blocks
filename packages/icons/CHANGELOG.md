@@ -1,5 +1,11 @@
 # @fluent-blocks/basic-icons
 
+## 9.1.1
+
+### Patch Changes
+
+- [#112](https://github.com/OfficeDev/fluent-blocks/pull/112) [`7ef0ddd`](https://github.com/OfficeDev/fluent-blocks/commit/7ef0ddd8721946a7d62078fbcdf6c33d26f89d76) Thanks [@thure](https://github.com/thure)! - Ensure basic-icons sprite is built in CI before publishing.
+
 ## 9.1.0
 
 ### Minor Changes

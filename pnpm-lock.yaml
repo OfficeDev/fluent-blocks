@@ -62,7 +62,7 @@ importers:
   packages/react:
     specifiers:
       '@babel/core': latest
-      '@fluent-blocks/basic-icons': workspace:9.1.0
+      '@fluent-blocks/basic-icons': workspace:9.1.1
       '@fluent-blocks/colors': workspace:9.1.0
       '@fluent-blocks/schemas': workspace:9.1.0
       '@fluentui/react-components': 9.0.0-rc.10
