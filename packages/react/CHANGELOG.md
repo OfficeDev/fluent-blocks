@@ -1,5 +1,12 @@
 # @fluent-blocks/react
 
+## 9.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`7ef0ddd`](https://github.com/OfficeDev/fluent-blocks/commit/7ef0ddd8721946a7d62078fbcdf6c33d26f89d76)]:
+  - @fluent-blocks/basic-icons@9.1.1
+
 ## 9.1.1
 
 ### Patch Changes
