@@ -1,5 +1,20 @@
 # @fluent-blocks/schemas
 
+## 9.1.0
+
+### Minor Changes
+
+- [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Adjust card content constituents to handle 280px viewport widths. Add 'flush' variant to Main.
+
+* [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Automate prereleases.
+
+### Patch Changes
+
+- [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Update logo.
+
+- Updated dependencies [[`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44)]:
+  - @fluent-blocks/colors@9.1.0
+
 ## 9.1.0-next.3
 
 ### Patch Changes

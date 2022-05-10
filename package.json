@@ -13,8 +13,7 @@
     "lint-staged": "lint-staged",
     "test": "pnpm run test -r --if-present",
     "change": "pnpm exec changeset add",
-    "changeset:version-latest": "pnpm exec changeset pre exit && pnpm exec changeset version && pnpm install --lockfile-only",
-    "changeset:version-next": "pnpm exec changeset version && pnpm install --lockfile-only",
+    "changeset:version": "pnpm exec changeset version && pnpm install --lockfile-only",
     "changeset:publish": "pnpm exec changeset publish"
   },
   "engines": {

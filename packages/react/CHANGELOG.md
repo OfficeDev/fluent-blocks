@@ -1,5 +1,48 @@
 # @fluent-blocks/react
 
+## 9.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`18a2463`](https://github.com/OfficeDev/fluent-blocks/commit/18a246334614d8b655a1bfc024884cc962472a77)]:
+  - @fluent-blocks/basic-icons@9.1.2
+
+## 9.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`7ef0ddd`](https://github.com/OfficeDev/fluent-blocks/commit/7ef0ddd8721946a7d62078fbcdf6c33d26f89d76)]:
+  - @fluent-blocks/basic-icons@9.1.1
+
+## 9.1.1
+
+### Patch Changes
+
+- [#110](https://github.com/OfficeDev/fluent-blocks/pull/110) [`328e91b`](https://github.com/OfficeDev/fluent-blocks/commit/328e91b987663f7c0d625b5d93661e24f08ce1da) Thanks [@thure](https://github.com/thure)! - Peg direct and peer deps to specific versions.
+
+## 9.1.0
+
+### Minor Changes
+
+- [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Adjust card content constituents to handle 280px viewport widths. Add 'flush' variant to Main.
+
+* [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Automate prereleases.
+
+- [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Fix no-longer-unstable import and peg to a specific version of react-components.
+
+### Patch Changes
+
+- [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Make UI tests with Charts less flaky.
+
+* [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Add an intro to the Storybook.
+
+- [#106](https://github.com/OfficeDev/fluent-blocks/pull/106) [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44) Thanks [@thure](https://github.com/thure)! - Update logo.
+
+- Updated dependencies [[`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44), [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44), [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44), [`c965fd5`](https://github.com/OfficeDev/fluent-blocks/commit/c965fd56ebb8525fa9acd394308d0659dfbe9d44)]:
+  - @fluent-blocks/schemas@9.1.0
+  - @fluent-blocks/basic-icons@9.1.0
+  - @fluent-blocks/colors@9.1.0
+
 ## 9.1.0-next.4
 
 ### Minor Changes
