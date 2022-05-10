@@ -1,5 +1,11 @@
 # @fluent-blocks/basic-icons
 
+## 9.1.2
+
+### Patch Changes
+
+- [#114](https://github.com/OfficeDev/fluent-blocks/pull/114) [`18a2463`](https://github.com/OfficeDev/fluent-blocks/commit/18a246334614d8b655a1bfc024884cc962472a77) Thanks [@thure](https://github.com/thure)! - Bundle icons before building Storybook.
+
 ## 9.1.1
 
 ### Patch Changes
