@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.1.1
+
+### Patch Changes
+
+- [#110](https://github.com/OfficeDev/fluent-blocks/pull/110) [`328e91b`](https://github.com/OfficeDev/fluent-blocks/commit/328e91b987663f7c0d625b5d93661e24f08ce1da) Thanks [@thure](https://github.com/thure)! - Peg direct and peer deps to specific versions.
+
 ## 9.1.0
 
 ### Minor Changes
