@@ -1,9 +1,11 @@
+import { useState } from 'react'
+
 import { ViewProps as NaturalViewProps } from '@fluent-blocks/schemas'
 
 import { SectionContentProps } from '../../blocks'
 import { FluentBlocksProvider, defaultTranslations } from '../../lib'
 import { WithActionHandler } from '../../props'
-import { Main } from '../../surfaces'
+import { Main, Sidebar, Topbar } from '../../surfaces'
 
 export interface ViewProps
   extends Omit<NaturalViewProps, 'main'>,
@@ -15,21 +17,29 @@ export interface ViewProps
 /** An experience provided to the user via their device’s canvas. */
 export const View = ({
   main,
+  sidebar,
+  topbar,
   themeName = 'light',
   accentScheme = 'web',
   translations = defaultTranslations,
   iconSpriteUrl,
   onAction,
-}: ViewProps) => (
-  <FluentBlocksProvider
-    {...{
-      themeName,
-      accentScheme,
-      translations,
-      onAction,
-      iconSpriteUrl,
-    }}
-  >
-    <Main {...main} />
-  </FluentBlocksProvider>
-)
+}: ViewProps) => {
+  const [sidebarActive, setSidebarActive] = useState(false)
+  const contextualViewState = { sidebarActive, setSidebarActive } // useMemo(()=>({sidebarActive, setSidebarActive}), [sidebarActive, setSidebarActive])
+  return (
+    <FluentBlocksProvider
+      {...{
+        themeName,
+        accentScheme,
+        translations,
+        onAction,
+        iconSpriteUrl,
+      }}
+    >
+      <Main {...main} contextualHasTopbar={!!topbar} />
+      {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
+      {topbar && <Topbar {...topbar} {...{ contextualViewState }} />}
+    </FluentBlocksProvider>
+  )
+}

@@ -1,0 +1,70 @@
+import { fake, seed } from 'faker/locale/en_US'
+import range from 'lodash/range'
+
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import fakeTitle from '../../lib/fakeTitle'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { View } from '../../views'
+import { Topbar } from './Topbar'
+
+<Meta
+  title="Surfaces/Topbar"
+  component={Topbar}
+  argTypes={{
+    ...contextArgTypes,
+    contextualViewState: {
+      table: { disable: true },
+    },
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const TopbarTemplate = (props) => (
+  <View {...props} iconSpriteUrl={iconSpriteUrl} />
+)
+
+# Topbar
+
+The Topbar is unique to a view (so `topbar` is one of `View`’s props). It
+supports a menu of actions on both the near side (the left side in LTR
+languages) and the far side, and the far side also supports `find` and `filter`
+like a regular `Toolbar`.
+
+When used inside `View`, `View` adds a menu action to the near side of the
+Topbar when a Sidebar is also present. When notifications are released, `View`
+will also add notifications to the far side of the Topbar.
+
+<Canvas withSource="none">
+  <Story
+    name="Topbar"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      topbar: {
+        near: { menu: [{ type: 'action', actionId: 'hello', label: 'Hello' }] },
+      },
+      main: {
+        title: [{ text: fakeTitle(fake) }],
+        abstract: [{ text: fake('{{lorem.paragraph}}') }],
+        sections: range(4).map((s) => ({
+          title: [{ text: fakeTitle(fake) }],
+          blocks: [
+            ...range(2).map(() => ({
+              paragraph: range(3).map(() => ({
+                text: fake('{{lorem.sentence}} '),
+              })),
+            })),
+          ],
+        })),
+      },
+    }}
+  >
+    {seed(1234) || TopbarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Topbar" />
