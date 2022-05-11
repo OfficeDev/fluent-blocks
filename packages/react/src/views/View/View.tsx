@@ -1,9 +1,14 @@
 import { useState } from 'react'
 
 import { ViewProps as NaturalViewProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { SectionContentProps } from '../../blocks'
-import { FluentBlocksProvider, defaultTranslations } from '../../lib'
+import {
+  FluentBlocksProvider,
+  defaultTranslations,
+  useCommonStyles,
+} from '../../lib'
 import { WithActionHandler } from '../../props'
 import { Main, Sidebar, Topbar } from '../../surfaces'
 
@@ -13,6 +18,20 @@ export interface ViewProps
   main: SectionContentProps
   iconSpriteUrl?: string
 }
+
+const useViewStyles = makeStyles({
+  root: {
+    position: 'relative',
+    height: '100%',
+  },
+  mainScrollContext: {
+    height: '100%',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    backgroundColor: 'var(--surface-background)',
+    color: 'var(--surface-foreground)',
+  },
+})
 
 /** An experience provided to the user via their device’s canvas. */
 export const View = ({
@@ -27,6 +46,8 @@ export const View = ({
 }: ViewProps) => {
   const [sidebarActive, setSidebarActive] = useState(false)
   const contextualViewState = { sidebarActive, setSidebarActive } // useMemo(()=>({sidebarActive, setSidebarActive}), [sidebarActive, setSidebarActive])
+  const viewStyles = useViewStyles()
+  const commonStyles = useCommonStyles()
   return (
     <FluentBlocksProvider
       {...{
@@ -37,9 +58,16 @@ export const View = ({
         iconSpriteUrl,
       }}
     >
-      <Main {...main} contextualHasTopbar={!!topbar} />
-      {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
-      {topbar && <Topbar {...topbar} {...{ contextualViewState }} />}
+      <div
+        role="none"
+        className={cx(viewStyles.root, commonStyles.baseSurface)}
+      >
+        <div role="none" className={viewStyles.mainScrollContext}>
+          <Main {...main} contextualHasTopbar={!!topbar} />
+        </div>
+        {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
+        {topbar && <Topbar {...topbar} {...{ contextualViewState }} />}
+      </div>
     </FluentBlocksProvider>
   )
 }

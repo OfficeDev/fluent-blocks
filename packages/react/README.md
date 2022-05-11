@@ -21,7 +21,7 @@ Using TypeScript and an IDE that supports type inspections will make using this 
 1. Add `react@17`, `react-dom@17`, and `@fluentui/react-components@latest` if they’re not in your project already
 2. Add `chart.js@^2.9.4` if you want to use charts from this package
 3. Depending on your package manager, you may need to add `@fluent-blocks/basic-icons` to use icons
-4. Finally, install this package, `@fluent-blocks/react`, using your package manager
+4. Install this package, `@fluent-blocks/react`, using your package manager
 
 Now anywhere you can use React, you can use Fluent Blocks. If you want to delegate the entire viewport to Fluent Blocks, use the `View` component on its own:
 
@@ -72,6 +72,16 @@ render(
   </FluentBlocksProvider>,
   document.getElementById('root')
 )
+```
+
+In order to get the right background coverage and overflow behavior, you should apply `height: 100%` to the DOM node React mounts to render Fluent Blocks, and any parent elements of that node should occupy the full height of whatever space Fluent Blocks should occupy.
+
+In most situations this rule is sufficient:
+
+```css
+html, body, #root {
+  height: 100%;
+}
 ```
 
 ## How design pattern usage is validated through types

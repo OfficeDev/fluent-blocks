@@ -11,7 +11,7 @@ export interface TopbarProps
 
 const useTopbarStyles = makeStyles({
   root: {
-    position: 'fixed',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,

@@ -12,8 +12,9 @@ export interface MainProps
 
 const useMainSectionStyles = makeStyles({
   root: {
-    overflowX: 'hidden',
-    overflowY: 'hidden',
+    // Allow `Main` to occupy its natural height and width; it is the
+    // responsibility of its parent (e.g. `View`) to control how it should
+    // overflow.
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     paddingBlockEnd: rem(44),
