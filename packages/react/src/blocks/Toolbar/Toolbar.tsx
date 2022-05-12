@@ -14,6 +14,7 @@ import {
   SingleValueInputActionPayload,
 } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+import useResizeObserver from '@react-hook/resize-observer'
 
 import {
   Button,
@@ -166,14 +167,13 @@ export const Toolbar = ({
   }, [])
 
   useLayoutEffect(() => {
-    document.defaultView?.addEventListener('resize', handleResize)
     if ($toolbar.current && layoutNeedsUpdate) {
       setActionsInFlow(getNextActionsInFlow())
       setLayoutNeedsUpdate(false)
     }
-    return () =>
-      document.defaultView?.removeEventListener('resize', handleResize)
   }, [toolbar, $toolbar.current])
+
+  useResizeObserver($toolbar, handleResize)
 
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined

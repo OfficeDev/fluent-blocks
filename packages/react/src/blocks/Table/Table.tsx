@@ -24,6 +24,7 @@ import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
+import useResizeObserver from '@react-hook/resize-observer'
 
 import { InlineContent } from '../../inlines'
 import { Overflow } from '../../inputs'
@@ -235,7 +236,6 @@ export const Table = (props: TableProps) => {
   )
 
   useLayoutEffect(() => {
-    document.defaultView?.addEventListener('resize', debouncedUpdateTableLayout)
     if ($table.current) {
       const nextColumnsInFlow = getNextColumnsInFlow()
       setInFlowColumns(nextColumnsInFlow!)
@@ -243,12 +243,9 @@ export const Table = (props: TableProps) => {
         getContentColumnsHidden(nextColumnsInFlow!, colKeys)
       )
     }
-    return () =>
-      document.defaultView?.removeEventListener(
-        'resize',
-        debouncedUpdateTableLayout
-      )
   }, [])
+
+  useResizeObserver($table, debouncedUpdateTableLayout)
 
   const rootRowHeaderActivate = useCallback(
     ({ target }: MouseEvent<HTMLButtonElement>) => {
