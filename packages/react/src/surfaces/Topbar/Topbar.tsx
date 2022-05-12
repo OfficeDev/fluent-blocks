@@ -2,7 +2,7 @@ import { TopbarProps as NaturalTopbarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Toolbar } from '../../blocks/Toolbar/Toolbar'
-import { rem, sx, useCommonStyles } from '../../lib'
+import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
 import { ContextualViewStateProps } from '../../props'
 
 export interface TopbarProps
@@ -21,6 +21,12 @@ const useTopbarStyles = makeStyles({
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     ...sx.padding(rem(8)),
+    borderBlockEndWidth: '1px',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: 'transparent',
+  },
+  'inner--hc': {
+    borderBlockEndColor: 'var(--colorNeutralForeground1)',
   },
   gap: {
     ...sx.flex(1, 0, '0'),
@@ -30,9 +36,16 @@ const useTopbarStyles = makeStyles({
 export const Topbar = ({ near, far }: TopbarProps) => {
   const topbarStyles = useTopbarStyles()
   const commonStyles = useCommonStyles()
+  const { themeName } = useFluentBlocksContext()
   return (
     <div className={cx(topbarStyles.root)}>
-      <div className={cx(topbarStyles.inner, commonStyles.elevatedSurface)}>
+      <div
+        className={cx(
+          topbarStyles.inner,
+          commonStyles.elevatedSurface,
+          themeName === 'highContrast' && topbarStyles['inner--hc']
+        )}
+      >
         {near?.menu ? (
           <Toolbar toolbar={{ menu: near.menu }} />
         ) : (
