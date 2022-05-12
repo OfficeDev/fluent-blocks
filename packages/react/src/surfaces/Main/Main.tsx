@@ -18,6 +18,8 @@ const useMainSectionStyles = makeStyles({
     paddingBlockEnd: rem(44),
     paddingInlineStart: '1rem',
     paddingInlineEnd: '1rem',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
   },
   'root--flush': {
     paddingInlineStart: 0,
