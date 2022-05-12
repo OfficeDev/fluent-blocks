@@ -7,6 +7,7 @@ import { SectionContentProps } from '../../blocks'
 import {
   FluentBlocksProvider,
   defaultTranslations,
+  rem,
   useCommonStyles,
 } from '../../lib'
 import { WithActionHandler } from '../../props'
@@ -30,6 +31,16 @@ const useViewStyles = makeStyles({
     overflowX: 'hidden',
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
+  },
+  'mainScrollContext--sidebarActive': {
+    marginInlineStart: rem(280),
+  },
+  'mainScrollContext--topbar': {
+    '&:before': {
+      content: '""',
+      display: 'block',
+      height: rem(48),
+    },
   },
 })
 
@@ -62,8 +73,15 @@ export const View = ({
         role="none"
         className={cx(viewStyles.root, commonStyles.baseSurface)}
       >
-        <div role="none" className={viewStyles.mainScrollContext}>
-          <Main {...main} contextualHasTopbar={!!topbar} />
+        <div
+          role="none"
+          className={cx(
+            viewStyles.mainScrollContext,
+            sidebar && viewStyles['mainScrollContext--sidebarActive'],
+            topbar && viewStyles['mainScrollContext--topbar']
+          )}
+        >
+          <Main {...main} />
         </div>
         {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
         {topbar && <Topbar {...topbar} {...{ contextualViewState }} />}

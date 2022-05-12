@@ -42,6 +42,10 @@ const useButtonStyles = makeStyles({
   toolbarItemHidden: {
     display: 'none',
   },
+  alignInlineStart: {
+    textAlign: 'start',
+    justifyContent: 'flex-start',
+  },
 })
 
 export const Button = ({
@@ -76,7 +80,9 @@ export const Button = ({
   const buttonStyles = useButtonStyles()
 
   const derivedSize =
-    contextualVariant === 'card-inputs' ? 'small' : size || 'medium'
+    contextualVariant === 'card-inputs' || contextualVariant === 'sidebar'
+      ? 'small'
+      : size || 'medium'
   const derivedIconSize =
     iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
 
@@ -88,7 +94,10 @@ export const Button = ({
       size={derivedSize}
       className={cx(
         buttonStyles.root,
-        contextualVariant === 'narrow-inputs' && buttonStyles.fill,
+        (contextualVariant === 'narrow-inputs' ||
+          contextualVariant === 'sidebar') &&
+          buttonStyles.fill,
+        contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
         contextualVariant.startsWith('toolbar-item') &&
           buttonStyles.toolbarItemInFlow,
         contextualVariant === 'toolbar-item--needs-update' &&

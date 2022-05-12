@@ -1,6 +1,6 @@
 import { ButtonProps } from '../inputs'
 
-export type MenuAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
+export type MenuAction = Omit<ButtonProps, 'size' | 'iconSize'> & {
   hidden?: boolean
 }
 

@@ -9,7 +9,15 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'Views', 'Facets', 'Blocks', 'Media', '*'],
+      order: [
+        'Introduction',
+        'Facets',
+        'Views',
+        'Surfaces',
+        'Blocks',
+        'Media',
+        '*',
+      ],
     },
   },
   viewMode: 'docs',

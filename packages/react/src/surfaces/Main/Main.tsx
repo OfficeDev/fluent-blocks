@@ -6,9 +6,7 @@ import { rem, useCommonStyles } from '../../lib'
 
 export interface MainProps
   extends Pick<NaturalMainProps, 'variant'>,
-    SectionContentProps {
-  contextualHasTopbar?: boolean
-}
+    SectionContentProps {}
 
 const useMainSectionStyles = makeStyles({
   root: {

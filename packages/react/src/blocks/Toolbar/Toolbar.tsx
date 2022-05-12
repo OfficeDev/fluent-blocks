@@ -97,7 +97,7 @@ const ToolbarItemInFlow = (
     case 'action':
       return Button({
         ...item,
-        variant: 'transparent',
+        variant: item.variant || 'transparent',
         size: item.buttonSize || defaultButtonSize,
         iconSize: item.iconSize || defaultIconSize,
         contextualVariant: item.layoutNeedsUpdate

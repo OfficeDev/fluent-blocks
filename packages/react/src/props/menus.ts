@@ -7,10 +7,7 @@ import { ButtonProps } from '../inputs'
 
 export interface MenuAction
   extends NaturalMenuAction,
-    Omit<
-      ButtonProps,
-      'type' | 'variant' | 'size' | 'iconSze' | 'contextualVariant'
-    > {}
+    Omit<ButtonProps, 'type' | 'size' | 'iconSze' | 'contextualVariant'> {}
 
 export type MenuActionSequence = MenuAction[]
 
