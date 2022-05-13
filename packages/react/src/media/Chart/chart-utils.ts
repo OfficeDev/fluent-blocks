@@ -233,10 +233,10 @@ export const chartConfig = ({
     },
     layout: {
       padding: {
-        insetInlineStart: 0,
-        insetInlineEnd: 16,
-        insetBlockStart: 0,
-        insetBlockEnd: 0,
+        left: 0,
+        right: 16,
+        top: 0,
+        bottom: 0,
       },
     },
     scaleLabel: {
