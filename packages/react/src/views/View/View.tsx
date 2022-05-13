@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { ViewProps as NaturalViewProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
@@ -9,9 +9,16 @@ import {
   defaultTranslations,
   rem,
   useCommonStyles,
+  useLayoutResize,
 } from '../../lib'
-import { WithActionHandler } from '../../props'
-import { Main, Sidebar, Topbar } from '../../surfaces'
+import { SidebarState, WithActionHandler } from '../../props'
+import {
+  Main,
+  Sidebar,
+  Topbar,
+  sidebarWidth,
+  topbarHeight,
+} from '../../surfaces'
 
 export interface ViewProps
   extends Omit<NaturalViewProps, 'main'>,
@@ -32,14 +39,14 @@ const useViewStyles = makeStyles({
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
   },
-  'mainScrollContext--sidebarActive': {
-    marginInlineStart: rem(280),
+  'mainScrollContext--sidebarDocked': {
+    marginInlineStart: rem(sidebarWidth),
   },
   'mainScrollContext--topbar': {
     '&:before': {
       content: '""',
       display: 'block',
-      height: rem(48),
+      height: rem(topbarHeight),
     },
   },
 })
@@ -55,10 +62,26 @@ export const View = ({
   iconSpriteUrl,
   onAction,
 }: ViewProps) => {
-  const [sidebarActive, setSidebarActive] = useState(false)
-  const contextualViewState = { sidebarActive, setSidebarActive } // useMemo(()=>({sidebarActive, setSidebarActive}), [sidebarActive, setSidebarActive])
+  const [sidebarState, setsidebarState] = useState<SidebarState>(
+    sidebar ? SidebarState.Hidden : SidebarState.Never
+  )
+  const contextualViewState = { sidebarState, setsidebarState } // useMemo(()=>({sidebarState, setsidebarState}), [sidebarState, setsidebarState])
   const viewStyles = useViewStyles()
   const commonStyles = useCommonStyles()
+  const $view = useRef<HTMLDivElement | null>(null)
+
+  const onResize = useCallback(() => {
+    setsidebarState(
+      !sidebar
+        ? SidebarState.Never
+        : ($view.current?.clientWidth ?? 0) >= sidebarWidth * 3
+        ? SidebarState.Docked
+        : SidebarState.Hidden
+    )
+  }, [sidebar])
+
+  useLayoutResize($view, onResize)
+
   return (
     <FluentBlocksProvider
       {...{
@@ -71,13 +94,15 @@ export const View = ({
     >
       <div
         role="none"
+        ref={$view}
         className={cx(viewStyles.root, commonStyles.baseSurface)}
       >
         <div
           role="none"
           className={cx(
             viewStyles.mainScrollContext,
-            sidebar && viewStyles['mainScrollContext--sidebarActive'],
+            sidebarState === SidebarState.Docked &&
+              viewStyles['mainScrollContext--sidebarDocked'],
             topbar && viewStyles['mainScrollContext--topbar']
           )}
         >

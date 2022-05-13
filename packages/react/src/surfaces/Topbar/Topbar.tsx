@@ -9,6 +9,8 @@ export interface TopbarProps
   extends NaturalTopbarProps,
     ContextualViewStateProps {}
 
+export const topbarHeight = 49
+
 const useTopbarStyles = makeStyles({
   root: {
     position: 'absolute',
@@ -24,6 +26,8 @@ const useTopbarStyles = makeStyles({
     borderBlockEndWidth: '1px',
     borderBlockEndStyle: 'solid',
     borderBlockEndColor: 'transparent',
+    height: rem(topbarHeight),
+    boxSizing: 'border-box',
   },
   'inner--hc': {
     borderBlockEndColor: 'var(--colorNeutralForeground1)',

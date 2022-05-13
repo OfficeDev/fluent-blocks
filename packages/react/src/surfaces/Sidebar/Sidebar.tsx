@@ -3,22 +3,30 @@ import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Button } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
-import { ContextualViewStateProps } from '../../props'
+import { ContextualViewStateProps, SidebarState } from '../../props'
 
 export interface SidebarProps
   extends NaturalSidebarProps,
     ContextualViewStateProps {}
 
+export const sidebarWidth = 240
+
 const useSidebarStyles = makeStyles({
   root: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
+    insetBlockStart: 0,
+    insetBlockEnd: 0,
+    insetInlineStart: rem(-sidebarWidth),
     boxShadow: 'var(--content-elevation)',
   },
+  'root--docked': {
+    insetInlineStart: 0,
+  },
+  'root--active': {
+    insetInlineStart: 0,
+  },
   inner: {
-    width: rem(280),
+    width: rem(sidebarWidth),
     boxSizing: 'border-box',
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
@@ -39,8 +47,17 @@ export const Sidebar = (props: SidebarProps) => {
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
   const { themeName } = useFluentBlocksContext()
+  const { contextualViewState } = props
   return (
-    <div className={sidebarStyles.root}>
+    <div
+      className={cx(
+        sidebarStyles.root,
+        contextualViewState?.sidebarState === SidebarState.Active &&
+          sidebarStyles['root--active'],
+        contextualViewState?.sidebarState === SidebarState.Docked &&
+          sidebarStyles['root--docked']
+      )}
+    >
       <div
         className={cx(
           sidebarStyles.inner,
