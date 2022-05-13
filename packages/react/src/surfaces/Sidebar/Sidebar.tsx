@@ -1,3 +1,6 @@
+import noop from 'lodash/noop'
+import { useCallback } from 'react'
+
 import { SidebarProps as NaturalSidebarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
@@ -9,7 +12,7 @@ export interface SidebarProps
   extends NaturalSidebarProps,
     ContextualViewStateProps {}
 
-export const sidebarWidth = 240
+export const sidebarWidth = 228
 
 const useSidebarStyles = makeStyles({
   root: {
@@ -80,4 +83,71 @@ export const Sidebar = (props: SidebarProps) => {
       </div>
     </div>
   )
+}
+
+const useSidebarInvokerStyles = makeStyles({
+  root: {
+    ...sx.padding(rem(8)),
+    position: 'absolute',
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+  },
+  'root--active': {
+    insetInlineStart: rem(sidebarWidth),
+    insetBlockEnd: 0,
+    insetInlineEnd: 0,
+    backgroundColor: 'var(--colorNeutralShadowKeyDarker)',
+  },
+})
+
+export const SidebarInvoker = ({
+  contextualViewState,
+}: ContextualViewStateProps) => {
+  const sidebarInvokerStyles = useSidebarInvokerStyles()
+  const { sidebarState, setSidebarState } = contextualViewState || {
+    sidebarState: SidebarState.Never,
+    setSidebarState: noop,
+  }
+  const { translations } = useFluentBlocksContext()
+  const onAction = useCallback(() => {
+    if (sidebarState === SidebarState.Active) {
+      return (setSidebarState || noop)(SidebarState.Hidden)
+    }
+    if (sidebarState === SidebarState.Hidden) {
+      return (setSidebarState || noop)(SidebarState.Active)
+    }
+  }, [sidebarState, setSidebarState])
+  switch (sidebarState) {
+    case SidebarState.Never:
+      return null
+    case SidebarState.Docked:
+      return null
+    default:
+      return (
+        <div
+          className={cx(
+            sidebarInvokerStyles.root,
+            sidebarState === SidebarState.Active &&
+              sidebarInvokerStyles['root--active']
+          )}
+          onClick={onAction}
+        >
+          <Button
+            {...{
+              type: 'action',
+              actionId: 'invoke-sidebar',
+              label:
+                sidebarState === SidebarState.Active
+                  ? translations['sidebar__close']
+                  : translations['sidebar__open'],
+              icon:
+                sidebarState === SidebarState.Active ? 'dismiss' : 'apps_list',
+              iconOnly: true,
+              variation: 'subtle',
+              onAction,
+            }}
+          />
+        </div>
+      )
+  }
 }

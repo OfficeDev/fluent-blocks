@@ -14,9 +14,9 @@ export const topbarHeight = 49
 const useTopbarStyles = makeStyles({
   root: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    insetInlineEnd: 0,
     boxShadow: 'var(--content-elevation)',
   },
   inner: {

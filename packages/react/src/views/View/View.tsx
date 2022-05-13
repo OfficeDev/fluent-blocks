@@ -15,6 +15,7 @@ import { SidebarState, WithActionHandler } from '../../props'
 import {
   Main,
   Sidebar,
+  SidebarInvoker,
   Topbar,
   sidebarWidth,
   topbarHeight,
@@ -42,7 +43,7 @@ const useViewStyles = makeStyles({
   'mainScrollContext--sidebarDocked': {
     marginInlineStart: rem(sidebarWidth),
   },
-  'mainScrollContext--topbar': {
+  'mainScrollContext--topGap': {
     '&:before': {
       content: '""',
       display: 'block',
@@ -62,16 +63,16 @@ export const View = ({
   iconSpriteUrl,
   onAction,
 }: ViewProps) => {
-  const [sidebarState, setsidebarState] = useState<SidebarState>(
+  const [sidebarState, setSidebarState] = useState<SidebarState>(
     sidebar ? SidebarState.Hidden : SidebarState.Never
   )
-  const contextualViewState = { sidebarState, setsidebarState } // useMemo(()=>({sidebarState, setsidebarState}), [sidebarState, setsidebarState])
+  const contextualViewState = { sidebarState, setSidebarState } // useMemo(()=>({sidebarState, setsidebarState}), [sidebarState, setsidebarState])
   const viewStyles = useViewStyles()
   const commonStyles = useCommonStyles()
   const $view = useRef<HTMLDivElement | null>(null)
 
   const onResize = useCallback(() => {
-    setsidebarState(
+    setSidebarState(
       !sidebar
         ? SidebarState.Never
         : ($view.current?.clientWidth ?? 0) >= sidebarWidth * 3
@@ -103,13 +104,20 @@ export const View = ({
             viewStyles.mainScrollContext,
             sidebarState === SidebarState.Docked &&
               viewStyles['mainScrollContext--sidebarDocked'],
-            topbar && viewStyles['mainScrollContext--topbar']
+            (topbar ||
+              sidebarState === SidebarState.Active ||
+              sidebarState === SidebarState.Hidden) &&
+              viewStyles['mainScrollContext--topGap']
           )}
         >
           <Main {...main} />
         </div>
         {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
-        {topbar && <Topbar {...topbar} {...{ contextualViewState }} />}
+        {topbar ? (
+          <Topbar {...topbar} {...{ contextualViewState }} />
+        ) : sidebar ? (
+          <SidebarInvoker {...{ contextualViewState }} />
+        ) : null}
       </div>
     </FluentBlocksProvider>
   )
