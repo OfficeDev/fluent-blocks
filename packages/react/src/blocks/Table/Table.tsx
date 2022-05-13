@@ -31,8 +31,8 @@ import {
   sx,
   useCommonStyles,
   useFluentBlocksContext,
+  useLayoutResize,
 } from '../../lib'
-import { useLayoutResize } from '../../lib/useLayoutResize'
 import { ListColumnProps, MenuItemSequence, TableProps } from '../../props'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 import { getBreakpoints } from './tableBreakpoints'

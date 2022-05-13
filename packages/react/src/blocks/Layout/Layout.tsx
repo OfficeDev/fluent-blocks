@@ -2,8 +2,7 @@ import { ReactElement, useRef, useState } from 'react'
 
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
-import { Sequence, sx } from '../../lib'
-import { useLayoutResize } from '../../lib/useLayoutResize'
+import { Sequence, sx, useLayoutResize } from '../../lib'
 import { LayoutProps } from '../../props'
 import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
 import {

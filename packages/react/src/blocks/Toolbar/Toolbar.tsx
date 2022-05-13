@@ -20,8 +20,8 @@ import {
   rem,
   useCommonStyles,
   useFluentBlocksContext,
+  useLayoutResize,
 } from '../../lib'
-import { useLayoutResize } from '../../lib/useLayoutResize'
 import {
   MenuItemEntity,
   MenuItemSequence,
