@@ -1,10 +1,10 @@
 import noop from 'lodash/noop'
-import { useCallback } from 'react'
+import { Dispatch, SetStateAction, useCallback } from 'react'
 
 import { SidebarProps as NaturalSidebarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
-import { Button } from '../../inputs'
+import { Button, ButtonProps } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
 import { ContextualViewStateProps, SidebarState } from '../../props'
 
@@ -100,23 +100,66 @@ const useSidebarInvokerStyles = makeStyles({
   },
 })
 
+function sidebarStatePropsFromViewState(
+  contextualViewState: ContextualViewStateProps['contextualViewState']
+) {
+  return {
+    sidebarState: SidebarState.Never,
+    setSidebarState: noop,
+    ...contextualViewState,
+  }
+}
+
+function useSidebarActionHandler(
+  sidebarState: SidebarState,
+  setSidebarState: Dispatch<SetStateAction<SidebarState>>
+) {
+  return useCallback(() => {
+    if (sidebarState === SidebarState.Active) {
+      return setSidebarState(SidebarState.Hidden)
+    }
+    if (sidebarState === SidebarState.Hidden) {
+      return setSidebarState(SidebarState.Active)
+    }
+  }, [sidebarState, setSidebarState])
+}
+
+export function useSidebarInvoker(
+  contextualViewState: ContextualViewStateProps['contextualViewState']
+): ButtonProps {
+  const { sidebarState, setSidebarState } =
+    sidebarStatePropsFromViewState(contextualViewState)
+
+  const { translations } = useFluentBlocksContext()
+
+  const onAction = useSidebarActionHandler(sidebarState, setSidebarState)
+
+  return {
+    type: 'action',
+    actionId: 'invoke-sidebar',
+    label:
+      sidebarState === SidebarState.Active
+        ? translations['sidebar__close']
+        : translations['sidebar__open'],
+    icon: sidebarState === SidebarState.Active ? 'dismiss' : 'apps_list',
+    iconOnly: true,
+    variant: 'outline',
+    onAction,
+  }
+}
+
 export const SidebarInvoker = ({
   contextualViewState,
 }: ContextualViewStateProps) => {
   const sidebarInvokerStyles = useSidebarInvokerStyles()
-  const { sidebarState, setSidebarState } = contextualViewState || {
-    sidebarState: SidebarState.Never,
-    setSidebarState: noop,
-  }
-  const { translations } = useFluentBlocksContext()
-  const onAction = useCallback(() => {
-    if (sidebarState === SidebarState.Active) {
-      return (setSidebarState || noop)(SidebarState.Hidden)
-    }
-    if (sidebarState === SidebarState.Hidden) {
-      return (setSidebarState || noop)(SidebarState.Active)
-    }
-  }, [sidebarState, setSidebarState])
+
+  const { sidebarState, setSidebarState } =
+    sidebarStatePropsFromViewState(contextualViewState)
+
+  const onAction = useSidebarActionHandler(sidebarState, setSidebarState)
+
+  const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
+
   switch (sidebarState) {
     case SidebarState.Never:
       return null
@@ -132,21 +175,7 @@ export const SidebarInvoker = ({
           )}
           onClick={onAction}
         >
-          <Button
-            {...{
-              type: 'action',
-              actionId: 'invoke-sidebar',
-              label:
-                sidebarState === SidebarState.Active
-                  ? translations['sidebar__close']
-                  : translations['sidebar__open'],
-              icon:
-                sidebarState === SidebarState.Active ? 'dismiss' : 'apps_list',
-              iconOnly: true,
-              variation: 'subtle',
-              onAction,
-            }}
-          />
+          <Button {...sidebarInvokerAction} />
         </div>
       )
   }

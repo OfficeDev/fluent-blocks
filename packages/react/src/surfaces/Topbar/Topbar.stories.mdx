@@ -49,10 +49,6 @@ supports a menu of actions on both the near side (the left side in LTR
 languages) and the far side, and the far side also supports `find` and `filter`
 like a regular `Toolbar`.
 
-When used inside `View`, `View` adds a menu action to the near side of the
-Topbar when a Sidebar is also present. When notifications are released, `View`
-will also add notifications to the far side of the Topbar.
-
 <Canvas withSource="none">
   <Story
     name="Topbar"
@@ -79,3 +75,39 @@ will also add notifications to the far side of the Topbar.
 </Canvas>
 
 <ArgsTable story="Topbar" />
+
+When used inside `View`, `View` adds a menu action to the near side of the
+Topbar when a Sidebar is also present. When notifications are released, `View`
+will also add notifications to the far side of the Topbar.
+
+<Canvas withSource="none">
+  <Story
+    name="Topbar plus Sidebar"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      topbar: {
+        near: {
+          menu: [
+            {
+              type: 'action',
+              actionId: 'hello',
+              label: 'Hello',
+              variant: 'primary',
+            },
+          ],
+        },
+      },
+      sidebar: {
+        menu: range(8).map((s) => ({
+          type: 'action',
+          actionId: `sidebar-action__${s}`,
+          label: fakeTitle(fake),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || TopbarTemplate.bind({})}
+  </Story>
+</Canvas>

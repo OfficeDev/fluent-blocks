@@ -3,7 +3,12 @@ import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Toolbar } from '../../blocks/Toolbar/Toolbar'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
-import { ContextualViewStateProps } from '../../props'
+import {
+  ContextualViewStateProps,
+  MenuItemSequence,
+  SidebarState,
+} from '../../props'
+import { useSidebarInvoker } from '../Sidebar/Sidebar'
 
 export interface TopbarProps
   extends NaturalTopbarProps,
@@ -37,10 +42,16 @@ const useTopbarStyles = makeStyles({
   },
 })
 
-export const Topbar = ({ near, far }: TopbarProps) => {
+export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
   const topbarStyles = useTopbarStyles()
   const commonStyles = useCommonStyles()
   const { themeName } = useFluentBlocksContext()
+  const hasSidebarInvoker =
+    contextualViewState &&
+    contextualViewState.sidebarState &&
+    (contextualViewState.sidebarState === SidebarState.Active ||
+      contextualViewState.sidebarState === SidebarState.Hidden)
+  const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
   return (
     <div className={cx(topbarStyles.root)}>
       <div
@@ -50,8 +61,14 @@ export const Topbar = ({ near, far }: TopbarProps) => {
           themeName === 'highContrast' && topbarStyles['inner--hc']
         )}
       >
-        {near?.menu ? (
-          <Toolbar toolbar={{ menu: near.menu }} />
+        {near?.menu || hasSidebarInvoker ? (
+          <Toolbar
+            toolbar={{
+              menu: hasSidebarInvoker
+                ? [sidebarInvokerAction, ...(near?.menu ?? [])]
+                : (near!.menu as MenuItemSequence),
+            }}
+          />
         ) : (
           <div role="none" className={topbarStyles.gap} />
         )}
