@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 import keys from 'lodash/keys'
 import {
@@ -6,7 +5,6 @@ import {
   MouseEvent,
   ReactElement,
   useCallback,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -24,7 +22,6 @@ import {
   useArrowNavigationGroup,
   useFocusableGroup,
 } from '@fluentui/react-tabster'
-import useResizeObserver from '@react-hook/resize-observer'
 
 import { InlineContent } from '../../inlines'
 import { Overflow } from '../../inputs'
@@ -35,6 +32,7 @@ import {
   useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
+import { useLayoutResize } from '../../lib/useLayoutResize'
 import { ListColumnProps, MenuItemSequence, TableProps } from '../../props'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
 import { getBreakpoints } from './tableBreakpoints'
@@ -218,34 +216,15 @@ export const Table = (props: TableProps) => {
     }
   }, [])
 
-  const debouncedUpdateTableLayout = useCallback(
-    debounce(
-      () => {
-        if ($table.current) {
-          const nextColumnsInFlow = getNextColumnsInFlow()
-          setInFlowColumns(nextColumnsInFlow!)
-          setContentColumnsHidden(
-            getContentColumnsHidden(nextColumnsInFlow!, colKeys)
-          )
-        }
-      },
-      100,
-      { leading: false, trailing: true }
-    ),
-    []
-  )
-
-  useLayoutEffect(() => {
-    if ($table.current) {
-      const nextColumnsInFlow = getNextColumnsInFlow()
-      setInFlowColumns(nextColumnsInFlow!)
-      setContentColumnsHidden(
-        getContentColumnsHidden(nextColumnsInFlow!, colKeys)
-      )
-    }
+  const updateTableLayout = useCallback(() => {
+    const nextColumnsInFlow = getNextColumnsInFlow()
+    setInFlowColumns(nextColumnsInFlow!)
+    setContentColumnsHidden(
+      getContentColumnsHidden(nextColumnsInFlow!, colKeys)
+    )
   }, [])
 
-  useResizeObserver($table, debouncedUpdateTableLayout)
+  useLayoutResize($table, updateTableLayout)
 
   const rootRowHeaderActivate = useCallback(
     ({ target }: MouseEvent<HTMLButtonElement>) => {

@@ -1,20 +1,13 @@
 import debounce from 'lodash/debounce'
 import every from 'lodash/every'
 import get from 'lodash/get'
-import {
-  ReactElement,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { ReactElement, useCallback, useRef, useState } from 'react'
 
 import {
   ToolbarProps as NaturalToolbarProps,
   SingleValueInputActionPayload,
 } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
-import useResizeObserver from '@react-hook/resize-observer'
 
 import {
   Button,
@@ -28,6 +21,7 @@ import {
   useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
+import { useLayoutResize } from '../../lib/useLayoutResize'
 import {
   MenuItemEntity,
   MenuItemSequence,
@@ -149,31 +143,16 @@ export const Toolbar = ({
     return new Set(nextActionsInFlow)
   }, [])
 
-  const debouncedUpdateToolbarLayout = useCallback(
-    debounce(
-      () => {
-        setActionsInFlow(getNextActionsInFlow())
-        setLayoutNeedsUpdate(false)
-      },
-      100,
-      { leading: false, trailing: true }
-    ),
-    []
-  )
-
-  const handleResize = useCallback(() => {
-    setLayoutNeedsUpdate(true)
-    debouncedUpdateToolbarLayout()
+  const onComputeResize = useCallback(() => {
+    setActionsInFlow(getNextActionsInFlow())
+    setLayoutNeedsUpdate(false)
   }, [])
 
-  useLayoutEffect(() => {
-    if ($toolbar.current && layoutNeedsUpdate) {
-      setActionsInFlow(getNextActionsInFlow())
-      setLayoutNeedsUpdate(false)
-    }
-  }, [toolbar, $toolbar.current])
+  const onResizeStart = useCallback(() => {
+    setLayoutNeedsUpdate(true)
+  }, [])
 
-  useResizeObserver($toolbar, handleResize)
+  useLayoutResize($toolbar, onComputeResize, onResizeStart)
 
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
