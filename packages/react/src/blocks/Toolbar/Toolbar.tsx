@@ -56,6 +56,7 @@ const useToolbarStyles = makeStyles({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexGrow: 1,
   },
   find: {
     flexGrow: 1,

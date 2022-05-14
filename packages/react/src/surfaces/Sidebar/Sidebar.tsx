@@ -94,9 +94,6 @@ const useSidebarInvokerStyles = makeStyles({
   },
   'root--active': {
     insetInlineStart: rem(sidebarWidth),
-    insetBlockEnd: 0,
-    insetInlineEnd: 0,
-    backgroundColor: 'var(--colorNeutralShadowKeyDarker)',
   },
 })
 
@@ -153,10 +150,7 @@ export const SidebarInvoker = ({
 }: ContextualViewStateProps) => {
   const sidebarInvokerStyles = useSidebarInvokerStyles()
 
-  const { sidebarState, setSidebarState } =
-    sidebarStatePropsFromViewState(contextualViewState)
-
-  const onAction = useSidebarActionHandler(sidebarState, setSidebarState)
+  const { sidebarState } = sidebarStatePropsFromViewState(contextualViewState)
 
   const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
 
@@ -173,10 +167,41 @@ export const SidebarInvoker = ({
             sidebarState === SidebarState.Active &&
               sidebarInvokerStyles['root--active']
           )}
-          onClick={onAction}
         >
           <Button {...sidebarInvokerAction} />
         </div>
       )
   }
+}
+
+const useSidebarScrimStyles = makeStyles({
+  root: {
+    position: 'absolute',
+  },
+  'root--active': {
+    insetInlineStart: rem(sidebarWidth),
+    insetInlineEnd: 0,
+    insetBlockStart: 0,
+    insetBlockEnd: 0,
+    backgroundColor: 'var(--colorNeutralShadowKeyDarker)',
+  },
+})
+
+export const SidebarScrim = ({
+  contextualViewState,
+}: ContextualViewStateProps) => {
+  const { sidebarState, setSidebarState } =
+    sidebarStatePropsFromViewState(contextualViewState)
+  const onAction = useSidebarActionHandler(sidebarState, setSidebarState)
+  const sidebarScrimStyles = useSidebarScrimStyles()
+  return (
+    <div
+      className={cx(
+        sidebarScrimStyles.root,
+        sidebarState === SidebarState.Active &&
+          sidebarScrimStyles['root--active']
+      )}
+      onClick={onAction}
+    />
+  )
 }

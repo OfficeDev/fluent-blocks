@@ -2,13 +2,10 @@ import { TopbarProps as NaturalTopbarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Toolbar } from '../../blocks/Toolbar/Toolbar'
+import { Button } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
-import {
-  ContextualViewStateProps,
-  MenuItemSequence,
-  SidebarState,
-} from '../../props'
-import { useSidebarInvoker } from '../Sidebar/Sidebar'
+import { ContextualViewStateProps, SidebarState } from '../../props'
+import { sidebarWidth, useSidebarInvoker } from '../Sidebar/Sidebar'
 
 export interface TopbarProps
   extends NaturalTopbarProps,
@@ -24,6 +21,13 @@ const useTopbarStyles = makeStyles({
     insetInlineEnd: 0,
     boxShadow: 'var(--content-elevation)',
   },
+  'root--sidebarActive': {
+    insetInlineStart: rem(sidebarWidth),
+    insetInlineEnd: rem(-sidebarWidth),
+  },
+  'root--sidebarDocked': {
+    insetInlineStart: rem(sidebarWidth),
+  },
   inner: {
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
@@ -33,6 +37,8 @@ const useTopbarStyles = makeStyles({
     borderBlockEndColor: 'transparent',
     height: rem(topbarHeight),
     boxSizing: 'border-box',
+    display: 'flex',
+    ...sx.gap(rem(4)),
   },
   'inner--hc': {
     borderBlockEndColor: 'var(--colorNeutralForeground1)',
@@ -46,14 +52,20 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
   const topbarStyles = useTopbarStyles()
   const commonStyles = useCommonStyles()
   const { themeName } = useFluentBlocksContext()
+  const sidebarState = contextualViewState?.sidebarState
   const hasSidebarInvoker =
-    contextualViewState &&
-    contextualViewState.sidebarState &&
-    (contextualViewState.sidebarState === SidebarState.Active ||
-      contextualViewState.sidebarState === SidebarState.Hidden)
+    sidebarState === SidebarState.Active || sidebarState === SidebarState.Hidden
   const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
   return (
-    <div className={cx(topbarStyles.root)}>
+    <div
+      className={cx(
+        topbarStyles.root,
+        sidebarState === SidebarState.Active &&
+          topbarStyles['root--sidebarActive'],
+        sidebarState === SidebarState.Docked &&
+          topbarStyles['root--sidebarDocked']
+      )}
+    >
       <div
         className={cx(
           topbarStyles.inner,
@@ -61,14 +73,11 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
           themeName === 'highContrast' && topbarStyles['inner--hc']
         )}
       >
-        {near?.menu || hasSidebarInvoker ? (
-          <Toolbar
-            toolbar={{
-              menu: hasSidebarInvoker
-                ? [sidebarInvokerAction, ...(near?.menu ?? [])]
-                : (near!.menu as MenuItemSequence),
-            }}
-          />
+        {hasSidebarInvoker && (
+          <Button {...sidebarInvokerAction} variant="subtle" />
+        )}
+        {near?.menu ? (
+          <Toolbar toolbar={{ menu: near.menu }} />
         ) : (
           <div role="none" className={topbarStyles.gap} />
         )}

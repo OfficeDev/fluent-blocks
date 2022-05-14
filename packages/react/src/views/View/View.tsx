@@ -16,6 +16,7 @@ import {
   Main,
   Sidebar,
   SidebarInvoker,
+  SidebarScrim,
   Topbar,
   sidebarWidth,
   topbarHeight,
@@ -32,6 +33,8 @@ const useViewStyles = makeStyles({
   root: {
     position: 'relative',
     height: '100%',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
   },
   mainScrollContext: {
     height: '100%',
@@ -112,12 +115,13 @@ export const View = ({
         >
           <Main {...main} />
         </div>
-        {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
+        {sidebar && <SidebarScrim contextualViewState={contextualViewState} />}
         {topbar ? (
           <Topbar {...topbar} {...{ contextualViewState }} />
         ) : sidebar ? (
           <SidebarInvoker {...{ contextualViewState }} />
         ) : null}
+        {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
       </div>
     </FluentBlocksProvider>
   )
