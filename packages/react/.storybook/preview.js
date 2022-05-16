@@ -1,3 +1,12 @@
+import isChromatic from 'chromatic/isChromatic'
+
+if (isChromatic()) {
+  const rtStyles = document.getElementById('runtime-styles')
+  if (rtStyles) {
+    rtStyles.parentElement.removeChild(rtStyles)
+  }
+}
+
 export const parameters = {
   layout: 'fullscreen',
   actions: { argTypesRegex: '^on[A-Z].*' },
