@@ -16,4 +16,6 @@ export default {
   'pagination--prev': 'Previous page',
   'pagination--next': 'Next page',
   list__find: 'Find in this list',
+  sidebar__open: 'Open sidebar',
+  sidebar__close: 'Close sidebar',
 }

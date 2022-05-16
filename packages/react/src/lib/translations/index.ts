@@ -1,15 +1,11 @@
 import { useContext } from 'react'
 
-import { FluentBlocksContext } from '../Provider/FluentBlocksContext'
+import { Translations as NaturalTranslations } from '@fluent-blocks/schemas'
+
+import { FluentBlocksContext } from '../Provider'
 import enUS from './en-US'
 
-export type Dir = 'ltr' | 'rtl'
-
-export type Translations = {
-  dir: Dir
-  locale: string
-  [key: string]: string
-}
+export type Translations = NaturalTranslations
 
 export const defaultTranslations = enUS
 

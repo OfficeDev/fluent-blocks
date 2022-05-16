@@ -130,5 +130,5 @@ export const contextArgTypes = {
       defaultValue: { summary: 'web' },
     },
   },
-  onAction: { action: 'action' },
+  onAction: { action: 'action', table: { disable: true } },
 }

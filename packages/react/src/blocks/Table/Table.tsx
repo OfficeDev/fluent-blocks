@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 import keys from 'lodash/keys'
 import {
@@ -6,7 +5,6 @@ import {
   MouseEvent,
   ReactElement,
   useCallback,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -33,6 +31,7 @@ import {
   sx,
   useCommonStyles,
   useFluentBlocksContext,
+  useLayoutResize,
 } from '../../lib'
 import { ListColumnProps, MenuItemSequence, TableProps } from '../../props'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
@@ -217,38 +216,15 @@ export const Table = (props: TableProps) => {
     }
   }, [])
 
-  const debouncedUpdateTableLayout = useCallback(
-    debounce(
-      () => {
-        if ($table.current) {
-          const nextColumnsInFlow = getNextColumnsInFlow()
-          setInFlowColumns(nextColumnsInFlow!)
-          setContentColumnsHidden(
-            getContentColumnsHidden(nextColumnsInFlow!, colKeys)
-          )
-        }
-      },
-      100,
-      { leading: false, trailing: true }
-    ),
-    []
-  )
-
-  useLayoutEffect(() => {
-    document.defaultView?.addEventListener('resize', debouncedUpdateTableLayout)
-    if ($table.current) {
-      const nextColumnsInFlow = getNextColumnsInFlow()
-      setInFlowColumns(nextColumnsInFlow!)
-      setContentColumnsHidden(
-        getContentColumnsHidden(nextColumnsInFlow!, colKeys)
-      )
-    }
-    return () =>
-      document.defaultView?.removeEventListener(
-        'resize',
-        debouncedUpdateTableLayout
-      )
+  const updateTableLayout = useCallback(() => {
+    const nextColumnsInFlow = getNextColumnsInFlow()
+    setInFlowColumns(nextColumnsInFlow!)
+    setContentColumnsHidden(
+      getContentColumnsHidden(nextColumnsInFlow!, colKeys)
+    )
   }, [])
+
+  useLayoutResize($table, updateTableLayout)
 
   const rootRowHeaderActivate = useCallback(
     ({ target }: MouseEvent<HTMLButtonElement>) => {

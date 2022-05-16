@@ -1,0 +1,76 @@
+import { fake, seed } from 'faker/locale/en_US'
+import range from 'lodash/range'
+
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import fakeTitle from '../../lib/fakeTitle'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { View } from '../../views'
+import { Sidebar } from './Sidebar'
+
+<Meta
+  title="Surfaces/Topbar & Sidebar"
+  component={Sidebar}
+  argTypes={{
+    ...contextArgTypes,
+    contextualViewState: {
+      table: { disable: true },
+    },
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const SidebarTemplate = (props) => (
+  <View {...props} iconSpriteUrl={iconSpriteUrl} />
+)
+
+export const mainArgs = {
+  title: [{ text: fakeTitle(fake) }],
+  abstract: [{ text: fake('{{lorem.paragraph}}') }],
+  sections: range(4).map((s) => ({
+    title: [{ text: fakeTitle(fake) }],
+    blocks: [
+      ...range(2).map(() => ({
+        paragraph: range(3).map(() => ({
+          text: fake('{{lorem.sentence}} '),
+        })),
+      })),
+    ],
+  })),
+}
+
+# Sidebar
+
+The Sidebar is unique to a view (so `sidebar` is one of `View`’s props). It
+supports a variety of content in order to support the use-cases sidebars are
+most often designed for.
+
+When used inside `View`, `View` adds a menu action to the near side of the
+Topbar when a Sidebar is also present. When there is no Topbar but there is a
+Sidebar, `View` adds a menu button that can invoke the Sidebar on viewports too
+narrow to display the Sidebar next to the Main content.
+
+<Canvas withSource="none">
+  <Story
+    name="Sidebar"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      sidebar: {
+        menu: range(8).map((s) => ({
+          type: 'action',
+          actionId: `sidebar-action__${s}`,
+          label: fakeTitle(fake),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || SidebarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Sidebar" />

@@ -1,9 +1,11 @@
 import Chart from 'chart.js'
-import { ThemeName } from '../../lib'
-import { Theme } from '@fluentui/react-components'
-import { buildPattern, Pattern } from './chart-patterns'
-import { ChartDataset, ChartData } from './chart-types'
 import { useMemo } from 'react'
+
+import { Theme } from '@fluentui/react-components'
+
+import { ThemeName } from '../../lib'
+import { Pattern, buildPattern } from './chart-patterns'
+import { ChartData, ChartDataset } from './chart-types'
 
 export const random = (min: number, max: number): number =>
   Math.round(Math.random() * (max - min) + min)
