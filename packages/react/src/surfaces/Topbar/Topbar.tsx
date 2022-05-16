@@ -40,6 +40,12 @@ const useTopbarStyles = makeStyles({
     display: 'flex',
     ...sx.gap(rem(4)),
   },
+  nonInvokerInner: {
+    display: 'contents',
+  },
+  'nonInvokerInner--sidebarActive': {
+    visibility: 'hidden',
+  },
   'inner--hc': {
     borderBlockEndColor: 'var(--colorNeutralForeground1)',
   },
@@ -73,19 +79,27 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
         {hasSidebarInvoker && (
           <Button {...sidebarInvokerAction} variant="subtle" />
         )}
-        {near?.menu && (
-          <Toolbar
-            toolbar={{ menu: near.menu }}
-            contextualVariant="viewportWidth"
-          />
-        )}
-        {far?.menu && (
-          <Toolbar
-            toolbar={{ menu: far.menu }}
-            contextualVariant="viewportWidth"
-            contextualJustifyEnd
-          />
-        )}
+        <div
+          className={cx(
+            topbarStyles.nonInvokerInner,
+            sidebarState === SidebarState.Active &&
+              topbarStyles['nonInvokerInner--sidebarActive']
+          )}
+        >
+          {near?.menu && (
+            <Toolbar
+              toolbar={{ menu: near.menu }}
+              contextualVariant="viewportWidth"
+            />
+          )}
+          {far?.menu && (
+            <Toolbar
+              toolbar={{ menu: far.menu }}
+              contextualVariant="viewportWidth"
+              contextualJustifyEnd
+            />
+          )}
+        </div>
       </div>
     </div>
   )
