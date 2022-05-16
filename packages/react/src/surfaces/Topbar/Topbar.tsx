@@ -43,9 +43,6 @@ const useTopbarStyles = makeStyles({
   'inner--hc': {
     borderBlockEndColor: 'var(--colorNeutralForeground1)',
   },
-  gap: {
-    ...sx.flex(1, 0, '0'),
-  },
 })
 
 export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
@@ -76,10 +73,18 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
         {hasSidebarInvoker && (
           <Button {...sidebarInvokerAction} variant="subtle" />
         )}
-        {near?.menu ? (
-          <Toolbar toolbar={{ menu: near.menu }} />
-        ) : (
-          <div role="none" className={topbarStyles.gap} />
+        {near?.menu && (
+          <Toolbar
+            toolbar={{ menu: near.menu }}
+            contextualVariant="viewportWidth"
+          />
+        )}
+        {far?.menu && (
+          <Toolbar
+            toolbar={{ menu: far.menu }}
+            contextualVariant="viewportWidth"
+            contextualJustifyEnd
+          />
         )}
       </div>
     </div>

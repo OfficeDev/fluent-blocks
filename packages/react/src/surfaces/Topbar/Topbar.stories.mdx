@@ -42,6 +42,42 @@ export const mainArgs = {
   })),
 }
 
+export const topbarArgs = {
+  near: {
+    menu: [
+      {
+        type: 'action',
+        actionId: 'add',
+        label: 'Add',
+        icon: 'add',
+      },
+      {
+        type: 'action',
+        actionId: 'delete',
+        label: 'Delete',
+        icon: 'delete',
+      },
+    ],
+  },
+  far: {
+    menu: [
+      {
+        type: 'action',
+        actionId: 'publish',
+        label: 'Publish',
+        variant: 'primary',
+        icon: 'send',
+      },
+      {
+        type: 'action',
+        actionId: 'preview',
+        label: 'Preview',
+        icon: 'eye',
+      },
+    ],
+  },
+}
+
 # Topbar
 
 The Topbar is unique to a view (so `topbar` is one of `View`’s props). It
@@ -55,18 +91,7 @@ like a regular `Toolbar`.
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      topbar: {
-        near: {
-          menu: [
-            {
-              type: 'action',
-              actionId: 'hello',
-              label: 'Hello',
-              variant: 'primary',
-            },
-          ],
-        },
-      },
+      topbar: topbarArgs,
       main: mainArgs,
     }}
   >
@@ -86,18 +111,7 @@ will also add notifications to the far side of the Topbar.
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      topbar: {
-        near: {
-          menu: [
-            {
-              type: 'action',
-              actionId: 'hello',
-              label: 'Hello',
-              variant: 'primary',
-            },
-          ],
-        },
-      },
+      topbar: topbarArgs,
       sidebar: {
         menu: range(8).map((s) => ({
           type: 'action',

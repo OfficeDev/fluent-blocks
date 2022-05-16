@@ -36,6 +36,7 @@ export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
   contextualFindProps?: {
     onAction: (payload: SingleValueInputActionPayload) => void
   }
+  contextualJustifyEnd?: boolean
 }
 
 type ToolbarItemContextualOptions = Pick<
@@ -57,6 +58,8 @@ const useToolbarStyles = makeStyles({
     display: 'flex',
     flexWrap: 'wrap',
     flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: rem(48),
   },
   find: {
     flexGrow: 1,
@@ -71,6 +74,9 @@ const useToolbarStyles = makeStyles({
   },
   'root--large': {
     height: rem(40),
+  },
+  'root--justifyEnd': {
+    flexDirection: 'row-reverse',
   },
   flexDivider: {
     flexGrow: 1,
@@ -112,6 +118,7 @@ export const Toolbar = ({
   toolbar,
   contextualVariant = 'block',
   contextualFindProps,
+  contextualJustifyEnd,
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
@@ -170,6 +177,7 @@ export const Toolbar = ({
       className={cx(
         toolbarStyles.root,
         toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`],
+        contextualJustifyEnd && toolbarStyles['root--justifyEnd'],
         contextualVariant === 'block' && commonStyles.mainContentWidth,
         contextualVariant === 'block' && commonStyles.centerBlock
       )}
