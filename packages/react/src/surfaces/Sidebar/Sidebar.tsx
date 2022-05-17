@@ -109,26 +109,26 @@ export const Sidebar = ({
           }
         >
           {items.map(({ actionId, label, menu }) => (
-              <AccordionItem key={actionId} value={actionId}>
-                <AccordionHeader>
-                  <InlineContent inlines={label} />
-                </AccordionHeader>
-                <AccordionPanel>
-                  {menu.map((menuItem) => {
-                    if (menuItem.type === 'action') {
-                      return (
-                        <Button
-                          key={menuItem.actionId}
-                          {...menuItem}
-                          variant="subtle"
-                          contextualVariant="sidebar"
-                        />
-                      )
-                    }
-                  })}
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
+            <AccordionItem key={actionId} value={actionId}>
+              <AccordionHeader as="h2">
+                <InlineContent inlines={label} />
+              </AccordionHeader>
+              <AccordionPanel>
+                {menu.map((menuItem) => {
+                  if (menuItem.type === 'action') {
+                    return (
+                      <Button
+                        key={menuItem.actionId}
+                        {...menuItem}
+                        variant="subtle"
+                        contextualVariant="sidebar"
+                      />
+                    )
+                  }
+                })}
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
         </Accordion>
       </div>
     </div>
