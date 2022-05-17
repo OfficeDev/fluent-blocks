@@ -5,13 +5,14 @@ import { Toolbar } from '../../blocks/Toolbar/Toolbar'
 import { Button } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
 import { ContextualViewStateProps, SidebarState } from '../../props'
-import { sidebarWidth, useSidebarInvoker } from '../Sidebar/Sidebar'
+import { sidebarWidth, useSidebarInvoker } from '../Sidebar'
+import { topbarHeight } from './topbarHeight'
+
+console.log('[sidebarWidth]', sidebarWidth)
 
 export interface TopbarProps
   extends NaturalTopbarProps,
     ContextualViewStateProps {}
-
-export const topbarHeight = 48
 
 const useTopbarStyles = makeStyles({
   root: {
@@ -59,6 +60,10 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
   const hasSidebarInvoker =
     sidebarState === SidebarState.Active || sidebarState === SidebarState.Hidden
   const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
+  console.log(
+    'sidebarState === SidebarState.Docked',
+    sidebarState === SidebarState.Docked
+  )
   return (
     <div
       className={cx(

@@ -1,3 +1,3 @@
 export * from './Main/Main'
-export * from './Sidebar/Sidebar'
-export * from './Topbar/Topbar'
+export * from './Sidebar'
+export * from './Topbar'

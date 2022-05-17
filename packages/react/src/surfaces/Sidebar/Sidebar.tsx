@@ -4,15 +4,19 @@ import { Dispatch, SetStateAction, useCallback } from 'react'
 import { SidebarProps as NaturalSidebarProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
+import { Heading } from '../../blocks'
+import { InlineSequenceOrString } from '../../inlines'
 import { Button, ButtonProps } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
 import { ContextualViewStateProps, SidebarState } from '../../props'
+import { topbarHeight } from '../Topbar/topbarHeight'
+import { sidebarWidth } from './sidebarWidth'
 
 export interface SidebarProps
-  extends NaturalSidebarProps,
-    ContextualViewStateProps {}
-
-export const sidebarWidth = 228
+  extends Omit<NaturalSidebarProps, 'title'>,
+    ContextualViewStateProps {
+  title: InlineSequenceOrString
+}
 
 const useSidebarStyles = makeStyles({
   root: {
@@ -36,7 +40,7 @@ const useSidebarStyles = makeStyles({
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '100%',
-    ...sx.padding(rem(8)),
+    ...sx.padding(rem(16)),
     borderInlineEndWidth: '1px',
     borderInlineEndStyle: 'solid',
     borderInlineEndColor: 'transparent',
@@ -44,13 +48,19 @@ const useSidebarStyles = makeStyles({
   'inner--hc': {
     borderInlineEndColor: 'var(--colorNeutralForeground1)',
   },
+  sidebarTopbar: {
+    height: rem(topbarHeight),
+  },
+  paddedContent: {
+    marginInlineEnd: rem(-8),
+    marginInlineStart: rem(-8),
+  },
 })
 
-export const Sidebar = (props: SidebarProps) => {
+export const Sidebar = ({ title, menu, contextualViewState }: SidebarProps) => {
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
   const { themeName } = useFluentBlocksContext()
-  const { contextualViewState } = props
   return (
     <div
       className={cx(
@@ -68,18 +78,21 @@ export const Sidebar = (props: SidebarProps) => {
           themeName === 'highContrast' && sidebarStyles['inner--hc']
         )}
       >
-        {props.menu?.map((menuItem) => {
-          if (menuItem.type === 'action') {
-            return (
-              <Button
-                key={menuItem.actionId}
-                {...menuItem}
-                variant="subtle"
-                contextualVariant="sidebar"
-              />
-            )
-          }
-        })}
+        <Heading paragraph={title} level={1} contextualVariant="card" />
+        <div className={sidebarStyles.paddedContent}>
+          {menu?.map((menuItem) => {
+            if (menuItem.type === 'action') {
+              return (
+                <Button
+                  key={menuItem.actionId}
+                  {...menuItem}
+                  variant="subtle"
+                  contextualVariant="sidebar"
+                />
+              )
+            }
+          })}
+        </div>
       </div>
     </div>
   )
