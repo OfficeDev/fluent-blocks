@@ -9,7 +9,6 @@ import { InlineSequenceOrString } from '../../inlines'
 import { Button, ButtonProps } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
 import { ContextualViewStateProps, SidebarState } from '../../props'
-import { topbarHeight } from '../Topbar/topbarHeight'
 import { sidebarWidth } from './sidebarWidth'
 
 export interface SidebarProps
@@ -47,9 +46,6 @@ const useSidebarStyles = makeStyles({
   },
   'inner--hc': {
     borderInlineEndColor: 'var(--colorNeutralForeground1)',
-  },
-  sidebarTopbar: {
-    height: rem(topbarHeight),
   },
   paddedContent: {
     marginInlineEnd: rem(-8),

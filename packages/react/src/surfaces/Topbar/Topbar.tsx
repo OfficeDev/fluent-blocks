@@ -8,8 +8,6 @@ import { ContextualViewStateProps, SidebarState } from '../../props'
 import { sidebarWidth, useSidebarInvoker } from '../Sidebar'
 import { topbarHeight } from './topbarHeight'
 
-console.log('[sidebarWidth]', sidebarWidth)
-
 export interface TopbarProps
   extends NaturalTopbarProps,
     ContextualViewStateProps {}
@@ -60,10 +58,6 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
   const hasSidebarInvoker =
     sidebarState === SidebarState.Active || sidebarState === SidebarState.Hidden
   const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
-  console.log(
-    'sidebarState === SidebarState.Docked',
-    sidebarState === SidebarState.Docked
-  )
   return (
     <div
       className={cx(
