@@ -1,20 +1,41 @@
 import noop from 'lodash/noop'
 import { Dispatch, SetStateAction, useCallback } from 'react'
 
-import { SidebarProps as NaturalSidebarProps } from '@fluent-blocks/schemas'
-import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+import {
+  SidebarItemProps as NaturalSidebarItemProps,
+  SidebarProps as NaturalSidebarProps,
+} from '@fluent-blocks/schemas'
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionItem,
+  AccordionPanel,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
 
 import { Heading } from '../../blocks'
-import { InlineSequenceOrString } from '../../inlines'
+import { InlineContent, InlineSequenceOrString } from '../../inlines'
 import { Button, ButtonProps } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
-import { ContextualViewStateProps, SidebarState } from '../../props'
+import {
+  ContextualViewStateProps,
+  MenuItemSequence,
+  SidebarState,
+} from '../../props'
 import { sidebarWidth } from './sidebarWidth'
 
+export interface SidebarItemProps
+  extends Omit<NaturalSidebarItemProps, 'label' | 'menu'> {
+  label: InlineSequenceOrString
+  menu: MenuItemSequence
+}
+
 export interface SidebarProps
-  extends Omit<NaturalSidebarProps, 'title'>,
+  extends Omit<NaturalSidebarProps, 'title' | 'items'>,
     ContextualViewStateProps {
   title: InlineSequenceOrString
+  items: SidebarItemProps[]
 }
 
 const useSidebarStyles = makeStyles({
@@ -48,12 +69,17 @@ const useSidebarStyles = makeStyles({
     borderInlineEndColor: 'var(--colorNeutralForeground1)',
   },
   paddedContent: {
-    marginInlineEnd: rem(-8),
-    marginInlineStart: rem(-8),
+    marginInlineEnd: rem(-16),
+    marginInlineStart: rem(-16),
   },
 })
 
-export const Sidebar = ({ title, menu, contextualViewState }: SidebarProps) => {
+export const Sidebar = ({
+  title,
+  items,
+  defaultOpenItems,
+  contextualViewState,
+}: SidebarProps) => {
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
   const { themeName } = useFluentBlocksContext()
@@ -75,20 +101,35 @@ export const Sidebar = ({ title, menu, contextualViewState }: SidebarProps) => {
         )}
       >
         <Heading paragraph={title} level={1} contextualVariant="card" />
-        <div className={sidebarStyles.paddedContent}>
-          {menu?.map((menuItem) => {
-            if (menuItem.type === 'action') {
-              return (
-                <Button
-                  key={menuItem.actionId}
-                  {...menuItem}
-                  variant="subtle"
-                  contextualVariant="sidebar"
-                />
-              )
-            }
-          })}
-        </div>
+        <Accordion
+          multiple
+          className={sidebarStyles.paddedContent}
+          defaultOpenItems={
+            defaultOpenItems || items.map(({ actionId }) => actionId)
+          }
+        >
+          {items.map(({ actionId, label, menu }) => (
+              <AccordionItem key={actionId} value={actionId}>
+                <AccordionHeader>
+                  <InlineContent inlines={label} />
+                </AccordionHeader>
+                <AccordionPanel>
+                  {menu.map((menuItem) => {
+                    if (menuItem.type === 'action') {
+                      return (
+                        <Button
+                          key={menuItem.actionId}
+                          {...menuItem}
+                          variant="subtle"
+                          contextualVariant="sidebar"
+                        />
+                      )
+                    }
+                  })}
+                </AccordionPanel>
+              </AccordionItem>
+            ))}
+        </Accordion>
       </div>
     </div>
   )

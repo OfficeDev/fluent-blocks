@@ -114,10 +114,14 @@ will also add notifications to the far side of the Topbar.
       topbar: topbarArgs,
       sidebar: {
         title: fakeTitle(fake),
-        menu: range(8).map((s) => ({
-          type: 'action',
-          actionId: `sidebar-action__${s}`,
+        items: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            type: 'action',
+            actionId: `sidebar-action__${i}-${s}`,
+            label: fakeTitle(fake),
+          })),
         })),
       },
       main: mainArgs,
