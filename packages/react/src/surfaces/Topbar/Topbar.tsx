@@ -5,13 +5,12 @@ import { Toolbar } from '../../blocks/Toolbar/Toolbar'
 import { Button } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
 import { ContextualViewStateProps, SidebarState } from '../../props'
-import { sidebarWidth, useSidebarInvoker } from '../Sidebar/Sidebar'
+import { sidebarWidth, useSidebarInvoker } from '../Sidebar'
+import { topbarHeight } from './topbarHeight'
 
 export interface TopbarProps
   extends NaturalTopbarProps,
     ContextualViewStateProps {}
-
-export const topbarHeight = 49
 
 const useTopbarStyles = makeStyles({
   root: {
@@ -31,7 +30,7 @@ const useTopbarStyles = makeStyles({
   inner: {
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
-    ...sx.padding(rem(8)),
+    ...sx.padding(rem(8), rem(8), rem(7), rem(8)),
     borderBlockEndWidth: '1px',
     borderBlockEndStyle: 'solid',
     borderBlockEndColor: 'transparent',
@@ -40,11 +39,14 @@ const useTopbarStyles = makeStyles({
     display: 'flex',
     ...sx.gap(rem(4)),
   },
+  nonInvokerInner: {
+    display: 'contents',
+  },
+  'nonInvokerInner--sidebarActive': {
+    visibility: 'hidden',
+  },
   'inner--hc': {
     borderBlockEndColor: 'var(--colorNeutralForeground1)',
-  },
-  gap: {
-    ...sx.flex(1, 0, '0'),
   },
 })
 
@@ -76,11 +78,27 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
         {hasSidebarInvoker && (
           <Button {...sidebarInvokerAction} variant="subtle" />
         )}
-        {near?.menu ? (
-          <Toolbar toolbar={{ menu: near.menu }} />
-        ) : (
-          <div role="none" className={topbarStyles.gap} />
-        )}
+        <div
+          className={cx(
+            topbarStyles.nonInvokerInner,
+            sidebarState === SidebarState.Active &&
+              topbarStyles['nonInvokerInner--sidebarActive']
+          )}
+        >
+          {near?.menu && (
+            <Toolbar
+              toolbar={{ menu: near.menu }}
+              contextualVariant="viewportWidth"
+            />
+          )}
+          {far?.menu && (
+            <Toolbar
+              toolbar={{ menu: far.menu }}
+              contextualVariant="viewportWidth"
+              contextualJustifyEnd
+            />
+          )}
+        </div>
       </div>
     </div>
   )

@@ -60,10 +60,15 @@ narrow to display the Sidebar next to the Main content.
       themeName: 'light',
       accentScheme: 'teams',
       sidebar: {
-        menu: range(8).map((s) => ({
-          type: 'action',
-          actionId: `sidebar-action__${s}`,
+        title: fakeTitle(fake),
+        items: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            type: 'action',
+            actionId: `sidebar-action__${i}-${s}`,
+            label: fakeTitle(fake),
+          })),
         })),
       },
       main: mainArgs,
