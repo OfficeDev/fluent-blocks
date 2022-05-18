@@ -13,14 +13,12 @@ import {
   renderIfEscape,
 } from '../../lib'
 import { IconElement, renderIfIcon } from '../Icon/Icon'
-import { LinkElement, renderIfLink } from '../Link/Link'
 import { TextElement, renderIfText } from '../Text/Text'
 
 export type InlineEntity =
   | NaturalInlineEntity
   | TextElement
   | IconElement
-  | LinkElement
   | EscapeElement
 
 export type InlineSequence = InlineEntity[]
@@ -32,23 +30,7 @@ export interface InlineContentProps
   inlines: InlineSequenceOrString
 }
 
-export function getInlineText(
-  inlineSequenceOrString: InlineSequenceOrString
-): string {
-  if (isString(inlineSequenceOrString)) {
-    return inlineSequenceOrString
-  } else {
-    return (inlineSequenceOrString as InlineSequence).reduce(
-      (acc: string, inline) => {
-        const textValue = isString(inline) ? inline : get(inline, 'props', '')
-        return acc + textValue
-      },
-      ''
-    )
-  }
-}
-
-function renderAsTextIfString(o: any) {
+export function renderAsTextIfString(o: any) {
   return isString(o) ? renderIfText({ text: o }) : null
 }
 
@@ -60,7 +42,6 @@ export const Inline = (o: InlineEntity) =>
   renderAsTextIfString(o) ||
   renderIfIcon(o) ||
   renderIfText(o) ||
-  renderIfLink(o) ||
   renderIfEscape(o) ||
   invalidInline(o)
 

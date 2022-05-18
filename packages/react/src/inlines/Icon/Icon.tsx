@@ -5,7 +5,7 @@ import basicIcons from '@fluent-blocks/basic-icons'
 import { IconProps, IconSize, IconVariant } from '@fluent-blocks/schemas'
 import { makeStyles } from '@fluentui/react-components'
 
-import { Described, useFluentBlocksContext } from '../../lib'
+import { useFluentBlocksContext } from '../../lib'
 
 function spriteHref(
   icon: string,
@@ -48,12 +48,11 @@ export const Icon = (props: IconProps) => {
   const { icon, variant = 'outline', size = 16 } = props
   const iconStyles = useIconStyles()
   const { iconSpriteUrl } = useFluentBlocksContext()
-  const iconElement = (
+  return (
     <svg className={`${iconStyles.root} fuib-Icon`} data-chromatic="ignore">
       <use href={spriteHref(icon, size, variant, iconSpriteUrl)} />
     </svg>
   )
-  return Described(iconElement, props.description)
 }
 
 export type IconElement = ReactElement<IconProps, typeof Icon>

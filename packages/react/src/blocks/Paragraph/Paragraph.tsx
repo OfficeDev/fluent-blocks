@@ -3,12 +3,15 @@ import { ReactElement } from 'react'
 import { ParagraphProps as NaturalParagraphProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx } from '@fluentui/react-components'
 
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
+import {
+  DescribedInlineContent,
+  DescribedInlineSequenceOrString,
+} from '../../inlines'
 import { useCommonStyles, useTextBlockStyles } from '../../lib'
 
 export interface ParagraphProps
   extends Omit<NaturalParagraphProps, 'paragraph'> {
-  paragraph: InlineSequenceOrString
+  paragraph: DescribedInlineSequenceOrString
   contextualVariant?: 'card' | 'block'
   contextualId?: string
   visuallyHidden?: boolean
@@ -34,7 +37,7 @@ export const Paragraph = (props: ParagraphProps) => {
       )}
       {...(contextualId && { id: contextualId })}
     >
-      <InlineContent inlines={paragraph} />
+      <DescribedInlineContent inlines={paragraph} />
     </p>
   )
 }

@@ -7,6 +7,9 @@ export type TextVariant =
 
 export interface TextProps {
   text: string
-  description?: string
   variant?: TextVariant
+}
+
+export interface DescribedTextProps extends TextProps {
+  description?: string
 }

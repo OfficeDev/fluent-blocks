@@ -3,13 +3,13 @@ import { ReactElement, createElement } from 'react'
 import { HeadingProps as NaturalHeadingProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx } from '@fluentui/react-components'
 
-import { InlineContent } from '../../inlines'
+import { DescribedInlineContent } from '../../inlines'
 import { useCommonStyles, useTextBlockStyles } from '../../lib'
 import { ParagraphProps } from '../Paragraph/Paragraph'
 
 export interface HeadingProps
-  extends ParagraphProps,
-    Omit<NaturalHeadingProps, 'paragraph'> {}
+  extends Omit<NaturalHeadingProps, 'paragraph'>,
+    ParagraphProps {}
 
 export const Heading = (props: HeadingProps) => {
   const {
@@ -19,7 +19,7 @@ export const Heading = (props: HeadingProps) => {
     contextualId,
     visuallyHidden,
   } = props
-  const content = <InlineContent inlines={paragraph} />
+  const content = <DescribedInlineContent inlines={paragraph} />
   const textStyles = useTextBlockStyles()
   const commonStyles = useCommonStyles()
   const elementName = level >= 1 && level <= 5 ? `h${level}` : 'h6'
