@@ -1,24 +1,26 @@
 import get from 'lodash/get'
 import isString from 'lodash/isString'
+
 import {
-  InlineEntity as NaturalInlineEntity,
   InlineContentProps as NaturalInlineContentProps,
+  InlineEntity as NaturalInlineEntity,
 } from '@fluent-blocks/schemas'
 
 import {
-  invalidInline,
   EscapeElement,
-  renderIfEscape,
   Sequence,
+  invalidInline,
+  renderIfEscape,
 } from '../../lib'
-
-import { TextElement, renderIfText } from '../Text/Text'
 import { IconElement, renderIfIcon } from '../Icon/Icon'
+import { LinkElement, renderIfLink } from '../Link/Link'
+import { TextElement, renderIfText } from '../Text/Text'
 
 export type InlineEntity =
   | NaturalInlineEntity
   | TextElement
   | IconElement
+  | LinkElement
   | EscapeElement
 
 export type InlineSequence = InlineEntity[]
@@ -58,6 +60,7 @@ export const Inline = (o: InlineEntity) =>
   renderAsTextIfString(o) ||
   renderIfIcon(o) ||
   renderIfText(o) ||
+  renderIfLink(o) ||
   renderIfEscape(o) ||
   invalidInline(o)
 

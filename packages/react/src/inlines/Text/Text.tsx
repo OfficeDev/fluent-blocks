@@ -1,17 +1,21 @@
 import { ReactElement } from 'react'
+
 import { TextProps } from '@fluent-blocks/schemas'
 
-import { useTextStyles } from '../../lib'
+import { Described, useTextStyles } from '../../lib'
 
 export const Text = (props: TextProps) => {
   const { text, variant } = props
   const textStyles = useTextStyles()
-  switch (variant) {
-    case 'code':
-      return <code className={textStyles.code}>{text}</code>
-    default:
-      return <>{text}</>
-  }
+  const textElement = (() => {
+    switch (variant) {
+      case 'code':
+        return <code className={textStyles.code}>{text}</code>
+      default:
+        return <>{text}</>
+    }
+  })()
+  return <Described element={textElement} description={props.description} />
 }
 
 export type TextElement = ReactElement<TextProps, typeof Text>

@@ -18,4 +18,8 @@ export default {
   list__find: 'Find in this list',
   sidebar__open: 'Open sidebar',
   sidebar__close: 'Close sidebar',
+  'link--external': 'Leads to an external website.',
+  'link--targetBlank': 'Opens a new tab or window.',
+  'link--externalTargetBlank':
+    'Opens a new tab or window to an external website.',
 }

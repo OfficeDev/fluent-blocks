@@ -20,6 +20,7 @@ export type IconSize =
 
 export interface IconProps {
   icon: string
+  description?: string
   variant?: IconVariant
   size?: IconSize
 }

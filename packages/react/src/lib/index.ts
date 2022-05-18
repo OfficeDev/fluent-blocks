@@ -1,4 +1,5 @@
 export * from './commonStyles'
+export * from './Described'
 export * from './Escape'
 export * from './keys'
 export * from './log'

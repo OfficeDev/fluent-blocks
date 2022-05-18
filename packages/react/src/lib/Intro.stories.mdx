@@ -107,8 +107,17 @@ return <View {...{
     args={{
       main: {
         title: [{ text: 'Hello, world ' }, { icon: 'send' }],
-        abstract:
-          'This is an example using Fluent Blocks. It can do much more, but here’s just a taste.',
+        abstract: [
+          {
+            text: 'This is an example using Fluent Blocks. It can do much more, but here’s just a taste. ',
+          },
+          {
+            link: 'Learn more.',
+            href: 'https://github.com/OfficeDev/fluent-blocks',
+            external: true,
+            targetBlank: true,
+          },
+        ],
         message: { media: { label: 'Hello', illustration: 'hello' } },
         blocks: [
           {
