@@ -53,7 +53,7 @@ export const Icon = (props: IconProps) => {
       <use href={spriteHref(icon, size, variant, iconSpriteUrl)} />
     </svg>
   )
-  return <Described element={iconElement} description={props.description} />
+  return Described(iconElement, props.description)
 }
 
 export type IconElement = ReactElement<IconProps, typeof Icon>

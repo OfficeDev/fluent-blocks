@@ -6,7 +6,7 @@ import {
   AnchorProps as NaturalAnchorProps,
   InlineButtonProps as NaturalInlineButtonProps,
 } from '@fluent-blocks/schemas'
-import { Link as FluentLink, Tooltip } from '@fluentui/react-components'
+import { Link as FluentLink } from '@fluentui/react-components'
 
 import { Described, useFluentBlocksContext } from '../../lib'
 import { WithActionHandler } from '../../props'
@@ -83,7 +83,7 @@ export const Link = ({
 
   const linkElement = <FluentLink {...fluentLinkArgs} />
 
-  return <Described element={linkElement} description={derivedDescription} />
+  return Described(linkElement, derivedDescription)
 }
 
 export type LinkElement = ReactElement<LinkProps, typeof Link>

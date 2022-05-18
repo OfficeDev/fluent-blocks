@@ -12,10 +12,16 @@ export const Text = (props: TextProps) => {
       case 'code':
         return <code className={textStyles.code}>{text}</code>
       default:
-        return <>{text}</>
+        return props.description ? (
+          <span tabIndex={0} className={textStyles.described}>
+            {text}
+          </span>
+        ) : (
+          <>{text}</>
+        )
     }
   })()
-  return <Described element={textElement} description={props.description} />
+  return Described(textElement, props.description)
 }
 
 export type TextElement = ReactElement<TextProps, typeof Text>

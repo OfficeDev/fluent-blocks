@@ -240,7 +240,19 @@ that time `View` will call its interaction callback with the update.
                 {
                   card: {
                     title: fakeTitle(fake),
-                    body: [{ paragraph: fake('{{lorem.paragraph}}') }],
+                    body: [
+                      { paragraph: fake('{{lorem.paragraph}}') },
+                      {
+                        paragraph: [
+                          { text: fake('{{lorem.sentence}} ') },
+                          {
+                            text: fake('{{lorem.sentence}}'),
+                            description: fake('{{lorem.sentence}}'),
+                          },
+                          { text: fake(' {{lorem.sentence}}') },
+                        ],
+                      },
+                    ],
                     actions: [
                       {
                         type: 'action',
