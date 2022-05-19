@@ -202,6 +202,7 @@ export const Toolbar = ({
             }))
       )}
       <div
+        role="none"
         data-layout="required"
         className={cx(
           toolbarStyles.requiredInFlow,
@@ -214,10 +215,12 @@ export const Toolbar = ({
           contextualHiddenFlags={menuItemHiddenFlags}
           iconSize={toolbar.iconSize || defaultIconSize}
           buttonSize={toolbar.buttonSize || defaultButtonSize}
+          contextualRole="menuitem"
         />
       </div>
       {toolbar.find && (
         <div
+          role="none"
           data-layout="required"
           className={cx(
             toolbarStyles.requiredInFlow,
