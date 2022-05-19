@@ -2,13 +2,19 @@ import { ReactElement } from 'react'
 
 import { DescribedIconProps } from '@fluent-blocks/schemas'
 
-import { Described, useFluentBlocksContext } from '../../lib'
+import { Described } from '../../lib'
 import { Icon } from './Icon'
 
 export const DescribedIcon = ({
   description,
   ...iconProps
-}: DescribedIconProps) => Described(<Icon {...iconProps} />, description)
+}: DescribedIconProps) => {
+  const iconElement = <Icon {...iconProps} />
+  return Described(
+    description ? <span tabIndex={0}>{iconElement}</span> : iconElement,
+    description
+  )
+}
 
 export type DescribedIconElement = ReactElement<
   DescribedIconProps,

@@ -19,7 +19,6 @@ export const Heading = (props: HeadingProps) => {
     contextualId,
     visuallyHidden,
   } = props
-  const content = <DescribedInlineContent inlines={paragraph} />
   const textStyles = useTextBlockStyles()
   const commonStyles = useCommonStyles()
   const elementName = level >= 1 && level <= 5 ? `h${level}` : 'h6'
@@ -54,7 +53,7 @@ export const Heading = (props: HeadingProps) => {
   return createElement(
     elementName,
     { className, id: contextualId },
-    content
+    DescribedInlineContent({ inlines: paragraph })
   ) as JSX.Element
 }
 

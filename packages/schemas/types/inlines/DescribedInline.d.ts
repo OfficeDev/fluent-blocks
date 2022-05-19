@@ -1,11 +1,13 @@
-import { DescribedIconProps } from './Icon'
+import { DescribedIconProps, IconProps } from './Icon'
 import { LinkProps } from './Link'
-import { DescribedTextProps } from './Text'
+import { DescribedTextProps, TextProps } from './Text'
 
 export type DescribedInlineEntity =
   | string
   | DescribedTextProps
+  | TextProps
   | DescribedIconProps
+  | IconProps
   | LinkProps
 export type DescribedInlineSequence = DescribedInlineEntity[]
 export type DescribedInlineSequenceOrString = string | DescribedInlineSequence

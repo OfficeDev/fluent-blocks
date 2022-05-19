@@ -37,7 +37,7 @@ export const Paragraph = (props: ParagraphProps) => {
       )}
       {...(contextualId && { id: contextualId })}
     >
-      <DescribedInlineContent inlines={paragraph} />
+      {DescribedInlineContent({ inlines: paragraph })}
     </p>
   )
 }

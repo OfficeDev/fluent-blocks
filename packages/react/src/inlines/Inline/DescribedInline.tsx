@@ -15,19 +15,21 @@ import {
   DescribedIconElement,
   renderIfDescribedIcon,
 } from '../Icon/DescribedIcon'
-import { renderIfIcon } from '../Icon/Icon'
+import { IconElement, renderIfIcon } from '../Icon/Icon'
 import { LinkElement, renderIfLink } from '../Link/Link'
 import {
   DescribedTextElement,
   renderIfDescribedText,
 } from '../Text/DescribedText'
-import { renderIfText } from '../Text/Text'
+import { TextElement, renderIfText } from '../Text/Text'
 import { renderAsTextIfString } from './Inline'
 
 export type DescribedInlineEntity =
   | NaturalDescribedInlineEntity
   | DescribedTextElement
+  | TextElement
   | DescribedIconElement
+  | IconElement
   | LinkElement
   | EscapeElement
 
@@ -57,20 +59,16 @@ export const DescribedInline = (o: DescribedInlineEntity) =>
 /**
  * An ordered set of inline elements to render together.
  */
-export const DescribedInlineContent = (props: DescribedInlineContentProps) => {
-  const { inlines } = props
-  return (
-    <>
-      {inlines
-        ? isString(inlines)
-          ? renderIfText({ text: inlines })
-          : Sequence<DescribedInlineEntity>(
-              inlines.map((inline) =>
-                isString(inline) ? { text: inline } : inline
-              ),
-              DescribedInline
-            )
-        : null}
-    </>
-  )
-}
+export const DescribedInlineContent = ({
+  inlines,
+}: DescribedInlineContentProps) =>
+  inlines
+    ? isString(inlines)
+      ? renderIfText({ text: inlines })
+      : Sequence<DescribedInlineEntity>(
+          inlines.map((inline) =>
+            isString(inline) ? { text: inline } : inline
+          ),
+          DescribedInline
+        )
+    : null

@@ -25,6 +25,18 @@ import { View } from './View'
 
 export const ViewTemplate = (props) => <View {...props} />
 
+export const learnMore = {
+  link: 'Learn more.',
+  href: 'https://github.com/OfficeDev/fluent-blocks#readme',
+  external: true,
+  targetBlank: true,
+}
+
+export const activate = {
+  link: 'Activate.',
+  actionId: 'link--activate',
+}
+
 # View
 
 The `View` component organizes all patterns supported in this library into one
@@ -185,7 +197,7 @@ that time `View` will call its interaction callback with the update.
                     actionId: 'a3',
                     label: [{ text: fakeTitle(fake) }],
                     inputType: 'tel',
-                    initialValue: fake('{{phone.phoneNumber}}'),
+                    initialValue: fake('000 x1829'),
                     before: { icon: 'call' },
                   },
                 ],
@@ -207,7 +219,7 @@ that time `View` will call its interaction callback with the update.
                   maxWidthVariant: 'textWidth',
                   minWidthVariant: 'fill',
                   columns: {
-                    c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
+                    c1: { title: 'Name' },
                     c2: { title: 'Office' },
                     c3: { title: 'Email', hideable: true },
                   },
@@ -232,14 +244,17 @@ that time `View` will call its interaction callback with the update.
             sections: range(2).map((r) => ({
               title: [{ text: fakeTitle(fake) }],
               blocks: [
-                ...range(3).map(() => ({
+                ...range(3).map((q) => ({
                   paragraph: range(3).map(() => ({
                     text: fake('{{lorem.sentence}} '),
                   })),
                 })),
                 {
                   card: {
-                    title: fakeTitle(fake),
+                    title: [
+                      { text: `${fakeTitle(fake)} ` },
+                      { icon: 'info', description: fake('{{lorem.sentence}}') },
+                    ],
                     body: [
                       { paragraph: fake('{{lorem.paragraph}}') },
                       {
@@ -249,7 +264,8 @@ that time `View` will call its interaction callback with the update.
                             text: fake('{{lorem.sentence}}'),
                             description: fake('{{lorem.sentence}}'),
                           },
-                          { text: fake(' {{lorem.sentence}}') },
+                          { text: fake(' {{lorem.sentence}} ') },
+                          r % 2 === 0 ? learnMore : activate,
                         ],
                       },
                     ],
