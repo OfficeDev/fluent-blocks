@@ -20,7 +20,9 @@ export type ButtonActionPayload = NaturalButtonActionPayload
 export interface ButtonProps
   extends NaturalButtonProps,
     WithActionHandler<ButtonActionPayload>,
-    ShortInputContextualProps {}
+    ShortInputContextualProps {
+  contextualRole?: 'button' | 'menuitem'
+}
 
 const useButtonStyles = makeStyles({
   root: {
@@ -64,6 +66,7 @@ export const Button = ({
   disabled,
   payload,
   contextualVariant = 'block-inputs',
+  contextualRole = 'button',
 }: ButtonProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
@@ -88,6 +91,7 @@ export const Button = ({
 
   const button = (
     <FluentButton
+      role={contextualRole}
       aria-label={label}
       appearance={variant}
       disabled={disabled}

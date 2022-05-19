@@ -60,6 +60,7 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
   const sidebarInvokerAction = useSidebarInvoker(contextualViewState)
   return (
     <div
+      role="menubar"
       className={cx(
         topbarStyles.root,
         sidebarState === SidebarState.Active &&
@@ -69,6 +70,7 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
       )}
     >
       <div
+        role="none"
         className={cx(
           topbarStyles.inner,
           commonStyles.elevatedSurface,
@@ -79,6 +81,7 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
           <Button {...sidebarInvokerAction} variant="subtle" />
         )}
         <div
+          role="none"
           className={cx(
             topbarStyles.nonInvokerInner,
             sidebarState === SidebarState.Active &&
@@ -89,6 +92,7 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
             <Toolbar
               toolbar={{ menu: near.menu }}
               contextualVariant="viewportWidth"
+              contextualRole="group"
             />
           )}
           {far?.menu && (
@@ -96,6 +100,7 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
               toolbar={{ menu: far.menu }}
               contextualVariant="viewportWidth"
               contextualJustifyEnd
+              contextualRole="group"
             />
           )}
         </div>

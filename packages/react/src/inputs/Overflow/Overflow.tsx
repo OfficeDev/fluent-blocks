@@ -102,6 +102,7 @@ export const Overflow = ({
             className={overflowStyles.trigger}
             icon={<Icon icon={triggerIcon} size={iconSize} variant="outline" />}
             size={buttonSize}
+            role="menuitem"
           />
         </Tooltip>
       </MenuTrigger>

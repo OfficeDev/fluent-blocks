@@ -17,7 +17,13 @@ import {
 import { Heading } from '../../blocks'
 import { InlineContent, InlineSequenceOrString } from '../../inlines'
 import { Button, ButtonProps } from '../../inputs'
-import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
+import {
+  key,
+  rem,
+  sx,
+  useCommonStyles,
+  useFluentBlocksContext,
+} from '../../lib'
 import {
   ContextualViewStateProps,
   MenuItemSequence,
@@ -83,8 +89,10 @@ export const Sidebar = ({
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
   const { themeName } = useFluentBlocksContext()
+  const labelId = key(title)
   return (
-    <div
+    <nav
+      aria-labelledby={labelId}
       className={cx(
         sidebarStyles.root,
         contextualViewState?.sidebarState === SidebarState.Active &&
@@ -94,13 +102,19 @@ export const Sidebar = ({
       )}
     >
       <div
+        role="none"
         className={cx(
           sidebarStyles.inner,
           commonStyles.elevatedSurface,
           themeName === 'highContrast' && sidebarStyles['inner--hc']
         )}
       >
-        <Heading paragraph={title} level={1} contextualVariant="card" />
+        <Heading
+          paragraph={title}
+          level={1}
+          contextualVariant="card"
+          contextualId={labelId}
+        />
         <Accordion
           multiple
           className={sidebarStyles.paddedContent}
@@ -113,7 +127,7 @@ export const Sidebar = ({
               <AccordionHeader as="h2">
                 <InlineContent inlines={label} />
               </AccordionHeader>
-              <AccordionPanel>
+              <AccordionPanel role="group">
                 {menu.map((menuItem) => {
                   if (menuItem.type === 'action') {
                     return (
@@ -131,7 +145,7 @@ export const Sidebar = ({
           ))}
         </Accordion>
       </div>
-    </div>
+    </nav>
   )
 }
 
