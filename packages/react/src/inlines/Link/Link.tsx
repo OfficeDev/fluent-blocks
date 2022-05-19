@@ -79,8 +79,6 @@ export const Link = ({
         }),
   }
 
-  console.log('[fluentLinkArgs]', fluentLinkArgs)
-
   const linkElement = <FluentLink {...fluentLinkArgs} />
 
   return Described(linkElement, derivedDescription)
