@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce'
 import every from 'lodash/every'
 import get from 'lodash/get'
 import { ReactElement, useCallback, useRef, useState } from 'react'
@@ -37,6 +36,7 @@ export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
     onAction: (payload: SingleValueInputActionPayload) => void
   }
   contextualJustifyEnd?: boolean
+  contextualRole?: 'menubar' | 'group'
 }
 
 type ToolbarItemContextualOptions = Pick<
@@ -108,6 +108,7 @@ const ToolbarItemInFlow = (
           ? 'toolbar-item--hidden'
           : 'toolbar-item',
         type: 'action',
+        contextualRole: 'menuitem',
       })
     default:
       return null
@@ -119,6 +120,7 @@ export const Toolbar = ({
   contextualVariant = 'block',
   contextualFindProps,
   contextualJustifyEnd,
+  contextualRole = 'menubar',
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
@@ -174,6 +176,7 @@ export const Toolbar = ({
 
   return (
     <div
+      role={contextualRole}
       className={cx(
         toolbarStyles.root,
         toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`],
@@ -199,6 +202,7 @@ export const Toolbar = ({
             }))
       )}
       <div
+        role="none"
         data-layout="required"
         className={cx(
           toolbarStyles.requiredInFlow,
@@ -211,10 +215,12 @@ export const Toolbar = ({
           contextualHiddenFlags={menuItemHiddenFlags}
           iconSize={toolbar.iconSize || defaultIconSize}
           buttonSize={toolbar.buttonSize || defaultButtonSize}
+          contextualRole="menuitem"
         />
       </div>
       {toolbar.find && (
         <div
+          role="none"
           data-layout="required"
           className={cx(
             toolbarStyles.requiredInFlow,

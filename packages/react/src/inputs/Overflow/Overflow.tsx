@@ -26,6 +26,7 @@ export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
   contextualHiddenFlags?: { hidden?: boolean }[]
   triggerIcon?: string
   triggerLabel?: string
+  contextualRole?: 'button' | 'menuitem'
 }
 
 function isAction(o: any): o is MenuAction {
@@ -89,6 +90,7 @@ export const Overflow = ({
   contextualHiddenFlags,
   triggerIcon = 'more_horizontal',
   triggerLabel,
+  contextualRole,
 }: OverflowProps) => {
   const { translations, onAction } = useFluentBlocksContext()
   const overflowStyles = useOverflowStyles()
@@ -102,6 +104,7 @@ export const Overflow = ({
             className={overflowStyles.trigger}
             icon={<Icon icon={triggerIcon} size={iconSize} variant="outline" />}
             size={buttonSize}
+            role={contextualRole}
           />
         </Tooltip>
       </MenuTrigger>

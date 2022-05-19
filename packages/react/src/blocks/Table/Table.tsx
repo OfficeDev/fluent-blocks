@@ -389,6 +389,7 @@ export const Table = (props: TableProps) => {
                                         : 'arrow_down'
                                       : 'arrow_sort'
                                   }
+                                  contextualRole="button"
                                 />
                               )}
                           </div>
