@@ -23,3 +23,7 @@ export interface IconProps {
   variant?: IconVariant
   size?: IconSize
 }
+
+export interface DescribedIconProps extends IconProps {
+  description?: string
+}

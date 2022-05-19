@@ -1,5 +1,5 @@
-import { TextProps } from './Text'
 import { IconProps } from './Icon'
+import { TextProps } from './Text'
 
 export type InlineEntity = string | TextProps | IconProps
 export type InlineSequence = InlineEntity[]

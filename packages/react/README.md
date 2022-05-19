@@ -74,13 +74,16 @@ render(
 )
 ```
 
-In order to get the right background coverage and overflow behavior, you should apply `height: 100%` to the DOM node React mounts to render Fluent Blocks, and any parent elements of that node should occupy the full height of whatever space Fluent Blocks should occupy.
+In order to get the right background coverage and overflow behavior, you should apply `height: 100%` and `overflow: hidden` to the Fluent Blocks React root, and any parents of the Fluent Blocks React root should occupy the full height of whatever space Fluent Blocks should occupy.
 
-In most situations this rule is sufficient:
+If Fluent Blocks will render alone on the page, these rules are sufficient:
 
 ```css
 html, body, #root {
   height: 100%;
+}
+#root {
+    overflow: hidden;
 }
 ```
 

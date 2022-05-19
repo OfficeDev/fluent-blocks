@@ -11,7 +11,7 @@ import {
 
 const useProviderStyles = makeStyles({
   root: {
-    height: '100%',
+    display: 'contents',
   },
 })
 

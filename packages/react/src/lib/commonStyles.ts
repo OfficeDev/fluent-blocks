@@ -92,4 +92,8 @@ export const useTextStyles = makeStyles({
     backgroundColor: 'var(--input-background)',
     ...sx.padding('.1em', '.3em'),
   },
+  described: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
+  },
 })

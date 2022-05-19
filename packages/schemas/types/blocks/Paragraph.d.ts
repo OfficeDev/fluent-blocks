@@ -1,5 +1,5 @@
-import { InlineSequenceOrString } from '../inlines'
+import { DescribedInlineSequenceOrString } from '../inlines'
 
 export interface ParagraphProps {
-  paragraph: InlineSequenceOrString
+  paragraph: DescribedInlineSequenceOrString
 }

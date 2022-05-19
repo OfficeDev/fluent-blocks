@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+
 import { TextProps } from '@fluent-blocks/schemas'
 
 import { useTextStyles } from '../../lib'

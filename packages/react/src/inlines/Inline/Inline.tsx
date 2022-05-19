@@ -1,19 +1,19 @@
 import get from 'lodash/get'
 import isString from 'lodash/isString'
+
 import {
-  InlineEntity as NaturalInlineEntity,
   InlineContentProps as NaturalInlineContentProps,
+  InlineEntity as NaturalInlineEntity,
 } from '@fluent-blocks/schemas'
 
 import {
-  invalidInline,
   EscapeElement,
-  renderIfEscape,
   Sequence,
+  invalidInline,
+  renderIfEscape,
 } from '../../lib'
-
-import { TextElement, renderIfText } from '../Text/Text'
 import { IconElement, renderIfIcon } from '../Icon/Icon'
+import { TextElement, renderIfText } from '../Text/Text'
 
 export type InlineEntity =
   | NaturalInlineEntity
@@ -30,23 +30,7 @@ export interface InlineContentProps
   inlines: InlineSequenceOrString
 }
 
-export function getInlineText(
-  inlineSequenceOrString: InlineSequenceOrString
-): string {
-  if (isString(inlineSequenceOrString)) {
-    return inlineSequenceOrString
-  } else {
-    return (inlineSequenceOrString as InlineSequence).reduce(
-      (acc: string, inline) => {
-        const textValue = isString(inline) ? inline : get(inline, 'props', '')
-        return acc + textValue
-      },
-      ''
-    )
-  }
-}
-
-function renderAsTextIfString(o: any) {
+export function renderAsTextIfString(o: any) {
   return isString(o) ? renderIfText({ text: o }) : null
 }
 
