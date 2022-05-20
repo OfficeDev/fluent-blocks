@@ -1,9 +1,6 @@
 import { ReactElement } from 'react'
 
-import {
-  HeadingLevel,
-  WidgetProps as NaturalWidgetProps,
-} from '@fluent-blocks/schemas'
+import { WidgetProps as NaturalWidgetProps } from '@fluent-blocks/schemas'
 
 import { InlineSequenceOrString } from '../../../inlines'
 import { ButtonProps } from '../../../inputs'
@@ -25,7 +22,6 @@ export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
 }
 
 const widgetFooterActionProps = {
-  type: 'action' as 'action',
   variant: 'transparent' as 'transparent',
 }
 

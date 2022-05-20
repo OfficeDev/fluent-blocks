@@ -25,8 +25,8 @@ export interface FilterProps {
 export interface ToolbarProps {
   toolbar: {
     menu: MenuItemSequence
-    iconSize?: ButtonProps['iconSize']
-    buttonSize?: ButtonProps['size']
+    iconSize?: ButtonProps['button']['iconSize']
+    buttonSize?: ButtonProps['button']['size']
     filter?: FilterProps
     /**
      * An actionId

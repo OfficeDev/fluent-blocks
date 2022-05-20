@@ -17,10 +17,8 @@ import { ShortInputContextualProps, WithActionHandler } from '../../props'
 
 export type ButtonActionPayload = NaturalButtonActionPayload
 
-export interface ButtonProps
-  extends NaturalButtonProps,
-    WithActionHandler<ButtonActionPayload>,
-    ShortInputContextualProps {
+export interface ButtonProps extends ShortInputContextualProps {
+  button: NaturalButtonProps['button'] & WithActionHandler<ButtonActionPayload>
   contextualRole?: 'button' | 'menuitem'
 }
 
@@ -51,20 +49,22 @@ const useButtonStyles = makeStyles({
 })
 
 export const Button = ({
-  label,
-  iconOnly,
-  icon,
-  iconPosition,
-  variant,
-  size,
-  iconSize,
-  iconVariant,
-  actionId,
-  onAction,
+  button: {
+    label,
+    iconOnly,
+    icon,
+    iconPosition,
+    variant,
+    size,
+    iconSize,
+    iconVariant,
+    actionId,
+    onAction,
+    disabled,
+    payload,
+  },
   selected,
   controls,
-  disabled,
-  payload,
   contextualVariant = 'block-inputs',
   contextualRole = 'button',
 }: ButtonProps) => {
@@ -89,7 +89,7 @@ export const Button = ({
   const derivedIconSize =
     iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
 
-  const button = (
+  const buttonElement = (
     <FluentButton
       role={contextualRole}
       aria-label={label}
@@ -130,10 +130,10 @@ export const Button = ({
 
   return iconOnly ? (
     <Tooltip content={label} relationship="label" withArrow>
-      {button}
+      {buttonElement}
     </Tooltip>
   ) : (
-    button
+    buttonElement
   )
 }
 
@@ -141,7 +141,7 @@ export type ButtonElement = ReactElement<ButtonProps, typeof Button>
 export type ButtonPropsOrElement = ButtonProps | ButtonElement
 
 function isButtonProps(o: any): o is ButtonProps {
-  return o && 'type' in o && o.type === 'action'
+  return 'button' in o
 }
 
 function isButtonElement(o: any): o is ButtonElement {

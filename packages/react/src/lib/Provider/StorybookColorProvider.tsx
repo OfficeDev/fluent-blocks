@@ -40,28 +40,32 @@ export const StorybookColorProvider = ({
           {
             inputs: [
               {
-                type: 'action',
-                actionId: 'primary',
-                variant: 'primary',
-                label: 'Primary',
+                button: {
+                  actionId: 'primary',
+                  variant: 'primary',
+                  label: 'Primary',
+                },
               },
               {
-                type: 'action',
-                actionId: 'outline',
-                variant: 'outline',
-                label: 'Outline',
+                button: {
+                  actionId: 'outline',
+                  variant: 'outline',
+                  label: 'Outline',
+                },
               },
               {
-                type: 'action',
-                actionId: 'subtle',
-                variant: 'subtle',
-                label: 'Subtle',
+                button: {
+                  actionId: 'subtle',
+                  variant: 'subtle',
+                  label: 'Subtle',
+                },
               },
               {
-                type: 'action',
-                actionId: 'transparent',
-                variant: 'transparent',
-                label: 'Transparent',
+                button: {
+                  actionId: 'transparent',
+                  variant: 'transparent',
+                  label: 'Transparent',
+                },
               },
             ],
           },

@@ -62,6 +62,7 @@ const useToolbarStyles = makeStyles({
     flexBasis: rem(48),
   },
   find: {
+    order: 3,
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'flex-end',
@@ -95,23 +96,23 @@ const useToolbarStyles = makeStyles({
 const ToolbarItemInFlow = (
   item: MenuItemEntity & Partial<ToolbarItemContextualOptions>
 ) => {
-  switch (item.type) {
-    case 'action':
-      return Button({
-        ...item,
-        variant: item.variant || 'transparent',
+  if ('action' in item) {
+    return Button({
+      button: {
+        ...item.action,
+        variant: item.action.variant || 'transparent',
         size: item.buttonSize || defaultButtonSize,
         iconSize: item.iconSize || defaultIconSize,
-        contextualVariant: item.layoutNeedsUpdate
-          ? 'toolbar-item--needs-update'
-          : item.hidden
-          ? 'toolbar-item--hidden'
-          : 'toolbar-item',
-        type: 'action',
-        contextualRole: 'menuitem',
-      })
-    default:
-      return null
+      },
+      contextualVariant: item.layoutNeedsUpdate
+        ? 'toolbar-item--needs-update'
+        : item.hidden
+        ? 'toolbar-item--hidden'
+        : 'toolbar-item',
+      contextualRole: 'menuitem',
+    })
+  } else {
+    return null
   }
 }
 
@@ -167,7 +168,9 @@ export const Toolbar = ({
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
     : toolbar.menu.map((item) => ({
-        hidden: item.hidden || actionsInFlow.has(get(item, 'actionId', false)),
+        hidden:
+          item.hidden ||
+          actionsInFlow.has(get(item, ['action', 'actionId'], false)),
       }))
 
   const hideOverflowTrigger = menuItemHiddenFlags
@@ -198,7 +201,8 @@ export const Toolbar = ({
           ? undefined
           : toolbar.menu.map((item) => ({
               hidden:
-                item.hidden || !actionsInFlow.has(get(item, 'actionId', false)),
+                item.hidden ||
+                !actionsInFlow.has(get(item, ['action', 'actionId'], false)),
             }))
       )}
       <div

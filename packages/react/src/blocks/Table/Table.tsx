@@ -263,18 +263,23 @@ export const Table = (props: TableProps) => {
         default:
           return [
             {
-              label: translations['sort--alphabetical-ascending'],
-              actionId: `${colKey}:sort--alphabetical-ascending`,
-              onAction: () =>
-                sort?.setSort({ sortColumn: colKey, sortOrder: 'ascending' }),
-              type: 'action',
+              action: {
+                label: translations['sort--alphabetical-ascending'],
+                actionId: `${colKey}:sort--alphabetical-ascending`,
+                onAction: () =>
+                  sort?.setSort({ sortColumn: colKey, sortOrder: 'ascending' }),
+              },
             },
             {
-              label: translations['sort--alphabetical-descending'],
-              actionId: `${colKey}:sort--alphabetical-descending`,
-              onAction: () =>
-                sort?.setSort({ sortColumn: colKey, sortOrder: 'descending' }),
-              type: 'action',
+              action: {
+                label: translations['sort--alphabetical-descending'],
+                actionId: `${colKey}:sort--alphabetical-descending`,
+                onAction: () =>
+                  sort?.setSort({
+                    sortColumn: colKey,
+                    sortOrder: 'descending',
+                  }),
+              },
             },
           ]
       }
@@ -433,11 +438,13 @@ export const Table = (props: TableProps) => {
                                     ...(contentColumnsHidden
                                       ? [
                                           {
-                                            type: 'action' as 'action',
-                                            label: translations.viewAllDetails,
-                                            actionId: `${rowKey}__details`,
+                                            action: {
+                                              label:
+                                                translations.viewAllDetails,
+                                              actionId: `${rowKey}__details`,
+                                            },
                                           },
-                                          { type: 'divider' as 'divider' },
+                                          { divider: {} },
                                         ]
                                       : []),
                                     ...(row.actions
@@ -445,9 +452,11 @@ export const Table = (props: TableProps) => {
                                         rowActions.hasOwnProperty(actionId)
                                       )
                                       .map((actionId) => ({
-                                        ...rowActions[actionId],
-                                        actionId,
-                                        payload: { rows: [rowKey] },
+                                        action: {
+                                          ...rowActions[actionId],
+                                          actionId,
+                                          payload: { rows: [rowKey] },
+                                        },
                                       })) || []),
                                   ]}
                                 />
@@ -474,9 +483,11 @@ export const Table = (props: TableProps) => {
                                     rowActions.hasOwnProperty(actionId)
                                   )
                                   .map((actionId) => ({
-                                    ...rowActions[actionId],
-                                    actionId,
-                                    payload: { rows: [rowKey] },
+                                    button: {
+                                      ...rowActions[actionId],
+                                      actionId,
+                                      payload: { rows: [rowKey] },
+                                    },
                                   }))}
                               />
                             </div>

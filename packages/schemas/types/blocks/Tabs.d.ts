@@ -7,8 +7,8 @@ import { ShortInputsProps } from './ShortInputs'
 import { TableProps } from './Table'
 
 export type TabProps = Omit<
-  ButtonProps,
-  'type' | 'actionId' | 'variant' | 'iconVariant'
+  ButtonProps['button'],
+  'actionId' | 'variant' | 'iconVariant'
 >
 
 export type TabPanelItemEntity =
