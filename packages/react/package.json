@@ -36,16 +36,14 @@
     "pnpm": "^7"
   },
   "peerDependencies": {
-    "@fluentui/react-components": "9.0.0-rc.10",
-    "@types/react": ">=16.13.1 <19",
-    "@types/react-dom": ">=16.13.1 <19",
+    "@fluentui/react-components": "9.0.0-rc.12",
     "chart.js": "^2.9.4",
     "react": ">=16.13.1 <19",
     "react-dom": ">=16.13.1 <19"
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@fluentui/react-components": "9.0.0-rc.10",
+    "@fluentui/react-components": "9.0.0-rc.12",
     "@storybook/addon-actions": "^6.5.4",
     "@storybook/addon-essentials": "^6.5.4",
     "@storybook/addon-links": "^6.5.4",
@@ -83,7 +81,7 @@
     "@fluent-blocks/basic-icons": "workspace:9.1.2",
     "@fluent-blocks/colors": "workspace:9.1.0",
     "@fluent-blocks/schemas": "workspace:9.1.0",
-    "@fluentui/react-tabster": "9.0.0-rc.9",
+    "@fluentui/react-tabster": "9.0.0-rc.11",
     "@react-hook/resize-observer": "^1.2.5",
     "lodash": "^4.17.21"
   }
