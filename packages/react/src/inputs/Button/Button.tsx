@@ -46,6 +46,14 @@ const useButtonStyles = makeStyles({
     textAlign: 'start',
     justifyContent: 'flex-start',
   },
+  wrapContents: {
+    display: 'block',
+    height: 'auto',
+    whiteSpace: 'normal',
+    paddingBlockStart: rem(4),
+    paddingBlockEnd: rem(4),
+    paddingBottom: rem(4),
+  },
 })
 
 export const Button = ({
@@ -102,6 +110,7 @@ export const Button = ({
           contextualVariant === 'sidebar') &&
           buttonStyles.fill,
         contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
+        contextualVariant === 'sidebar' && buttonStyles.wrapContents,
         contextualVariant.startsWith('toolbar-item') &&
           buttonStyles.toolbarItemInFlow,
         contextualVariant === 'toolbar-item--needs-update' &&

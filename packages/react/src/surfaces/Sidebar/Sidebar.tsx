@@ -52,6 +52,9 @@ const useSidebarStyles = makeStyles({
     insetInlineStart: rem(-sidebarWidth),
     boxShadow: 'var(--content-elevation)',
   },
+  'root--hidden': {
+    boxShadow: 'none',
+  },
   'root--docked': {
     insetInlineStart: 0,
   },
@@ -66,7 +69,10 @@ const useSidebarStyles = makeStyles({
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '100%',
-    ...sx.padding(rem(16)),
+    paddingBlockStart: rem(16),
+    paddingBlockEnd: rem(16),
+    paddingInlineStart: rem(16),
+    paddingInlineEnd: rem(15),
     borderInlineEndWidth: '1px',
     borderInlineEndStyle: 'solid',
     borderInlineEndColor: 'transparent',
@@ -97,6 +103,8 @@ export const Sidebar = ({
         sidebarStyles.root,
         contextualViewState?.sidebarState === SidebarState.Active &&
           sidebarStyles['root--active'],
+        contextualViewState?.sidebarState === SidebarState.Hidden &&
+          sidebarStyles['root--hidden'],
         contextualViewState?.sidebarState === SidebarState.Docked &&
           sidebarStyles['root--docked']
       )}
