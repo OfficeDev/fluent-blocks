@@ -3,12 +3,11 @@ import { ReactElement } from 'react'
 import { RadioGroupProps as NaturalRadioGroupProps } from '@fluent-blocks/schemas'
 import {
   RadioGroup as FluentRadioGroup,
+  Label,
   Radio,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
-// todo: fix this import when it stabilizes
-import { Label } from '@fluentui/react-components/unstable'
 
 import { InlineContent } from '../../inlines'
 import { makeLabelId, useCommonStyles } from '../../lib'

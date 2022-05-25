@@ -8,7 +8,7 @@ import {
   makeStyles,
 } from '@fluentui/react-components'
 
-import { ThemeName, sx, useTranslations } from '../../lib'
+import { ThemeName, rem, sx, useTranslations } from '../../lib'
 import { Pattern, legendLabels } from './chart-patterns'
 import { ChartData, ChartDataset } from './chart-types'
 
@@ -50,6 +50,7 @@ const useColorValueStyles = makeStyles({
 const useLegendItemStyles = makeStyles({
   root: {
     ...sx.flex(0, 0, 'auto'),
+    ...sx.gap(rem(4)),
     fontSize: '.75rem',
     color: 'var(--colorNeutralForeground2)',
     ...sx.margin('0.125rem'),

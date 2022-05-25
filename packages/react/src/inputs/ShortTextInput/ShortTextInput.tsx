@@ -5,9 +5,12 @@ import {
   ShortTextInputProps as NaturalShortTextInputProps,
   SingleValueInputActionPayload,
 } from '@fluent-blocks/schemas'
-import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
-// todo: fix this import when it stabilizes
-import { Input, Label } from '@fluentui/react-components/unstable'
+import {
+  Input,
+  Label,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
 
 import { Inline, InlineContent } from '../../inlines'
 import {
@@ -110,8 +113,8 @@ export const ShortTextInput = ({
         }}
         appearance={
           contextualElevationVariant === 'elevated'
-            ? 'filledDarker'
-            : 'filledLighter'
+            ? 'filled-darker'
+            : 'filled-lighter'
         }
       />
     </div>
