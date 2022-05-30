@@ -70,9 +70,9 @@ export const Button = ({
     onAction,
     disabled,
     payload,
+    selected,
+    controls,
   },
-  selected,
-  controls,
   contextualVariant = 'block-inputs',
   contextualRole = 'button',
 }: ButtonProps) => {
