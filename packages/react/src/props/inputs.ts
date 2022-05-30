@@ -37,6 +37,4 @@ export type ShortInputContextualVariant =
 
 export interface ShortInputContextualProps {
   contextualVariant?: ShortInputContextualVariant
-  selected?: boolean
-  controls?: string
 }

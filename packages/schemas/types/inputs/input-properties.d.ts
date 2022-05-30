@@ -20,6 +20,7 @@ export interface TextInputInnerProps
     InputInitialValueProps {
   placeholder?: string
   labelVisuallyHidden?: boolean
+  autocomplete?: string
 }
 
 export interface SingleValueInputActionPayload extends ActionPayload {

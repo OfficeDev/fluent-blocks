@@ -19,6 +19,8 @@ interface ButtonInnerProps extends Omit<InputProps, 'label'> {
   iconSize?: IconSize
   iconVariant?: IconVariant
   disabled?: boolean
+  selected?: boolean
+  controls?: string
   payload?: Record<string, string | string[]>
 }
 
