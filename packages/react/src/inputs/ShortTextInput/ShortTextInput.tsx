@@ -62,6 +62,7 @@ export const ShortTextInput = ({
     inputType,
     before,
     after,
+    autocomplete,
     initialValue,
     labelVisuallyHidden,
     onAction,
@@ -116,6 +117,7 @@ export const ShortTextInput = ({
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
           className: shortTextInputStyles.input,
+          ...(autocomplete && { autocomplete }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'
