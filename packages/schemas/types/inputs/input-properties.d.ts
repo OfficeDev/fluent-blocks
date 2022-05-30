@@ -22,6 +22,10 @@ export interface InputInitialValueProps {
   initialValue?: string
 }
 
+export interface InputInitialValuesProps {
+  initialValues?: string[]
+}
+
 export interface TextInputInnerProps
   extends DescribedInputProps,
     InputRequiredProps,

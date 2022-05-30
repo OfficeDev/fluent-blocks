@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
 
-import { RadioGroupProps as NaturalRadioGroupProps } from '@fluent-blocks/schemas'
 import {
   RadioGroup as FluentRadioGroup,
   Label,
@@ -12,26 +11,7 @@ import {
 import { Paragraph } from '../../blocks'
 import { InlineContent } from '../../inlines'
 import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
-import {
-  DescribedLabeledValueProps,
-  WithDescribedInputElements,
-} from '../../props'
-
-export interface RadioGroupInnerProps
-  extends WithDescribedInputElements<
-    Omit<NaturalRadioGroupProps['radioGroup'], 'options'>
-  > {
-  options: [
-    DescribedLabeledValueProps,
-    DescribedLabeledValueProps,
-    ...DescribedLabeledValueProps[]
-  ]
-}
-
-export interface RadioGroupProps
-  extends Omit<NaturalRadioGroupProps, 'radioGroup'> {
-  radioGroup: RadioGroupInnerProps
-}
+import { SelectProps } from '../../props/select'
 
 const useRadioGroupStyles = makeStyles({
   root: {
@@ -47,7 +27,7 @@ const useRadioGroupStyles = makeStyles({
 })
 
 export const RadioGroup = ({
-  radioGroup: {
+  select: {
     label,
     disambiguatingLabel,
     description,
@@ -56,7 +36,7 @@ export const RadioGroup = ({
     initialValue,
     options,
   },
-}: RadioGroupProps) => {
+}: SelectProps) => {
   const radioGroupStyles = useRadioGroupStyles()
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
@@ -122,11 +102,11 @@ export const RadioGroup = ({
   )
 }
 
-export type RadioGroupElement = ReactElement<RadioGroupProps, typeof RadioGroup>
-export type RadioGroupPropsOrElement = RadioGroupProps | RadioGroupElement
+export type RadioGroupElement = ReactElement<SelectProps, typeof RadioGroup>
+export type RadioGroupPropsOrElement = SelectProps | RadioGroupElement
 
-function isRadioGroupProps(o: any): o is RadioGroupProps {
-  return 'radioGroup' in o
+function isRadioGroupProps(o: any): o is SelectProps {
+  return 'select' in o && o.select.variant === 'group' && !o.select.multiple
 }
 
 function isRadioGroupElement(o: any): o is RadioGroupElement {
