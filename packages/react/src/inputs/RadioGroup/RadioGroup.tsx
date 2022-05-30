@@ -12,10 +12,21 @@ import {
 import { Paragraph } from '../../blocks'
 import { InlineContent } from '../../inlines'
 import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
-import { WithDescribedInputElements } from '../../props'
+import {
+  DescribedLabeledValueProps,
+  WithDescribedInputElements,
+} from '../../props'
 
 export interface RadioGroupInnerProps
-  extends WithDescribedInputElements<NaturalRadioGroupProps['radioGroup']> {}
+  extends WithDescribedInputElements<
+    Omit<NaturalRadioGroupProps['radioGroup'], 'options'>
+  > {
+  options: [
+    DescribedLabeledValueProps,
+    DescribedLabeledValueProps,
+    ...DescribedLabeledValueProps[]
+  ]
+}
 
 export interface RadioGroupProps
   extends Omit<NaturalRadioGroupProps, 'radioGroup'> {
@@ -79,13 +90,33 @@ export const RadioGroup = ({
         {...(disambiguatingLabel
           ? { 'aria-label': disambiguatingLabel }
           : { 'aria-labelledby': labelId })}
+        {...(description && { 'aria-describedby': descriptionId })}
       >
-        {options.map(({ value, label }) => (
-          <Radio
-            key={value}
-            {...{ value, label: <InlineContent inlines={label} /> }}
-          />
-        ))}
+        {options.map(({ value, label, description, descriptionVariant }) => {
+          const optionDescriptionId = makeId(value, 'optionDescription')
+          return (
+            <>
+              <Radio
+                key={value}
+                {...{
+                  value,
+                  label: <InlineContent inlines={label} />,
+                  ...(description && {
+                    'aria-describedby': optionDescriptionId,
+                  }),
+                }}
+              />
+              {description && (
+                <Paragraph
+                  paragraph={description}
+                  contextualId={optionDescriptionId}
+                  contextualVariant="inputMeta--radio"
+                  visuallyHidden={descriptionVariant === 'visuallyHidden'}
+                />
+              )}
+            </>
+          )
+        })}
       </FluentRadioGroup>
     </div>
   )

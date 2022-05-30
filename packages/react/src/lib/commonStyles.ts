@@ -70,8 +70,14 @@ export const useTextBlockStyles = makeStyles({
     marginBlockStart: 0,
   },
   inputMetaSpacing: {
-    marginBlockStart: rem(4),
+    marginBlockStart: 0,
+    marginBlockEnd: 0,
+  },
+  radioMetaSpacing: {
+    marginBlockStart: rem(-4),
     marginBlockEnd: rem(4),
+    marginInlineEnd: 0,
+    marginInlineStart: rem(36),
   },
   h1: {
     fontSize: rem(24),

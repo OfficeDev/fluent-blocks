@@ -1,15 +1,19 @@
 import {
   DescribedInputProps,
+  DescribedLabeledValueProps,
   InputInitialValueProps,
   InputRequiredProps,
-  LabeledValueProps,
 } from './input-properties'
 
 export interface RadioGroupInnerProps
   extends DescribedInputProps,
     InputRequiredProps,
     InputInitialValueProps {
-  options: [LabeledValueProps, LabeledValueProps, ...LabeledValueProps[]]
+  options: [
+    DescribedLabeledValueProps,
+    DescribedLabeledValueProps,
+    ...DescribedLabeledValueProps[]
+  ]
 }
 
 export interface RadioGroupProps {

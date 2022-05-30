@@ -236,8 +236,16 @@ that time `View` will call its interaction callback with the update.
                   label: [{ text: fakeTitle(fake) }],
                   description: fake('{{lorem.sentence}}'),
                   options: [
-                    { label: [{ text: fakeTitle(fake) }], value: 'v1' },
-                    { label: [{ text: fakeTitle(fake) }], value: 'v2' },
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'v1',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'v2',
+                      description: fake('{{lorem.sentence}}'),
+                    },
                   ],
                 },
               },

@@ -52,6 +52,7 @@ const useShortTextInputStyles = makeStyles({
     display: 'block',
   },
   input: {
+    marginBlockStart: rem(4),
     width: '100%',
     '& .fuib-Icon': { fontSize: '1rem' },
   },
