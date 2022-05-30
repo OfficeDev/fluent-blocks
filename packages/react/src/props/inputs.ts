@@ -3,7 +3,7 @@ import {
   InputProps as NaturalInputProps,
   InputInitialValueProps as NaturalInputWithInitialStringValue,
   LabeledValueProps as NaturalLabeledValueProps,
-  TextInputProps as NaturalTextInputProps,
+  TextInputInnerProps as NaturalTextInputInnerProps,
 } from '@fluent-blocks/schemas'
 
 import { InlineSequenceOrString } from '../inlines'
@@ -21,7 +21,7 @@ export interface InputInitialValueProps
     NaturalInputWithInitialStringValue {}
 
 export interface TextInputProps
-  extends WithInputElements<NaturalTextInputProps> {}
+  extends WithInputElements<NaturalTextInputInnerProps> {}
 
 export interface LabeledValueProps
   extends WithInputElements<NaturalLabeledValueProps> {}

@@ -26,10 +26,14 @@ import {
   WithInputElements,
 } from '../../props'
 
+export interface ShortTextInputInnerProps
+  extends WithInputElements<NaturalShortTextInputProps['textInput']>,
+    WithActionHandler<SingleValueInputActionPayload> {}
+
 export interface ShortTextInputProps
-  extends WithInputElements<NaturalShortTextInputProps>,
-    WithActionHandler<SingleValueInputActionPayload>,
+  extends Omit<NaturalShortTextInputProps, 'textInput'>,
     ShortInputContextualProps {
+  textInput: ShortTextInputInnerProps
   contextualElevationVariant?: 'surface' | 'elevated'
 }
 
@@ -51,15 +55,17 @@ const useShortTextInputStyles = makeStyles({
 })
 
 export const ShortTextInput = ({
-  label,
-  actionId,
-  placeholder,
-  inputType,
-  before,
-  after,
-  initialValue,
-  labelVisuallyHidden,
-  onAction,
+  textInput: {
+    label,
+    actionId,
+    placeholder,
+    inputType,
+    before,
+    after,
+    initialValue,
+    labelVisuallyHidden,
+    onAction,
+  },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
@@ -130,11 +136,13 @@ export type ShortTextInputPropsOrElement =
   | ShortTextInputElement
 
 function isShortTextInputProps(o: any): o is ShortTextInputProps {
-  return 'type' in o && o.type === 'text' && !('multiline' in o && o.multiline)
+  return (
+    'textInput' in o && !('multiline' in o.textInput && o.textInput.multiline)
+  )
 }
 
 function isShortTextInputElement(o: any): o is ShortTextInputElement {
-  return o?.type === ShortTextInput && isShortTextInputProps(o?.props)
+  return o?.type === ShortTextInput
 }
 
 export function renderIfShortTextInput(o: any) {

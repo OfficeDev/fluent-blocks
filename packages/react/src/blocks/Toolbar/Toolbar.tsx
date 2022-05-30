@@ -234,17 +234,18 @@ export const Toolbar = ({
         >
           <ShortTextInput
             {...{
-              actionId: toolbar.find,
-              type: 'text',
-              inputType: 'search',
-              labelVisuallyHidden: true,
-              label: translations['list__find'],
-              placeholder: translations['list__find'],
-              after: { icon: 'document_search' },
+              textInput: {
+                actionId: toolbar.find,
+                inputType: 'search',
+                labelVisuallyHidden: true,
+                label: translations['list__find'],
+                placeholder: translations['list__find'],
+                after: { icon: 'document_search' },
+                ...(contextualFindProps?.onAction && {
+                  onAction: (payload) => contextualFindProps.onAction(payload),
+                }),
+              },
               contextualVariant: 'toolbar-item',
-              ...(contextualFindProps?.onAction && {
-                onAction: (payload) => contextualFindProps.onAction(payload),
-              }),
             }}
           />
         </div>

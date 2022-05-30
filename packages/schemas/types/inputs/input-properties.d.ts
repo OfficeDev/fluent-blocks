@@ -14,11 +14,10 @@ export interface InputInitialValueProps {
   initialValue?: string
 }
 
-export interface TextInputProps
+export interface TextInputInnerProps
   extends InputProps,
     InputRequiredProps,
     InputInitialValueProps {
-  type: 'text'
   placeholder?: string
   labelVisuallyHidden?: boolean
 }

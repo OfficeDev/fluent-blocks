@@ -190,27 +190,32 @@ that time `View` will call its interaction callback with the update.
               {
                 inputs: [
                   {
-                    type: 'text',
-                    actionId: 'a1',
-                    label: [{ text: fakeTitle(fake) }],
-                    initialValue: fake('{{name.firstName}} {{name.lastName}}'),
-                    after: { icon: 'person' },
+                    textInput: {
+                      actionId: 'a1',
+                      label: [{ text: fakeTitle(fake) }],
+                      initialValue: fake(
+                        '{{name.firstName}} {{name.lastName}}'
+                      ),
+                      after: { icon: 'person' },
+                    },
                   },
                   {
-                    type: 'text',
-                    actionId: 'a2',
-                    label: [{ text: fakeTitle(fake) }],
-                    inputType: 'email',
-                    placeholder: 'username',
-                    after: { text: '@live.com' },
+                    textInput: {
+                      actionId: 'a2',
+                      label: [{ text: fakeTitle(fake) }],
+                      inputType: 'email',
+                      placeholder: 'username',
+                      after: { text: '@live.com' },
+                    },
                   },
                   {
-                    type: 'text',
-                    actionId: 'a3',
-                    label: [{ text: fakeTitle(fake) }],
-                    inputType: 'tel',
-                    initialValue: fake('000 x1829'),
-                    before: { icon: 'call' },
+                    textInput: {
+                      actionId: 'a3',
+                      label: [{ text: fakeTitle(fake) }],
+                      inputType: 'tel',
+                      initialValue: fake('000 x1829'),
+                      before: { icon: 'call' },
+                    },
                   },
                 ],
               },
