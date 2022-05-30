@@ -69,6 +69,10 @@ export const useTextBlockStyles = makeStyles({
     marginInlineEnd: 0,
     marginBlockStart: 0,
   },
+  inputMetaSpacing: {
+    marginBlockStart: rem(4),
+    marginBlockEnd: rem(4),
+  },
   h1: {
     fontSize: rem(24),
     lineHeight: 32 / 24,
@@ -96,4 +100,5 @@ export const useTextStyles = makeStyles({
     textDecorationLine: 'underline',
     textDecorationStyle: 'dotted',
   },
+  inputMeta: {},
 })

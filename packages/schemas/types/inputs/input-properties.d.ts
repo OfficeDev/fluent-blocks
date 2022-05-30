@@ -8,7 +8,7 @@ export interface InputProps {
 }
 
 interface DescriptionProps {
-  description?: string
+  description?: InlineSequenceOrString
   descriptionVariant?: 'block' | 'visuallyHidden'
 }
 
@@ -46,7 +46,6 @@ export interface LabeledValueProps {
   label: InlineSequenceOrString
 }
 
-export interface DescribedLabeledValueProps extends DescriptionProps {
-  value: string
-  label: InlineSequenceOrString
-}
+export interface DescribedLabeledValueProps
+  extends LabeledValueProps,
+    DescriptionProps {}

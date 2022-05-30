@@ -12,14 +12,16 @@ import {
   makeStyles,
 } from '@fluentui/react-components'
 
+import { Paragraph } from '../../blocks'
 import { Inline, InlineContent } from '../../inlines'
 import {
-  makeLabelId,
+  makeId,
   rem,
   sx,
   useCommonStyles,
   useDebounce,
   useFluentBlocksContext,
+  useTextBlockStyles,
 } from '../../lib'
 import {
   ShortInputContextualProps,
@@ -47,7 +49,7 @@ const useShortTextInputStyles = makeStyles({
     ...sx.flex(0, 1, rem(240)),
   },
   label: {
-    color: 'var(--surface-foreground)',
+    display: 'block',
   },
   input: {
     width: '100%',
@@ -59,6 +61,9 @@ export const ShortTextInput = ({
   textInput: {
     label,
     disambiguatingLabel,
+    labelVariant = 'block',
+    description,
+    descriptionVariant = 'block',
     actionId,
     placeholder,
     inputType,
@@ -66,7 +71,6 @@ export const ShortTextInput = ({
     after,
     autocomplete,
     initialValue,
-    labelVariant = 'block',
     onAction,
   },
   contextualVariant = 'block-inputs',
@@ -74,6 +78,7 @@ export const ShortTextInput = ({
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
   const commonStyles = useCommonStyles()
+  const textBlockStyles = useTextBlockStyles()
   const [value, setValue] = useState(initialValue || '')
   const debouncedValue = useDebounce(value, 400)
   const didMount = useRef(false)
@@ -92,7 +97,8 @@ export const ShortTextInput = ({
     }
   }, [debouncedValue])
 
-  const labelId = makeLabelId(actionId)
+  const labelId = makeId(actionId, 'label')
+  const descriptionId = makeId(actionId, 'description')
 
   return (
     <div
@@ -106,11 +112,20 @@ export const ShortTextInput = ({
         id={labelId}
         className={cx(
           shortTextInputStyles.label,
-          labelVariant === 'block' && commonStyles.visuallyHidden
+          textBlockStyles.inputMetaSpacing,
+          labelVariant === 'visuallyHidden' && commonStyles.visuallyHidden
         )}
       >
         <InlineContent inlines={label} />
       </Label>
+      {description && (
+        <Paragraph
+          paragraph={description}
+          contextualId={descriptionId}
+          visuallyHidden={descriptionVariant === 'visuallyHidden'}
+          contextualVariant="inputMeta"
+        />
+      )}
       <Input
         {...{
           id: actionId,
@@ -125,6 +140,7 @@ export const ShortTextInput = ({
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': labelId }),
+          ...(description && { 'aria-describedby': descriptionId }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'

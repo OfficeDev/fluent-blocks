@@ -9,12 +9,13 @@ import {
   makeStyles,
 } from '@fluentui/react-components'
 
+import { Paragraph } from '../../blocks'
 import { InlineContent } from '../../inlines'
-import { makeLabelId, useCommonStyles } from '../../lib'
-import { WithInputElements } from '../../props'
+import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
+import { WithDescribedInputElements } from '../../props'
 
 export interface RadioGroupInnerProps
-  extends WithInputElements<NaturalRadioGroupProps['radioGroup']> {}
+  extends WithDescribedInputElements<NaturalRadioGroupProps['radioGroup']> {}
 
 export interface RadioGroupProps
   extends Omit<NaturalRadioGroupProps, 'radioGroup'> {
@@ -30,16 +31,26 @@ const useRadioGroupStyles = makeStyles({
     marginBlockStart: '.25rem',
   },
   label: {
-    color: 'var(--surface-foreground)',
+    display: 'block',
   },
 })
 
 export const RadioGroup = ({
-  radioGroup: { label, disambiguatingLabel, actionId, initialValue, options },
+  radioGroup: {
+    label,
+    disambiguatingLabel,
+    description,
+    descriptionVariant,
+    actionId,
+    initialValue,
+    options,
+  },
 }: RadioGroupProps) => {
   const radioGroupStyles = useRadioGroupStyles()
   const commonStyles = useCommonStyles()
-  const labelId = makeLabelId(actionId)
+  const textBlockStyles = useTextBlockStyles()
+  const labelId = makeId(actionId, 'label')
+  const descriptionId = makeId(actionId, 'description')
   return (
     <div
       className={cx(
@@ -48,9 +59,20 @@ export const RadioGroup = ({
         radioGroupStyles.root
       )}
     >
-      <Label id={labelId} className={radioGroupStyles.label}>
+      <Label
+        id={labelId}
+        className={cx(radioGroupStyles.label, textBlockStyles.inputMetaSpacing)}
+      >
         <InlineContent inlines={label} />
       </Label>
+      {description && (
+        <Paragraph
+          paragraph={description}
+          contextualId={descriptionId}
+          visuallyHidden={descriptionVariant === 'visuallyHidden'}
+          contextualVariant="inputMeta"
+        />
+      )}
       <FluentRadioGroup
         defaultValue={initialValue}
         className={radioGroupStyles.radioGroup}

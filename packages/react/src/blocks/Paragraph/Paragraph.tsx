@@ -7,12 +7,12 @@ import {
   DescribedInlineContent,
   DescribedInlineSequenceOrString,
 } from '../../inlines'
-import { useCommonStyles, useTextBlockStyles } from '../../lib'
+import { useCommonStyles, useTextBlockStyles, useTextStyles } from '../../lib'
 
 export interface ParagraphProps
   extends Omit<NaturalParagraphProps, 'paragraph'> {
   paragraph: DescribedInlineSequenceOrString
-  contextualVariant?: 'card' | 'block'
+  contextualVariant?: 'card' | 'block' | 'inputMeta'
   contextualId?: string
   visuallyHidden?: boolean
 }
@@ -24,15 +24,18 @@ export const Paragraph = (props: ParagraphProps) => {
     contextualId,
     visuallyHidden,
   } = props
-  const textStyles = useTextBlockStyles()
+  const textBlockStyles = useTextBlockStyles()
+  const textStyles = useTextStyles()
   const commonStyles = useCommonStyles()
   return (
     <p
       className={cx(
-        textStyles.root,
+        textBlockStyles.root,
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        contextualVariant === 'card' && textStyles.cardSpacing,
+        contextualVariant === 'card' && textBlockStyles.cardSpacing,
+        contextualVariant === 'inputMeta' && textBlockStyles.inputMetaSpacing,
+        contextualVariant === 'inputMeta' && textStyles.inputMeta,
         visuallyHidden && commonStyles.visuallyHidden
       )}
       {...(contextualId && { id: contextualId })}

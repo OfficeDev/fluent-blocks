@@ -1,4 +1,5 @@
 import {
+  DescribedLabeledValueProps as NaturalDescribedLabeledValueProps,
   InlineSequenceOrString as NaturalInlineSequenceOrString,
   InputProps as NaturalInputProps,
   InputInitialValueProps as NaturalInputWithInitialStringValue,
@@ -13,6 +14,15 @@ export type WithInputElements<
 > = Omit<T, 'label'> & {
   label: InlineSequenceOrString
 }
+export type WithDescribedInputElements<
+  T extends {
+    label: NaturalInlineSequenceOrString
+    description?: NaturalInlineSequenceOrString
+  }
+> = Omit<T, 'label' | 'description'> & {
+  label: InlineSequenceOrString
+  description?: InlineSequenceOrString
+}
 
 export interface InputProps extends WithInputElements<NaturalInputProps> {}
 
@@ -21,10 +31,13 @@ export interface InputInitialValueProps
     NaturalInputWithInitialStringValue {}
 
 export interface TextInputProps
-  extends WithInputElements<NaturalTextInputInnerProps> {}
+  extends WithDescribedInputElements<NaturalTextInputInnerProps> {}
 
 export interface LabeledValueProps
   extends WithInputElements<NaturalLabeledValueProps> {}
+
+export interface DescribedLabeledValueProps
+  extends WithDescribedInputElements<NaturalDescribedLabeledValueProps> {}
 
 export type ShortInputContextualVariant =
   | 'block-inputs'
