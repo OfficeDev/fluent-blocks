@@ -1,5 +1,4 @@
 /* eslint func-names: 0 */
-
 import expect from 'expect'
 
 describe('Toolbar', function () {
@@ -11,14 +10,10 @@ describe('Toolbar', function () {
       })
       it('renders to the page and hides content that can’t fit', async function () {
         expect(
-          await this.page
-            .locator('#root button[aria-label="51e6eeb9"]')
-            .isVisible()
+          await this.page.locator('#root button[id="51e6eeb9"]').isVisible()
         ).toBeTruthy()
         expect(
-          await this.page
-            .locator('#root button[aria-label="b3ccb472"]')
-            .isVisible()
+          await this.page.locator('#root button[id="b3ccb472"]').isVisible()
         ).toBeFalsy()
       })
     })

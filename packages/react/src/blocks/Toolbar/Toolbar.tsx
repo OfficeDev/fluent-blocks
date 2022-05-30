@@ -144,7 +144,7 @@ export const Toolbar = ({
           !$child.hasAttribute('data-layout') &&
           $child.offsetTop === baseOffset
         ) {
-          const actionId = $child.getAttribute('id')?.split('__')[1]
+          const actionId = $child.getAttribute('id')
           if (actionId) {
             nextActionsInFlow.push(actionId)
           }
