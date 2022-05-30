@@ -31,4 +31,8 @@ module.exports = {
       allowFunction: false,
     },
   },
+  features: {
+    storyStoreV7: true,
+    buildStoriesJson: true,
+  },
 }
