@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.stories.mdx",
+    "**/*.test.tsx",
+    "**/*.test-stories.tsx",
+    "**/Storybook*.tsx"
+  ],
+  "compilerOptions": {
+    "types": ["node"]
+  }
+}

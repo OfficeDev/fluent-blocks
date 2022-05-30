@@ -1,11 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["src"],
-  "exclude": [
-    "**/*.test.ts",
-    "**/*.stories.mdx",
-    "**/*.test.tsx",
-    "**/*.test-stories.tsx",
-    "**/Storybook*.tsx"
-  ]
+  "compilerOptions": {
+    "types": ["mocha", "node"]
+  }
 }
