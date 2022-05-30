@@ -3,6 +3,7 @@ import { ActionPayload } from '../lib/actions'
 
 export interface InputProps {
   label: InlineSequenceOrString
+  disambiguatingLabel?: string
   actionId: string
 }
 

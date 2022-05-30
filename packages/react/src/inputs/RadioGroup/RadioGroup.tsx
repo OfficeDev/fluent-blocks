@@ -35,7 +35,7 @@ const useRadioGroupStyles = makeStyles({
 })
 
 export const RadioGroup = ({
-  radioGroup: { label, actionId, initialValue, options },
+  radioGroup: { label, disambiguatingLabel, actionId, initialValue, options },
 }: RadioGroupProps) => {
   const radioGroupStyles = useRadioGroupStyles()
   const commonStyles = useCommonStyles()
@@ -53,8 +53,10 @@ export const RadioGroup = ({
       </Label>
       <FluentRadioGroup
         defaultValue={initialValue}
-        aria-labelledby={labelId}
         className={radioGroupStyles.radioGroup}
+        {...(disambiguatingLabel
+          ? { 'aria-label': disambiguatingLabel }
+          : { 'aria-labelledby': labelId })}
       >
         {options.map(({ value, label }) => (
           <Radio

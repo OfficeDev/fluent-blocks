@@ -59,6 +59,7 @@ const useButtonStyles = makeStyles({
 export const Button = ({
   button: {
     label,
+    disambiguatingLabel,
     iconOnly,
     icon,
     iconPosition,
@@ -99,46 +100,54 @@ export const Button = ({
 
   const buttonElement = (
     <FluentButton
-      role={contextualRole}
-      aria-label={label}
-      appearance={variant}
-      disabled={disabled}
-      size={derivedSize}
-      className={cx(
-        buttonStyles.root,
-        (contextualVariant === 'narrow-inputs' ||
-          contextualVariant === 'sidebar') &&
-          buttonStyles.fill,
-        contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
-        contextualVariant === 'sidebar' && buttonStyles.wrapContents,
-        contextualVariant.startsWith('toolbar-item') &&
-          buttonStyles.toolbarItemInFlow,
-        contextualVariant === 'toolbar-item--needs-update' &&
-          buttonStyles.toolbarItemNeedsUpdate,
-        contextualVariant === 'toolbar-item--hidden' &&
-          buttonStyles.toolbarItemHidden
-      )}
-      {...{ iconOnly, iconPosition }}
-      {...(icon && {
-        icon: (
-          <Icon
-            icon={icon}
-            size={derivedIconSize}
-            variant={iconVariant || 'outline'}
-          />
+      {...{
+        role: contextualRole,
+        appearance: variant,
+        disabled,
+        size: derivedSize,
+        className: cx(
+          buttonStyles.root,
+          (contextualVariant === 'narrow-inputs' ||
+            contextualVariant === 'sidebar') &&
+            buttonStyles.fill,
+          contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
+          contextualVariant === 'sidebar' && buttonStyles.wrapContents,
+          contextualVariant.startsWith('toolbar-item') &&
+            buttonStyles.toolbarItemInFlow,
+          contextualVariant === 'toolbar-item--needs-update' &&
+            buttonStyles.toolbarItemNeedsUpdate,
+          contextualVariant === 'toolbar-item--hidden' &&
+            buttonStyles.toolbarItemHidden
         ),
-      })}
-      onClick={onButtonActivate}
-      id={`${contextualVariant}__${actionId}`}
-      {...(selected && { 'aria-selected': selected })}
-      {...(controls && { 'aria-controls': controls })}
+        iconOnly,
+        iconPosition,
+        onClick: onButtonActivate,
+        id: actionId,
+        ...(icon && {
+          icon: (
+            <Icon
+              icon={icon}
+              size={derivedIconSize}
+              variant={iconVariant || 'outline'}
+            />
+          ),
+        }),
+        ...(!iconOnly &&
+          disambiguatingLabel && { 'aria-label': disambiguatingLabel }),
+        ...(selected && { 'aria-selected': selected }),
+        ...(controls && { 'aria-controls': controls }),
+      }}
     >
       {iconOnly ? null : label}
     </FluentButton>
   )
 
   return iconOnly ? (
-    <Tooltip content={label} relationship="label" withArrow>
+    <Tooltip
+      content={disambiguatingLabel || label}
+      relationship="label"
+      withArrow
+    >
       {buttonElement}
     </Tooltip>
   ) : (

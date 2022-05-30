@@ -14,6 +14,7 @@ import {
 
 import { Inline, InlineContent } from '../../inlines'
 import {
+  makeLabelId,
   rem,
   sx,
   useCommonStyles,
@@ -57,6 +58,7 @@ const useShortTextInputStyles = makeStyles({
 export const ShortTextInput = ({
   textInput: {
     label,
+    disambiguatingLabel,
     actionId,
     placeholder,
     inputType,
@@ -90,6 +92,8 @@ export const ShortTextInput = ({
     }
   }, [debouncedValue])
 
+  const labelId = makeLabelId(actionId)
+
   return (
     <div
       className={cx(
@@ -99,7 +103,7 @@ export const ShortTextInput = ({
       )}
     >
       <Label
-        htmlFor={actionId}
+        id={labelId}
         className={cx(
           shortTextInputStyles.label,
           labelVisuallyHidden && commonStyles.visuallyHidden
@@ -118,6 +122,9 @@ export const ShortTextInput = ({
           ...(after && { contentAfter: Inline(after) }),
           className: shortTextInputStyles.input,
           ...(autocomplete && { autocomplete }),
+          ...(disambiguatingLabel
+            ? { 'aria-label': disambiguatingLabel }
+            : { 'aria-labelledby': labelId }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'
