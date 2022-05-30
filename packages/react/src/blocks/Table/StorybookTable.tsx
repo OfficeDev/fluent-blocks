@@ -1,9 +1,8 @@
 import { TableActionPayload } from '@fluent-blocks/schemas'
 
 import { AccentScheme, ThemeName } from '../../lib'
-import { ActionHandler, WithActionHandler } from '../../props'
+import { ActionHandler, TableProps, WithActionHandler } from '../../props'
 import { View } from '../../views'
-import { TableProps } from './Table'
 
 export const Table = ({
   themeName,

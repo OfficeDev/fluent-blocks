@@ -1,13 +1,9 @@
 import set from 'lodash/set'
-import { ToolbarProps } from './Toolbar'
-import {
-  AccentScheme,
-  ActionHandler,
-  FluentBlocksProvider,
-  MenuAction,
-  ThemeName,
-} from '../../lib'
+
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { ActionHandler, ActionPayload } from '../../props'
 import { Main } from '../../surfaces'
+import { ToolbarProps } from './Toolbar'
 
 export const Toolbar = ({
   themeName,
@@ -20,7 +16,7 @@ export const Toolbar = ({
   toolbar: Omit<ToolbarProps['toolbar'], 'buttonSize'>
   themeName: ThemeName
   accentScheme: AccentScheme
-  onAction: ActionHandler<MenuAction>
+  onAction: ActionHandler<ActionPayload>
   buttonSize: 'small' | 'medium' | 'large'
   iconSpriteUrl: string
 }) => (

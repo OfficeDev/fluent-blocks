@@ -1,12 +1,8 @@
-import { BigMessageProps } from './BigMessage'
-import {
-  AccentScheme,
-  FluentBlocksProvider,
-  ThemeName,
-  WithActionHandler,
-} from '../../lib'
-import { Main } from '../../surfaces'
 import { ButtonActionPayload } from '../../inputs'
+import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { WithActionHandler } from '../../props'
+import { Main } from '../../surfaces'
+import { BigMessageProps } from './BigMessage'
 
 export const BigMessage = ({
   themeName,

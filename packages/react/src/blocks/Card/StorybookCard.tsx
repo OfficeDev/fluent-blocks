@@ -1,7 +1,7 @@
 import range from 'lodash/range'
 
 import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-import { CardProps } from '../../props/card-properties'
+import { CardProps } from '../../props'
 import { Main } from '../../surfaces'
 
 export const BlockCard = ({
