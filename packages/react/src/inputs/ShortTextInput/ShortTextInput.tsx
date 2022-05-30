@@ -66,7 +66,7 @@ export const ShortTextInput = ({
     after,
     autocomplete,
     initialValue,
-    labelVisuallyHidden,
+    labelVariant = 'block',
     onAction,
   },
   contextualVariant = 'block-inputs',
@@ -106,7 +106,7 @@ export const ShortTextInput = ({
         id={labelId}
         className={cx(
           shortTextInputStyles.label,
-          labelVisuallyHidden && commonStyles.visuallyHidden
+          labelVariant === 'block' && commonStyles.visuallyHidden
         )}
       >
         <InlineContent inlines={label} />

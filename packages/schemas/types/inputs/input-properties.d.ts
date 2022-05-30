@@ -7,6 +7,13 @@ export interface InputProps {
   actionId: string
 }
 
+interface DescriptionProps {
+  description?: string
+  descriptionVariant?: 'block' | 'visuallyHidden'
+}
+
+export interface DescribedInputProps extends InputProps, DescriptionProps {}
+
 export interface InputRequiredProps {
   required?: boolean
 }
@@ -16,11 +23,11 @@ export interface InputInitialValueProps {
 }
 
 export interface TextInputInnerProps
-  extends InputProps,
+  extends DescribedInputProps,
     InputRequiredProps,
     InputInitialValueProps {
   placeholder?: string
-  labelVisuallyHidden?: boolean
+  labelVariant?: 'block' | 'visuallyHidden'
   autocomplete?: string
 }
 
@@ -35,6 +42,11 @@ export interface MultipleValueInputActionPayload extends ActionPayload {
 }
 
 export interface LabeledValueProps {
+  value: string
+  label: InlineSequenceOrString
+}
+
+export interface DescribedLabeledValueProps extends DescriptionProps {
   value: string
   label: InlineSequenceOrString
 }
