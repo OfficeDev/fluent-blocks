@@ -13,8 +13,13 @@ import { InlineContent } from '../../inlines'
 import { makeLabelId, useCommonStyles } from '../../lib'
 import { WithInputElements } from '../../props'
 
+export interface RadioGroupInnerProps
+  extends WithInputElements<NaturalRadioGroupProps['radioGroup']> {}
+
 export interface RadioGroupProps
-  extends WithInputElements<NaturalRadioGroupProps> {}
+  extends Omit<NaturalRadioGroupProps, 'radioGroup'> {
+  radioGroup: RadioGroupInnerProps
+}
 
 const useRadioGroupStyles = makeStyles({
   root: {
@@ -30,10 +35,7 @@ const useRadioGroupStyles = makeStyles({
 })
 
 export const RadioGroup = ({
-  label,
-  actionId,
-  initialValue,
-  options,
+  radioGroup: { label, actionId, initialValue, options },
 }: RadioGroupProps) => {
   const radioGroupStyles = useRadioGroupStyles()
   const commonStyles = useCommonStyles()
@@ -69,7 +71,7 @@ export type RadioGroupElement = ReactElement<RadioGroupProps, typeof RadioGroup>
 export type RadioGroupPropsOrElement = RadioGroupProps | RadioGroupElement
 
 function isRadioGroupProps(o: any): o is RadioGroupProps {
-  return 'type' in o && o.type === 'radio-group'
+  return 'radioGroup' in o
 }
 
 function isRadioGroupElement(o: any): o is RadioGroupElement {

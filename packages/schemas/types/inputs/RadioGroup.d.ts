@@ -1,14 +1,17 @@
 import {
-  InputProps,
   InputInitialValueProps,
+  InputProps,
   InputRequiredProps,
   LabeledValueProps,
 } from './input-properties'
 
-export interface RadioGroupProps
+export interface RadioGroupInnerProps
   extends InputProps,
     InputRequiredProps,
     InputInitialValueProps {
-  type: 'radio-group'
   options: [LabeledValueProps, LabeledValueProps, ...LabeledValueProps[]]
+}
+
+export interface RadioGroupProps {
+  radioGroup: RadioGroupInnerProps
 }
