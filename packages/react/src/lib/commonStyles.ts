@@ -73,7 +73,7 @@ export const useTextBlockStyles = makeStyles({
     marginBlockStart: 0,
     marginBlockEnd: 0,
   },
-  radioMetaSpacing: {
+  selectOptionMetaSpacing: {
     marginBlockStart: rem(-4),
     marginBlockEnd: rem(4),
     marginInlineEnd: 0,

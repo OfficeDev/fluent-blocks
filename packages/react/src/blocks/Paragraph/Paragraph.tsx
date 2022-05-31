@@ -12,7 +12,7 @@ import { useCommonStyles, useTextBlockStyles, useTextStyles } from '../../lib'
 export interface ParagraphProps
   extends Omit<NaturalParagraphProps, 'paragraph'> {
   paragraph: DescribedInlineSequenceOrString
-  contextualVariant?: 'card' | 'block' | 'inputMeta' | 'inputMeta--radio'
+  contextualVariant?: 'card' | 'block' | 'inputMeta' | 'inputMeta--selectOption'
   contextualId?: string
   visuallyHidden?: boolean
 }
@@ -35,8 +35,8 @@ export const Paragraph = (props: ParagraphProps) => {
         commonStyles.mainContentWidth,
         contextualVariant === 'card' && textBlockStyles.cardSpacing,
         contextualVariant === 'inputMeta' && textBlockStyles.inputMetaSpacing,
-        contextualVariant === 'inputMeta--radio' &&
-          textBlockStyles.radioMetaSpacing,
+        contextualVariant === 'inputMeta--selectOption' &&
+          textBlockStyles.selectOptionMetaSpacing,
         contextualVariant === 'inputMeta' && textStyles.inputMeta,
         visuallyHidden && commonStyles.visuallyHidden
       )}

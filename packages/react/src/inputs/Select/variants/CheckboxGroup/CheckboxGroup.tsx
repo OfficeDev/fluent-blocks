@@ -1,9 +1,10 @@
-import { ReactElement } from 'react'
+import { ChangeEvent, ReactElement, useCallback, useState } from 'react'
 
 import {
-  RadioGroup as FluentRadioGroup,
+  Checkbox,
+  CheckboxOnChangeData,
+  CheckboxProps as FluentCheckboxProps,
   Label,
-  Radio,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
@@ -11,21 +12,14 @@ import {
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
 import { makeId, useCommonStyles, useTextBlockStyles } from '../../../../lib'
-import { SingleSelectProps } from '../../../../props/select'
+import { MultipleSelectProps } from '../../../../props/select'
 
-export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
-  select: SingleSelectProps['select'] & {
-    variant: 'group'
-    multiple?: false
-  }
-}
-
-const useRadioGroupStyles = makeStyles({
+const useCheckboxGroupStyles = makeStyles({
   root: {
     marginBlockStart: '.5rem',
     marginBlockEnd: '1rem',
   },
-  radioGroup: {
+  checkboxGroup: {
     marginBlockStart: '.25rem',
   },
   label: {
@@ -33,34 +27,63 @@ const useRadioGroupStyles = makeStyles({
   },
 })
 
-export const RadioGroup = ({
+export interface CheckboxProps extends Omit<MultipleSelectProps, 'select'> {
+  select: MultipleSelectProps['select'] & {
+    variant: 'group'
+    multiple: true
+  }
+}
+
+export const CheckboxGroup = ({
   select: {
     label,
     disambiguatingLabel,
     description,
     descriptionVariant,
     actionId,
-    initialValue,
+    initialValues,
     options,
   },
-}: SingleSelectProps) => {
-  const radioGroupStyles = useRadioGroupStyles()
+}: MultipleSelectProps) => {
+  const checkboxGroupStyles = useCheckboxGroupStyles()
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')
+
+  const [values, setValues] = useState<Set<string>>(new Set(initialValues))
+
+  const onChange: FluentCheckboxProps['onChange'] = useCallback(
+    (
+      { target: { value } }: ChangeEvent<HTMLInputElement>,
+      { checked }: CheckboxOnChangeData
+    ) => {
+      if (checked) {
+        values.add(value)
+        setValues(new Set(values))
+      } else {
+        values.delete(value)
+        setValues(new Set(values))
+      }
+    },
+    []
+  )
+
   return (
     <div
       role="none"
       className={cx(
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        radioGroupStyles.root
+        checkboxGroupStyles.root
       )}
     >
       <Label
         id={labelId}
-        className={cx(radioGroupStyles.label, textBlockStyles.inputMetaSpacing)}
+        className={cx(
+          checkboxGroupStyles.label,
+          textBlockStyles.inputMetaSpacing
+        )}
       >
         <InlineContent inlines={label} />
       </Label>
@@ -72,9 +95,9 @@ export const RadioGroup = ({
           contextualVariant="inputMeta"
         />
       )}
-      <FluentRadioGroup
-        defaultValue={initialValue}
-        className={radioGroupStyles.radioGroup}
+      <div
+        role="group"
+        className={checkboxGroupStyles.checkboxGroup}
         {...(disambiguatingLabel
           ? { 'aria-label': disambiguatingLabel }
           : { 'aria-labelledby': labelId })}
@@ -84,10 +107,12 @@ export const RadioGroup = ({
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
             <>
-              <Radio
+              <Checkbox
                 key={value}
                 {...{
                   value,
+                  checked: values.has(value),
+                  onChange,
                   label: <InlineContent inlines={label} />,
                   ...(description && {
                     'aria-describedby': optionDescriptionId,
@@ -105,26 +130,29 @@ export const RadioGroup = ({
             </>
           )
         })}
-      </FluentRadioGroup>
+      </div>
     </div>
   )
 }
 
-export type RadioGroupElement = ReactElement<RadioGroupProps, typeof RadioGroup>
-export type RadioGroupPropsOrElement = RadioGroupProps | RadioGroupElement
+export type CheckboxGroupElement = ReactElement<
+  CheckboxProps,
+  typeof CheckboxGroup
+>
+export type CheckboxGroupPropsOrElement = CheckboxProps | CheckboxGroupElement
 
-function isRadioGroupProps(o: any): o is RadioGroupProps {
-  return 'select' in o && o.select.variant === 'group' && !o.select.multiple
+function isCheckboxGroupProps(o: any): o is CheckboxProps {
+  return 'select' in o && o.select.variant === 'group' && o.select.multiple
 }
 
-function isRadioGroupElement(o: any): o is RadioGroupElement {
-  return o?.type === RadioGroup
+function isCheckboxGroupElement(o: any): o is CheckboxGroupElement {
+  return o?.type === CheckboxGroup
 }
 
-export function renderIfRadioGroup(o: any) {
-  return isRadioGroupProps(o) ? (
-    <RadioGroup {...o} />
-  ) : isRadioGroupElement(o) ? (
+export function renderIfCheckboxGroup(o: any) {
+  return isCheckboxGroupProps(o) ? (
+    <CheckboxGroup {...o} />
+  ) : isCheckboxGroupElement(o) ? (
     o
   ) : null
 }

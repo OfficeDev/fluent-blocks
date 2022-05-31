@@ -31,6 +31,16 @@ export interface MultipleSelectInnerProps
   ]
 }
 
-export interface SelectProps extends Omit<NaturalSelectProps, 'select'> {
+interface SelectOuterProps extends Omit<NaturalSelectProps, 'select'> {}
+
+export interface SelectProps extends SelectOuterProps {
   select: SingleSelectInnerProps | MultipleSelectInnerProps
+}
+
+export interface SingleSelectProps extends SelectOuterProps {
+  select: SingleSelectInnerProps
+}
+
+export interface MultipleSelectProps extends SelectOuterProps {
+  select: MultipleSelectInnerProps
 }

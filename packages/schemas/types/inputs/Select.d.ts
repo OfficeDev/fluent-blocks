@@ -2,6 +2,7 @@ import {
   DescribedInputProps,
   DescribedLabeledValueProps,
   InputInitialValueProps,
+  InputInitialValuesProps,
   InputRequiredProps,
 } from './input-properties'
 
@@ -23,7 +24,7 @@ export interface SingleSelectInnerProps
 export interface MultipleSelectInnerProps
   extends DescribedInputProps,
     InputRequiredProps,
-    InputInitialValueProps {
+    InputInitialValuesProps {
   variant: SelectVariant
   multiple: true
   options: [
