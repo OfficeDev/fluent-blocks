@@ -1,6 +1,5 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
+import { value expect } from '@playwright/test'
 
 describe('Chart', function () {
   describe('interactions', function () {
@@ -11,19 +10,17 @@ describe('Chart', function () {
       })
 
       it('renders the legend to the page', async function () {
-        expect(
-          await this.page.locator('#root button[aria-label="cc90"]').count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('#root button[aria-label="cc90"]')
+        ).toHaveCount(1)
       })
 
       it('renders the chart to the page', async function () {
-        expect(
-          await this.page
-            .locator(
-              '#root canvas[aria-label="cd324e65-8fed-4c66-a846-e13aeb52f977"]'
-            )
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator(
+            '#root canvas[aria-label="cd324e65-8fed-4c66-a846-e13aeb52f977"]'
+          )
+        ).toHaveCount(1)
       })
     })
   })

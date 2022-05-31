@@ -1,5 +1,5 @@
 /* eslint func-names: 0 */
-import expect from 'expect'
+import { value expect } from '@playwright/test'
 
 describe('Table', function () {
   describe('interactions', function () {
@@ -10,13 +10,11 @@ describe('Table', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator(
-              '#root [role="grid"] [role="row"][aria-labelledby="rh__a326a593-e247-4601-8f83-839cec59bfda"] >> text=1cb6d758-e3f0-4e10-8579-dbd348e680fd'
-            )
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator(
+            '#root [role="grid"] [role="row"][aria-labelledby="rh__a326a593-e247-4601-8f83-839cec59bfda"] >> text=1cb6d758-e3f0-4e10-8579-dbd348e680fd'
+          )
+        ).toHaveCount(1)
       })
     })
   })

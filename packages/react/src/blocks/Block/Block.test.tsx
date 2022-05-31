@@ -1,9 +1,10 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
-import renderer from 'react-test-renderer'
-import { Block } from './Block'
 import get from 'lodash/get'
+import renderer from 'react-test-renderer'
+
+import { value expect } from '@playwright/test'
+
+import { value Block } from './Block'
 
 describe('Block', function () {
   describe('unit tests', function () {
@@ -60,11 +61,9 @@ describe('Block', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=2fe399c7-c5bc-443e-8116-42ee17e4acd3')
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=2fe399c7-c5bc-443e-8116-42ee17e4acd3')
+        ).toHaveCount(1)
       })
     })
   })
