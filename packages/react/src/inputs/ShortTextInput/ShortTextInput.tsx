@@ -103,6 +103,7 @@ export const ShortTextInput = ({
 
   return (
     <div
+      role="none"
       className={cx(
         shortTextInputStyles.root,
         contextualVariant === 'toolbar-item' &&

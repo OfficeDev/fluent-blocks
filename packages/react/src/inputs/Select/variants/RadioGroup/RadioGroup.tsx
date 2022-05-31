@@ -8,10 +8,10 @@ import {
   makeStyles,
 } from '@fluentui/react-components'
 
-import { Paragraph } from '../../blocks'
-import { InlineContent } from '../../inlines'
-import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
-import { SelectProps } from '../../props/select'
+import { Paragraph } from '../../../../blocks'
+import { InlineContent } from '../../../../inlines'
+import { makeId, useCommonStyles, useTextBlockStyles } from '../../../../lib'
+import { SelectProps } from '../../../../props/select'
 
 const useRadioGroupStyles = makeStyles({
   root: {
@@ -44,6 +44,7 @@ export const RadioGroup = ({
   const descriptionId = makeId(actionId, 'description')
   return (
     <div
+      role="none"
       className={cx(
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
