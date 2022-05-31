@@ -27,7 +27,7 @@ export const ListTemplate = (props) => (
   <List {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
-export const cities = range(4).map(() => fake('{{address.city}}'))
+export const cities = seed(1234) || range(4).map(() => fake('{{address.city}}'))
 
 # List
 
