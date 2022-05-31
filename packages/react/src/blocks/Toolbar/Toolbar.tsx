@@ -237,7 +237,7 @@ export const Toolbar = ({
               textInput: {
                 actionId: toolbar.find,
                 inputType: 'search',
-                labelVisuallyHidden: true,
+                labelVariant: 'visuallyHidden',
                 label: translations['list__find'],
                 placeholder: translations['list__find'],
                 after: { icon: 'document_search' },
