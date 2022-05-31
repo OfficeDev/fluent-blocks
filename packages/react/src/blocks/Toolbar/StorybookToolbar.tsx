@@ -1,8 +1,8 @@
 import set from 'lodash/set'
 
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, ThemeName } from '../../lib'
 import { ActionHandler, ActionPayload } from '../../props'
-import { Main } from '../../surfaces'
+import { View } from '../../views'
 import { ToolbarProps } from './Toolbar'
 
 export const Toolbar = ({
@@ -20,12 +20,16 @@ export const Toolbar = ({
   buttonSize: 'small' | 'medium' | 'large'
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider
-    {...{ themeName, accentScheme, onAction, iconSpriteUrl }}
-  >
-    <Main
-      title={[{ text: ' ' }]}
-      blocks={[{ ...set(props, 'toolbar.buttonSize', buttonSize) }]}
-    />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      onAction,
+      iconSpriteUrl,
+      main: {
+        title: ' ',
+        blocks: [{ ...set(props, 'toolbar.buttonSize', buttonSize) }],
+      },
+    }}
+  />
 )

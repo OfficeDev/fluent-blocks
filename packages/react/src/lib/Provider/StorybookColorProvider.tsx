@@ -5,11 +5,9 @@ import {
 import { Palette } from '@fluent-blocks/schemas'
 
 import { Escape, defaultContext } from '..'
-import { Main } from '../../surfaces'
-import fakeTitle from '../fakeTitle'
+import { View } from '../..'
 import iconSpriteUrl from '../storybookIconSpriteUrl'
 import { defaultPaletteConfig, getFullLCHPalette } from '../theme'
-import { FluentBlocksProvider } from './FluentBlocksProvider'
 
 interface StorybookProviderProps
   extends Pick<Palette, 'lightCp' | 'darkCp' | 'hueTorsion'> {
@@ -28,15 +26,14 @@ export const StorybookColorProvider = ({
     getFullLCHPalette({ keyColor, darkCp, lightCp, hueTorsion })
   )
   return (
-    <FluentBlocksProvider
+    <View
       {...defaultContext}
       accentScheme={{ keyColor, lightCp, darkCp, hueTorsion }}
       themeName={themeName}
       iconSpriteUrl={iconSpriteUrl}
-    >
-      <Main
-        title="Color demonstration"
-        blocks={[
+      main={{
+        title: 'Color demonstration',
+        blocks: [
           {
             inputs: [
               {
@@ -83,8 +80,8 @@ export const StorybookColorProvider = ({
               }}
             />
           </Escape>,
-        ]}
-      />
-    </FluentBlocksProvider>
+        ],
+      }}
+    />
   )
 }

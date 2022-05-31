@@ -1,7 +1,7 @@
 import { ButtonActionPayload } from '../../inputs'
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, ThemeName } from '../../lib'
 import { WithActionHandler } from '../../props'
-import { Main } from '../../surfaces'
+import { View } from '../../views'
 import { BigMessageProps } from './BigMessage'
 
 export const BigMessage = ({
@@ -15,14 +15,18 @@ export const BigMessage = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 } & WithActionHandler<ButtonActionPayload>) => (
-  <FluentBlocksProvider
-    {...{ themeName, accentScheme, onAction, iconSpriteUrl }}
-  >
-    <Main
-      blocks={[
-        { message: { ...props, variant: 'big', viewportHeight: false } },
-      ]}
-      title={[{ text: ' ' }]}
-    />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      onAction,
+      iconSpriteUrl,
+      main: {
+        blocks: [
+          { message: { ...props, variant: 'big', viewportHeight: false } },
+        ],
+        title: ' ',
+      },
+    }}
+  />
 )

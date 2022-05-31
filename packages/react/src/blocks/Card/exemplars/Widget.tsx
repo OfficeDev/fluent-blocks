@@ -15,7 +15,7 @@ export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
   > & {
     title: InlineSequenceOrString
     abstract?: InlineSequenceOrString
-    footerAction?: Omit<ButtonProps, 'type' | 'variant' | 'iconOnly'>
+    footerAction?: Omit<ButtonProps['button'], 'variant' | 'iconOnly'>
     tabs: TabsProps['tabs']
   }
   contextualVariant?: CardProps['contextualVariant']
@@ -35,7 +35,13 @@ export const widgetCard = ({
       ...(abstract ? [{ paragraph: abstract }] : []),
       ...(tabs ? (tabs.length > 1 ? [{ tabs, label }] : tabs[0].panel) : []),
       ...(footerAction
-        ? [{ inputs: [{ ...footerAction, ...widgetFooterActionProps }] }]
+        ? [
+            {
+              inputs: [
+                { button: { ...footerAction, ...widgetFooterActionProps } },
+              ],
+            },
+          ]
         : []),
     ],
   },

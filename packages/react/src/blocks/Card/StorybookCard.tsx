@@ -1,8 +1,8 @@
 import range from 'lodash/range'
 
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, ThemeName } from '../../lib'
 import { CardProps } from '../../props'
-import { Main } from '../../surfaces'
+import { View } from '../../views'
 
 export const BlockCard = ({
   themeName,
@@ -14,9 +14,14 @@ export const BlockCard = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main blocks={[props]} title={[{ text: ' ' }]} />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: { blocks: [props], title: ' ' },
+    }}
+  />
 )
 
 export const LayoutCard = ({
@@ -29,17 +34,22 @@ export const LayoutCard = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main
-      blocks={[
-        {
-          layout: {
-            variant: 'grid',
-            items: range(3).map((i) => ({ item: { ...props } })),
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        blocks: [
+          {
+            layout: {
+              variant: 'grid',
+              items: range(3).map((i) => ({ item: { ...props } })),
+            },
           },
-        },
-      ]}
-      title={[{ text: ' ' }]}
-    />
-  </FluentBlocksProvider>
+        ],
+        title: ' ',
+      },
+    }}
+  ></View>
 )

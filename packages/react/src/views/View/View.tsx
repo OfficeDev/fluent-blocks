@@ -113,7 +113,7 @@ export const View = ({
               viewStyles['mainScrollContext--topGap']
           )}
         >
-          <Main {...main} />
+          <Main {...main} contextualVariant="view" />
         </div>
         {sidebar && <SidebarScrim contextualViewState={contextualViewState} />}
         {topbar ? (
