@@ -27,7 +27,7 @@ export const SidebarTemplate = (props) => (
   <View {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
-export const mainArgs = {
+export const mainArgs = seed(1234) || {
   title: [{ text: fakeTitle(fake) }],
   abstract: [{ text: fake('{{lorem.paragraph}}') }],
   sections: range(4).map((s) => ({
