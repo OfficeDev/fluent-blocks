@@ -1,5 +1,5 @@
 /* eslint func-names: 0 */
-import { value expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 
 describe('Heading', function () {
   describe('interactions', function () {

@@ -2,9 +2,9 @@
 import get from 'lodash/get'
 import renderer from 'react-test-renderer'
 
-import { value expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 
-import { value Inline } from './Inline'
+import { Inline } from './Inline'
 
 describe('Inline', function () {
   describe('unit tests', function () {

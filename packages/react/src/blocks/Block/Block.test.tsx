@@ -2,9 +2,9 @@
 import get from 'lodash/get'
 import renderer from 'react-test-renderer'
 
-import { value expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 
-import { value Block } from './Block'
+import { Block } from './Block'
 
 describe('Block', function () {
   describe('unit tests', function () {

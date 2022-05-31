@@ -2,14 +2,14 @@
 import get from 'lodash/get'
 import renderer from 'react-test-renderer'
 
-import { value expect } from '@playwright/test'
+import { expect } from '@playwright/test'
 
 import {
-  value Icon as ExpectedIcon,
-  value Text as ExpectedText,
+  Icon as ExpectedIcon,
+  Text as ExpectedText,
 } from '../../inlines'
-import { value Escape } from '../../lib'
-import { value Section } from './Section'
+import { Escape } from '../../lib'
+import { Section } from './Section'
 
 const Text = ({ text }: { text: string }) => <span>{text}</span>
 
