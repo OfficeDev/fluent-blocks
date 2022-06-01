@@ -15,7 +15,9 @@ import {
 import { Paragraph } from '../../blocks'
 import { Inline, InlineContent } from '../../inlines'
 import {
+  deleteInputValue,
   makeId,
+  putInputValue,
   rem,
   sx,
   useCommonStyles,
@@ -86,6 +88,12 @@ export const ShortTextInput = ({
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   useEffect(() => {
+    putInputValue(actionId, initialValue || '')
+    return () => deleteInputValue(actionId)
+  }, [initialValue])
+
+  useEffect(() => {
+    putInputValue(actionId, debouncedValue)
     if (didMount.current) {
       const payload = {
         actionId,
