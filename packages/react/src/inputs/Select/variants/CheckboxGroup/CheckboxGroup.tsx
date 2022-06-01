@@ -25,7 +25,7 @@ import {
   useCommonStyles,
   useTextBlockStyles,
 } from '../../../../lib'
-import { MultipleSelectProps } from '../../../../props/select'
+import { MultipleSelectProps } from '../../../../props'
 
 const useCheckboxGroupStyles = makeStyles({
   root: {

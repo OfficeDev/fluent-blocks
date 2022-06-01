@@ -24,7 +24,7 @@ import {
   useCommonStyles,
   useTextBlockStyles,
 } from '../../../../lib'
-import { SingleSelectProps } from '../../../../props/select'
+import { SingleSelectProps } from '../../../../props'
 
 export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
   select: SingleSelectProps['select'] & {
