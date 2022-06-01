@@ -21,7 +21,7 @@ export const getInputValue = (actionId: string) => {
 export const getInputValues = (actionIds: string[]) =>
   actionIds.reduce(
     (acc: Record<string, string | string[] | null>, actionId) => {
-      acc[actionId] = getInputValue(actionId)
+      acc[actionId] = getInputValue(sessionKey(actionId))
       return acc
     },
     {}

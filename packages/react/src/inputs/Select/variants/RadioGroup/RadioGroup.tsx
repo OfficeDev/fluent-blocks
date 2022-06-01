@@ -1,16 +1,29 @@
-import { ReactElement } from 'react'
+import {
+  FormEvent,
+  Fragment,
+  ReactElement,
+  useCallback,
+  useEffect,
+} from 'react'
 
 import {
   RadioGroup as FluentRadioGroup,
   Label,
   Radio,
+  RadioGroupOnChangeData,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
 
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
-import { makeId, useCommonStyles, useTextBlockStyles } from '../../../../lib'
+import {
+  deleteInputValue,
+  makeId,
+  putInputValue,
+  useCommonStyles,
+  useTextBlockStyles,
+} from '../../../../lib'
 import { SingleSelectProps } from '../../../../props/select'
 
 export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
@@ -49,6 +62,18 @@ export const RadioGroup = ({
   const textBlockStyles = useTextBlockStyles()
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')
+
+  useEffect(() => {
+    putInputValue(actionId, initialValue || '')
+    return () => deleteInputValue(actionId)
+  }, [initialValue])
+
+  const putRadioValue = useCallback(
+    (_e: FormEvent<HTMLDivElement>, { value }: RadioGroupOnChangeData) =>
+      putInputValue(actionId, value),
+    [actionId]
+  )
+
   return (
     <div
       role="none"
@@ -75,6 +100,7 @@ export const RadioGroup = ({
       <FluentRadioGroup
         defaultValue={initialValue}
         className={radioGroupStyles.radioGroup}
+        onChange={putRadioValue}
         {...(disambiguatingLabel
           ? { 'aria-label': disambiguatingLabel }
           : { 'aria-labelledby': labelId })}
@@ -83,9 +109,8 @@ export const RadioGroup = ({
         {options.map(({ value, label, description, descriptionVariant }) => {
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
-            <>
+            <Fragment key={value}>
               <Radio
-                key={value}
                 {...{
                   value,
                   label: <InlineContent inlines={label} />,
@@ -102,7 +127,7 @@ export const RadioGroup = ({
                   visuallyHidden={descriptionVariant === 'visuallyHidden'}
                 />
               )}
-            </>
+            </Fragment>
           )
         })}
       </FluentRadioGroup>

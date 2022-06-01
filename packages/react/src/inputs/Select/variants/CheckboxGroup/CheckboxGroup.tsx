@@ -1,4 +1,11 @@
-import { ChangeEvent, ReactElement, useCallback, useState } from 'react'
+import {
+  ChangeEvent,
+  Fragment,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 import {
   Checkbox,
@@ -11,7 +18,13 @@ import {
 
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
-import { makeId, useCommonStyles, useTextBlockStyles } from '../../../../lib'
+import {
+  deleteInputValue,
+  makeId,
+  putInputValue,
+  useCommonStyles,
+  useTextBlockStyles,
+} from '../../../../lib'
 import { MultipleSelectProps } from '../../../../props/select'
 
 const useCheckboxGroupStyles = makeStyles({
@@ -53,6 +66,11 @@ export const CheckboxGroup = ({
 
   const [values, setValues] = useState<Set<string>>(new Set(initialValues))
 
+  useEffect(() => {
+    putInputValue(actionId, initialValues || [])
+    return () => deleteInputValue(actionId)
+  }, [initialValues])
+
   const onChange: FluentCheckboxProps['onChange'] = useCallback(
     (
       { target: { value } }: ChangeEvent<HTMLInputElement>,
@@ -60,11 +78,12 @@ export const CheckboxGroup = ({
     ) => {
       if (checked) {
         values.add(value)
-        setValues(new Set(values))
       } else {
         values.delete(value)
-        setValues(new Set(values))
       }
+      const nextValues = Array.from(values)
+      putInputValue(actionId, nextValues)
+      setValues(new Set(nextValues))
     },
     []
   )
@@ -106,9 +125,8 @@ export const CheckboxGroup = ({
         {options.map(({ value, label, description, descriptionVariant }) => {
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
-            <>
+            <Fragment key={value}>
               <Checkbox
-                key={value}
                 {...{
                   value,
                   checked: values.has(value),
@@ -127,7 +145,7 @@ export const CheckboxGroup = ({
                   visuallyHidden={descriptionVariant === 'visuallyHidden'}
                 />
               )}
-            </>
+            </Fragment>
           )
         })}
       </div>
