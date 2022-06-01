@@ -1,5 +1,5 @@
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-import { Main } from '../../surfaces'
+import { AccentScheme, ThemeName } from '../../lib'
+import { View } from '../../views'
 import { DescriptionListProps } from './DescriptionList'
 
 export const DescriptionList = ({
@@ -12,22 +12,27 @@ export const DescriptionList = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main
-      blocks={[
-        {
-          card: {
-            title: '',
-            titleVisuallyHidden: true,
-            body: [
-              {
-                ...props,
-              },
-            ],
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        blocks: [
+          {
+            card: {
+              title: '',
+              titleVisuallyHidden: true,
+              body: [
+                {
+                  ...props,
+                },
+              ],
+            },
           },
-        },
-      ]}
-      title={[{ text: ' ' }]}
-    />
-  </FluentBlocksProvider>
+        ],
+        title: ' ',
+      },
+    }}
+  />
 )

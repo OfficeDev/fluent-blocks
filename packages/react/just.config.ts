@@ -15,10 +15,12 @@ task(
   "build:tsc",
   parallel(
     tscTask({
+      project: 'tsconfig.build.json',
       module: "CommonJS",
       outDir: "cjs"
     }),
     tscTask({
+      project: 'tsconfig.build.json',
       module: "ES2020",
       declarationDir: 'types',
       disableSizeLimit: true,

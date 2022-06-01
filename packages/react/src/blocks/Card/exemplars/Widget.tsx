@@ -1,9 +1,6 @@
 import { ReactElement } from 'react'
 
-import {
-  HeadingLevel,
-  WidgetProps as NaturalWidgetProps,
-} from '@fluent-blocks/schemas'
+import { WidgetProps as NaturalWidgetProps } from '@fluent-blocks/schemas'
 
 import { InlineSequenceOrString } from '../../../inlines'
 import { ButtonProps } from '../../../inputs'
@@ -18,14 +15,13 @@ export interface WidgetProps extends Omit<NaturalWidgetProps, 'widget'> {
   > & {
     title: InlineSequenceOrString
     abstract?: InlineSequenceOrString
-    footerAction?: Omit<ButtonProps, 'type' | 'variant' | 'iconOnly'>
+    footerAction?: Omit<ButtonProps['button'], 'variant' | 'iconOnly'>
     tabs: TabsProps['tabs']
   }
   contextualVariant?: CardProps['contextualVariant']
 }
 
 const widgetFooterActionProps = {
-  type: 'action' as 'action',
   variant: 'transparent' as 'transparent',
 }
 
@@ -39,7 +35,13 @@ export const widgetCard = ({
       ...(abstract ? [{ paragraph: abstract }] : []),
       ...(tabs ? (tabs.length > 1 ? [{ tabs, label }] : tabs[0].panel) : []),
       ...(footerAction
-        ? [{ inputs: [{ ...footerAction, ...widgetFooterActionProps }] }]
+        ? [
+            {
+              inputs: [
+                { button: { ...footerAction, ...widgetFooterActionProps } },
+              ],
+            },
+          ]
         : []),
     ],
   },

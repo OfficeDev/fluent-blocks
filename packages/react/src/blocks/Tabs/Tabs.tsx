@@ -38,13 +38,8 @@ import { TablePropsOrElement, renderIfTable } from '../Table/Table'
 
 export interface TabProps
   extends Omit<
-    ButtonProps,
-    | 'type'
-    | 'actionId'
-    | 'variant'
-    | 'iconVariant'
-    | 'onAction'
-    | 'contextualVariant'
+    ButtonProps['button'],
+    'actionId' | 'variant' | 'iconVariant' | 'onAction'
   > {}
 
 export type TabPanelItemEntity =

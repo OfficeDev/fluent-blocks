@@ -1,5 +1,5 @@
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-import { Main } from '../../surfaces'
+import { AccentScheme, ThemeName } from '../../lib'
+import { View } from '../../views'
 import { TabsProps } from './Tabs'
 
 export const Tabs = ({
@@ -12,12 +12,17 @@ export const Tabs = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main
-      title={[{ text: ' ' }]}
-      blocks={[
-        { card: { title: '', titleVisuallyHidden: true, body: [props] } },
-      ]}
-    />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        title: ' ',
+        blocks: [
+          { card: { title: '', titleVisuallyHidden: true, body: [props] } },
+        ],
+      },
+    }}
+  />
 )

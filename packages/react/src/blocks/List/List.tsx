@@ -16,7 +16,6 @@ import {
   ListColumnProps,
   MenuActionSequence,
   SortProps,
-  TableAction,
   TableProps,
 } from '../../props'
 import { Table } from '../Table/Table'
@@ -64,8 +63,7 @@ const Pagination = ({
   return (
     <div className={listStyles.pagination}>
       <Button
-        {...{
-          type: 'action',
+        button={{
           label: translations['pagination--prev'],
           actionId: 'pagination--prev',
           icon: 'chevron_left',
@@ -77,8 +75,7 @@ const Pagination = ({
       />
       <span tabIndex={0}>{`${page + 1} / ${nPages}`}</span>
       <Button
-        {...{
-          type: 'action',
+        button={{
           label: translations['pagination--next'],
           actionId: 'pagination--next',
           icon: 'chevron_right',
@@ -96,7 +93,7 @@ function alphabeticalSort(a: string, b: string): number {
   return a.localeCompare(b)
 }
 
-function getCellText(cell: CellProps | TableAction[] | undefined): string {
+function getCellText(cell: CellProps | string[] | undefined): string {
   return !cell || isArray(cell) ? '' : getInlineText(cell.cell)
 }
 
@@ -189,17 +186,16 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
         <Toolbar
           toolbar={{
             menu: [
-              ...(list.listActions || []),
+              ...(list.listActions || []).map((action) => ({ action })),
               ...Object.keys(rowActions || []).map((actionId) => ({
-                actionId,
-                ...rowActions![actionId],
-                ...(commonActions.has(actionId)
-                  ? {
-                      payload: { rows: Array.from(selection) },
-                    }
-                  : {
-                      hidden: true,
-                    }),
+                action: {
+                  actionId,
+                  ...rowActions![actionId],
+                  payload: { rows: Array.from(selection) },
+                },
+                ...(!commonActions.has(actionId) && {
+                  hidden: true,
+                }),
               })),
             ],
             iconSize: list.iconSize,

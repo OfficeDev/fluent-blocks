@@ -1,6 +1,6 @@
+import { AccentScheme, ThemeName } from '../../lib'
+import { View } from '../../views'
 import { ChartProps } from './Chart'
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-import { Main } from '../../surfaces'
 
 export const Chart = ({
   themeName,
@@ -12,7 +12,15 @@ export const Chart = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main blocks={[{ media: props, variant: 'textWidth' }]} title={[' ']} />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        blocks: [{ media: props, variant: 'textWidth' }],
+        title: ' ',
+      },
+    }}
+  />
 )

@@ -52,34 +52,32 @@ const OverflowItem = (
     ? () => {
         const payload = {
           type: 'activate' as 'activate',
-          actionId: item.actionId,
-          ...item.payload,
+          actionId: item.action.actionId,
+          ...item.action.payload,
         }
-        item.onAction && item.onAction(payload)
+        item.action.onAction && item.action.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)
       }
     : noop
-
-  switch (item.type) {
-    case 'action':
-      return item.hidden ? null : (
-        <MenuItem
-          {...(item.icon && {
-            icon: (
-              <Icon
-                icon={item.icon}
-                size={item.iconSize || defaultIconSize}
-                variant="outline"
-              />
-            ),
-          })}
-          onClick={onItemActivate}
-        >
-          {item.label}
-        </MenuItem>
-      )
-    default:
-      return null
+  if ('action' in item) {
+    return item.hidden ? null : (
+      <MenuItem
+        {...(item.action.icon && {
+          icon: (
+            <Icon
+              icon={item.action.icon}
+              size={item.action.iconSize || defaultIconSize}
+              variant="outline"
+            />
+          ),
+        })}
+        onClick={onItemActivate}
+      >
+        {item.action.label}
+      </MenuItem>
+    )
+  } else {
+    return null
   }
 }
 

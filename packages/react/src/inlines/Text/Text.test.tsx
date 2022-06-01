@@ -1,6 +1,5 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
+import { expect } from '@playwright/test'
 
 describe('Text', function () {
   describe('interactions', function () {
@@ -10,11 +9,9 @@ describe('Text', function () {
     })
 
     it('renders to the page', async function () {
-      expect(
-        await this.page
-          .locator('text=4270bec2-4a76-4e13-899e-70115e1bf49e')
-          .count()
-      ).toEqual(1)
+      await expect(
+        this.page.locator('text=4270bec2-4a76-4e13-899e-70115e1bf49e')
+      ).toHaveCount(1)
     })
   })
 })

@@ -2,10 +2,16 @@ import get from 'lodash/get'
 import { ReactElement } from 'react'
 
 import basicIcons from '@fluent-blocks/basic-icons'
-import { IconProps, IconSize, IconVariant } from '@fluent-blocks/schemas'
+import {
+  IconSize,
+  IconVariant,
+  IconProps as NaturalIconProps,
+} from '@fluent-blocks/schemas'
 import { makeStyles } from '@fluentui/react-components'
 
 import { useFluentBlocksContext } from '../../lib'
+
+export type IconProps = NaturalIconProps
 
 function spriteHref(
   icon: string,

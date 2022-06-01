@@ -110,7 +110,9 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
             contextualId={id}
           />
         </div>
-        {card.actions && <Overflow overflow={card.actions} />}
+        {card.actions && (
+          <Overflow overflow={card.actions.map((action) => ({ action }))} />
+        )}
       </div>
       <div
         role="none"

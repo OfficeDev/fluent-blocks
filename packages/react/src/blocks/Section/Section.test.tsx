@@ -1,11 +1,15 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
-import renderer from 'react-test-renderer'
 import get from 'lodash/get'
-import { Section } from './Section'
-import { Text as ExpectedText, Icon as ExpectedIcon } from '../../inlines'
+import renderer from 'react-test-renderer'
+
+import { expect } from '@playwright/test'
+
+import {
+  Icon as ExpectedIcon,
+  Text as ExpectedText,
+} from '../../inlines'
 import { Escape } from '../../lib'
+import { Section } from './Section'
 
 const Text = ({ text }: { text: string }) => <span>{text}</span>
 
@@ -107,16 +111,12 @@ describe('Section', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=451e7cfb-23ce-408a-8d5a-75970be8c530')
-            .count()
-        ).toEqual(1)
-        expect(
-          await this.page
-            .locator('text=aca0c8ba-b43c-4e9f-b554-960ac12b4633')
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=451e7cfb-23ce-408a-8d5a-75970be8c530')
+        ).toHaveCount(1)
+        await expect(
+          this.page.locator('text=aca0c8ba-b43c-4e9f-b554-960ac12b4633')
+        ).toHaveCount(1)
       })
     })
 
@@ -126,16 +126,12 @@ describe('Section', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=fc1aece1-c6e0-4285-a37b-58382132fd6f')
-            .count()
-        ).toEqual(1)
-        expect(
-          await this.page
-            .locator('text=fa3ac1fc-1976-459e-9a6e-1b69315cd7be')
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=fc1aece1-c6e0-4285-a37b-58382132fd6f')
+        ).toHaveCount(1)
+        await expect(
+          this.page.locator('text=fa3ac1fc-1976-459e-9a6e-1b69315cd7be')
+        ).toHaveCount(1)
       })
     })
 
@@ -145,11 +141,9 @@ describe('Section', function () {
       })
 
       it('renders escaped content to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=8e86641e-3efc-472c-bcb1-a7d74c1080fc')
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=8e86641e-3efc-472c-bcb1-a7d74c1080fc')
+        ).toHaveCount(1)
       })
     })
   })

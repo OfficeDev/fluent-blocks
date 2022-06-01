@@ -62,6 +62,7 @@ const useToolbarStyles = makeStyles({
     flexBasis: rem(48),
   },
   find: {
+    order: 3,
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'flex-end',
@@ -95,23 +96,23 @@ const useToolbarStyles = makeStyles({
 const ToolbarItemInFlow = (
   item: MenuItemEntity & Partial<ToolbarItemContextualOptions>
 ) => {
-  switch (item.type) {
-    case 'action':
-      return Button({
-        ...item,
-        variant: item.variant || 'transparent',
+  if ('action' in item) {
+    return Button({
+      button: {
+        ...item.action,
+        variant: item.action.variant || 'transparent',
         size: item.buttonSize || defaultButtonSize,
         iconSize: item.iconSize || defaultIconSize,
-        contextualVariant: item.layoutNeedsUpdate
-          ? 'toolbar-item--needs-update'
-          : item.hidden
-          ? 'toolbar-item--hidden'
-          : 'toolbar-item',
-        type: 'action',
-        contextualRole: 'menuitem',
-      })
-    default:
-      return null
+      },
+      contextualVariant: item.layoutNeedsUpdate
+        ? 'toolbar-item--needs-update'
+        : item.hidden
+        ? 'toolbar-item--hidden'
+        : 'toolbar-item',
+      contextualRole: 'menuitem',
+    })
+  } else {
+    return null
   }
 }
 
@@ -143,7 +144,7 @@ export const Toolbar = ({
           !$child.hasAttribute('data-layout') &&
           $child.offsetTop === baseOffset
         ) {
-          const actionId = $child.getAttribute('id')?.split('__')[1]
+          const actionId = $child.getAttribute('id')
           if (actionId) {
             nextActionsInFlow.push(actionId)
           }
@@ -167,7 +168,9 @@ export const Toolbar = ({
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
     : toolbar.menu.map((item) => ({
-        hidden: item.hidden || actionsInFlow.has(get(item, 'actionId', false)),
+        hidden:
+          item.hidden ||
+          actionsInFlow.has(get(item, ['action', 'actionId'], false)),
       }))
 
   const hideOverflowTrigger = menuItemHiddenFlags
@@ -198,7 +201,8 @@ export const Toolbar = ({
           ? undefined
           : toolbar.menu.map((item) => ({
               hidden:
-                item.hidden || !actionsInFlow.has(get(item, 'actionId', false)),
+                item.hidden ||
+                !actionsInFlow.has(get(item, ['action', 'actionId'], false)),
             }))
       )}
       <div
@@ -230,17 +234,18 @@ export const Toolbar = ({
         >
           <ShortTextInput
             {...{
-              actionId: toolbar.find,
-              type: 'text',
-              inputType: 'search',
-              labelVisuallyHidden: true,
-              label: translations['list__find'],
-              placeholder: translations['list__find'],
-              after: { icon: 'document_search' },
+              textInput: {
+                actionId: toolbar.find,
+                inputType: 'search',
+                labelVariant: 'visuallyHidden',
+                label: translations['list__find'],
+                placeholder: translations['list__find'],
+                after: { icon: 'document_search' },
+                ...(contextualFindProps?.onAction && {
+                  onAction: (payload) => contextualFindProps.onAction(payload),
+                }),
+              },
               contextualVariant: 'toolbar-item',
-              ...(contextualFindProps?.onAction && {
-                onAction: (payload) => contextualFindProps.onAction(payload),
-              }),
             }}
           />
         </div>

@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "latest",
     "@fluentui/react-components": "9.0.0-rc.12",
+    "@playwright/test": "latest",
     "@storybook/addon-actions": "^6.5.5",
     "@storybook/addon-essentials": "^6.5.5",
     "@storybook/addon-links": "^6.5.5",
@@ -62,7 +63,6 @@
     "chart.js": "^2.9.4",
     "chromatic": "latest",
     "csstype": "^2.6.20",
-    "expect": "latest",
     "faker": "github:thure/faker.js#v5.1.2",
     "http-proxy-middleware": "latest",
     "just-scripts": "latest",

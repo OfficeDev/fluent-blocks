@@ -3,8 +3,16 @@ import { ActionPayload } from '../lib/actions'
 
 export interface InputProps {
   label: InlineSequenceOrString
+  disambiguatingLabel?: string
   actionId: string
 }
+
+interface DescriptionProps {
+  description?: InlineSequenceOrString
+  descriptionVariant?: 'block' | 'visuallyHidden'
+}
+
+export interface DescribedInputProps extends InputProps, DescriptionProps {}
 
 export interface InputRequiredProps {
   required?: boolean
@@ -14,13 +22,17 @@ export interface InputInitialValueProps {
   initialValue?: string
 }
 
-export interface TextInputProps
-  extends InputProps,
+export interface InputInitialValuesProps {
+  initialValues?: string[]
+}
+
+export interface TextInputInnerProps
+  extends DescribedInputProps,
     InputRequiredProps,
     InputInitialValueProps {
-  type: 'text'
   placeholder?: string
-  labelVisuallyHidden?: boolean
+  labelVariant?: 'block' | 'visuallyHidden'
+  autocomplete?: string
 }
 
 export interface SingleValueInputActionPayload extends ActionPayload {
@@ -37,3 +49,7 @@ export interface LabeledValueProps {
   value: string
   label: InlineSequenceOrString
 }
+
+export interface DescribedLabeledValueProps
+  extends LabeledValueProps,
+    DescriptionProps {}

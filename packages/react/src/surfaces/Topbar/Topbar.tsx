@@ -78,7 +78,9 @@ export const Topbar = ({ near, far, contextualViewState }: TopbarProps) => {
         )}
       >
         {hasSidebarInvoker && (
-          <Button {...sidebarInvokerAction} variant="subtle" />
+          <Button
+            button={{ ...sidebarInvokerAction.button, variant: 'subtle' }}
+          />
         )}
         <div
           role="none"

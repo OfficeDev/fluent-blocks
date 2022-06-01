@@ -12,13 +12,16 @@ import {
   makeStyles,
 } from '@fluentui/react-components'
 
+import { Paragraph } from '../../blocks'
 import { Inline, InlineContent } from '../../inlines'
 import {
+  makeId,
   rem,
   sx,
   useCommonStyles,
   useDebounce,
   useFluentBlocksContext,
+  useTextBlockStyles,
 } from '../../lib'
 import {
   ShortInputContextualProps,
@@ -26,10 +29,14 @@ import {
   WithInputElements,
 } from '../../props'
 
+export interface ShortTextInputInnerProps
+  extends WithInputElements<NaturalShortTextInputProps['textInput']>,
+    WithActionHandler<SingleValueInputActionPayload> {}
+
 export interface ShortTextInputProps
-  extends WithInputElements<NaturalShortTextInputProps>,
-    WithActionHandler<SingleValueInputActionPayload>,
+  extends Omit<NaturalShortTextInputProps, 'textInput'>,
     ShortInputContextualProps {
+  textInput: ShortTextInputInnerProps
   contextualElevationVariant?: 'surface' | 'elevated'
 }
 
@@ -42,29 +49,37 @@ const useShortTextInputStyles = makeStyles({
     ...sx.flex(0, 1, rem(240)),
   },
   label: {
-    color: 'var(--surface-foreground)',
+    display: 'block',
   },
   input: {
+    marginBlockStart: rem(4),
     width: '100%',
     '& .fuib-Icon': { fontSize: '1rem' },
   },
 })
 
 export const ShortTextInput = ({
-  label,
-  actionId,
-  placeholder,
-  inputType,
-  before,
-  after,
-  initialValue,
-  labelVisuallyHidden,
-  onAction,
+  textInput: {
+    label,
+    disambiguatingLabel,
+    labelVariant = 'block',
+    description,
+    descriptionVariant = 'block',
+    actionId,
+    placeholder,
+    inputType,
+    before,
+    after,
+    autocomplete,
+    initialValue,
+    onAction,
+  },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
   const commonStyles = useCommonStyles()
+  const textBlockStyles = useTextBlockStyles()
   const [value, setValue] = useState(initialValue || '')
   const debouncedValue = useDebounce(value, 400)
   const didMount = useRef(false)
@@ -83,8 +98,12 @@ export const ShortTextInput = ({
     }
   }, [debouncedValue])
 
+  const labelId = makeId(actionId, 'label')
+  const descriptionId = makeId(actionId, 'description')
+
   return (
     <div
+      role="none"
       className={cx(
         shortTextInputStyles.root,
         contextualVariant === 'toolbar-item' &&
@@ -92,14 +111,23 @@ export const ShortTextInput = ({
       )}
     >
       <Label
-        htmlFor={actionId}
+        id={labelId}
         className={cx(
           shortTextInputStyles.label,
-          labelVisuallyHidden && commonStyles.visuallyHidden
+          textBlockStyles.inputMetaSpacing,
+          labelVariant === 'visuallyHidden' && commonStyles.visuallyHidden
         )}
       >
         <InlineContent inlines={label} />
       </Label>
+      {description && (
+        <Paragraph
+          paragraph={description}
+          contextualId={descriptionId}
+          visuallyHidden={descriptionVariant === 'visuallyHidden'}
+          contextualVariant="inputMeta"
+        />
+      )}
       <Input
         {...{
           id: actionId,
@@ -110,6 +138,11 @@ export const ShortTextInput = ({
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
           className: shortTextInputStyles.input,
+          ...(autocomplete && { autocomplete }),
+          ...(disambiguatingLabel
+            ? { 'aria-label': disambiguatingLabel }
+            : { 'aria-labelledby': labelId }),
+          ...(description && { 'aria-describedby': descriptionId }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'
@@ -130,11 +163,13 @@ export type ShortTextInputPropsOrElement =
   | ShortTextInputElement
 
 function isShortTextInputProps(o: any): o is ShortTextInputProps {
-  return 'type' in o && o.type === 'text' && !('multiline' in o && o.multiline)
+  return (
+    'textInput' in o && !('multiline' in o.textInput && o.textInput.multiline)
+  )
 }
 
 function isShortTextInputElement(o: any): o is ShortTextInputElement {
-  return o?.type === ShortTextInput && isShortTextInputProps(o?.props)
+  return o?.type === ShortTextInput
 }
 
 export function renderIfShortTextInput(o: any) {

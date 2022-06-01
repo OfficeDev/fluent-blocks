@@ -1,5 +1,5 @@
-import { TextInputProps } from './input-properties'
 import { InlineEntity } from '../inlines'
+import { TextInputInnerProps } from './input-properties'
 
 export type ShortTextInputType =
   | 'text'
@@ -15,9 +15,13 @@ export type ShortTextInputType =
   | 'week'
   | 'datetime-local'
 
-export interface ShortTextInputProps extends TextInputProps {
+export interface ShortTextInputInnerProps extends TextInputInnerProps {
   inputType: ShortTextInputType
   before?: InlineEntity
   after?: InlineEntity
   multiline?: false
+}
+
+export interface ShortTextInputProps {
+  textInput: ShortTextInputInnerProps
 }

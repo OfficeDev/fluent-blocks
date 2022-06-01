@@ -1,24 +1,24 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import { BigMessageProps as NaturalBigMessageProps } from '@fluent-blocks/schemas'
 
-import {
-  renderIfEscape,
-  rem,
-  sx,
-  EscapeElement,
-  isEscapeElement,
-} from '../../lib'
-import { MediaEntity } from '../../media'
+import { BigMessageProps as NaturalBigMessageProps } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+
 import { InlineSequenceOrString } from '../../inlines'
 import { ButtonProps } from '../../inputs'
-
+import {
+  EscapeElement,
+  isEscapeElement,
+  rem,
+  renderIfEscape,
+  sx,
+} from '../../lib'
+import { MediaEntity } from '../../media'
 import { Figure } from '../Figure/Figure'
 import { Heading } from '../Heading/Heading'
 import { Paragraph } from '../Paragraph/Paragraph'
-import { ShortInputs, ShortInputSequence } from '../ShortInputs/ShortInputs'
+import { ShortInputSequence, ShortInputs } from '../ShortInputs/ShortInputs'
 
-type BigMessageActionProps = Omit<ButtonProps, 'variant' | 'type'>
+type BigMessageActionProps = Omit<ButtonProps['button'], 'variant' | 'type'>
 
 type ActionsBlockProps = {
   primary?: BigMessageActionProps | EscapeElement
@@ -62,23 +62,25 @@ function ActionsBlock({ primary, secondary, tertiary }: ActionsBlockProps) {
     isEscapeElement(primary)
       ? inputs.push(primary)
       : inputs.push({
-          type: 'action',
-          variant: 'primary',
-          ...(primary as BigMessageActionProps),
+          button: {
+            variant: 'primary',
+            ...(primary as BigMessageActionProps),
+          },
         })
   }
   if (secondary) {
     isEscapeElement(secondary)
       ? inputs.push(secondary)
-      : inputs.push({ type: 'action', ...(secondary as BigMessageActionProps) })
+      : inputs.push({ button: secondary as BigMessageActionProps })
   }
   if (tertiary) {
     isEscapeElement(tertiary)
       ? inputs.push(tertiary)
       : inputs.push({
-          type: 'action',
-          variant: 'subtle',
-          ...(tertiary as BigMessageActionProps),
+          button: {
+            variant: 'subtle',
+            ...(tertiary as BigMessageActionProps),
+          },
         })
   }
   return <ShortInputs variant="narrow-block" inputs={inputs} />

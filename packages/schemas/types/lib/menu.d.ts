@@ -1,15 +1,17 @@
 import { ButtonProps } from '../inputs'
 
-export type MenuAction = Omit<ButtonProps, 'size' | 'iconSize'> & {
+export type MenuAction = {
+  action: Omit<ButtonProps['button'], 'size' | 'iconSize'> & {}
   hidden?: boolean
 }
 
-export type MenuActionSequence = MenuAction[]
+export type MenuActionSequence = MenuAction['action'][]
 
 export type MenuDivider = {
-  type: 'divider'
+  divider: {
+    variant?: 'line'
+  }
   hidden?: boolean
-  variant?: 'line'
 }
 
 export type MenuItemEntity = MenuAction | MenuDivider

@@ -17,10 +17,8 @@ import { ShortInputContextualProps, WithActionHandler } from '../../props'
 
 export type ButtonActionPayload = NaturalButtonActionPayload
 
-export interface ButtonProps
-  extends NaturalButtonProps,
-    WithActionHandler<ButtonActionPayload>,
-    ShortInputContextualProps {
+export interface ButtonProps extends ShortInputContextualProps {
+  button: NaturalButtonProps['button'] & WithActionHandler<ButtonActionPayload>
   contextualRole?: 'button' | 'menuitem'
 }
 
@@ -48,23 +46,34 @@ const useButtonStyles = makeStyles({
     textAlign: 'start',
     justifyContent: 'flex-start',
   },
+  wrapContents: {
+    display: 'block',
+    height: 'auto',
+    whiteSpace: 'normal',
+    paddingBlockStart: rem(4),
+    paddingBlockEnd: rem(4),
+    paddingBottom: rem(4),
+  },
 })
 
 export const Button = ({
-  label,
-  iconOnly,
-  icon,
-  iconPosition,
-  variant,
-  size,
-  iconSize,
-  iconVariant,
-  actionId,
-  onAction,
-  selected,
-  controls,
-  disabled,
-  payload,
+  button: {
+    label,
+    disambiguatingLabel,
+    iconOnly,
+    icon,
+    iconPosition,
+    variant,
+    size,
+    iconSize,
+    iconVariant,
+    actionId,
+    onAction,
+    disabled,
+    payload,
+    selected,
+    controls,
+  },
   contextualVariant = 'block-inputs',
   contextualRole = 'button',
 }: ButtonProps) => {
@@ -89,51 +98,60 @@ export const Button = ({
   const derivedIconSize =
     iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
 
-  const button = (
+  const buttonElement = (
     <FluentButton
-      role={contextualRole}
-      aria-label={label}
-      appearance={variant}
-      disabled={disabled}
-      size={derivedSize}
-      className={cx(
-        buttonStyles.root,
-        (contextualVariant === 'narrow-inputs' ||
-          contextualVariant === 'sidebar') &&
-          buttonStyles.fill,
-        contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
-        contextualVariant.startsWith('toolbar-item') &&
-          buttonStyles.toolbarItemInFlow,
-        contextualVariant === 'toolbar-item--needs-update' &&
-          buttonStyles.toolbarItemNeedsUpdate,
-        contextualVariant === 'toolbar-item--hidden' &&
-          buttonStyles.toolbarItemHidden
-      )}
-      {...{ iconOnly, iconPosition }}
-      {...(icon && {
-        icon: (
-          <Icon
-            icon={icon}
-            size={derivedIconSize}
-            variant={iconVariant || 'outline'}
-          />
+      {...{
+        role: contextualRole,
+        appearance: variant,
+        disabled,
+        size: derivedSize,
+        className: cx(
+          buttonStyles.root,
+          (contextualVariant === 'narrow-inputs' ||
+            contextualVariant === 'sidebar') &&
+            buttonStyles.fill,
+          contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
+          contextualVariant === 'sidebar' && buttonStyles.wrapContents,
+          contextualVariant.startsWith('toolbar-item') &&
+            buttonStyles.toolbarItemInFlow,
+          contextualVariant === 'toolbar-item--needs-update' &&
+            buttonStyles.toolbarItemNeedsUpdate,
+          contextualVariant === 'toolbar-item--hidden' &&
+            buttonStyles.toolbarItemHidden
         ),
-      })}
-      onClick={onButtonActivate}
-      id={`${contextualVariant}__${actionId}`}
-      {...(selected && { 'aria-selected': selected })}
-      {...(controls && { 'aria-controls': controls })}
+        iconOnly,
+        iconPosition,
+        onClick: onButtonActivate,
+        id: actionId,
+        ...(icon && {
+          icon: (
+            <Icon
+              icon={icon}
+              size={derivedIconSize}
+              variant={iconVariant || 'outline'}
+            />
+          ),
+        }),
+        ...(!iconOnly &&
+          disambiguatingLabel && { 'aria-label': disambiguatingLabel }),
+        ...(selected && { 'aria-selected': selected }),
+        ...(controls && { 'aria-controls': controls }),
+      }}
     >
       {iconOnly ? null : label}
     </FluentButton>
   )
 
   return iconOnly ? (
-    <Tooltip content={label} relationship="label" withArrow>
-      {button}
+    <Tooltip
+      content={disambiguatingLabel || label}
+      relationship="label"
+      withArrow
+    >
+      {buttonElement}
     </Tooltip>
   ) : (
-    button
+    buttonElement
   )
 }
 
@@ -141,7 +159,7 @@ export type ButtonElement = ReactElement<ButtonProps, typeof Button>
 export type ButtonPropsOrElement = ButtonProps | ButtonElement
 
 function isButtonProps(o: any): o is ButtonProps {
-  return o && 'type' in o && o.type === 'action'
+  return 'button' in o
 }
 
 function isButtonElement(o: any): o is ButtonElement {

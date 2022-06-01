@@ -1,6 +1,5 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
+import { expect } from '@playwright/test'
 
 describe('Short inputs', function () {
   describe('interactions', function () {
@@ -10,13 +9,11 @@ describe('Short inputs', function () {
         await this.goto(this.storybookUrl('tests-sis--short-inputs-json-test'))
       })
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator(
-              '#root button >> text=37db439e-ea0f-44b6-8fbe-61138ad48601'
-            )
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator(
+            '#root button >> text=37db439e-ea0f-44b6-8fbe-61138ad48601'
+          )
+        ).toHaveCount(1)
       })
     })
   })

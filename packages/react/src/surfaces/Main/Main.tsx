@@ -6,7 +6,9 @@ import { rem, useCommonStyles } from '../../lib'
 
 export interface MainProps
   extends Pick<NaturalMainProps, 'variant'>,
-    SectionContentProps {}
+    SectionContentProps {
+  contextualVariant?: 'standalone' | 'view'
+}
 
 const useMainSectionStyles = makeStyles({
   root: {
@@ -18,12 +20,14 @@ const useMainSectionStyles = makeStyles({
     paddingBlockEnd: rem(44),
     paddingInlineStart: '1rem',
     paddingInlineEnd: '1rem',
-    overflowX: 'hidden',
-    overflowY: 'hidden',
   },
   'root--flush': {
     paddingInlineStart: 0,
     paddingInlineEnd: 0,
+  },
+  'root--view': {
+    overflowX: 'hidden',
+    overflowY: 'hidden',
   },
 })
 
@@ -38,7 +42,8 @@ export const Main = (props: MainProps) => {
       className={cx(
         commonStyles.baseSurface,
         mainStyles.root,
-        props.variant === 'flush' && mainStyles['root--flush']
+        props.variant === 'flush' && mainStyles['root--flush'],
+        props.contextualVariant === 'view' && mainStyles['root--view']
       )}
     />
   )

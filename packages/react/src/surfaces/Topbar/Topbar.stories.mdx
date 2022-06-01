@@ -27,7 +27,7 @@ export const TopbarTemplate = (props) => (
   <View {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
-export const mainArgs = {
+export const mainArgs = seed(1234) || {
   title: [{ text: fakeTitle(fake) }],
   abstract: [{ text: fake('{{lorem.paragraph}}') }],
   sections: range(4).map((s) => ({
@@ -46,33 +46,37 @@ export const topbarArgs = {
   near: {
     menu: [
       {
-        type: 'action',
-        actionId: 'add',
-        label: 'Add',
-        icon: 'add',
+        action: {
+          actionId: 'add',
+          label: 'Add',
+          icon: 'add',
+        },
       },
       {
-        type: 'action',
-        actionId: 'delete',
-        label: 'Delete',
-        icon: 'delete',
+        action: {
+          actionId: 'delete',
+          label: 'Delete',
+          icon: 'delete',
+        },
       },
     ],
   },
   far: {
     menu: [
       {
-        type: 'action',
-        actionId: 'publish',
-        label: 'Publish',
-        variant: 'primary',
-        icon: 'send',
+        action: {
+          actionId: 'publish',
+          label: 'Publish',
+          variant: 'primary',
+          icon: 'send',
+        },
       },
       {
-        type: 'action',
-        actionId: 'preview',
-        label: 'Preview',
-        icon: 'eye',
+        action: {
+          actionId: 'preview',
+          label: 'Preview',
+          icon: 'eye',
+        },
       },
     ],
   },
@@ -118,9 +122,10 @@ will also add notifications to the far side of the Topbar.
           actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
           menu: range(6).map((s) => ({
-            type: 'action',
-            actionId: `sidebar-action__${i}-${s}`,
-            label: fakeTitle(fake),
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
           })),
         })),
       },

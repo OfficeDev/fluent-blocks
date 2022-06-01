@@ -27,7 +27,7 @@ export const SidebarTemplate = (props) => (
   <View {...props} iconSpriteUrl={iconSpriteUrl} />
 )
 
-export const mainArgs = {
+export const mainArgs = seed(1234) || {
   title: [{ text: fakeTitle(fake) }],
   abstract: [{ text: fake('{{lorem.paragraph}}') }],
   sections: range(4).map((s) => ({
@@ -65,9 +65,10 @@ narrow to display the Sidebar next to the Main content.
           actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
           menu: range(6).map((s) => ({
-            type: 'action',
-            actionId: `sidebar-action__${i}-${s}`,
-            label: fakeTitle(fake),
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
           })),
         })),
       },

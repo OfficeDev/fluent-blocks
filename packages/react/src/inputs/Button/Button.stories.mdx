@@ -1,0 +1,43 @@
+import { seed } from 'faker/locale/en_US'
+
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { FluentBlocksProvider, contextArgTypes } from '../../lib'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { Button } from './Button'
+
+<Meta
+  title="Inputs/Button"
+  component={Button}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+/>
+
+export const ButtonTemplate = ({ themeName, accentScheme, ...props }) => (
+  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
+    <Button {...props} />
+  </FluentBlocksProvider>
+)
+
+# Button
+
+<Canvas withSource="none">
+  <Story
+    name="Button"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      button: {
+        actionId: 'tools',
+        label: 'Tools',
+        iconOnly: false,
+        icon: 'wrench',
+      },
+    }}
+  >
+    {seed(1234) || ButtonTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Button" />

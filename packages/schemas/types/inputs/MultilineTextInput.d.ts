@@ -1,5 +1,9 @@
-import { TextInputProps } from './input-properties'
+import { TextInputInnerProps } from './input-properties'
 
-export interface MultilineTextInputProps extends TextInputProps {
+export interface MultilineTextInputInnerProps extends TextInputInnerProps {
   multiline: true
+}
+
+export interface MultilineTextInputProps {
+  textInput: MultilineTextInputInnerProps
 }
