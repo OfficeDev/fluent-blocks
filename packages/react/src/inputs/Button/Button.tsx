@@ -54,6 +54,17 @@ const useButtonStyles = makeStyles({
     paddingBlockEnd: rem(4),
     paddingBottom: rem(4),
   },
+  shrink: {
+    flexShrink: 1,
+  },
+  'label--shrink': {
+    display: 'block',
+    flexShrink: 1,
+    minWidth: 0,
+    overflowX: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
 })
 
 export const Button = ({
@@ -98,6 +109,9 @@ export const Button = ({
   const derivedIconSize =
     iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
 
+  const shrink = contextualVariant === 'nav'
+  const wrap = contextualVariant === 'sidebar'
+
   const buttonElement = (
     <FluentButton
       {...{
@@ -107,11 +121,10 @@ export const Button = ({
         size: derivedSize,
         className: cx(
           buttonStyles.root,
-          (contextualVariant === 'narrow-inputs' ||
-            contextualVariant === 'sidebar') &&
-            buttonStyles.fill,
-          contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
-          contextualVariant === 'sidebar' && buttonStyles.wrapContents,
+          (contextualVariant === 'narrow-inputs' || wrap) && buttonStyles.fill,
+          wrap && buttonStyles.alignInlineStart,
+          wrap && buttonStyles.wrapContents,
+          shrink && buttonStyles.shrink,
           contextualVariant.startsWith('toolbar-item') &&
             buttonStyles.toolbarItemInFlow,
           contextualVariant === 'toolbar-item--needs-update' &&
@@ -138,7 +151,11 @@ export const Button = ({
         ...(controls && { 'aria-controls': controls }),
       }}
     >
-      {iconOnly ? null : label}
+      {iconOnly ? null : shrink ? (
+        <span className={buttonStyles['label--shrink']}>{label}</span>
+      ) : (
+        label
+      )}
     </FluentButton>
   )
 

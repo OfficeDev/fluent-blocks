@@ -15,8 +15,8 @@ import {
 } from '@fluentui/react-components'
 
 import { Heading } from '../../blocks'
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
-import { Button, ButtonProps } from '../../inputs'
+import { Icon, InlineContent, InlineSequenceOrString } from '../../inlines'
+import { Button, ButtonProps, Overflow } from '../../inputs'
 import {
   key,
   rem,
@@ -24,12 +24,13 @@ import {
   useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
+import { sidebarWidth, topbarHeight } from '../../lib/surfaceDimensions'
 import {
   ContextualViewStateProps,
+  MenuActionSequence,
   MenuItemSequence,
   SidebarState,
 } from '../../props'
-import { sidebarWidth } from './sidebarWidth'
 
 export interface SidebarItemProps
   extends Omit<NaturalSidebarItemProps, 'label' | 'menu'> {
@@ -38,8 +39,9 @@ export interface SidebarItemProps
 }
 
 export interface SidebarProps
-  extends Omit<NaturalSidebarProps, 'title' | 'items'>,
+  extends Omit<NaturalSidebarProps, 'title' | 'items' | 'cornerActions'>,
     ContextualViewStateProps {
+  cornerActions?: MenuActionSequence
   title: InlineSequenceOrString
   items: SidebarItemProps[]
 }
@@ -69,10 +71,6 @@ const useSidebarStyles = makeStyles({
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '100%',
-    paddingBlockStart: rem(16),
-    paddingBlockEnd: rem(16),
-    paddingInlineStart: rem(16),
-    paddingInlineEnd: rem(15),
     borderInlineEndWidth: '1px',
     borderInlineEndStyle: 'solid',
     borderInlineEndColor: 'transparent',
@@ -81,12 +79,31 @@ const useSidebarStyles = makeStyles({
     borderInlineEndColor: 'var(--colorNeutralForeground1)',
   },
   paddedContent: {
+    paddingBlockStart: rem(16),
+    paddingBlockEnd: rem(16),
+    paddingInlineStart: rem(16),
+    paddingInlineEnd: rem(15),
+  },
+  paddedContentInner: {
     marginInlineEnd: rem(-16),
     marginInlineStart: rem(-16),
+  },
+  cornerActions: {
+    height: rem(topbarHeight - 15),
+    paddingBlockStart: rem(8),
+    paddingBlockEnd: rem(7),
+    paddingInlineStart: rem(4),
+    paddingInlineEnd: rem(8),
+    borderBlockEndWidth: '1px',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: 'var(--colorNeutralStroke1)',
+    display: 'flex',
+    alignItems: 'center',
   },
 })
 
 export const Sidebar = ({
+  cornerActions,
   title,
   items,
   defaultOpenItems,
@@ -94,7 +111,7 @@ export const Sidebar = ({
 }: SidebarProps) => {
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
-  const { themeName } = useFluentBlocksContext()
+  const { themeName, translations } = useFluentBlocksContext()
   const labelId = key(title)
   return (
     <nav
@@ -117,43 +134,109 @@ export const Sidebar = ({
           themeName === 'highContrast' && sidebarStyles['inner--hc']
         )}
       >
-        <Heading
-          paragraph={title}
-          level={1}
-          contextualVariant="card"
-          contextualId={labelId}
-        />
-        <Accordion
-          multiple
-          className={sidebarStyles.paddedContent}
-          defaultOpenItems={
-            defaultOpenItems || items.map(({ actionId }) => actionId)
-          }
-        >
-          {items.map(({ actionId, label, menu }) => (
-            <AccordionItem key={actionId} value={actionId}>
-              <AccordionHeader as="h2">
-                <InlineContent inlines={label} />
-              </AccordionHeader>
-              <AccordionPanel role="group">
-                {menu.map((menuItem) => {
-                  if ('action' in menuItem) {
-                    return (
-                      <Button
-                        key={menuItem.action.actionId}
-                        button={{
-                          ...menuItem.action,
-                          variant: 'subtle',
-                        }}
-                        contextualVariant="sidebar"
-                      />
-                    )
+        {cornerActions && cornerActions.length && (
+          <div role="none" className={cx(sidebarStyles.cornerActions)}>
+            {cornerActions.length < 2 ? (
+              <Button
+                button={{
+                  ...cornerActions[0],
+                  icon:
+                    translations.dir === 'ltr' ? 'arrow_left' : 'arrow_right',
+                  variant: 'subtle',
+                }}
+                contextualVariant="nav"
+              />
+            ) : cornerActions.length < 3 ? (
+              <>
+                <Button
+                  button={{
+                    ...cornerActions[0],
+                    iconOnly: true,
+                    variant: 'subtle',
+                  }}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
                   }
-                })}
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-        </Accordion>
+                />
+                <Button
+                  button={{
+                    ...cornerActions[1],
+                    icon: undefined,
+                    variant: 'subtle',
+                  }}
+                  contextualVariant="nav"
+                />
+              </>
+            ) : (
+              <>
+                <Overflow
+                  triggerIcon="list"
+                  overflow={cornerActions
+                    .slice(0, cornerActions.length - 1)
+                    .map((action) => ({ action }))}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
+                  }
+                />
+                <Button
+                  button={{
+                    ...cornerActions.slice(-1)[0],
+                    icon: undefined,
+                    variant: 'subtle',
+                  }}
+                  contextualVariant="nav"
+                />
+              </>
+            )}
+          </div>
+        )}
+        <div role="none" className={cx(sidebarStyles.paddedContent)}>
+          <Heading
+            paragraph={title}
+            level={1}
+            contextualVariant="card"
+            contextualId={labelId}
+          />
+          <Accordion
+            multiple
+            className={sidebarStyles.paddedContentInner}
+            defaultOpenItems={
+              defaultOpenItems || items.map(({ actionId }) => actionId)
+            }
+          >
+            {items.map(({ actionId, label, menu }) => (
+              <AccordionItem key={actionId} value={actionId}>
+                <AccordionHeader as="h2">
+                  <InlineContent inlines={label} />
+                </AccordionHeader>
+                <AccordionPanel role="group">
+                  {menu.map((menuItem) => {
+                    if ('action' in menuItem) {
+                      return (
+                        <Button
+                          key={menuItem.action.actionId}
+                          button={{
+                            ...menuItem.action,
+                            variant: 'subtle',
+                          }}
+                          contextualVariant="sidebar"
+                        />
+                      )
+                    }
+                  })}
+                </AccordionPanel>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </nav>
   )

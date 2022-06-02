@@ -39,7 +39,7 @@ function spriteHref(
   }
 }
 
-const iconToTextRatio = 1.25
+const iconToTextRatio = 1
 
 const useIconStyles = makeStyles({
   root: {
@@ -47,6 +47,7 @@ const useIconStyles = makeStyles({
     width: `${iconToTextRatio}em`,
     verticalAlign: 'text-bottom',
     fill: 'currentcolor',
+    flexShrink: 0,
   },
 })
 

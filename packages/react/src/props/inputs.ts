@@ -47,6 +47,7 @@ export type ShortInputContextualVariant =
   | 'toolbar-item--needs-update'
   | 'toolbar-item--hidden'
   | 'sidebar'
+  | 'nav'
 
 export interface ShortInputContextualProps {
   contextualVariant?: ShortInputContextualVariant

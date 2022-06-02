@@ -1,5 +1,5 @@
 import { InlineSequenceOrString } from '../inlines'
-import { MenuItemSequence } from '../lib/menu'
+import { MenuActionSequence, MenuItemSequence } from '../lib/menu'
 
 export interface SidebarItemProps {
   actionId: string
@@ -8,6 +8,7 @@ export interface SidebarItemProps {
 }
 
 export interface SidebarProps {
+  cornerActions?: MenuActionSequence
   title: InlineSequenceOrString
   items: SidebarItemProps[]
   defaultOpenItems?: string[]

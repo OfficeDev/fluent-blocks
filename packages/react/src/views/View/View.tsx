@@ -11,6 +11,7 @@ import {
   useCommonStyles,
   useLayoutResize,
 } from '../../lib'
+import { sidebarWidth, topbarHeight } from '../../lib/surfaceDimensions'
 import { SidebarState, WithActionHandler } from '../../props'
 import {
   Main,
@@ -18,8 +19,6 @@ import {
   SidebarInvoker,
   SidebarScrim,
   Topbar,
-  sidebarWidth,
-  topbarHeight,
 } from '../../surfaces'
 
 export interface ViewProps
