@@ -52,7 +52,9 @@ const useButtonStyles = makeStyles({
     whiteSpace: 'normal',
     paddingBlockStart: rem(4),
     paddingBlockEnd: rem(4),
+    // These are added to override rules applied by @fluentui
     paddingBottom: rem(4),
+    paddingTop: rem(4),
   },
   shrink: {
     flexShrink: 1,
