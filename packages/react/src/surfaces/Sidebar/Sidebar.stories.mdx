@@ -42,46 +42,6 @@ export const mainArgs = seed(1234) || {
   })),
 }
 
-export const topbarArgs = {
-  near: {
-    menu: [
-      {
-        action: {
-          actionId: 'add',
-          label: 'Add',
-          icon: 'add',
-        },
-      },
-      {
-        action: {
-          actionId: 'delete',
-          label: 'Delete',
-          icon: 'delete',
-        },
-      },
-    ],
-  },
-  far: {
-    menu: [
-      {
-        action: {
-          actionId: 'publish',
-          label: 'Publish',
-          variant: 'primary',
-          icon: 'send',
-        },
-      },
-      {
-        action: {
-          actionId: 'preview',
-          label: 'Preview',
-          icon: 'eye',
-        },
-      },
-    ],
-  },
-}
-
 # Sidebar
 
 The Sidebar is unique to a view (so `sidebar` is one of `View`’s props). It
@@ -128,11 +88,10 @@ back/up.
 
 <Canvas withSource="none">
   <Story
-    name="Topbar plus Sidebar, one corner action"
+    name="Sidebar, 1 corner action"
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      topbar: topbarArgs,
       sidebar: {
         cornerActions: [
           {
@@ -164,11 +123,10 @@ back/up.
 
 <Canvas withSource="none">
   <Story
-    name="Topbar plus Sidebar, two corner actions"
+    name="Sidebar, 2 corner actions"
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      topbar: topbarArgs,
       sidebar: {
         cornerActions: [
           {
@@ -205,11 +163,10 @@ back/up.
 
 <Canvas withSource="none">
   <Story
-    name="Topbar plus Sidebar, more than two corner actions"
+    name="Sidebar, 3+ corner actions"
     args={{
       themeName: 'light',
       accentScheme: 'teams',
-      topbar: topbarArgs,
       sidebar: {
         cornerActions: [
           {

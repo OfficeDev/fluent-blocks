@@ -92,7 +92,7 @@ const useSidebarStyles = makeStyles({
     height: rem(topbarHeight - 15),
     paddingBlockStart: rem(8),
     paddingBlockEnd: rem(7),
-    paddingInlineStart: rem(4),
+    paddingInlineStart: rem(8),
     paddingInlineEnd: rem(8),
     borderBlockEndWidth: '1px',
     borderBlockEndStyle: 'solid',

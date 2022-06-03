@@ -111,13 +111,25 @@ will also add notifications to the far side of the Topbar.
 
 <Canvas withSource="none">
   <Story
-    name="Topbar plus Sidebar, no corner actions"
+    name="Topbar plus Sidebar"
     args={{
       themeName: 'light',
       accentScheme: 'teams',
       topbar: topbarArgs,
       sidebar: {
         title: fakeTitle(fake),
+        cornerActions: [
+          {
+            actionId: 'home',
+            label: fakeTitle(fake),
+            icon: 'home',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+        ],
         items: range(3).map((i) => ({
           actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
