@@ -2,6 +2,7 @@ export default {
   dir: 'ltr' as 'ltr',
   locale: 'en-US',
   more: 'More options',
+  'more--nav': 'More navigation options',
   thead: 'Column titles',
   overflow: 'Options',
   selection: 'Selected',

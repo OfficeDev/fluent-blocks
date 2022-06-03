@@ -175,6 +175,7 @@ export const Sidebar = ({
               <>
                 <Overflow
                   triggerIcon="list"
+                  triggerLabel={translations['more--nav']}
                   overflow={cornerActions
                     .slice(0, cornerActions.length - 1)
                     .map((action) => ({ action }))}
