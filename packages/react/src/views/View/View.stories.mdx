@@ -197,6 +197,7 @@ that time `View` will call its interaction callback with the update.
                         '{{name.firstName}} {{name.lastName}}'
                       ),
                       after: { icon: 'person' },
+                      include: ['a2', 'a3'],
                     },
                   },
                   {
@@ -206,6 +207,7 @@ that time `View` will call its interaction callback with the update.
                       inputType: 'email',
                       placeholder: 'username',
                       after: { text: '@live.com' },
+                      include: ['a1', 'a3'],
                     },
                   },
                   {
@@ -215,6 +217,7 @@ that time `View` will call its interaction callback with the update.
                       inputType: 'tel',
                       initialValue: fake('000 x1829'),
                       before: { icon: 'call' },
+                      include: ['a1', 'a2'],
                     },
                   },
                 ],

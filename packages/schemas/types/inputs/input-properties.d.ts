@@ -5,6 +5,8 @@ export interface InputProps {
   label: InlineSequenceOrString
   disambiguatingLabel?: string
   actionId: string
+  include?: string[]
+  metadata?: Record<string, string | string[]>
 }
 
 interface DescriptionProps {

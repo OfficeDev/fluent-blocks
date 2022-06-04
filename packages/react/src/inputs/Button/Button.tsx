@@ -12,7 +12,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Icon } from '../../inlines'
-import { rem, sx, useFluentBlocksContext } from '../../lib'
+import { makePayload, rem, sx, useFluentBlocksContext } from '../../lib'
 import { ShortInputContextualProps, WithActionHandler } from '../../props'
 
 export type ButtonActionPayload = NaturalButtonActionPayload
@@ -71,6 +71,7 @@ export const Button = ({
     onAction,
     disabled,
     metadata,
+    include,
     selected,
     controls,
   },
@@ -80,14 +81,17 @@ export const Button = ({
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   const onButtonActivate = useCallback(() => {
-    const actionPayload = {
-      type: 'activate' as 'activate',
-      actionId,
-      ...metadata,
-    }
+    const actionPayload = makePayload<ButtonActionPayload>(
+      {
+        type: 'activate' as 'activate',
+        actionId,
+      },
+      metadata,
+      include
+    )
     onAction && onAction(actionPayload)
     contextOnAction && contextOnAction(actionPayload)
-  }, [onAction, actionId, metadata])
+  }, [onAction, contextOnAction, actionId, metadata, include])
 
   const buttonStyles = useButtonStyles()
 

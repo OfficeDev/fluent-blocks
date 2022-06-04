@@ -21,7 +21,6 @@ interface ButtonInnerProps extends Omit<InputProps, 'label'> {
   disabled?: boolean
   selected?: boolean
   controls?: string
-  metadata?: Record<string, string | string[]>
 }
 
 export interface ButtonProps {

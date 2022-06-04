@@ -17,6 +17,7 @@ import { Inline, InlineContent } from '../../inlines'
 import {
   deleteInputValue,
   makeId,
+  makePayload,
   putInputValue,
   rem,
   sx,
@@ -75,6 +76,8 @@ export const ShortTextInput = ({
     autocomplete,
     initialValue,
     onAction,
+    metadata,
+    include,
   },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
@@ -95,11 +98,15 @@ export const ShortTextInput = ({
   useEffect(() => {
     putInputValue(actionId, debouncedValue)
     if (didMount.current) {
-      const payload = {
-        actionId,
-        type: 'change' as 'change',
-        value: debouncedValue,
-      }
+      const payload = makePayload(
+        {
+          actionId,
+          type: 'change' as 'change',
+          value: debouncedValue,
+        },
+        metadata,
+        include
+      )
       onAction ? onAction(payload) : contextOnAction(payload)
     } else {
       didMount.current = true

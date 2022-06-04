@@ -13,7 +13,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Icon } from '../../inlines'
-import { Sequence, sx, useFluentBlocksContext } from '../../lib'
+import { Sequence, makePayload, sx, useFluentBlocksContext } from '../../lib'
 import {
   ActionHandler,
   MenuAction,
@@ -50,11 +50,14 @@ const OverflowItem = (
 ) => {
   const onItemActivate = isAction(item)
     ? () => {
-        const payload = {
-          type: 'activate' as 'activate',
-          actionId: item.action.actionId,
-          ...item.action.metadata,
-        }
+        const payload = makePayload(
+          {
+            type: 'activate' as 'activate',
+            actionId: item.action.actionId,
+          },
+          item.action.metadata,
+          item.action.include
+        )
         item.action.onAction && item.action.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)
       }
