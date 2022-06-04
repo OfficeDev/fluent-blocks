@@ -30,7 +30,7 @@ export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
 }
 
 function isAction(o: any): o is MenuAction {
-  return 'actionId' in o
+  return 'action' in o && 'actionId' in o.action
 }
 
 const defaultIconSize = 16
@@ -53,7 +53,7 @@ const OverflowItem = (
         const payload = {
           type: 'activate' as 'activate',
           actionId: item.action.actionId,
-          ...item.action.payload,
+          ...item.action.metadata,
         }
         item.action.onAction && item.action.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)

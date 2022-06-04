@@ -191,7 +191,7 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
                 action: {
                   actionId,
                   ...rowActions![actionId],
-                  payload: { rows: Array.from(selection) },
+                  metadata: { rows: Array.from(selection) },
                 },
                 ...(!commonActions.has(actionId) && {
                   hidden: true,

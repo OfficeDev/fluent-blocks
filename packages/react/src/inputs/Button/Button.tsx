@@ -70,7 +70,7 @@ export const Button = ({
     actionId,
     onAction,
     disabled,
-    payload,
+    metadata,
     selected,
     controls,
   },
@@ -83,11 +83,11 @@ export const Button = ({
     const actionPayload = {
       type: 'activate' as 'activate',
       actionId,
-      ...payload,
+      ...metadata,
     }
     onAction && onAction(actionPayload)
     contextOnAction && contextOnAction(actionPayload)
-  }, [onAction, actionId, payload])
+  }, [onAction, actionId, metadata])
 
   const buttonStyles = useButtonStyles()
 
