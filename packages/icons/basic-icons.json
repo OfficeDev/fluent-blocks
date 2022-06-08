@@ -1,5 +1,5 @@
 {
-  "sizes": [16, 24],
+  "sizes": [20],
   "styles": ["regular", "filled"],
   "include": {
     "accessibility": {},

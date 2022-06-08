@@ -108,8 +108,7 @@ export const Button = ({
     contextualVariant === 'card-inputs' || contextualVariant === 'sidebar'
       ? 'small'
       : size || 'medium'
-  const derivedIconSize =
-    iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
+  const derivedIconSize = iconSize || 20
 
   const shrink = contextualVariant === 'nav'
   const wrap = contextualVariant === 'sidebar'
@@ -151,6 +150,7 @@ export const Button = ({
           disambiguatingLabel && { 'aria-label': disambiguatingLabel }),
         ...(selected && { 'aria-selected': selected }),
         ...(controls && { 'aria-controls': controls }),
+        ...(shrink && { title: disambiguatingLabel || label }),
       }}
     >
       {iconOnly ? null : shrink ? (

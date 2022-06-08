@@ -52,7 +52,7 @@ const useIconStyles = makeStyles({
 })
 
 export const Icon = (props: IconProps) => {
-  const { icon, variant = 'outline', size = 16 } = props
+  const { icon, variant = 'outline', size = 20 } = props
   const iconStyles = useIconStyles()
   const { iconSpriteUrl } = useFluentBlocksContext()
   return (

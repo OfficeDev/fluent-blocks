@@ -15,7 +15,12 @@ import {
 } from '@fluentui/react-components'
 
 import { Heading } from '../../blocks'
-import { Icon, InlineContent, InlineSequenceOrString } from '../../inlines'
+import {
+  Icon,
+  InlineContent,
+  InlineSequenceOrString,
+  getInlineText,
+} from '../../inlines'
 import { Button, ButtonProps, Overflow } from '../../inputs'
 import {
   key,
@@ -174,7 +179,8 @@ export const Sidebar = ({
             ) : (
               <>
                 <Overflow
-                  triggerIcon="list"
+                  triggerIcon="home_more"
+                  iconSize={20}
                   triggerLabel={translations['more--nav']}
                   overflow={cornerActions
                     .slice(0, cornerActions.length - 1)
@@ -189,7 +195,7 @@ export const Sidebar = ({
                 />
                 <Button
                   button={{
-                    ...cornerActions.slice(-1)[0],
+                    ...cornerActions[cornerActions.length - 1],
                     icon: undefined,
                     variant: 'subtle',
                   }}

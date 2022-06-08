@@ -33,7 +33,7 @@ function isAction(o: any): o is MenuAction {
   return 'actionId' in o
 }
 
-const defaultIconSize = 16
+const defaultIconSize = 20
 
 const useOverflowStyles = makeStyles({
   trigger: {
