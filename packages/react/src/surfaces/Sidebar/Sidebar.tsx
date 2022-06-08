@@ -15,12 +15,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Heading } from '../../blocks'
-import {
-  Icon,
-  InlineContent,
-  InlineSequenceOrString,
-  getInlineText,
-} from '../../inlines'
+import { Icon, InlineContent, InlineSequenceOrString } from '../../inlines'
 import { Button, ButtonProps, Overflow } from '../../inputs'
 import {
   key,
