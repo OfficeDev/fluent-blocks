@@ -163,7 +163,7 @@ back/up.
 
 <Canvas withSource="none">
   <Story
-    name="Sidebar, 3+ corner actions"
+    name="Sidebar, 3+ corner actions, initial menu"
     args={{
       themeName: 'light',
       accentScheme: 'teams',
@@ -190,6 +190,57 @@ back/up.
             icon: 'eye',
           },
         ],
+        title: fakeTitle(fake),
+        items: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
+          label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
+          })),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || SidebarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+If you prefer a menu to appear in the middle, with first and last items pinned, you can set Sidebar’s `deepCornerActionsMenuVariant` prop to `'middle'`.
+
+<Canvas withSource="none">
+  <Story
+    name="Sidebar, 3+ corner actions, middle menu"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      sidebar: {
+        cornerActions: [
+          {
+            actionId: 'home',
+            label: fakeTitle(fake),
+            icon: 'home',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+          {
+            actionId: 'backToApp',
+            label: fakeTitle(fake),
+            icon: 'image',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'eye',
+          },
+        ],
+        deepCornerActionsMenuVariant: 'middle',
         title: fakeTitle(fake),
         items: range(3).map((i) => ({
           actionId: `sidebar-item__${i}`,

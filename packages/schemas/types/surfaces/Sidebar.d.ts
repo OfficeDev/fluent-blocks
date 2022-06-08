@@ -8,8 +8,9 @@ export interface SidebarItemProps {
 }
 
 export interface SidebarProps {
-  cornerActions?: MenuActionSequence
   title: InlineSequenceOrString
   items: SidebarItemProps[]
   defaultOpenItems?: string[]
+  cornerActions?: MenuActionSequence
+  deepCornerActionsMenuVariant?: 'initial' | 'middle'
 }

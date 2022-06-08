@@ -103,10 +103,11 @@ const useSidebarStyles = makeStyles({
 })
 
 export const Sidebar = ({
-  cornerActions,
   title,
   items,
   defaultOpenItems,
+  cornerActions,
+  deepCornerActionsMenuVariant = 'initial',
   contextualViewState,
 }: SidebarProps) => {
   const sidebarStyles = useSidebarStyles()
@@ -171,11 +172,48 @@ export const Sidebar = ({
                   contextualVariant="nav"
                 />
               </>
+            ) : deepCornerActionsMenuVariant === 'middle' ? (
+              <>
+                <Button
+                  button={{
+                    ...cornerActions[0],
+                    iconOnly: true,
+                    variant: 'subtle',
+                  }}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
+                  }
+                />
+                <Overflow
+                  triggerLabel={translations['more--nav']}
+                  overflow={cornerActions
+                    .slice(1, cornerActions.length - 1)
+                    .map((action) => ({ action }))}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
+                  }
+                />
+                <Button
+                  button={{
+                    ...cornerActions[cornerActions.length - 1],
+                    icon: undefined,
+                    variant: 'subtle',
+                  }}
+                  contextualVariant="nav"
+                />
+              </>
             ) : (
               <>
                 <Overflow
                   triggerIcon="home_more"
-                  iconSize={20}
                   triggerLabel={translations['more--nav']}
                   overflow={cornerActions
                     .slice(0, cornerActions.length - 1)
