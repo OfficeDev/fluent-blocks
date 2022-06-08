@@ -89,7 +89,7 @@ const useSidebarStyles = makeStyles({
     marginInlineStart: rem(-16),
   },
   cornerActions: {
-    height: rem(topbarHeight - 15),
+    height: rem(topbarHeight - 16),
     paddingBlockStart: rem(8),
     paddingBlockEnd: rem(7),
     paddingInlineStart: rem(8),
@@ -335,7 +335,7 @@ export function useSidebarInvoker(
         sidebarState === SidebarState.Active
           ? translations['sidebar__close']
           : translations['sidebar__open'],
-      icon: sidebarState === SidebarState.Active ? 'dismiss' : 'apps_list',
+      icon: sidebarState === SidebarState.Active ? 'dismiss' : 'navigation',
       iconOnly: true,
       variant: 'outline',
       onAction,
