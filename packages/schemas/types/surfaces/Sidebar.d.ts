@@ -1,16 +1,19 @@
 import { InlineSequenceOrString } from '../inlines'
+import { AccordionProps } from '../lib/accordion'
 import { MenuActionSequence, MenuItemSequence } from '../lib/menu'
 
-export interface SidebarItemProps {
-  actionId: string
-  label: InlineSequenceOrString
-  menu: MenuItemSequence
-}
-
-export interface SidebarProps {
+export interface SidebarCommonProps {
   title: InlineSequenceOrString
-  items: SidebarItemProps[]
-  defaultOpenItems?: string[]
   cornerActions?: MenuActionSequence
   deepCornerActionsMenuVariant?: 'initial' | 'middle'
 }
+
+export interface AccordionSidebarProps
+  extends SidebarCommonProps,
+    AccordionProps {}
+
+export interface FlatSidebarProps extends SidebarCommonProps {
+  menu: MenuItemSequence
+}
+
+export type SidebarProps = AccordionSidebarProps | FlatSidebarProps

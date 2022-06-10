@@ -1,4 +1,4 @@
-import * as alea from 'alea'
+const alea = require('alea')
 
 interface PrngFactory {
   new (seed?: string): () => number

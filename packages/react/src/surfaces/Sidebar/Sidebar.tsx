@@ -1,10 +1,7 @@
 import noop from 'lodash/noop'
 import { Dispatch, SetStateAction, useCallback } from 'react'
 
-import {
-  SidebarItemProps as NaturalSidebarItemProps,
-  SidebarProps as NaturalSidebarProps,
-} from '@fluent-blocks/schemas'
+import { SidebarCommonProps as NaturalSidebarCommonProps } from '@fluent-blocks/schemas'
 import {
   Accordion,
   AccordionHeader,
@@ -31,20 +28,22 @@ import {
   MenuItemSequence,
   SidebarState,
 } from '../../props'
+import { AccordionProps } from '../../props/accordion'
 
-export interface SidebarItemProps
-  extends Omit<NaturalSidebarItemProps, 'label' | 'menu'> {
-  label: InlineSequenceOrString
-  menu: MenuItemSequence
-}
-
-export interface SidebarProps
-  extends Omit<NaturalSidebarProps, 'title' | 'items' | 'cornerActions'>,
+export interface SidebarCommonProps
+  extends Omit<NaturalSidebarCommonProps, 'title' | 'cornerActions'>,
     ContextualViewStateProps {
   cornerActions?: MenuActionSequence
   title: InlineSequenceOrString
-  items: SidebarItemProps[]
 }
+
+export interface AccordionSidebarProps
+  extends SidebarCommonProps,
+    AccordionProps {}
+export interface FlatSidebarProps extends SidebarCommonProps {
+  menu: MenuItemSequence
+}
+export type SidebarProps = AccordionSidebarProps | FlatSidebarProps
 
 const useSidebarStyles = makeStyles({
   root: {
@@ -81,8 +80,8 @@ const useSidebarStyles = makeStyles({
   paddedContent: {
     paddingBlockStart: rem(16),
     paddingBlockEnd: rem(16),
-    paddingInlineStart: rem(16),
-    paddingInlineEnd: rem(15),
+    paddingInlineStart: rem(20),
+    paddingInlineEnd: rem(19),
   },
   paddedContentInner: {
     marginInlineEnd: rem(-16),
@@ -102,14 +101,21 @@ const useSidebarStyles = makeStyles({
   },
 })
 
-export const Sidebar = ({
-  title,
-  items,
-  defaultOpenItems,
-  cornerActions,
-  deepCornerActionsMenuVariant = 'initial',
-  contextualViewState,
-}: SidebarProps) => {
+function isAccordionSidebar(o: any): o is AccordionSidebarProps {
+  return 'accordion' in o
+}
+
+function isFlatSidebar(o: any): o is FlatSidebarProps {
+  return 'menu' in o
+}
+
+export const Sidebar = (props: SidebarProps) => {
+  const {
+    title,
+    cornerActions,
+    deepCornerActionsMenuVariant = 'initial',
+    contextualViewState,
+  } = props
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
   const { themeName, translations } = useFluentBlocksContext()
@@ -245,37 +251,52 @@ export const Sidebar = ({
             contextualVariant="card"
             contextualId={labelId}
           />
-          <Accordion
-            multiple
-            className={sidebarStyles.paddedContentInner}
-            defaultOpenItems={
-              defaultOpenItems || items.map(({ actionId }) => actionId)
-            }
-          >
-            {items.map(({ actionId, label, menu }) => (
-              <AccordionItem key={actionId} value={actionId}>
-                <AccordionHeader as="h2">
-                  <InlineContent inlines={label} />
-                </AccordionHeader>
-                <AccordionPanel role="group">
-                  {menu.map((menuItem) => {
-                    if ('action' in menuItem) {
-                      return (
-                        <Button
-                          key={menuItem.action.actionId}
-                          button={{
-                            ...menuItem.action,
-                            variant: 'subtle',
-                          }}
-                          contextualVariant="sidebar"
-                        />
-                      )
-                    }
-                  })}
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {isAccordionSidebar(props) && (
+            <Accordion
+              multiple
+              className={sidebarStyles.paddedContentInner}
+              defaultOpenItems={
+                props.defaultOpenItems ||
+                props.accordion.map(({ actionId }) => actionId)
+              }
+            >
+              {props.accordion.map(({ actionId, label, menu }) => (
+                <AccordionItem key={actionId} value={actionId}>
+                  <AccordionHeader as="h2">
+                    <InlineContent inlines={label} />
+                  </AccordionHeader>
+                  <AccordionPanel role="group">
+                    {menu.map((menuItem) => {
+                      if ('action' in menuItem) {
+                        return (
+                          <Button
+                            key={menuItem.action.actionId}
+                            button={{
+                              ...menuItem.action,
+                              variant: 'subtle',
+                            }}
+                            contextualVariant="accordionItem"
+                          />
+                        )
+                      }
+                    })}
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          )}
+          {isFlatSidebar(props) && (
+            <div role="none" className={sidebarStyles.paddedContentInner}>
+              {props.menu.map((menuItem) =>
+                'action' in menuItem ? (
+                  <Button
+                    button={menuItem.action}
+                    contextualVariant="sidebar"
+                  />
+                ) : null
+              )}
+            </div>
+          )}
         </div>
       </div>
     </nav>

@@ -122,7 +122,6 @@ const eslintrc = {
     'lodash/import-scope': ['warn', 'method'],
     'arrow-body-style': 'warn',
     // "arrow-parens": ["warn", "as-needed"], // this conflicts with Prettier formatting
-    complexity: ['warn', 25],
     curly: 'warn',
     'constructor-super': 'warn',
     eqeqeq: ['warn', 'smart'],
