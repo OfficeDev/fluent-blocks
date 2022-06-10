@@ -92,6 +92,7 @@ importers:
       '@types/react': 18.x
       '@types/react-dom': 18.x
       '@types/react-test-renderer': latest
+      alea: ^1.0.1
       babel-loader: latest
       chart.js: ^2.9.4
       chromatic: latest
@@ -116,6 +117,7 @@ importers:
       '@fluent-blocks/schemas': link:../schemas
       '@fluentui/react-tabster': 9.0.0-rc.11_zlkrlo2xsersbascmmsr65fm34
       '@react-hook/resize-observer': 1.2.5_react@18.1.0
+      alea: 1.0.1
       lodash: 4.17.21
     devDependencies:
       '@babel/core': 7.18.2
@@ -4979,6 +4981,10 @@ packages:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
     dev: true
+
+  /alea/1.0.1:
+    resolution: {integrity: sha512-QU+wv+ziDXaMxRdsQg/aH7sVfWdhKps5YP97IIwFkHCsbDZA3k87JXoZ5/iuemf4ntytzIWeScrRpae8+lDrXA==}
+    dev: false
 
   /ansi-align/3.0.1:
     resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}

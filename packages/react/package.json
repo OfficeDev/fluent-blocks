@@ -83,6 +83,7 @@
     "@fluent-blocks/schemas": "workspace:9.1.0",
     "@fluentui/react-tabster": "9.0.0-rc.11",
     "@react-hook/resize-observer": "^1.2.5",
+    "alea": "^1.0.1",
     "lodash": "^4.17.21"
   }
 }
