@@ -58,7 +58,11 @@ export const ViewContent = ({
   main,
   sidebar,
   topbar,
-}: Pick<ViewProps, 'main' | 'sidebar' | 'topbar'>) => {
+}: {
+  main: ViewProps['main']
+  sidebar?: ViewProps['sidebar']
+  topbar?: ViewProps['topbar']
+}) => {
   const viewStyles = useViewStyles()
   const commonStyles = useCommonStyles()
 
