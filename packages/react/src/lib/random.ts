@@ -8,6 +8,8 @@ const Alea: PrngFactory = alea as unknown as PrngFactory
 
 const prng = new Alea('fuib')
 
+export const randomNumber = prng
+
 export const randomString = (n = 4) =>
   prng()
     .toString(16)

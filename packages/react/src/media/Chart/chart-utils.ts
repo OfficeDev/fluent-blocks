@@ -3,12 +3,12 @@ import { useMemo } from 'react'
 
 import { Theme } from '@fluentui/react-components'
 
-import { ThemeName } from '../../lib'
+import { ThemeName, randomNumber } from '../../lib'
 import { Pattern, buildPattern } from './chart-patterns'
 import { ChartData, ChartDataset } from './chart-types'
 
 export const random = (min: number, max: number): number =>
-  Math.round(Math.random() * (max - min) + min)
+  Math.round(randomNumber() * (max - min) + min)
 
 // TODO: Localization
 const suffixes = ['K', 'M', 'G', 'T', 'P', 'E']
@@ -38,7 +38,7 @@ export const chartAxisCallback = (value: number | string): string => {
 }
 
 export const useChartId = () =>
-  useMemo(() => Math.random().toString(36).substr(2, 9), [])
+  useMemo(() => randomNumber().toString(36).substr(2, 9), [])
 
 export const hexToRgb = (hex: string) => {
   if (hex.length < 6) {
