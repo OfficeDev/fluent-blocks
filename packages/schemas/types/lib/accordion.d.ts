@@ -5,6 +5,7 @@ export interface AccordionItemProps {
   actionId: string
   label: InlineSequenceOrString
   menu: MenuItemSequence
+  defaultActiveItem?: string
 }
 
 export interface AccordionProps {

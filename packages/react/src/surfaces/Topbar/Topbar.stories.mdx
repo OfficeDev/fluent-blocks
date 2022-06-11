@@ -130,15 +130,13 @@ will also add notifications to the far side of the Topbar.
             icon: 'grid',
           },
         ],
-        items: range(3).map((i) => ({
-          actionId: `sidebar-item__${i}`,
-          label: fakeTitle(fake),
-          menu: range(6).map((s) => ({
-            action: {
-              actionId: `sidebar-action__${i}-${s}`,
-              label: fakeTitle(fake),
-            },
-          })),
+        defaultActiveItem: 'sidebar-action__0',
+        menu: range(6).map((s) => ({
+          action: {
+            actionId: `sidebar-action__${s}`,
+            label: fakeTitle(fake),
+            icon: 'animal_cat',
+          },
         })),
       },
       main: mainArgs,

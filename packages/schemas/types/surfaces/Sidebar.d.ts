@@ -14,6 +14,7 @@ export interface AccordionSidebarProps
 
 export interface FlatSidebarProps extends SidebarCommonProps {
   menu: MenuItemSequence
+  defaultActiveItem?: string
 }
 
 export type SidebarProps = AccordionSidebarProps | FlatSidebarProps

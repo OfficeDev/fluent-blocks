@@ -7,6 +7,8 @@ import {
   AccordionHeader,
   AccordionItem,
   AccordionPanel,
+  Tab,
+  TabList,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
@@ -42,7 +44,9 @@ export interface AccordionSidebarProps
     AccordionProps {}
 export interface FlatSidebarProps extends SidebarCommonProps {
   menu: MenuItemSequence
+  defaultActiveItem?: string
 }
+
 export type SidebarProps = AccordionSidebarProps | FlatSidebarProps
 
 const useSidebarStyles = makeStyles({
@@ -99,6 +103,9 @@ const useSidebarStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  tab: {
+    textAlign: 'start',
+  },
 })
 
 function isAccordionSidebar(o: any): o is AccordionSidebarProps {
@@ -120,6 +127,9 @@ export const Sidebar = (props: SidebarProps) => {
   const commonStyles = useCommonStyles()
   const { themeName, translations } = useFluentBlocksContext()
   const labelId = key(title)
+
+  console.log('[sidebar props]', props)
+
   return (
     <nav
       aria-labelledby={labelId}
@@ -260,42 +270,88 @@ export const Sidebar = (props: SidebarProps) => {
                 props.accordion.map(({ actionId }) => actionId)
               }
             >
-              {props.accordion.map(({ actionId, label, menu }) => (
-                <AccordionItem key={actionId} value={actionId}>
-                  <AccordionHeader as="h2">
-                    <InlineContent inlines={label} />
-                  </AccordionHeader>
-                  <AccordionPanel role="group">
-                    {menu.map((menuItem) => {
-                      if ('action' in menuItem) {
-                        return (
-                          <Button
-                            key={menuItem.action.actionId}
-                            button={{
-                              ...menuItem.action,
-                              variant: 'subtle',
-                            }}
-                            contextualVariant="accordionItem"
-                          />
-                        )
-                      }
-                    })}
-                  </AccordionPanel>
-                </AccordionItem>
-              ))}
+              {props.accordion.map(
+                ({ actionId, label, menu, defaultActiveItem }) => (
+                  <AccordionItem key={actionId} value={actionId}>
+                    <AccordionHeader as="h2">
+                      <InlineContent inlines={label} />
+                    </AccordionHeader>
+                    <AccordionPanel role="none">
+                      <TabList
+                        {...{
+                          vertical: true,
+                          ...(defaultActiveItem && {
+                            defaultSelectedValue: defaultActiveItem,
+                          }),
+                        }}
+                      >
+                        {menu.map((menuItem) => {
+                          if ('action' in menuItem) {
+                            const { action } = menuItem
+                            return (
+                              <Tab
+                                {...{
+                                  key: action.actionId,
+                                  value: action.actionId,
+                                  className: sidebarStyles.tab,
+                                  ...(action.icon && {
+                                    icon: <Icon icon={action.icon} />,
+                                  }),
+                                  ...(action.onAction && {
+                                    onClick: () =>
+                                      action.onAction!({
+                                        actionId: action.actionId,
+                                        type: 'activate',
+                                      }),
+                                  }),
+                                }}
+                              >
+                                {action.label}
+                              </Tab>
+                            )
+                          }
+                        })}
+                      </TabList>
+                    </AccordionPanel>
+                  </AccordionItem>
+                )
+              )}
             </Accordion>
           )}
           {isFlatSidebar(props) && (
-            <div role="none" className={sidebarStyles.paddedContentInner}>
+            <TabList
+              {...{
+                vertical: true,
+                className: sidebarStyles.paddedContentInner,
+                ...(props.defaultActiveItem && {
+                  defaultSelectedValue: props.defaultActiveItem,
+                }),
+              }}
+            >
               {props.menu.map((menuItem) =>
                 'action' in menuItem ? (
-                  <Button
-                    button={menuItem.action}
-                    contextualVariant="sidebar"
-                  />
+                  <Tab
+                    {...{
+                      key: menuItem.action.actionId,
+                      value: menuItem.action.actionId,
+                      className: sidebarStyles.tab,
+                      ...(menuItem.action.icon && {
+                        icon: <Icon icon={menuItem.action.icon} />,
+                      }),
+                      ...(menuItem.action.onAction && {
+                        onClick: () =>
+                          menuItem.action.onAction!({
+                            actionId: menuItem.action.actionId,
+                            type: 'activate',
+                          }),
+                      }),
+                    }}
+                  >
+                    {menuItem.action.label}
+                  </Tab>
                 ) : null
               )}
-            </div>
+            </TabList>
           )}
         </div>
       </div>
