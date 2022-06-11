@@ -105,13 +105,10 @@ export const Button = ({
   const buttonStyles = useButtonStyles()
 
   const derivedSize =
-    contextualVariant === 'card-inputs' || contextualVariant === 'accordionItem'
-      ? 'small'
-      : size || 'medium'
+    contextualVariant === 'card-inputs' ? 'small' : size || 'medium'
   const derivedIconSize = iconSize || 20
 
   const shrink = contextualVariant === 'nav'
-  const wrap = contextualVariant === 'accordionItem'
 
   const buttonElement = (
     <FluentButton
@@ -122,13 +119,7 @@ export const Button = ({
         size: derivedSize,
         className: cx(
           buttonStyles.root,
-          (wrap ||
-            contextualVariant === 'narrow-inputs' ||
-            contextualVariant === 'sidebar') &&
-            buttonStyles.fill,
-          (wrap || contextualVariant === 'sidebar') &&
-            buttonStyles.alignInlineStart,
-          wrap && buttonStyles.wrapContents,
+          contextualVariant === 'narrow-inputs' && buttonStyles.fill,
           shrink && buttonStyles.shrink,
           contextualVariant.startsWith('toolbar-item') &&
             buttonStyles.toolbarItemInFlow,
