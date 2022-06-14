@@ -6,7 +6,7 @@ import {
   InputRequiredProps,
 } from './input-properties'
 
-export type SelectVariant = 'group'
+export type SelectVariant = 'group' | 'combobox'
 
 export interface SingleSelectInnerProps
   extends DescribedInputProps,

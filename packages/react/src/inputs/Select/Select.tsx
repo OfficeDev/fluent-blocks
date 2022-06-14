@@ -1,16 +1,93 @@
-import { SelectProps } from '../../props/select'
-import {
-  CheckboxGroupElement,
-  renderIfCheckboxGroup,
-} from './variants/CheckboxGroup/CheckboxGroup'
-import {
-  RadioGroupElement,
-  renderIfRadioGroup,
-} from './variants/RadioGroup/RadioGroup'
+import { ReactElement } from 'react'
 
-export type SelectElement = RadioGroupElement | CheckboxGroupElement
+import {
+  Label,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
 
+import { Paragraph } from '../../blocks'
+import { InlineContent } from '../../inlines'
+import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
+import { SelectProps } from '../../props'
+import { renderIfCheckboxGroup } from './variants/CheckboxGroup/CheckboxGroup'
+import { renderIfDropdown } from './variants/Dropdown/Dropdown'
+import { renderIfRadioGroup } from './variants/RadioGroup/RadioGroup'
+
+const useSelectStyles = makeStyles({
+  root: {
+    marginBlockStart: '.5rem',
+    marginBlockEnd: '1rem',
+  },
+  label: {
+    display: 'block',
+  },
+  input: {
+    marginBlockStart: '.25rem',
+  },
+})
+
+export const Select = (o: SelectProps) => {
+  const commonStyles = useCommonStyles()
+  const textBlockStyles = useTextBlockStyles()
+  const selectStyles = useSelectStyles()
+
+  const {
+    select: { actionId, label, description, descriptionVariant },
+  } = o
+
+  const labelId = makeId(actionId, 'label')
+  const descriptionId = makeId(actionId, 'description')
+
+  const extendedSelectProps = {
+    ...o,
+    contextualLabelId: labelId,
+    contextualDescriptionId: descriptionId,
+  }
+
+  return (
+    <div
+      role="none"
+      className={cx(
+        commonStyles.centerBlock,
+        commonStyles.mainContentWidth,
+        selectStyles.root
+      )}
+    >
+      <Label
+        id={labelId}
+        className={cx(selectStyles.label, textBlockStyles.inputMetaSpacing)}
+      >
+        <InlineContent inlines={label} />
+      </Label>
+      {description && (
+        <Paragraph
+          paragraph={description}
+          contextualId={descriptionId}
+          visuallyHidden={descriptionVariant === 'visuallyHidden'}
+          contextualVariant="inputMeta"
+        />
+      )}
+      <div role="none" className={selectStyles.input}>
+        {renderIfRadioGroup(extendedSelectProps) ||
+          renderIfCheckboxGroup(extendedSelectProps) ||
+          renderIfDropdown(extendedSelectProps)}
+      </div>
+    </div>
+  )
+}
+
+export type SelectElement = ReactElement<SelectProps, typeof Select>
 export type SelectPropsOrElement = SelectProps | SelectElement
 
-export const renderIfSelect = (o: any) =>
-  'select' in o ? renderIfRadioGroup(o) || renderIfCheckboxGroup(o) : null
+function isSelectProps(o: any): o is SelectProps {
+  return 'select' in o
+}
+
+function isSelectElement(o: any): o is SelectElement {
+  return o?.type === Select
+}
+
+export function renderIfSelect(o: any) {
+  return isSelectProps(o) ? <Select {...o} /> : isSelectElement(o) ? o : null
+}

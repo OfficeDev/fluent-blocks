@@ -1,69 +1,37 @@
-import {
-  ChangeEvent,
-  Fragment,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react'
 
 import {
   Checkbox,
   CheckboxOnChangeData,
   CheckboxProps as FluentCheckboxProps,
-  Label,
-  mergeClasses as cx,
-  makeStyles,
 } from '@fluentui/react-components'
 
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
-import {
-  deleteInputValue,
-  makeId,
-  putInputValue,
-  useCommonStyles,
-  useTextBlockStyles,
-} from '../../../../lib'
+import { deleteInputValue, makeId, putInputValue } from '../../../../lib'
 import { MultipleSelectProps } from '../../../../props'
 
-const useCheckboxGroupStyles = makeStyles({
-  root: {
-    marginBlockStart: '.5rem',
-    marginBlockEnd: '1rem',
-  },
-  checkboxGroup: {
-    marginBlockStart: '.25rem',
-  },
-  label: {
-    display: 'block',
-  },
-})
-
-export interface CheckboxProps extends Omit<MultipleSelectProps, 'select'> {
+export interface CheckboxGroupProps
+  extends Omit<MultipleSelectProps, 'select'> {
   select: MultipleSelectProps['select'] & {
     variant: 'group'
     multiple: true
   }
+  contextualLabelId?: string
+  contextualDescriptionId?: string
 }
 
 export const CheckboxGroup = ({
   select: {
-    label,
     disambiguatingLabel,
     description,
-    descriptionVariant,
     actionId,
     initialValues,
     options,
   },
-}: MultipleSelectProps) => {
-  const checkboxGroupStyles = useCheckboxGroupStyles()
-  const commonStyles = useCommonStyles()
-  const textBlockStyles = useTextBlockStyles()
-  const labelId = makeId(actionId, 'label')
-  const descriptionId = makeId(actionId, 'description')
-
+  contextualLabelId,
+  contextualDescriptionId,
+}: CheckboxGroupProps) => {
   const [values, setValues] = useState<Set<string>>(new Set(initialValues))
 
   useEffect(() => {
@@ -90,87 +58,46 @@ export const CheckboxGroup = ({
 
   return (
     <div
-      role="none"
-      className={cx(
-        commonStyles.centerBlock,
-        commonStyles.mainContentWidth,
-        checkboxGroupStyles.root
-      )}
+      role="group"
+      {...(disambiguatingLabel
+        ? { 'aria-label': disambiguatingLabel }
+        : { 'aria-labelledby': contextualLabelId })}
+      {...(description && { 'aria-describedby': contextualDescriptionId })}
     >
-      <Label
-        id={labelId}
-        className={cx(
-          checkboxGroupStyles.label,
-          textBlockStyles.inputMetaSpacing
-        )}
-      >
-        <InlineContent inlines={label} />
-      </Label>
-      {description && (
-        <Paragraph
-          paragraph={description}
-          contextualId={descriptionId}
-          visuallyHidden={descriptionVariant === 'visuallyHidden'}
-          contextualVariant="inputMeta"
-        />
-      )}
-      <div
-        role="group"
-        className={checkboxGroupStyles.checkboxGroup}
-        {...(disambiguatingLabel
-          ? { 'aria-label': disambiguatingLabel }
-          : { 'aria-labelledby': labelId })}
-        {...(description && { 'aria-describedby': descriptionId })}
-      >
-        {options.map(({ value, label, description, descriptionVariant }) => {
-          const optionDescriptionId = makeId(value, 'optionDescription')
-          return (
-            <Fragment key={value}>
-              <Checkbox
-                {...{
-                  value,
-                  checked: values.has(value),
-                  onChange,
-                  label: <InlineContent inlines={label} />,
-                  ...(description && {
-                    'aria-describedby': optionDescriptionId,
-                  }),
-                }}
+      {options.map(({ value, label, description, descriptionVariant }) => {
+        const optionDescriptionId = makeId(value, 'optionDescription')
+        return (
+          <Fragment key={value}>
+            <Checkbox
+              {...{
+                value,
+                checked: values.has(value),
+                onChange,
+                label: <InlineContent inlines={label} />,
+                ...(description && {
+                  'aria-describedby': optionDescriptionId,
+                }),
+              }}
+            />
+            {description && (
+              <Paragraph
+                paragraph={description}
+                contextualId={optionDescriptionId}
+                contextualVariant="inputMeta--selectOption"
+                visuallyHidden={descriptionVariant === 'visuallyHidden'}
               />
-              {description && (
-                <Paragraph
-                  paragraph={description}
-                  contextualId={optionDescriptionId}
-                  contextualVariant="inputMeta--selectOption"
-                  visuallyHidden={descriptionVariant === 'visuallyHidden'}
-                />
-              )}
-            </Fragment>
-          )
-        })}
-      </div>
+            )}
+          </Fragment>
+        )
+      })}
     </div>
   )
 }
 
-export type CheckboxGroupElement = ReactElement<
-  CheckboxProps,
-  typeof CheckboxGroup
->
-export type CheckboxGroupPropsOrElement = CheckboxProps | CheckboxGroupElement
-
-function isCheckboxGroupProps(o: any): o is CheckboxProps {
+function isCheckboxGroupProps(o: any): o is CheckboxGroupProps {
   return 'select' in o && o.select.variant === 'group' && o.select.multiple
 }
 
-function isCheckboxGroupElement(o: any): o is CheckboxGroupElement {
-  return o?.type === CheckboxGroup
-}
-
 export function renderIfCheckboxGroup(o: any) {
-  return isCheckboxGroupProps(o) ? (
-    <CheckboxGroup {...o} />
-  ) : isCheckboxGroupElement(o) ? (
-    o
-  ) : null
+  return isCheckboxGroupProps(o) ? <CheckboxGroup {...o} /> : null
 }

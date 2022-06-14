@@ -275,6 +275,26 @@ that time `View` will call its interaction callback with the update.
                 },
               },
               {
+                select: {
+                  variant: 'combobox',
+                  actionId: 'b3',
+                  label: [{ text: fakeTitle(fake) }],
+                  description: fake('{{lorem.sentence}}'),
+                  options: [
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'w1',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'w2',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                  ],
+                },
+              },
+              {
                 table: {
                   caption: `${fakeTitle(fake)}`,
                   captionVisuallyHidden: true,
