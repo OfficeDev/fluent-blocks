@@ -90,8 +90,8 @@ export const Dropdown = ({
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
             <option
+              key={value}
               {...{
-                key: value,
                 value,
                 ...(description && {
                   'aria-describedby': optionDescriptionId,
@@ -108,8 +108,8 @@ export const Dropdown = ({
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
             <Paragraph
+              key={value}
               {...{
-                key: value,
                 paragraph: description,
                 contextualId: optionDescriptionId,
                 contextualVariant: 'inputMeta--selectOption',
