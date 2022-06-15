@@ -1,5 +1,6 @@
 import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react'
 
+import { MultipleValueInputActionPayload } from '@fluent-blocks/schemas'
 import { Checkbox, CheckboxOnChangeData } from '@fluentui/react-components'
 
 import { Paragraph } from '../../../../blocks'
@@ -11,10 +12,7 @@ import {
   putInputValue,
   useFluentBlocksContext,
 } from '../../../../lib'
-import {
-  MultipleSelectChangeAction,
-  MultipleSelectProps,
-} from '../../../../props'
+import { MultipleSelectProps } from '../../../../props'
 
 export interface CheckboxGroupProps
   extends Omit<MultipleSelectProps, 'select'> {
@@ -62,7 +60,7 @@ export const CheckboxGroup = ({
       const nextValues = Array.from(values)
       putInputValue(actionId, nextValues)
       setValues(new Set(nextValues))
-      const actionPayload = makePayload<MultipleSelectChangeAction>(
+      const actionPayload = makePayload<MultipleValueInputActionPayload>(
         {
           actionId,
           type: 'change' as 'change',

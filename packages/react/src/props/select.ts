@@ -1,25 +1,22 @@
 import {
+  MultipleValueInputActionPayload,
   MultipleSelectInnerProps as NaturalMultipleSelectInnerProps,
   SelectProps as NaturalSelectProps,
   SingleSelectInnerProps as NaturalSingleSelectInnerProps,
+  SingleValueInputActionPayload,
 } from '@fluent-blocks/schemas'
 
-import { ActionPayload, WithActionHandler } from './actions'
+import { WithActionHandler } from './actions'
 import {
   DescribedLabeledValueProps,
   WithDescribedInputElements,
 } from './inputs'
 
-export interface SingleSelectChangeAction extends ActionPayload {
-  type: 'change'
-  value: string
-}
-
 export interface SingleSelectInnerProps
   extends WithDescribedInputElements<
       Omit<NaturalSingleSelectInnerProps, 'options'>
     >,
-    WithActionHandler<SingleSelectChangeAction> {
+    WithActionHandler<SingleValueInputActionPayload> {
   options: [
     DescribedLabeledValueProps,
     DescribedLabeledValueProps,
@@ -27,16 +24,11 @@ export interface SingleSelectInnerProps
   ]
 }
 
-export interface MultipleSelectChangeAction extends ActionPayload {
-  type: 'change'
-  values: string[]
-}
-
 export interface MultipleSelectInnerProps
   extends WithDescribedInputElements<
       Omit<NaturalMultipleSelectInnerProps, 'options'>
     >,
-    WithActionHandler<MultipleSelectChangeAction> {
+    WithActionHandler<MultipleValueInputActionPayload> {
   options: [
     DescribedLabeledValueProps,
     DescribedLabeledValueProps,

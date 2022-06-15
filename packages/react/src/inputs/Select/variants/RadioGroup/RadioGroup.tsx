@@ -1,5 +1,6 @@
 import { FormEvent, Fragment, useCallback, useEffect } from 'react'
 
+import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
 import {
   RadioGroup as FluentRadioGroup,
   Radio,
@@ -15,7 +16,7 @@ import {
   putInputValue,
   useFluentBlocksContext,
 } from '../../../../lib'
-import { SingleSelectChangeAction, SingleSelectProps } from '../../../../props'
+import { SingleSelectProps } from '../../../../props'
 
 export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
   select: SingleSelectProps['select'] & {
@@ -50,7 +51,7 @@ export const RadioGroup = ({
   const onChange = useCallback(
     (_e: FormEvent<HTMLDivElement>, { value }: RadioGroupOnChangeData) => {
       putInputValue(actionId, value)
-      const actionPayload = makePayload<SingleSelectChangeAction>(
+      const actionPayload = makePayload<SingleValueInputActionPayload>(
         {
           actionId,
           type: 'change' as 'change',

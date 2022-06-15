@@ -1,6 +1,7 @@
 import get from 'lodash/get'
 import { ChangeEvent, useCallback, useEffect } from 'react'
 
+import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
 import { Select as FluentSelect } from '@fluentui/react-components/unstable'
 
 import { Paragraph } from '../../../../blocks'
@@ -13,7 +14,6 @@ import {
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
-  SingleSelectChangeAction,
   SingleSelectProps,
 } from '../../../../props'
 
@@ -65,7 +65,7 @@ export const Dropdown = ({
       if (value) {
         putInputValue(actionId, value)
       }
-      const actionPayload = makePayload<SingleSelectChangeAction>(
+      const actionPayload = makePayload<SingleValueInputActionPayload>(
         {
           actionId,
           type: 'change' as 'change',

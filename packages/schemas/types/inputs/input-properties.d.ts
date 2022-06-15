@@ -44,7 +44,7 @@ export interface SingleValueInputActionPayload extends ActionPayload {
 
 export interface MultipleValueInputActionPayload extends ActionPayload {
   type: 'change'
-  value: string[]
+  values: string[]
 }
 
 export interface LabeledValueProps {
