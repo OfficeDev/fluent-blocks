@@ -189,9 +189,9 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
               ...(list.listActions || []).map((action) => ({ action })),
               ...Object.keys(rowActions || []).map((actionId) => ({
                 action: {
-                  actionId,
                   ...rowActions![actionId],
-                  payload: { rows: Array.from(selection) },
+                  actionId,
+                  metadata: { rows: Array.from(selection) },
                 },
                 ...(!commonActions.has(actionId) && {
                   hidden: true,

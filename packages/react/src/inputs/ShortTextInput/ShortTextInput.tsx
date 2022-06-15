@@ -15,7 +15,10 @@ import {
 import { Paragraph } from '../../blocks'
 import { Inline, InlineContent } from '../../inlines'
 import {
+  deleteInputValue,
   makeId,
+  makePayload,
+  putInputValue,
   rem,
   sx,
   useCommonStyles,
@@ -73,6 +76,8 @@ export const ShortTextInput = ({
     autocomplete,
     initialValue,
     onAction,
+    metadata,
+    include,
   },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
@@ -86,17 +91,27 @@ export const ShortTextInput = ({
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   useEffect(() => {
+    putInputValue(actionId, initialValue || '')
+    return () => deleteInputValue(actionId)
+  }, [initialValue])
+
+  useEffect(() => {
+    putInputValue(actionId, debouncedValue)
     if (didMount.current) {
-      const payload = {
-        actionId,
-        type: 'change' as 'change',
-        value: debouncedValue,
-      }
+      const payload = makePayload(
+        {
+          actionId,
+          type: 'change' as 'change',
+          value: debouncedValue,
+        },
+        metadata,
+        include
+      )
       onAction ? onAction(payload) : contextOnAction(payload)
     } else {
       didMount.current = true
     }
-  }, [debouncedValue])
+  }, [debouncedValue, actionId, onAction, contextOnAction, metadata, include])
 
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')

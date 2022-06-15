@@ -5,6 +5,8 @@ export interface InputProps {
   label: InlineSequenceOrString
   disambiguatingLabel?: string
   actionId: string
+  include?: string[]
+  metadata?: Record<string, string | string[]>
 }
 
 interface DescriptionProps {
@@ -42,7 +44,7 @@ export interface SingleValueInputActionPayload extends ActionPayload {
 
 export interface MultipleValueInputActionPayload extends ActionPayload {
   type: 'change'
-  value: string[]
+  values: string[]
 }
 
 export interface LabeledValueProps {

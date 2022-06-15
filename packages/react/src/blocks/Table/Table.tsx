@@ -454,7 +454,7 @@ export const Table = (props: TableProps) => {
                                         action: {
                                           ...rowActions[actionId],
                                           actionId,
-                                          payload: { rows: [rowKey] },
+                                          metadata: { rows: [rowKey] },
                                         },
                                       })) || []),
                                   ]}
@@ -485,7 +485,7 @@ export const Table = (props: TableProps) => {
                                     button: {
                                       ...rowActions[actionId],
                                       actionId,
-                                      payload: { rows: [rowKey] },
+                                      metadata: { rows: [rowKey] },
                                     },
                                   }))}
                               />
