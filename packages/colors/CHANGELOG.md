@@ -1,5 +1,13 @@
 # @fluent-blocks/colors
 
+## 9.1.1-next.0
+
+### Patch Changes
+
+- [#116](https://github.com/OfficeDev/fluent-blocks/pull/116) [`cf7f64a`](https://github.com/OfficeDev/fluent-blocks/commit/cf7f64a39b43e31548680047840aa8c963ab3fb6) Thanks [@thure](https://github.com/thure)! - Start v9.2.0-next prereleases.
+
+* [#121](https://github.com/OfficeDev/fluent-blocks/pull/121) [`e4e673b`](https://github.com/OfficeDev/fluent-blocks/commit/e4e673bb50f557be0c617ca5c9f1410370e28548) Thanks [@thure](https://github.com/thure)! - Fix strict peers.
+
 ## 9.1.0
 
 ### Patch Changes

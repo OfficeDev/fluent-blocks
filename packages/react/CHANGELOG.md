@@ -1,5 +1,38 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.0
+
+### Minor Changes
+
+- [#120](https://github.com/OfficeDev/fluent-blocks/pull/120) [`ec59bfe`](https://github.com/OfficeDev/fluent-blocks/commit/ec59bfe5bed9662f9ef054b26ce5d0ac806fbfbf) Thanks [@thure](https://github.com/thure)! - Improve the ontology for Topbar and Sidebar; Topbar now supports a menu on its `far` prop, and Sidebar now uses an implicit Accordion and expects a title.
+
+* [#128](https://github.com/OfficeDev/fluent-blocks/pull/128) [`16f2d75`](https://github.com/OfficeDev/fluent-blocks/commit/16f2d75146ffd5ef4395868ae9c80b361e736a1e) Thanks [@thure](https://github.com/thure)! - Inputs now use eponymous props like all other components. Fix tests and stories. Add optional description to many inputs. Add CheckboxGroup. RadioGroup and CheckboxGroup are now implementation variants of Select. Labels and descriptions now have variants, which support the old 'visuallyHidden' pattern and may support others in the future.
+
+- [#119](https://github.com/OfficeDev/fluent-blocks/pull/119) [`a06a4c7`](https://github.com/OfficeDev/fluent-blocks/commit/a06a4c76e67f6a783db120ecf2af6067caaa93a8) Thanks [@thure](https://github.com/thure)! - Add Topbar and Sidebar as surface-type components.
+
+* [#136](https://github.com/OfficeDev/fluent-blocks/pull/136) [`271fb95`](https://github.com/OfficeDev/fluent-blocks/commit/271fb95e8dde0cab15f413bb25cc966f96eb30e5) Thanks [@thure](https://github.com/thure)! - Input components with values maintain their values in sessionStorage. All other inputs can select those values onAction.
+
+- [#122](https://github.com/OfficeDev/fluent-blocks/pull/122) [`a31edc1`](https://github.com/OfficeDev/fluent-blocks/commit/a31edc18e3e3fd1390546969fb03af6025445620) Thanks [@thure](https://github.com/thure)! - Add description properties to inline elements which, if defined, renders a tooltip invoker element. Add Link element to inlines.
+
+### Patch Changes
+
+- [#129](https://github.com/OfficeDev/fluent-blocks/pull/129) [`eee0eb1`](https://github.com/OfficeDev/fluent-blocks/commit/eee0eb11087041a377349405bba4a787e2c68707) Thanks [@thure](https://github.com/thure)! - Fix theme resolution ahead of next v9 prerelease.
+
+* [#116](https://github.com/OfficeDev/fluent-blocks/pull/116) [`cf7f64a`](https://github.com/OfficeDev/fluent-blocks/commit/cf7f64a39b43e31548680047840aa8c963ab3fb6) Thanks [@thure](https://github.com/thure)! - Start v9.2.0-next prereleases.
+
+- [#131](https://github.com/OfficeDev/fluent-blocks/pull/131) [`e1482f0`](https://github.com/OfficeDev/fluent-blocks/commit/e1482f0e4f9f70a057abd535cc53ae28186c2107) Thanks [@thure](https://github.com/thure)! - Update deps.
+
+* [#123](https://github.com/OfficeDev/fluent-blocks/pull/123) [`d28fb2a`](https://github.com/OfficeDev/fluent-blocks/commit/d28fb2aaf7b55ddb1757ae12321413bde05cf304) Thanks [@thure](https://github.com/thure)! - Fix roles for topbar and sidebar.
+
+- [#121](https://github.com/OfficeDev/fluent-blocks/pull/121) [`e4e673b`](https://github.com/OfficeDev/fluent-blocks/commit/e4e673bb50f557be0c617ca5c9f1410370e28548) Thanks [@thure](https://github.com/thure)! - Fix strict peers.
+
+* [#130](https://github.com/OfficeDev/fluent-blocks/pull/130) [`387d7c9`](https://github.com/OfficeDev/fluent-blocks/commit/387d7c967e294caffd9f1164222e14f110cd59f8) Thanks [@thure](https://github.com/thure)! - Update dependencies.
+
+* Updated dependencies [[`cf7f64a`](https://github.com/OfficeDev/fluent-blocks/commit/cf7f64a39b43e31548680047840aa8c963ab3fb6), [`ec59bfe`](https://github.com/OfficeDev/fluent-blocks/commit/ec59bfe5bed9662f9ef054b26ce5d0ac806fbfbf), [`16f2d75`](https://github.com/OfficeDev/fluent-blocks/commit/16f2d75146ffd5ef4395868ae9c80b361e736a1e), [`a06a4c7`](https://github.com/OfficeDev/fluent-blocks/commit/a06a4c76e67f6a783db120ecf2af6067caaa93a8), [`271fb95`](https://github.com/OfficeDev/fluent-blocks/commit/271fb95e8dde0cab15f413bb25cc966f96eb30e5), [`e4e673b`](https://github.com/OfficeDev/fluent-blocks/commit/e4e673bb50f557be0c617ca5c9f1410370e28548), [`16f2d75`](https://github.com/OfficeDev/fluent-blocks/commit/16f2d75146ffd5ef4395868ae9c80b361e736a1e), [`a31edc1`](https://github.com/OfficeDev/fluent-blocks/commit/a31edc18e3e3fd1390546969fb03af6025445620)]:
+  - @fluent-blocks/colors@9.1.1-next.0
+  - @fluent-blocks/basic-icons@9.1.3-next.0
+  - @fluent-blocks/schemas@9.2.0-next.0
+
 ## 9.1.3
 
 ### Patch Changes
