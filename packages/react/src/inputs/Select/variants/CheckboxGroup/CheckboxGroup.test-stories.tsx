@@ -3,11 +3,12 @@ import { Parameters } from '@storybook/addons'
 
 import { FluentBlocksProvider } from '../../../../lib'
 import { ActionHandler } from '../../../../props'
-import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup'
+import { Select } from '../../Select'
+import { CheckboxGroupProps } from './CheckboxGroup'
 
 export default {
   title: 'Tests/Checkboxgroup',
-  component: CheckboxGroup,
+  component: Select,
 }
 
 type CheckboxGroupTestArgs = {
@@ -17,7 +18,7 @@ type CheckboxGroupTestArgs = {
 
 const CheckboxGroupTemplate = ({ select, onAction }: CheckboxGroupTestArgs) => (
   <FluentBlocksProvider onAction={onAction}>
-    <CheckboxGroup select={select} />
+    <Select select={select} />
   </FluentBlocksProvider>
 )
 

@@ -84,6 +84,7 @@ export const Dropdown = ({
     <>
       <FluentSelect
         {...{
+          id: actionId,
           defaultValue: initialValue || '',
           onChange,
           ...(disambiguatingLabel

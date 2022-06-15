@@ -69,6 +69,7 @@ export const RadioGroup = ({
   return (
     <FluentRadioGroup
       {...{
+        id: actionId,
         defaultValue: initialValue,
         onChange,
         ...(disambiguatingLabel

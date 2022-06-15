@@ -77,11 +77,14 @@ export const CheckboxGroup = ({
 
   return (
     <div
-      role="group"
-      {...(disambiguatingLabel
-        ? { 'aria-label': disambiguatingLabel }
-        : { 'aria-labelledby': contextualLabelId })}
-      {...(description && { 'aria-describedby': contextualDescriptionId })}
+      {...{
+        role: 'group',
+        id: actionId,
+        ...(disambiguatingLabel
+          ? { 'aria-label': disambiguatingLabel }
+          : { 'aria-labelledby': contextualLabelId }),
+        ...(description && { 'aria-describedby': contextualDescriptionId }),
+      }}
     >
       {options.map(({ value, label, description, descriptionVariant }) => {
         const optionDescriptionId = makeId(value, 'optionDescription')
