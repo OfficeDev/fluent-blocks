@@ -1,15 +1,20 @@
 import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react'
 
-import {
-  Checkbox,
-  CheckboxOnChangeData,
-  CheckboxProps as FluentCheckboxProps,
-} from '@fluentui/react-components'
+import { Checkbox, CheckboxOnChangeData } from '@fluentui/react-components'
 
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
-import { deleteInputValue, makeId, putInputValue } from '../../../../lib'
-import { MultipleSelectProps } from '../../../../props'
+import {
+  deleteInputValue,
+  makeId,
+  makePayload,
+  putInputValue,
+  useFluentBlocksContext,
+} from '../../../../lib'
+import {
+  MultipleSelectChangeAction,
+  MultipleSelectProps,
+} from '../../../../props'
 
 export interface CheckboxGroupProps
   extends Omit<MultipleSelectProps, 'select'> {
@@ -28,10 +33,15 @@ export const CheckboxGroup = ({
     actionId,
     initialValues,
     options,
+    metadata,
+    include,
+    onAction,
   },
   contextualLabelId,
   contextualDescriptionId,
 }: CheckboxGroupProps) => {
+  const { onAction: contextOnAction } = useFluentBlocksContext()
+
   const [values, setValues] = useState<Set<string>>(new Set(initialValues))
 
   useEffect(() => {
@@ -39,7 +49,7 @@ export const CheckboxGroup = ({
     return () => deleteInputValue(actionId)
   }, [initialValues])
 
-  const onChange: FluentCheckboxProps['onChange'] = useCallback(
+  const onChange = useCallback(
     (
       { target: { value } }: ChangeEvent<HTMLInputElement>,
       { checked }: CheckboxOnChangeData
@@ -52,8 +62,19 @@ export const CheckboxGroup = ({
       const nextValues = Array.from(values)
       putInputValue(actionId, nextValues)
       setValues(new Set(nextValues))
+      const actionPayload = makePayload<MultipleSelectChangeAction>(
+        {
+          actionId,
+          type: 'change' as 'change',
+          values: nextValues,
+        },
+        metadata,
+        include
+      )
+      onAction && onAction(actionPayload)
+      contextOnAction && contextOnAction(actionPayload)
     },
-    []
+    [actionId, metadata, include, onAction, contextOnAction]
   )
 
   return (

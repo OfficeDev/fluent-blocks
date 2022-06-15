@@ -1,18 +1,19 @@
 import get from 'lodash/get'
-import { ChangeEvent, Fragment, useCallback, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect } from 'react'
 
 import { Select as FluentSelect } from '@fluentui/react-components/unstable'
 
 import { Paragraph } from '../../../../blocks'
-import { InlineContent } from '../../../../inlines'
 import {
   deleteInputValue,
   makeId,
+  makePayload,
   putInputValue,
   useFluentBlocksContext,
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
+  SingleSelectChangeAction,
   SingleSelectProps,
 } from '../../../../props'
 
@@ -44,36 +45,52 @@ export const Dropdown = ({
     initialValue,
     options,
     placeholder,
+    onAction,
+    metadata,
+    include,
   },
   contextualLabelId,
   contextualDescriptionId,
 }: DropdownProps) => {
-  const { translations } = useFluentBlocksContext()
+  const { onAction: contextOnAction } = useFluentBlocksContext()
 
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
   }, [initialValue])
 
-  const putSelectValue = useCallback(
+  const onChange = useCallback(
     ({ target }: ChangeEvent<HTMLSelectElement>) => {
-      const value = get(target, 'value', null)
+      const value = get(target, 'value', '')
       if (value) {
         putInputValue(actionId, value)
       }
+      const actionPayload = makePayload<SingleSelectChangeAction>(
+        {
+          actionId,
+          type: 'change' as 'change',
+          value,
+        },
+        metadata,
+        include
+      )
+      onAction && onAction(actionPayload)
+      contextOnAction && contextOnAction(actionPayload)
     },
-    [actionId]
+    [actionId, onAction, contextOnAction, metadata, include]
   )
 
   return (
     <>
       <FluentSelect
-        defaultValue={initialValue || ''}
-        onChange={putSelectValue}
-        {...(disambiguatingLabel
-          ? { 'aria-label': disambiguatingLabel }
-          : { 'aria-labelledby': contextualLabelId })}
-        {...(description && { 'aria-describedby': contextualDescriptionId })}
+        {...{
+          defaultValue: initialValue || '',
+          onChange,
+          ...(disambiguatingLabel
+            ? { 'aria-label': disambiguatingLabel }
+            : { 'aria-labelledby': contextualLabelId }),
+          ...(description && { 'aria-describedby': contextualDescriptionId }),
+        }}
       >
         <option
           value=""

@@ -8,8 +8,14 @@ import {
 
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
-import { deleteInputValue, makeId, putInputValue } from '../../../../lib'
-import { SingleSelectProps } from '../../../../props'
+import {
+  deleteInputValue,
+  makeId,
+  makePayload,
+  putInputValue,
+  useFluentBlocksContext,
+} from '../../../../lib'
+import { SingleSelectChangeAction, SingleSelectProps } from '../../../../props'
 
 export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
   select: SingleSelectProps['select'] & {
@@ -21,29 +27,54 @@ export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
 }
 
 export const RadioGroup = ({
-  select: { disambiguatingLabel, description, actionId, initialValue, options },
+  select: {
+    disambiguatingLabel,
+    description,
+    actionId,
+    initialValue,
+    options,
+    metadata,
+    include,
+    onAction,
+  },
   contextualLabelId,
   contextualDescriptionId,
 }: RadioGroupProps) => {
+  const { onAction: contextOnAction } = useFluentBlocksContext()
+
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
   }, [initialValue])
 
-  const putRadioValue = useCallback(
-    (_e: FormEvent<HTMLDivElement>, { value }: RadioGroupOnChangeData) =>
-      putInputValue(actionId, value),
-    [actionId]
+  const onChange = useCallback(
+    (_e: FormEvent<HTMLDivElement>, { value }: RadioGroupOnChangeData) => {
+      putInputValue(actionId, value)
+      const actionPayload = makePayload<SingleSelectChangeAction>(
+        {
+          actionId,
+          type: 'change' as 'change',
+          value,
+        },
+        metadata,
+        include
+      )
+      onAction && onAction(actionPayload)
+      contextOnAction && contextOnAction(actionPayload)
+    },
+    [actionId, metadata, include, onAction, contextOnAction]
   )
 
   return (
     <FluentRadioGroup
-      defaultValue={initialValue}
-      onChange={putRadioValue}
-      {...(disambiguatingLabel
-        ? { 'aria-label': disambiguatingLabel }
-        : { 'aria-labelledby': contextualLabelId })}
-      {...(description && { 'aria-describedby': contextualDescriptionId })}
+      {...{
+        defaultValue: initialValue,
+        onChange,
+        ...(disambiguatingLabel
+          ? { 'aria-label': disambiguatingLabel }
+          : { 'aria-labelledby': contextualLabelId }),
+        ...(description && { 'aria-describedby': contextualDescriptionId }),
+      }}
     >
       {options.map(({ value, label, description, descriptionVariant }) => {
         const optionDescriptionId = makeId(value, 'optionDescription')

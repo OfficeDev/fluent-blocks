@@ -237,6 +237,8 @@ that time `View` will call its interaction callback with the update.
                 select: {
                   variant: 'group',
                   actionId: 'b1',
+                  include: ['b2'],
+                  metadata: { peach: 'pit' },
                   label: [{ text: fakeTitle(fake) }],
                   description: fake('{{lorem.sentence}}'),
                   options: [
@@ -258,6 +260,8 @@ that time `View` will call its interaction callback with the update.
                   variant: 'group',
                   multiple: true,
                   actionId: 'b2',
+                  include: ['b3'],
+                  metadata: { palm: 'coconut' },
                   label: [{ text: fakeTitle(fake) }],
                   description: fake('{{lorem.sentence}}'),
                   options: [
@@ -280,6 +284,8 @@ that time `View` will call its interaction callback with the update.
                   actionId: 'b3',
                   label: [{ text: fakeTitle(fake) }],
                   description: fake('{{lorem.sentence}}'),
+                  include: ['b1'],
+                  metadata: { oak: 'acorn' },
                   options: [
                     {
                       label: fakeTitle(fake),

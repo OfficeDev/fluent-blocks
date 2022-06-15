@@ -111,7 +111,7 @@ export const ShortTextInput = ({
     } else {
       didMount.current = true
     }
-  }, [debouncedValue])
+  }, [debouncedValue, actionId, onAction, contextOnAction, metadata, include])
 
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')
