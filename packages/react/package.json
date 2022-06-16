@@ -38,19 +38,19 @@
   "peerDependencies": {
     "@fluentui/react-components": "9.0.0-rc.14",
     "chart.js": "^2.9.4",
-    "react": ">=16.13.1 <19",
-    "react-dom": ">=16.13.1 <19"
+    "react": "16.14.0, 17.x, 18.x",
+    "react-dom": "16.14.0, 17.x, 18.x"
   },
   "devDependencies": {
     "@babel/core": "latest",
     "@fluentui/react-components": "9.0.0-rc.14",
     "@playwright/test": "latest",
-    "@storybook/addon-actions": "^6.5.5",
-    "@storybook/addon-essentials": "^6.5.5",
-    "@storybook/addon-links": "^6.5.5",
-    "@storybook/addons": "^6.5.5",
-    "@storybook/react": "^6.5.5",
-    "@storybook/theming": "^6.5.5",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/addons": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/theming": "^6.5.9",
     "@types/chart.js": "^2.9.37",
     "@types/faker": "^5.5.9",
     "@types/lodash": "latest",
