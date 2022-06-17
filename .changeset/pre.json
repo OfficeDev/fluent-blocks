@@ -8,6 +8,7 @@
     "@fluent-blocks/schemas": "9.1.0"
   },
   "changesets": [
+    "calm-avocados-doubt",
     "early-mirrors-complain",
     "eighty-insects-applaud",
     "eighty-walls-deny",

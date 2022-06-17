@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.1
+
+### Patch Changes
+
+- [#137](https://github.com/OfficeDev/fluent-blocks/pull/137) [`12e4c78`](https://github.com/OfficeDev/fluent-blocks/commit/12e4c7823bb31c8587764b960407a377c572f6c5) Thanks [@thure](https://github.com/thure)! - Fix React deps to specify support for jsx-runtime.
+
 ## 9.2.0-next.0
 
 ### Minor Changes
