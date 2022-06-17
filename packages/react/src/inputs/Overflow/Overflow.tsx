@@ -13,7 +13,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Icon } from '../../inlines'
-import { Sequence, sx, useFluentBlocksContext } from '../../lib'
+import { Sequence, makePayload, sx, useFluentBlocksContext } from '../../lib'
 import {
   ActionHandler,
   MenuAction,
@@ -30,7 +30,7 @@ export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
 }
 
 function isAction(o: any): o is MenuAction {
-  return 'actionId' in o
+  return 'action' in o && 'actionId' in o.action
 }
 
 const defaultIconSize = 20
@@ -50,11 +50,14 @@ const OverflowItem = (
 ) => {
   const onItemActivate = isAction(item)
     ? () => {
-        const payload = {
-          type: 'activate' as 'activate',
-          actionId: item.action.actionId,
-          ...item.action.payload,
-        }
+        const payload = makePayload(
+          {
+            type: 'activate' as 'activate',
+            actionId: item.action.actionId,
+          },
+          item.action.metadata,
+          item.action.include
+        )
         item.action.onAction && item.action.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)
       }

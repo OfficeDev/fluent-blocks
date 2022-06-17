@@ -1,130 +1,115 @@
-import { ReactElement } from 'react'
+import { FormEvent, Fragment, useCallback, useEffect } from 'react'
 
+import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
 import {
   RadioGroup as FluentRadioGroup,
-  Label,
   Radio,
-  mergeClasses as cx,
-  makeStyles,
+  RadioGroupOnChangeData,
 } from '@fluentui/react-components'
 
 import { Paragraph } from '../../../../blocks'
 import { InlineContent } from '../../../../inlines'
-import { makeId, useCommonStyles, useTextBlockStyles } from '../../../../lib'
-import { SingleSelectProps } from '../../../../props/select'
+import {
+  deleteInputValue,
+  makeId,
+  makePayload,
+  putInputValue,
+  useFluentBlocksContext,
+} from '../../../../lib'
+import { SingleSelectProps } from '../../../../props'
 
 export interface RadioGroupProps extends Omit<SingleSelectProps, 'select'> {
   select: SingleSelectProps['select'] & {
     variant: 'group'
     multiple?: false
   }
+  contextualLabelId?: string
+  contextualDescriptionId?: string
 }
-
-const useRadioGroupStyles = makeStyles({
-  root: {
-    marginBlockStart: '.5rem',
-    marginBlockEnd: '1rem',
-  },
-  radioGroup: {
-    marginBlockStart: '.25rem',
-  },
-  label: {
-    display: 'block',
-  },
-})
 
 export const RadioGroup = ({
   select: {
-    label,
     disambiguatingLabel,
     description,
-    descriptionVariant,
     actionId,
     initialValue,
     options,
+    metadata,
+    include,
+    onAction,
   },
-}: SingleSelectProps) => {
-  const radioGroupStyles = useRadioGroupStyles()
-  const commonStyles = useCommonStyles()
-  const textBlockStyles = useTextBlockStyles()
-  const labelId = makeId(actionId, 'label')
-  const descriptionId = makeId(actionId, 'description')
+  contextualLabelId,
+  contextualDescriptionId,
+}: RadioGroupProps) => {
+  const { onAction: contextOnAction } = useFluentBlocksContext()
+
+  useEffect(() => {
+    putInputValue(actionId, initialValue || '')
+    return () => deleteInputValue(actionId)
+  }, [initialValue])
+
+  const onChange = useCallback(
+    (_e: FormEvent<HTMLDivElement>, { value }: RadioGroupOnChangeData) => {
+      putInputValue(actionId, value)
+      const actionPayload = makePayload<SingleValueInputActionPayload>(
+        {
+          actionId,
+          type: 'change' as 'change',
+          value,
+        },
+        metadata,
+        include
+      )
+      onAction && onAction(actionPayload)
+      contextOnAction && contextOnAction(actionPayload)
+    },
+    [actionId, metadata, include, onAction, contextOnAction]
+  )
+
   return (
-    <div
-      role="none"
-      className={cx(
-        commonStyles.centerBlock,
-        commonStyles.mainContentWidth,
-        radioGroupStyles.root
-      )}
-    >
-      <Label
-        id={labelId}
-        className={cx(radioGroupStyles.label, textBlockStyles.inputMetaSpacing)}
-      >
-        <InlineContent inlines={label} />
-      </Label>
-      {description && (
-        <Paragraph
-          paragraph={description}
-          contextualId={descriptionId}
-          visuallyHidden={descriptionVariant === 'visuallyHidden'}
-          contextualVariant="inputMeta"
-        />
-      )}
-      <FluentRadioGroup
-        defaultValue={initialValue}
-        className={radioGroupStyles.radioGroup}
-        {...(disambiguatingLabel
+    <FluentRadioGroup
+      {...{
+        id: actionId,
+        defaultValue: initialValue,
+        onChange,
+        ...(disambiguatingLabel
           ? { 'aria-label': disambiguatingLabel }
-          : { 'aria-labelledby': labelId })}
-        {...(description && { 'aria-describedby': descriptionId })}
-      >
-        {options.map(({ value, label, description, descriptionVariant }) => {
-          const optionDescriptionId = makeId(value, 'optionDescription')
-          return (
-            <>
-              <Radio
-                key={value}
-                {...{
-                  value,
-                  label: <InlineContent inlines={label} />,
-                  ...(description && {
-                    'aria-describedby': optionDescriptionId,
-                  }),
-                }}
+          : { 'aria-labelledby': contextualLabelId }),
+        ...(description && { 'aria-describedby': contextualDescriptionId }),
+      }}
+    >
+      {options.map(({ value, label, description, descriptionVariant }) => {
+        const optionDescriptionId = makeId(value, 'optionDescription')
+        return (
+          <Fragment key={value}>
+            <Radio
+              {...{
+                value,
+                label: <InlineContent inlines={label} />,
+                ...(description && {
+                  'aria-describedby': optionDescriptionId,
+                }),
+              }}
+            />
+            {description && (
+              <Paragraph
+                paragraph={description}
+                contextualId={optionDescriptionId}
+                contextualVariant="inputMeta--selectOption"
+                visuallyHidden={descriptionVariant === 'visuallyHidden'}
               />
-              {description && (
-                <Paragraph
-                  paragraph={description}
-                  contextualId={optionDescriptionId}
-                  contextualVariant="inputMeta--selectOption"
-                  visuallyHidden={descriptionVariant === 'visuallyHidden'}
-                />
-              )}
-            </>
-          )
-        })}
-      </FluentRadioGroup>
-    </div>
+            )}
+          </Fragment>
+        )
+      })}
+    </FluentRadioGroup>
   )
 }
-
-export type RadioGroupElement = ReactElement<RadioGroupProps, typeof RadioGroup>
-export type RadioGroupPropsOrElement = RadioGroupProps | RadioGroupElement
 
 function isRadioGroupProps(o: any): o is RadioGroupProps {
   return 'select' in o && o.select.variant === 'group' && !o.select.multiple
 }
 
-function isRadioGroupElement(o: any): o is RadioGroupElement {
-  return o?.type === RadioGroup
-}
-
 export function renderIfRadioGroup(o: any) {
-  return isRadioGroupProps(o) ? (
-    <RadioGroup {...o} />
-  ) : isRadioGroupElement(o) ? (
-    o
-  ) : null
+  return isRadioGroupProps(o) ? <RadioGroup {...o} /> : null
 }
