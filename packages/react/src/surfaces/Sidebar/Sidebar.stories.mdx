@@ -61,10 +61,10 @@ narrow to display the Sidebar next to the Main content.
       accentScheme: 'teams',
       sidebar: {
         title: fakeTitle(fake),
+        defaultActiveItem: `sidebar-action__0-0`,
         accordion: range(3).map((i) => ({
           actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
-          ...(i === 0 && { defaultActiveItem: `sidebar-action__0-0` }),
           menu: range(6).map((s) => ({
             action: {
               actionId: `sidebar-action__${i}-${s}`,
@@ -186,7 +186,7 @@ back/up.
             icon: 'image',
           },
           {
-            actionId: 'backToApps',
+            actionId: 'backToSpecificApp',
             label: fakeTitle(fake),
             icon: 'eye',
           },
