@@ -27,8 +27,8 @@ export interface ViewProps
   extends Omit<NaturalViewProps, 'main' | 'sidebar' | 'topbar'>,
     WithActionHandler<any> {
   main: SectionContentProps
-  sidebar: SidebarProps
-  topbar: TopbarProps
+  sidebar?: SidebarProps
+  topbar?: TopbarProps
   iconSpriteUrl?: string
 }
 

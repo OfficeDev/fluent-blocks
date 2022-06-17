@@ -349,8 +349,9 @@ export const Sidebar = (props: SidebarProps) => {
               {props.menu.map((menuItem) =>
                 'action' in menuItem ? (
                   <Tab
+                    key={menuItem.action.actionId}
                     {...{
-                      key: menuItem.action.actionId,
+                      id: menuItem.action.actionId,
                       value: menuItem.action.actionId,
                       className: sidebarStyles.tab,
                       ...(menuItem.action.icon && {
