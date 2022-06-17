@@ -1,27 +1,60 @@
-import { ViewContent } from '@fluent-blocks/react'
+import range from 'lodash/range'
+
+import { Main } from '@fluent-blocks/react'
 
 export default function Home() {
   return (
-    <ViewContent
-      main={{
-        title: 'Home',
-        abstract: 'Inluding the hero and all that jazz.',
-      }}
-      sidebar={{
-        title: 'Developer portal',
-        menu: [
+    <Main
+      {...{
+        title: '',
+        blocks: [
           {
-            action: { actionId: 'navL1:home', icon: 'home', iconVariant: 'filled', label: 'Home', variant: 'subtle' },
-          },
-          {
-            action: { actionId: 'navL1:apps', icon: 'apps', label: 'Apps', variant: 'subtle' },
-          },
-          {
-            action: {
-              actionId: 'navL1:tools',
-              icon: 'wrench',
-              label: 'Tools',
-              variant: 'subtle',
+            dashboard: {
+              variant: 'grid',
+              items: [
+                {
+                  item: {
+                    widget: {
+                      label: 'Hello',
+                      title: 'Hello welcome to developer portal',
+                      tabs: [
+                        {
+                          tab: { label: 'Hello' },
+                          panel: [
+                            {
+                              inputs: [
+                                {
+                                  button: {
+                                    actionId: 'nav:/apps',
+                                    label: 'Get started ›',
+                                    variant: 'primary',
+                                  },
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                  inlineSizeFactor: 2,
+                  blockSizeFactor: 2,
+                },
+                ...range(12).map((i) => ({
+                  item: {
+                    widget: {
+                      label: `Card ${i}`,
+                      title: `Card ${i}`,
+                      tabs: [
+                        {
+                          tab: { label: 'Card' },
+                          panel: [{ paragraph: 'Content' }],
+                        },
+                      ],
+                    },
+                  },
+                })),
+              ],
             },
           },
         ],
