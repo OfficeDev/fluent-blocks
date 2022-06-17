@@ -38,8 +38,8 @@
   "peerDependencies": {
     "@fluentui/react-components": "9.0.0-rc.14",
     "chart.js": "^2.9.4",
-    "react": "16.14.0, 17.x, 18.x",
-    "react-dom": "16.14.0, 17.x, 18.x"
+    "react": "^16.14.0, 17.x, 18.x",
+    "react-dom": "^16.14.0, 17.x, 18.x"
   },
   "devDependencies": {
     "@babel/core": "latest",
