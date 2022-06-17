@@ -17,14 +17,18 @@ import {
   Main,
   Sidebar,
   SidebarInvoker,
+  SidebarProps,
   SidebarScrim,
   Topbar,
+  TopbarProps,
 } from '../../surfaces'
 
 export interface ViewProps
-  extends Omit<NaturalViewProps, 'main'>,
+  extends Omit<NaturalViewProps, 'main' | 'sidebar' | 'topbar'>,
     WithActionHandler<any> {
   main: SectionContentProps
+  sidebar: SidebarProps
+  topbar: TopbarProps
   iconSpriteUrl?: string
 }
 
