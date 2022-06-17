@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/basic-icons",
-  "version": "9.1.2",
+  "version": "9.1.3-next.0",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>"

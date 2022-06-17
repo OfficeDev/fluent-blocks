@@ -7,5 +7,19 @@
     "@fluent-blocks/react": "9.1.3",
     "@fluent-blocks/schemas": "9.1.0"
   },
-  "changesets": []
+  "changesets": [
+    "calm-avocados-doubt",
+    "early-mirrors-complain",
+    "eighty-insects-applaud",
+    "eighty-walls-deny",
+    "giant-otters-sin",
+    "grumpy-rice-clean",
+    "late-chefs-build",
+    "serious-cows-sell",
+    "shy-pants-boil",
+    "tame-mails-march",
+    "three-spoons-raise",
+    "tidy-coats-fail",
+    "witty-bags-travel"
+  ]
 }

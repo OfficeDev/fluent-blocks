@@ -34,17 +34,3 @@ ButtonClickTest.args = {
   },
 }
 ButtonClickTest.parameters = { chromatic: { disableSnapshot: true } }
-
-export const ButtonEmitTest: typeof ButtonTemplate & {
-  args?: ButtonTestArgs
-  parameters?: Parameters
-} = ButtonTemplate.bind({})
-
-ButtonEmitTest.args = {
-  button: {
-    actionId: 'bb35aced-ab23-4eaa-96c0-48cb8800f58f',
-    label: '1c525f9a-de85-4b35-8c23-658c625a2bf8',
-    onAction: (payload) => document.defaultView?.alert(payload.actionId),
-  },
-}
-ButtonEmitTest.parameters = { chromatic: { disableSnapshot: true } }
