@@ -1,6 +1,12 @@
 import get from 'lodash/get'
 import noop from 'lodash/noop'
-import { Dispatch, SetStateAction, useCallback, useState } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 import {
   ButtonActionPayload,
@@ -144,6 +150,10 @@ export const Sidebar = (props: SidebarProps) => {
   const [activeItem, setActiveItem] = useState<string | null>(
     defaultActiveItem || null
   )
+
+  useEffect(() => {
+    setActiveItem(defaultActiveItem || null)
+  }, [defaultActiveItem])
 
   const onSidebarItemClick: SelectTabEventHandler = useCallback((event) => {
     const nextActiveItem = get(event, ['currentTarget', 'id'], null)
