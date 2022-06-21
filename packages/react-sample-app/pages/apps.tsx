@@ -47,7 +47,7 @@ export default function Apps() {
                     c1: { cell: faker.fake('{{lorem.words}}') },
                     c2: { cell: '1.0.0' },
                     c3: { cell: faker.fake('{{lorem.words}}') },
-                    c4: { cell: faker.fake('{{date.recent}}') },
+                    c4: { cell: faker.fake('4 {{date.month}} 2022') },
                   }
                   return acc
                 }, {}),
