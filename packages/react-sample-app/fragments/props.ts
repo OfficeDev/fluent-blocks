@@ -1,3 +1,3 @@
-import {Router} from "next/router";
+import { Router } from 'next/router'
 
 export interface FragmentProps extends Pick<Router, 'pathname' | 'query'> {}
