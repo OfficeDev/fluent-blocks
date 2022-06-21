@@ -297,34 +297,30 @@ export const Table = (props: TableProps) => {
         maxWidthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
     >
-      <style>
-        {Array.from(inFlowColumns).reduce((acc: string, colKey: string) => {
+      <style>{`${Array.from(inFlowColumns).reduce(
+        (acc: string, colKey: string) => {
           if (colKey === 'selection' || colKey === 'overflow') {
-            return `${acc}.${colWidthClassName(colKey)} { flex-basis: ${rem(
+            return `${acc}.${colWidthClassName(colKey)}{flex-basis:${rem(
               accessoryWidth
-            )}; flex-grow: 0; flex-shrink: 0; }`
+            )};flex-grow:0;flex-shrink:0;}`
           } else {
             const minWidth = get(columns, [colKey, 'minWidth'], defaultMinWidth)
-            return `${acc}.${colWidthClassName(colKey)} { min-width: ${rem(
+            return `${acc}.${colWidthClassName(colKey)} {min-width:${rem(
               minWidth
-            )}; flex-grow: ${minWidth}; }\n`
+            )};flex-grow:${minWidth};}`
           }
-        }, '')}
-        {`.row-width { min-width: ${rem(
-          Array.from(inFlowColumns).reduce((acc: number, colKey: string) => {
-            if (colKey === 'selection' || colKey === 'overflow') {
-              return acc + accessoryWidth
-            } else {
-              const minWidth = get(
-                columns,
-                [colKey, 'minWidth'],
-                defaultMinWidth
-              )
-              return acc + minWidth
-            }
-          }, 0)
-        )} }`}
-      </style>
+        },
+        ''
+      )}.row-width{min-width:${rem(
+        Array.from(inFlowColumns).reduce((acc: number, colKey: string) => {
+          if (colKey === 'selection' || colKey === 'overflow') {
+            return acc + accessoryWidth
+          } else {
+            const minWidth = get(columns, [colKey, 'minWidth'], defaultMinWidth)
+            return acc + minWidth
+          }
+        }, 0)
+      )}}`}</style>
       <div role="none" className={tableStyles.rootSpacingAdjust}>
         <div role="none" className={tableStyles.rootInner}>
           <div
