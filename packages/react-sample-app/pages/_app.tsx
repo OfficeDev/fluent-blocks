@@ -9,7 +9,8 @@ import {
 } from '@griffel/react'
 import { RendererProviderProps } from '@griffel/react/RendererContext'
 
-import sidebarL1 from '../fragments/sidebar--l1'
+import sidebarFragment from '../fragments/sidebar'
+import topbarFragment from '../fragments/topbar'
 
 const RendererProvider = IncorrectlyTypedRendererProvider as FC<
   RendererProviderProps & { children: ReactElement }
@@ -39,11 +40,8 @@ function FuibApp({
               return router.push('/tools')
           }
         }}
-        sidebar={{
-          title: 'Developer portal',
-          defaultActiveItem: `nav:${router.pathname}`,
-          ...sidebarL1,
-        }}
+        sidebar={sidebarFragment(router.pathname)}
+        topbar={topbarFragment(router.pathname)}
         main={{
           title: '',
           blocks: [
