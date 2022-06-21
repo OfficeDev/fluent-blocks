@@ -1,5 +1,19 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.2
+
+### Minor Changes
+
+- [#135](https://github.com/OfficeDev/fluent-blocks/pull/135) [`db5967f`](https://github.com/OfficeDev/fluent-blocks/commit/db5967f5edc1b4ac6f1dba40f7fdc17be682de36) Thanks [@thure](https://github.com/thure)! - Add cornerActions to Sidebar, which can be used to add upward/backward navigation to the sidebar.
+
+### Patch Changes
+
+- [#135](https://github.com/OfficeDev/fluent-blocks/pull/135) [`db5967f`](https://github.com/OfficeDev/fluent-blocks/commit/db5967f5edc1b4ac6f1dba40f7fdc17be682de36) Thanks [@thure](https://github.com/thure)! - Update basic-icons dependencies. Change bundled icon size to only 20px. Fix all icon sizes in Fluent Blocks React to 20px.
+
+- Updated dependencies [[`db5967f`](https://github.com/OfficeDev/fluent-blocks/commit/db5967f5edc1b4ac6f1dba40f7fdc17be682de36), [`db5967f`](https://github.com/OfficeDev/fluent-blocks/commit/db5967f5edc1b4ac6f1dba40f7fdc17be682de36)]:
+  - @fluent-blocks/schemas@9.2.0-next.2
+  - @fluent-blocks/basic-icons@9.1.3-next.1
+
 ## 9.2.0-next.1
 
 ### Patch Changes
