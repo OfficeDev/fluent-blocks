@@ -1,8 +1,9 @@
+import get from 'lodash/get'
 import { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import { FC, ReactElement } from 'react'
 
-import { Escape, View } from '@fluent-blocks/react'
+import { ActionPayload, Escape, View } from '@fluent-blocks/react'
 import {
   RendererProvider as IncorrectlyTypedRendererProvider,
   createDOMRenderer,
@@ -18,6 +19,13 @@ const RendererProvider = IncorrectlyTypedRendererProvider as FC<
 
 const _globals = require('../styles/globals.css')
 
+function onActivate(payload: ActionPayload, router: NextRouter) {
+  if ('row' in payload) {
+    const dest = get(payload, 'row', '').split(':')[1]
+    router.push(dest)
+  }
+}
+
 function FuibApp({
   Component,
   pageProps,
@@ -30,7 +38,9 @@ function FuibApp({
         themeName="light"
         accentScheme="teams"
         iconSpriteUrl="/basic-icons.svg"
-        onAction={({ actionId }) => {
+        onAction={(payload) => {
+          console.log('[action]', payload)
+          const { actionId } = payload
           switch (actionId) {
             case 'nav:/':
               return router.push('/')
@@ -38,6 +48,8 @@ function FuibApp({
               return router.push('/apps')
             case 'nav:/tools':
               return router.push('/tools')
+            case 'activate':
+              return onActivate(payload, router)
           }
         }}
         sidebar={sidebarFragment(router.pathname)}

@@ -1,5 +1,7 @@
+import range from 'lodash/range'
+
 import { faker } from '@faker-js/faker'
-import { Main } from '@fluent-blocks/react'
+import { ListProps, Main } from '@fluent-blocks/react'
 
 export default function Apps() {
   return (
@@ -21,11 +23,13 @@ export default function Apps() {
                 columns: {
                   c1: {
                     title: 'Name',
+                    minWidth: 120,
                   },
                   c2: {
                     title: 'Version number',
                     hideable: true,
-                    hidePriority: 3,
+                    hidePriority: 1,
+                    minWidth: 60,
                   },
                   c3: {
                     title: 'App ID',
@@ -35,17 +39,18 @@ export default function Apps() {
                   c4: {
                     title: 'Updated',
                     hideable: true,
-                    hidePriority: 1,
+                    hidePriority: 3,
                   },
                 },
-                rows: {
-                  r1: {
+                rows: range(32).reduce((acc: ListProps['list']['rows'], r) => {
+                  acc[`nav:/apps/app-${r}`] = {
                     c1: { cell: faker.fake('{{lorem.words}}') },
                     c2: { cell: '1.0.0' },
-                    c3: { cell: '93jknv934nkke333' },
+                    c3: { cell: faker.fake('{{lorem.words}}') },
                     c4: { cell: faker.fake('{{date.recent}}') },
-                  },
-                },
+                  }
+                  return acc
+                }, {}),
               },
             },
           ],
