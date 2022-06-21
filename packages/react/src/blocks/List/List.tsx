@@ -182,7 +182,7 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
 
   return (
     <>
-      {(list.listActions?.length || commonActions.size) && (
+      {!!(list.listActions?.length || commonActions.size) && (
         <Toolbar
           toolbar={{
             menu: [

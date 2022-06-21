@@ -1,10 +1,9 @@
-import { fake, seed } from 'faker/locale/en_US'
 import range from 'lodash/range'
 
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
-import fakeTitle from '../../lib/fakeTitle'
+import { fake, fakeTitle, seed } from '../../lib/fake'
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { View } from '../../views'
 import { Topbar } from './Topbar'
@@ -118,15 +117,25 @@ will also add notifications to the far side of the Topbar.
       topbar: topbarArgs,
       sidebar: {
         title: fakeTitle(fake),
-        items: range(3).map((i) => ({
-          actionId: `sidebar-item__${i}`,
-          label: fakeTitle(fake),
-          menu: range(6).map((s) => ({
-            action: {
-              actionId: `sidebar-action__${i}-${s}`,
-              label: fakeTitle(fake),
-            },
-          })),
+        cornerActions: [
+          {
+            actionId: 'home',
+            label: fakeTitle(fake),
+            icon: 'home',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+        ],
+        defaultActiveItem: 'sidebar-action__0',
+        menu: range(6).map((s) => ({
+          action: {
+            actionId: `sidebar-action__${s}`,
+            label: fakeTitle(fake),
+            icon: 'animal_cat',
+          },
         })),
       },
       main: mainArgs,

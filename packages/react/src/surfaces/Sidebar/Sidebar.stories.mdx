@@ -1,10 +1,9 @@
-import { fake, seed } from 'faker/locale/en_US'
 import range from 'lodash/range'
 
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
-import fakeTitle from '../../lib/fakeTitle'
+import { fake, fakeTitle, seed } from '../../lib/fake'
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { View } from '../../views'
 import { Sidebar } from './Sidebar'
@@ -61,7 +60,8 @@ narrow to display the Sidebar next to the Main content.
       accentScheme: 'teams',
       sidebar: {
         title: fakeTitle(fake),
-        items: range(3).map((i) => ({
+        defaultActiveItem: `sidebar-action__0-0`,
+        accordion: range(3).map((i) => ({
           actionId: `sidebar-item__${i}`,
           label: fakeTitle(fake),
           menu: range(6).map((s) => ({
@@ -80,3 +80,182 @@ narrow to display the Sidebar next to the Main content.
 </Canvas>
 
 <ArgsTable story="Sidebar" />
+
+The Sidebar is also able to host a few variations on affordances for navigating
+back/up.
+
+- If one action is given in `cornerActions`, Sidebar renders button for the action with a back-facing arrow:
+
+<Canvas withSource="none">
+  <Story
+    name="Sidebar, 1 corner action"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      sidebar: {
+        cornerActions: [
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+        ],
+        title: fakeTitle(fake),
+        accordion: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
+          label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
+          })),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || SidebarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+- If two actions are given, Sidebar renders an icon-only button for the first action and a no-icon button for the second action with a chevron between them and at the end:
+
+<Canvas withSource="none">
+  <Story
+    name="Sidebar, 2 corner actions"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      sidebar: {
+        cornerActions: [
+          {
+            actionId: 'home',
+            label: fakeTitle(fake),
+            icon: 'home',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+        ],
+        title: fakeTitle(fake),
+        accordion: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
+          label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
+          })),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || SidebarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+- If more than two actions are given, Sidebar renders an overflow button that invokes a menu with all but the last action, and a no-icon button for the last action with a chevron between that and the overflow button and at the end:
+
+<Canvas withSource="none">
+  <Story
+    name="Sidebar, 3+ corner actions, initial menu"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      sidebar: {
+        cornerActions: [
+          {
+            actionId: 'home',
+            label: fakeTitle(fake),
+            icon: 'home',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+          {
+            actionId: 'backToApp',
+            label: fakeTitle(fake),
+            icon: 'image',
+          },
+          {
+            actionId: 'backToSpecificApp',
+            label: fakeTitle(fake),
+            icon: 'eye',
+          },
+        ],
+        title: fakeTitle(fake),
+        accordion: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
+          label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
+          })),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || SidebarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+If you prefer a menu to appear in the middle, with first and last items pinned, you can set Sidebar’s `deepCornerActionsMenuVariant` prop to `'middle'`.
+
+<Canvas withSource="none">
+  <Story
+    name="Sidebar, 3+ corner actions, middle menu"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      sidebar: {
+        cornerActions: [
+          {
+            actionId: 'home',
+            label: fakeTitle(fake),
+            icon: 'home',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'grid',
+          },
+          {
+            actionId: 'backToApp',
+            label: fakeTitle(fake),
+            icon: 'image',
+          },
+          {
+            actionId: 'backToApps',
+            label: fakeTitle(fake),
+            icon: 'eye',
+          },
+        ],
+        deepCornerActionsMenuVariant: 'middle',
+        title: fakeTitle(fake),
+        accordion: range(3).map((i) => ({
+          actionId: `sidebar-item__${i}`,
+          label: fakeTitle(fake),
+          menu: range(6).map((s) => ({
+            action: {
+              actionId: `sidebar-action__${i}-${s}`,
+              label: fakeTitle(fake),
+            },
+          })),
+        })),
+      },
+      main: mainArgs,
+    }}
+  >
+    {seed(1234) || SidebarTemplate.bind({})}
+  </Story>
+</Canvas>

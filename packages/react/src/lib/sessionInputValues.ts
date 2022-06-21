@@ -18,7 +18,8 @@ export const getInputValue = (actionId: string) => {
   return value ? JSON.parse(value) : null
 }
 
-export const getInputValues = (actionIds: string[]) => actionIds.reduce(
+export const getInputValues = (actionIds: string[]) =>
+  actionIds.reduce(
     (acc: Record<string, string | string[] | null>, actionId) => {
       acc[actionId] = getInputValue(actionId)
       return acc

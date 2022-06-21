@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { Meta } from '@storybook/addon-docs'
 
-import { useDebounce } from '../../lib'
+import { randomNumber, useDebounce } from '../../lib'
 import { Icon } from './Icon'
 
 <Meta
@@ -103,7 +103,7 @@ export const IconFinder = () => {
         sizes,
         possibleSizes,
         randomSample: range(0, 18).map(
-          (_i) => allIcons[Math.floor(Math.random() * allIcons.length)]
+          (_i) => allIcons[Math.floor(randomNumber() * allIcons.length)]
         ),
       })
     })

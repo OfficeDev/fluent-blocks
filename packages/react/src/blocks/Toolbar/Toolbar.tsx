@@ -50,7 +50,7 @@ type ToolbarItemContextualOptions = Pick<
     }
   >
 
-const defaultIconSize = 16
+const defaultIconSize = 20
 const defaultButtonSize = 'medium'
 
 const useToolbarStyles = makeStyles({

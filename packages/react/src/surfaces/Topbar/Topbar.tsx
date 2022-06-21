@@ -4,9 +4,9 @@ import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 import { Toolbar } from '../../blocks/Toolbar/Toolbar'
 import { Button } from '../../inputs'
 import { rem, sx, useCommonStyles, useFluentBlocksContext } from '../../lib'
+import { sidebarWidth, topbarHeight } from '../../lib/surfaceDimensions'
 import { ContextualViewStateProps, SidebarState } from '../../props'
-import { sidebarWidth, useSidebarInvoker } from '../Sidebar'
-import { topbarHeight } from './topbarHeight'
+import { useSidebarInvoker } from '../Sidebar/Sidebar'
 
 export interface TopbarProps
   extends NaturalTopbarProps,

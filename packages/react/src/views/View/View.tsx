@@ -11,21 +11,24 @@ import {
   useCommonStyles,
   useLayoutResize,
 } from '../../lib'
+import { sidebarWidth, topbarHeight } from '../../lib/surfaceDimensions'
 import { SidebarState, WithActionHandler } from '../../props'
 import {
   Main,
   Sidebar,
   SidebarInvoker,
+  SidebarProps,
   SidebarScrim,
   Topbar,
-  sidebarWidth,
-  topbarHeight,
+  TopbarProps,
 } from '../../surfaces'
 
 export interface ViewProps
-  extends Omit<NaturalViewProps, 'main'>,
+  extends Omit<NaturalViewProps, 'main' | 'sidebar' | 'topbar'>,
     WithActionHandler<any> {
   main: SectionContentProps
+  sidebar?: SidebarProps
+  topbar?: TopbarProps
   iconSpriteUrl?: string
 }
 
@@ -55,23 +58,22 @@ const useViewStyles = makeStyles({
   },
 })
 
-/** An experience provided to the user via their device’s canvas. */
-export const View = ({
+export const ViewContent = ({
   main,
   sidebar,
   topbar,
-  themeName = 'light',
-  accentScheme = 'web',
-  translations = defaultTranslations,
-  iconSpriteUrl,
-  onAction,
-}: ViewProps) => {
+}: {
+  main: ViewProps['main']
+  sidebar?: ViewProps['sidebar']
+  topbar?: ViewProps['topbar']
+}) => {
+  const viewStyles = useViewStyles()
+  const commonStyles = useCommonStyles()
+
   const [sidebarState, setSidebarState] = useState<SidebarState>(
     sidebar ? SidebarState.Hidden : SidebarState.Never
   )
-  const contextualViewState = { sidebarState, setSidebarState } // useMemo(()=>({sidebarState, setsidebarState}), [sidebarState, setsidebarState])
-  const viewStyles = useViewStyles()
-  const commonStyles = useCommonStyles()
+
   const $view = useRef<HTMLDivElement | null>(null)
 
   const onResize = useCallback(() => {
@@ -86,43 +88,59 @@ export const View = ({
 
   useLayoutResize($view, onResize)
 
+  const contextualViewState = { sidebarState, setSidebarState } // useMemo(()=>({sidebarState, setsidebarState}), [sidebarState, setsidebarState])
+
   return (
-    <FluentBlocksProvider
-      {...{
-        themeName,
-        accentScheme,
-        translations,
-        onAction,
-        iconSpriteUrl,
-      }}
+    <div
+      role="none"
+      ref={$view}
+      className={cx(viewStyles.root, commonStyles.baseSurface)}
     >
       <div
         role="none"
-        ref={$view}
-        className={cx(viewStyles.root, commonStyles.baseSurface)}
+        className={cx(
+          viewStyles.mainScrollContext,
+          sidebarState === SidebarState.Docked &&
+            viewStyles['mainScrollContext--sidebarDocked'],
+          (topbar ||
+            sidebarState === SidebarState.Active ||
+            sidebarState === SidebarState.Hidden) &&
+            viewStyles['mainScrollContext--topGap']
+        )}
       >
-        <div
-          role="none"
-          className={cx(
-            viewStyles.mainScrollContext,
-            sidebarState === SidebarState.Docked &&
-              viewStyles['mainScrollContext--sidebarDocked'],
-            (topbar ||
-              sidebarState === SidebarState.Active ||
-              sidebarState === SidebarState.Hidden) &&
-              viewStyles['mainScrollContext--topGap']
-          )}
-        >
-          <Main {...main} contextualVariant="view" />
-        </div>
-        {sidebar && <SidebarScrim contextualViewState={contextualViewState} />}
-        {topbar ? (
-          <Topbar {...topbar} {...{ contextualViewState }} />
-        ) : sidebar ? (
-          <SidebarInvoker {...{ contextualViewState }} />
-        ) : null}
-        {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
+        <Main {...main} contextualVariant="view" />
       </div>
-    </FluentBlocksProvider>
+      {sidebar && <SidebarScrim contextualViewState={contextualViewState} />}
+      {topbar ? (
+        <Topbar {...topbar} {...{ contextualViewState }} />
+      ) : sidebar ? (
+        <SidebarInvoker {...{ contextualViewState }} />
+      ) : null}
+      {sidebar && <Sidebar {...sidebar} {...{ contextualViewState }} />}
+    </div>
   )
 }
+
+/** An experience provided to the user via their device’s canvas. */
+export const View = ({
+  main,
+  sidebar,
+  topbar,
+  themeName = 'light',
+  accentScheme = 'web',
+  translations = defaultTranslations,
+  iconSpriteUrl,
+  onAction,
+}: ViewProps) => (
+  <FluentBlocksProvider
+    {...{
+      themeName,
+      accentScheme,
+      translations,
+      onAction,
+      iconSpriteUrl,
+    }}
+  >
+    <ViewContent {...{ main, sidebar, topbar }} />
+  </FluentBlocksProvider>
+)

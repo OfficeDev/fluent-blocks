@@ -52,7 +52,23 @@ const useButtonStyles = makeStyles({
     whiteSpace: 'normal',
     paddingBlockStart: rem(4),
     paddingBlockEnd: rem(4),
+    // These are added to override rules applied by @fluentui
     paddingBottom: rem(4),
+    paddingTop: rem(4),
+  },
+  shrink: {
+    flexShrink: 1,
+  },
+  'label--shrink': {
+    display: 'block',
+    flexShrink: 1,
+    minWidth: 0,
+    overflowX: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  'background--default': {
+    backgroundColor: 'var(--colorNeutralBackground1)',
   },
 })
 
@@ -96,11 +112,10 @@ export const Button = ({
   const buttonStyles = useButtonStyles()
 
   const derivedSize =
-    contextualVariant === 'card-inputs' || contextualVariant === 'sidebar'
-      ? 'small'
-      : size || 'medium'
-  const derivedIconSize =
-    iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
+    contextualVariant === 'card-inputs' ? 'small' : size || 'medium'
+  const derivedIconSize = iconSize || 20
+
+  const shrink = contextualVariant === 'nav'
 
   const buttonElement = (
     <FluentButton
@@ -111,11 +126,9 @@ export const Button = ({
         size: derivedSize,
         className: cx(
           buttonStyles.root,
-          (contextualVariant === 'narrow-inputs' ||
-            contextualVariant === 'sidebar') &&
-            buttonStyles.fill,
-          contextualVariant === 'sidebar' && buttonStyles.alignInlineStart,
-          contextualVariant === 'sidebar' && buttonStyles.wrapContents,
+          variant === 'outline' && buttonStyles['background--default'],
+          contextualVariant === 'narrow-inputs' && buttonStyles.fill,
+          shrink && buttonStyles.shrink,
           contextualVariant.startsWith('toolbar-item') &&
             buttonStyles.toolbarItemInFlow,
           contextualVariant === 'toolbar-item--needs-update' &&
@@ -140,9 +153,14 @@ export const Button = ({
           disambiguatingLabel && { 'aria-label': disambiguatingLabel }),
         ...(selected && { 'aria-selected': selected }),
         ...(controls && { 'aria-controls': controls }),
+        ...(shrink && { title: disambiguatingLabel || label }),
       }}
     >
-      {iconOnly ? null : label}
+      {iconOnly ? null : shrink ? (
+        <span className={buttonStyles['label--shrink']}>{label}</span>
+      ) : (
+        label
+      )}
     </FluentButton>
   )
 

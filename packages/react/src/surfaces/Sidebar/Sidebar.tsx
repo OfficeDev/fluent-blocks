@@ -1,48 +1,67 @@
+import get from 'lodash/get'
 import noop from 'lodash/noop'
-import { Dispatch, SetStateAction, useCallback } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 import {
-  SidebarItemProps as NaturalSidebarItemProps,
-  SidebarProps as NaturalSidebarProps,
+  ButtonActionPayload,
+  SidebarCommonProps as NaturalSidebarCommonProps,
 } from '@fluent-blocks/schemas'
 import {
   Accordion,
   AccordionHeader,
   AccordionItem,
   AccordionPanel,
+  SelectTabEventHandler,
+  Tab,
+  TabList,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
 
 import { Heading } from '../../blocks'
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
-import { Button, ButtonProps } from '../../inputs'
+import { Icon, InlineContent, InlineSequenceOrString } from '../../inlines'
+import { Button, ButtonProps, Overflow } from '../../inputs'
 import {
   key,
+  makePayload,
   rem,
   sx,
   useCommonStyles,
   useFluentBlocksContext,
 } from '../../lib'
+import { sidebarWidth, topbarHeight } from '../../lib/surfaceDimensions'
 import {
   ContextualViewStateProps,
+  MenuActionSequence,
   MenuItemSequence,
   SidebarState,
+  WithActionHandler,
 } from '../../props'
-import { sidebarWidth } from './sidebarWidth'
+import { AccordionProps } from '../../props/accordion'
 
-export interface SidebarItemProps
-  extends Omit<NaturalSidebarItemProps, 'label' | 'menu'> {
-  label: InlineSequenceOrString
-  menu: MenuItemSequence
-}
-
-export interface SidebarProps
-  extends Omit<NaturalSidebarProps, 'title' | 'items'>,
+export interface SidebarCommonProps
+  extends Omit<NaturalSidebarCommonProps, 'title' | 'cornerActions'>,
+    WithActionHandler<ButtonActionPayload>,
     ContextualViewStateProps {
+  cornerActions?: MenuActionSequence
   title: InlineSequenceOrString
-  items: SidebarItemProps[]
 }
+
+export interface AccordionSidebarProps
+  extends SidebarCommonProps,
+    AccordionProps {}
+export interface FlatSidebarProps extends SidebarCommonProps {
+  menu: MenuItemSequence
+  defaultActiveItem?: string
+}
+
+export type SidebarProps = AccordionSidebarProps | FlatSidebarProps
 
 const useSidebarStyles = makeStyles({
   root: {
@@ -69,10 +88,6 @@ const useSidebarStyles = makeStyles({
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '100%',
-    paddingBlockStart: rem(16),
-    paddingBlockEnd: rem(16),
-    paddingInlineStart: rem(16),
-    paddingInlineEnd: rem(15),
     borderInlineEndWidth: '1px',
     borderInlineEndStyle: 'solid',
     borderInlineEndColor: 'transparent',
@@ -81,21 +96,78 @@ const useSidebarStyles = makeStyles({
     borderInlineEndColor: 'var(--colorNeutralForeground1)',
   },
   paddedContent: {
+    paddingBlockStart: rem(16),
+    paddingBlockEnd: rem(16),
+    paddingInlineStart: rem(20),
+    paddingInlineEnd: rem(19),
+  },
+  paddedContentInner: {
     marginInlineEnd: rem(-16),
     marginInlineStart: rem(-16),
   },
+  cornerActions: {
+    height: rem(topbarHeight - 16),
+    paddingBlockStart: rem(8),
+    paddingBlockEnd: rem(7),
+    paddingInlineStart: rem(8),
+    paddingInlineEnd: rem(8),
+    borderBlockEndWidth: '1px',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndColor: 'var(--colorNeutralStroke1)',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  tab: {
+    textAlign: 'start',
+  },
 })
 
-export const Sidebar = ({
-  title,
-  items,
-  defaultOpenItems,
-  contextualViewState,
-}: SidebarProps) => {
+function isAccordionSidebar(o: any): o is AccordionSidebarProps {
+  return 'accordion' in o
+}
+
+function isFlatSidebar(o: any): o is FlatSidebarProps {
+  return 'menu' in o
+}
+
+export const Sidebar = (props: SidebarProps) => {
+  const {
+    title,
+    cornerActions,
+    deepCornerActionsMenuVariant = 'initial',
+    contextualViewState,
+    defaultActiveItem,
+    onAction,
+  } = props
   const sidebarStyles = useSidebarStyles()
   const commonStyles = useCommonStyles()
-  const { themeName } = useFluentBlocksContext()
+  const {
+    themeName,
+    translations,
+    onAction: contextOnAction,
+  } = useFluentBlocksContext()
   const labelId = key(title)
+  const [activeItem, setActiveItem] = useState<string | null>(
+    defaultActiveItem || null
+  )
+
+  useEffect(() => {
+    setActiveItem(defaultActiveItem || null)
+  }, [defaultActiveItem])
+
+  const onSidebarItemClick: SelectTabEventHandler = useCallback((event) => {
+    const nextActiveItem = get(event, ['currentTarget', 'id'], null)
+    setActiveItem(nextActiveItem)
+    if (nextActiveItem) {
+      const payload = makePayload({
+        type: 'activate' as 'activate',
+        actionId: nextActiveItem,
+      })
+      onAction && onAction(payload)
+      contextOnAction && contextOnAction(payload)
+    }
+  }, [])
+
   return (
     <nav
       aria-labelledby={labelId}
@@ -117,43 +189,193 @@ export const Sidebar = ({
           themeName === 'highContrast' && sidebarStyles['inner--hc']
         )}
       >
-        <Heading
-          paragraph={title}
-          level={1}
-          contextualVariant="card"
-          contextualId={labelId}
-        />
-        <Accordion
-          multiple
-          className={sidebarStyles.paddedContent}
-          defaultOpenItems={
-            defaultOpenItems || items.map(({ actionId }) => actionId)
-          }
-        >
-          {items.map(({ actionId, label, menu }) => (
-            <AccordionItem key={actionId} value={actionId}>
-              <AccordionHeader as="h2">
-                <InlineContent inlines={label} />
-              </AccordionHeader>
-              <AccordionPanel role="group">
-                {menu.map((menuItem) => {
-                  if ('action' in menuItem) {
-                    return (
-                      <Button
-                        key={menuItem.action.actionId}
-                        button={{
-                          ...menuItem.action,
-                          variant: 'subtle',
-                        }}
-                        contextualVariant="sidebar"
-                      />
-                    )
+        {cornerActions && !!cornerActions.length && (
+          <div role="none" className={cx(sidebarStyles.cornerActions)}>
+            {cornerActions.length < 2 ? (
+              <Button
+                button={{
+                  ...cornerActions[0],
+                  icon:
+                    translations.dir === 'ltr' ? 'arrow_left' : 'arrow_right',
+                  variant: 'subtle',
+                }}
+                contextualVariant="nav"
+              />
+            ) : cornerActions.length < 3 ? (
+              <>
+                <Button
+                  button={{
+                    ...cornerActions[0],
+                    iconOnly: true,
+                    variant: 'subtle',
+                  }}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
                   }
-                })}
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-        </Accordion>
+                />
+                <Button
+                  button={{
+                    ...cornerActions[1],
+                    icon: undefined,
+                    variant: 'subtle',
+                  }}
+                  contextualVariant="nav"
+                />
+              </>
+            ) : deepCornerActionsMenuVariant === 'middle' ? (
+              <>
+                <Button
+                  button={{
+                    ...cornerActions[0],
+                    iconOnly: true,
+                    variant: 'subtle',
+                  }}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
+                  }
+                />
+                <Overflow
+                  triggerLabel={translations['more--nav']}
+                  overflow={cornerActions
+                    .slice(1, cornerActions.length - 1)
+                    .map((action) => ({ action }))}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
+                  }
+                />
+                <Button
+                  button={{
+                    ...cornerActions[cornerActions.length - 1],
+                    icon: undefined,
+                    variant: 'subtle',
+                  }}
+                  contextualVariant="nav"
+                />
+              </>
+            ) : (
+              <>
+                <Overflow
+                  triggerIcon="home_more"
+                  triggerLabel={translations['more--nav']}
+                  overflow={cornerActions
+                    .slice(0, cornerActions.length - 1)
+                    .map((action) => ({ action }))}
+                />
+                <Icon
+                  icon={
+                    translations.dir === 'ltr'
+                      ? 'chevron_right'
+                      : 'chevron_left'
+                  }
+                />
+                <Button
+                  button={{
+                    ...cornerActions[cornerActions.length - 1],
+                    icon: undefined,
+                    variant: 'subtle',
+                  }}
+                  contextualVariant="nav"
+                />
+              </>
+            )}
+          </div>
+        )}
+        <div role="none" className={cx(sidebarStyles.paddedContent)}>
+          <Heading
+            paragraph={title}
+            level={1}
+            contextualVariant="card"
+            contextualId={labelId}
+          />
+          {isAccordionSidebar(props) && (
+            <Accordion
+              multiple
+              className={sidebarStyles.paddedContentInner}
+              defaultOpenItems={
+                props.defaultOpenItems ||
+                props.accordion.map(({ actionId }) => actionId)
+              }
+            >
+              {props.accordion.map(({ actionId, label, menu }) => (
+                <AccordionItem key={actionId} value={actionId}>
+                  <AccordionHeader as="h2">
+                    <InlineContent inlines={label} />
+                  </AccordionHeader>
+                  <AccordionPanel role="none">
+                    <TabList
+                      {...{
+                        vertical: true,
+                        onTabSelect: onSidebarItemClick,
+                        selectedValue: activeItem,
+                      }}
+                    >
+                      {menu.map((menuItem) => {
+                        if ('action' in menuItem) {
+                          const { action } = menuItem
+                          return (
+                            <Tab
+                              key={action.actionId}
+                              {...{
+                                id: action.actionId,
+                                value: action.actionId,
+                                className: sidebarStyles.tab,
+                                ...(action.icon && {
+                                  icon: <Icon icon={action.icon} />,
+                                }),
+                              }}
+                            >
+                              {action.label}
+                            </Tab>
+                          )
+                        }
+                      })}
+                    </TabList>
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          )}
+          {isFlatSidebar(props) && (
+            <TabList
+              {...{
+                vertical: true,
+                onTabSelect: onSidebarItemClick,
+                selectedValue: activeItem,
+                className: sidebarStyles.paddedContentInner,
+              }}
+            >
+              {props.menu.map((menuItem) =>
+                'action' in menuItem ? (
+                  <Tab
+                    key={menuItem.action.actionId}
+                    {...{
+                      id: menuItem.action.actionId,
+                      value: menuItem.action.actionId,
+                      className: sidebarStyles.tab,
+                      ...(menuItem.action.icon && {
+                        icon: <Icon icon={menuItem.action.icon} />,
+                      }),
+                    }}
+                  >
+                    {menuItem.action.label}
+                  </Tab>
+                ) : null
+              )}
+            </TabList>
+          )}
+        </div>
       </div>
     </nav>
   )
@@ -212,7 +434,7 @@ export function useSidebarInvoker(
         sidebarState === SidebarState.Active
           ? translations['sidebar__close']
           : translations['sidebar__open'],
-      icon: sidebarState === SidebarState.Active ? 'dismiss' : 'apps_list',
+      icon: sidebarState === SidebarState.Active ? 'dismiss' : 'navigation',
       iconOnly: true,
       variant: 'outline',
       onAction,

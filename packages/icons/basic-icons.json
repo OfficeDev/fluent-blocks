@@ -1,5 +1,5 @@
 {
-  "sizes": [16, 24],
+  "sizes": [20],
   "styles": ["regular", "filled"],
   "include": {
     "accessibility": {},
@@ -66,6 +66,7 @@
     "grid": {},
     "heart": {},
     "home": {},
+    "home_more": {},
     "image": {},
     "info": {},
     "key_command": {},
