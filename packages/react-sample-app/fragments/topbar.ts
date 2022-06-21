@@ -1,6 +1,7 @@
 import {TopbarProps} from "@fluent-blocks/react";
+import {FragmentProps} from "./props";
 
-export default function topbar(pathname: string): TopbarProps | undefined {
+export default function topbar({pathname}: FragmentProps): TopbarProps | undefined {
   switch(pathname){
     case '/apps': return {
       near: {

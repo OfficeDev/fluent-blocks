@@ -1,7 +1,7 @@
 import range from 'lodash/range'
 
 import { faker } from '@faker-js/faker'
-import { ListProps, Main } from '@fluent-blocks/react'
+import { Escape, ListProps, Main } from '@fluent-blocks/react'
 
 export default function Apps() {
   return (

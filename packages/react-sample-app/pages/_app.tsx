@@ -1,4 +1,5 @@
 import get from 'lodash/get'
+import pick from 'lodash/pick'
 import { AppProps } from 'next/app'
 import { NextRouter, useRouter } from 'next/router'
 import { FC, ReactElement } from 'react'
@@ -21,8 +22,10 @@ const _globals = require('../styles/globals.css')
 
 function onActivate(payload: ActionPayload, router: NextRouter) {
   if ('row' in payload) {
-    const dest = get(payload, 'row', '').split(':')[1]
-    router.push(dest)
+    const action = get(payload, 'row', '').split(':')
+    if (action[0] === 'nav') {
+      router.push(action[1])
+    }
   }
 }
 
@@ -32,6 +35,7 @@ function FuibApp({
   renderer,
 }: AppProps & { renderer?: RendererProviderProps['renderer'] }) {
   const router = useRouter()
+  const fragmentProps = pick(router, ['pathname', 'query'])
   return (
     <RendererProvider renderer={renderer || createDOMRenderer()}>
       <View
@@ -41,19 +45,16 @@ function FuibApp({
         onAction={(payload) => {
           console.log('[action]', payload)
           const { actionId } = payload
-          switch (actionId) {
-            case 'nav:/':
-              return router.push('/')
-            case 'nav:/apps':
-              return router.push('/apps')
-            case 'nav:/tools':
-              return router.push('/tools')
+          const action = actionId.split(':')
+          switch (action[0]) {
+            case 'nav':
+              return router.push(action[1])
             case 'activate':
               return onActivate(payload, router)
           }
         }}
-        sidebar={sidebarFragment(router.pathname)}
-        topbar={topbarFragment(router.pathname)}
+        sidebar={sidebarFragment(fragmentProps)}
+        topbar={topbarFragment(fragmentProps)}
         main={{
           title: '',
           blocks: [
