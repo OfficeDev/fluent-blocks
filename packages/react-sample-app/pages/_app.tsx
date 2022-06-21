@@ -2,21 +2,24 @@ import get from 'lodash/get'
 import pick from 'lodash/pick'
 import { AppProps } from 'next/app'
 import { NextRouter, useRouter } from 'next/router'
-import { FC, ReactElement } from 'react'
+import { FC, PropsWithChildren } from 'react'
 
 import { ActionPayload, Escape, View } from '@fluent-blocks/react'
 import {
   RendererProvider as IncorrectlyTypedRendererProvider,
+  SSRProvider as IncorrectlyTypedSSRProvider,
   createDOMRenderer,
-} from '@griffel/react'
+} from '@fluentui/react-components'
 import { RendererProviderProps } from '@griffel/react/RendererContext'
 
 import sidebarFragment from '../fragments/sidebar'
 import topbarFragment from '../fragments/topbar'
 
 const RendererProvider = IncorrectlyTypedRendererProvider as FC<
-  RendererProviderProps & { children: ReactElement }
+  PropsWithChildren<RendererProviderProps>
 >
+
+const SSRProvider = IncorrectlyTypedSSRProvider as FC<PropsWithChildren<{}>>
 
 const _globals = require('../styles/globals.css')
 
@@ -38,32 +41,34 @@ function FuibApp({
   const fragmentProps = pick(router, ['pathname', 'query'])
   return (
     <RendererProvider renderer={renderer || createDOMRenderer()}>
-      <View
-        themeName="light"
-        accentScheme="teams"
-        iconSpriteUrl="/basic-icons.svg"
-        onAction={(payload) => {
-          console.log('[action]', payload)
-          const { actionId } = payload
-          const action = actionId.split(':')
-          switch (action[0]) {
-            case 'nav':
-              return router.push(action[1])
-            case 'activate':
-              return onActivate(payload, router)
-          }
-        }}
-        sidebar={sidebarFragment(fragmentProps)}
-        topbar={topbarFragment(fragmentProps)}
-        main={{
-          title: '',
-          blocks: [
-            <Escape key="e1" contentMeetsAccessibilityAndDesignStandards>
-              <Component {...pageProps} />
-            </Escape>,
-          ],
-        }}
-      />
+      <SSRProvider>
+        <View
+          themeName="light"
+          accentScheme="teams"
+          iconSpriteUrl="/basic-icons.svg"
+          onAction={(payload) => {
+            console.log('[action]', payload)
+            const { actionId } = payload
+            const action = actionId.split(':')
+            switch (action[0]) {
+              case 'nav':
+                return router.push(action[1])
+              case 'activate':
+                return onActivate(payload, router)
+            }
+          }}
+          sidebar={sidebarFragment(fragmentProps)}
+          topbar={topbarFragment(fragmentProps)}
+          main={{
+            title: '',
+            blocks: [
+              <Escape key="e1" contentMeetsAccessibilityAndDesignStandards>
+                <Component {...pageProps} />
+              </Escape>,
+            ],
+          }}
+        />
+      </SSRProvider>
     </RendererProvider>
   )
 }

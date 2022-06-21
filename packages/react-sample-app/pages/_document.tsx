@@ -1,35 +1,53 @@
-import { createDOMRenderer, renderToStyleElements } from '@griffel/react';
+import {
+  AppContextType,
+  AppInitialProps,
+  AppPropsType,
+  NextComponentType,
+} from 'next/dist/shared/lib/utils'
 import Document, {
-  Html,
+  DocumentContext,
   Head,
+  Html,
   Main,
   NextScript,
-  DocumentContext
-} from 'next/document';
-import {
-  AppContextType, AppInitialProps, AppPropsType,
-  NextComponentType
-} from "next/dist/shared/lib/utils";
+} from 'next/document'
 
-class FuibDocument extends Document {
+import {
+  createDOMRenderer,
+  renderToStyleElements,
+} from '@fluentui/react-components'
+
+export default class FuibDocument extends Document {
   public static async getInitialProps(ctx: DocumentContext) {
     // 👇 creates a renderer
-    const renderer = createDOMRenderer();
-    const originalRenderPage = ctx.renderPage;
+    const renderer = createDOMRenderer()
+    const originalRenderPage = ctx.renderPage
 
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App: NextComponentType<AppContextType, AppInitialProps, AppPropsType & {renderer?: any}>) => props => <App {...props} renderer={renderer} />,
-      });
+        enhanceApp:
+          (
+            App: NextComponentType<
+              AppContextType,
+              AppInitialProps,
+              AppPropsType & { renderer?: any }
+            >
+          ) =>
+          (props) =>
+            <App {...props} renderer={renderer} />,
+      })
 
-    const initialProps = await Document.getInitialProps(ctx);
-    const styles = renderToStyleElements(renderer);
+    const initialProps = await Document.getInitialProps(ctx)
+    const styles = renderToStyleElements(renderer)
 
     return {
       ...initialProps,
       // 👇 adding our styles elements to output
-      styles: [...(Array.isArray(initialProps.styles) ? initialProps.styles : []), ...styles],
-    };
+      styles: [
+        ...(Array.isArray(initialProps.styles) ? initialProps.styles : []),
+        ...styles,
+      ],
+    }
   }
 
   public render() {
@@ -37,12 +55,10 @@ class FuibDocument extends Document {
       <Html>
         <Head />
         <body>
-        <Main />
-        <NextScript />
+          <Main />
+          <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
-
-export default FuibDocument
