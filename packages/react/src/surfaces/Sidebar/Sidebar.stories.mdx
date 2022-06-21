@@ -1,10 +1,9 @@
-import { fake, seed } from 'faker/locale/en_US'
 import range from 'lodash/range'
 
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
-import fakeTitle from '../../lib/fakeTitle'
+import { fake, fakeTitle, seed } from '../../lib/fake'
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { View } from '../../views'
 import { Sidebar } from './Sidebar'
