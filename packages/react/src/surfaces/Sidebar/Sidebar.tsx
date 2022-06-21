@@ -189,7 +189,7 @@ export const Sidebar = (props: SidebarProps) => {
           themeName === 'highContrast' && sidebarStyles['inner--hc']
         )}
       >
-        {cornerActions && cornerActions.length && (
+        {cornerActions && !!cornerActions.length && (
           <div role="none" className={cx(sidebarStyles.cornerActions)}>
             {cornerActions.length < 2 ? (
               <Button

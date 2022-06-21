@@ -67,6 +67,9 @@ const useButtonStyles = makeStyles({
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
   },
+  'background--default': {
+    backgroundColor: 'var(--colorNeutralBackground1)',
+  },
 })
 
 export const Button = ({
@@ -123,6 +126,7 @@ export const Button = ({
         size: derivedSize,
         className: cx(
           buttonStyles.root,
+          variant === 'outline' && buttonStyles['background--default'],
           contextualVariant === 'narrow-inputs' && buttonStyles.fill,
           shrink && buttonStyles.shrink,
           contextualVariant.startsWith('toolbar-item') &&
