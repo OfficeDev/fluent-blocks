@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce'
-import { RefObject, useCallback, useLayoutEffect } from 'react'
+import { RefObject, useCallback, useEffect } from 'react'
 
 import useResizeObserver from '@react-hook/resize-observer'
 
@@ -8,7 +8,7 @@ export function useLayoutResize<T extends HTMLElement>(
   onResizeCompute: () => void,
   onResizeStart?: () => void
 ): void {
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (ref.current) {
       onResizeCompute()
     }
