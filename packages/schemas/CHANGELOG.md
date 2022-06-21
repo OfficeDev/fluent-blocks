@@ -1,5 +1,11 @@
 # @fluent-blocks/schemas
 
+## 9.2.0-next.2
+
+### Minor Changes
+
+- [#135](https://github.com/OfficeDev/fluent-blocks/pull/135) [`db5967f`](https://github.com/OfficeDev/fluent-blocks/commit/db5967f5edc1b4ac6f1dba40f7fdc17be682de36) Thanks [@thure](https://github.com/thure)! - Add cornerActions to Sidebar, which can be used to add upward/backward navigation to the sidebar.
+
 ## 9.2.0-next.0
 
 ### Minor Changes

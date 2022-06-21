@@ -1,5 +1,11 @@
 # @fluent-blocks/basic-icons
 
+## 9.1.3-next.1
+
+### Patch Changes
+
+- [#135](https://github.com/OfficeDev/fluent-blocks/pull/135) [`db5967f`](https://github.com/OfficeDev/fluent-blocks/commit/db5967f5edc1b4ac6f1dba40f7fdc17be682de36) Thanks [@thure](https://github.com/thure)! - Update basic-icons dependencies. Change bundled icon size to only 20px. Fix all icon sizes in Fluent Blocks React to 20px.
+
 ## 9.1.3-next.0
 
 ### Patch Changes
