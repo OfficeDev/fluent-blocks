@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { ChangeEvent, useCallback, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
 import { Select as FluentSelect } from '@fluentui/react-components/unstable'
@@ -54,22 +54,27 @@ export const Dropdown = ({
 }: DropdownProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
+  const [value, setValue] = useState<string>(initialValue || '')
+
   useEffect(() => {
-    putInputValue(actionId, initialValue || '')
+    const nextValue = initialValue || ''
+    putInputValue(actionId, nextValue)
+    setValue(nextValue)
     return () => deleteInputValue(actionId)
   }, [initialValue])
 
   const onChange = useCallback(
     ({ target }: ChangeEvent<HTMLSelectElement>) => {
-      const value = get(target, 'value', '')
-      if (value) {
-        putInputValue(actionId, value)
+      const nextValue = get(target, 'value', '')
+      setValue(nextValue)
+      if (nextValue) {
+        putInputValue(actionId, nextValue)
       }
       const actionPayload = makePayload<SingleValueInputActionPayload>(
         {
           actionId,
           type: 'change' as 'change',
-          value,
+          value: nextValue,
         },
         metadata,
         include
@@ -85,7 +90,7 @@ export const Dropdown = ({
       <FluentSelect
         {...{
           id: actionId,
-          defaultValue: initialValue || '',
+          value,
           onChange,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
@@ -98,7 +103,8 @@ export const Dropdown = ({
           disabled
           {...(!initialValue && {
             // React errors about this, but provides no alternative means of
-            // selecting the falsy placeholder value when `initialValue` is falsy.
+            // selecting the falsy placeholder value when `initialValue`
+            // is falsy.
             selected: true,
           })}
         >
