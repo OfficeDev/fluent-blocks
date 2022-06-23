@@ -1,5 +1,14 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.3
+
+### Patch Changes
+
+- [#142](https://github.com/OfficeDev/fluent-blocks/pull/142) [`86a3417`](https://github.com/OfficeDev/fluent-blocks/commit/86a341788aea6d2456345ae24bcd7738b0052e0a) Thanks [@thure](https://github.com/thure)! - Change Sidebar to use initialActiveItem. Allow initialValue(s) to programmatically change input state.
+
+- Updated dependencies [[`86a3417`](https://github.com/OfficeDev/fluent-blocks/commit/86a341788aea6d2456345ae24bcd7738b0052e0a)]:
+  - @fluent-blocks/schemas@9.2.0-next.3
+
 ## 9.2.0-next.2
 
 ### Minor Changes
