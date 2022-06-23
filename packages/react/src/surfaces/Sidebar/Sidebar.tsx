@@ -58,7 +58,7 @@ export interface AccordionSidebarProps
     AccordionProps {}
 export interface FlatSidebarProps extends SidebarCommonProps {
   menu: MenuItemSequence
-  defaultActiveItem?: string
+  initialActiveItem?: string
 }
 
 export type SidebarProps = AccordionSidebarProps | FlatSidebarProps
@@ -136,7 +136,7 @@ export const Sidebar = (props: SidebarProps) => {
     cornerActions,
     deepCornerActionsMenuVariant = 'initial',
     contextualViewState,
-    defaultActiveItem,
+    initialActiveItem,
     onAction,
   } = props
   const sidebarStyles = useSidebarStyles()
@@ -148,12 +148,12 @@ export const Sidebar = (props: SidebarProps) => {
   } = useFluentBlocksContext()
   const labelId = key(title)
   const [activeItem, setActiveItem] = useState<string | null>(
-    defaultActiveItem || null
+    initialActiveItem || null
   )
 
   useEffect(() => {
-    setActiveItem(defaultActiveItem || null)
-  }, [defaultActiveItem])
+    setActiveItem(initialActiveItem || null)
+  }, [initialActiveItem])
 
   const onSidebarItemClick: SelectTabEventHandler = useCallback((event) => {
     const nextActiveItem = get(event, ['currentTarget', 'id'], null)

@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useCallback, useEffect } from 'react'
+import { FormEvent, Fragment, useCallback, useEffect, useState } from 'react'
 
 import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
 import {
@@ -43,19 +43,28 @@ export const RadioGroup = ({
 }: RadioGroupProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
+  const [value, setValue] = useState<string>(initialValue || '')
+
   useEffect(() => {
-    putInputValue(actionId, initialValue || '')
+    const nextValue = initialValue || ''
+    putInputValue(actionId, nextValue)
+    setValue(nextValue)
     return () => deleteInputValue(actionId)
   }, [initialValue])
 
   const onChange = useCallback(
-    (_e: FormEvent<HTMLDivElement>, { value }: RadioGroupOnChangeData) => {
-      putInputValue(actionId, value)
+    (
+      _e: FormEvent<HTMLDivElement>,
+      { value: elementValue }: RadioGroupOnChangeData
+    ) => {
+      const nextValue = elementValue || ''
+      setValue(nextValue)
+      putInputValue(actionId, nextValue)
       const actionPayload = makePayload<SingleValueInputActionPayload>(
         {
           actionId,
           type: 'change' as 'change',
-          value,
+          value: nextValue,
         },
         metadata,
         include
@@ -70,8 +79,8 @@ export const RadioGroup = ({
     <FluentRadioGroup
       {...{
         id: actionId,
-        defaultValue: initialValue,
         onChange,
+        ...(value && { value }),
         ...(disambiguatingLabel
           ? { 'aria-label': disambiguatingLabel }
           : { 'aria-labelledby': contextualLabelId }),
