@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.4
+
+### Patch Changes
+
+- [#144](https://github.com/OfficeDev/fluent-blocks/pull/144) [`1df162b`](https://github.com/OfficeDev/fluent-blocks/commit/1df162b78cdb4d759dd334f1c03b4942b44cac7a) Thanks [@thure](https://github.com/thure)! - Inputs no longer set internal state on changes in the initialValue(s) prop.
+
 ## 9.2.0-next.3
 
 ### Patch Changes
