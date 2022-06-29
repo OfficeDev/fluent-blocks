@@ -57,11 +57,9 @@ export const Dropdown = ({
   const [value, setValue] = useState<string>(initialValue || '')
 
   useEffect(() => {
-    const nextValue = initialValue || ''
-    putInputValue(actionId, nextValue)
-    setValue(nextValue)
+    putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
-  }, [initialValue])
+  }, [])
 
   const onChange = useCallback(
     ({ target }: ChangeEvent<HTMLSelectElement>) => {

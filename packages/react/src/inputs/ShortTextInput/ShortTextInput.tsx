@@ -91,11 +91,9 @@ export const ShortTextInput = ({
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   useEffect(() => {
-    const nextValue = initialValue || ''
-    putInputValue(actionId, nextValue)
-    setValue(nextValue)
+    putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
-  }, [initialValue])
+  }, [])
 
   useEffect(() => {
     putInputValue(actionId, debouncedValue)
