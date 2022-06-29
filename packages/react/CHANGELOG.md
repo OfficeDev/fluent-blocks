@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.5
+
+### Patch Changes
+
+- [#146](https://github.com/OfficeDev/fluent-blocks/pull/146) [`3f6f88f`](https://github.com/OfficeDev/fluent-blocks/commit/3f6f88f93ffa4ffbf26b754fa8d8b518c5abde60) Thanks [@thure](https://github.com/thure)! - Fix text input effects & callbacks to avoid infinite looping.
+
 ## 9.2.0-next.4
 
 ### Patch Changes
