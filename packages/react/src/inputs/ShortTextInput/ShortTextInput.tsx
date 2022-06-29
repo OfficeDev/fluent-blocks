@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   ShortTextInputProps as NaturalShortTextInputProps,
@@ -95,23 +95,28 @@ export const ShortTextInput = ({
     return () => deleteInputValue(actionId)
   }, [])
 
-  useEffect(() => {
-    putInputValue(actionId, debouncedValue)
-    if (didMount.current) {
-      const payload = makePayload(
-        {
-          actionId,
-          type: 'change' as 'change',
-          value: debouncedValue,
-        },
-        metadata,
-        include
-      )
-      onAction ? onAction(payload) : contextOnAction(payload)
-    } else {
-      didMount.current = true
-    }
-  }, [debouncedValue, actionId, onAction, contextOnAction, metadata, include])
+  const onChange = useCallback(
+    (nextValue: string) => {
+      putInputValue(actionId, nextValue)
+      if (didMount.current) {
+        const payload = makePayload(
+          {
+            actionId,
+            type: 'change' as 'change',
+            value: nextValue,
+          },
+          metadata,
+          include
+        )
+        onAction ? onAction(payload) : contextOnAction(payload)
+      } else {
+        didMount.current = true
+      }
+    },
+    [actionId, onAction, contextOnAction, metadata, include]
+  )
+
+  useEffect(() => onChange(debouncedValue), [debouncedValue])
 
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')
