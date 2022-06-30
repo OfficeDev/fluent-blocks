@@ -36,6 +36,7 @@
     "pnpm": "^7"
   },
   "peerDependencies": {
+    "chart.js": "^2.9.4",
     "react": "^16.14.0, 17.x, 18.x",
     "react-dom": "^16.14.0, 17.x, 18.x"
   },
@@ -81,7 +82,6 @@
     "@fluent-blocks/schemas": "workspace:9.2.0-next.3",
     "@react-hook/resize-observer": "^1.2.5",
     "alea": "^1.0.1",
-    "chart.js": "^2.9.4",
     "lodash": "^4.17.21"
   }
 }

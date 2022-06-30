@@ -118,7 +118,6 @@ importers:
       '@fluentui/react-tabster': 9.0.1_qyffbl774oliprn4v4btwexwpy
       '@react-hook/resize-observer': 1.2.5_react@18.1.0
       alea: 1.0.1
-      chart.js: 2.9.4
       lodash: 4.17.21
     devDependencies:
       '@babel/core': 7.18.6
@@ -138,6 +137,7 @@ importers:
       '@types/react-dom': 18.0.5
       '@types/react-test-renderer': 18.0.0
       babel-loader: 8.2.5_fswvdo7jykdwhfxrdcvghfn6pa
+      chart.js: 2.9.4
       chromatic: 6.7.0
       csstype: 2.6.20
       http-proxy-middleware: 2.0.6
@@ -6158,20 +6158,20 @@ packages:
     dependencies:
       chartjs-color: 2.4.1
       moment: 2.29.3
-    dev: false
+    dev: true
 
   /chartjs-color-string/0.6.0:
     resolution: {integrity: sha512-TIB5OKn1hPJvO7JcteW4WY/63v6KwEdt6udfnDE9iCAZgy+V4SrbSxoIbTw/xkUIapjEI4ExGtD0+6D3KyFd7A==}
     dependencies:
       color-name: 1.1.4
-    dev: false
+    dev: true
 
   /chartjs-color/2.4.1:
     resolution: {integrity: sha512-haqOg1+Yebys/Ts/9bLo/BqUcONQOdr/hoEr2LLTRl6C5LXctUdHxsCYfvQVg5JIxITrfCNUDr4ntqmQk9+/0w==}
     dependencies:
       chartjs-color-string: 0.6.0
       color-convert: 1.9.3
-    dev: false
+    dev: true
 
   /check-more-types/2.24.0:
     resolution: {integrity: sha1-FCD/sQ/URNz8ebQ4kbv//TKoRgA=}
@@ -6388,6 +6388,7 @@ packages:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
       color-name: 1.1.3
+    dev: true
 
   /color-convert/2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -6398,9 +6399,11 @@ packages:
 
   /color-name/1.1.3:
     resolution: {integrity: sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==}
+    dev: true
 
   /color-name/1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+    dev: true
 
   /color-support/1.1.3:
     resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==}
@@ -10427,6 +10430,7 @@ packages:
 
   /moment/2.29.3:
     resolution: {integrity: sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==}
+    dev: true
 
   /move-concurrently/1.0.1:
     resolution: {integrity: sha512-hdrFxZOycD/g6A6SoI2bB5NA/5NEqD0569+S47WZhPvm46sD50ZHdYaFmnua5lndde9rCHGjmfK7Z8BuCt/PcQ==}
