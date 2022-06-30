@@ -1,9 +1,9 @@
 import get from 'lodash/get'
-import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
-import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
+import { MultipleValueInputActionPayload } from '@fluent-blocks/schemas'
 import {
-  Dropdown as FluentDropdown,
+  Combobox as FluentCombobox,
   Option,
 } from '@fluentui/react-components/unstable'
 
@@ -17,7 +17,7 @@ import {
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
-  SingleSelectProps,
+  MultipleSelectProps,
 } from '../../../../props'
 
 interface DescribedStringLabeledValueProps
@@ -25,27 +25,27 @@ interface DescribedStringLabeledValueProps
   label: string
 }
 
-export interface DropdownProps extends Omit<SingleSelectProps, 'select'> {
-  select: Omit<SingleSelectProps['select'], 'options'> & {
+export interface ComboboxProps extends Omit<MultipleSelectProps, 'select'> {
+  select: Omit<MultipleSelectProps['select'], 'options'> & {
     variant: 'combobox'
+    multiple: true
     options: [
       DescribedStringLabeledValueProps,
       DescribedStringLabeledValueProps,
       ...DescribedStringLabeledValueProps[]
     ]
-    multiple?: false
     placeholder?: string
   }
   contextualLabelId?: string
   contextualDescriptionId?: string
 }
 
-export const Dropdown = ({
+export const Combobox = ({
   select: {
     disambiguatingLabel,
     description,
     actionId,
-    initialValue,
+    initialValues,
     options,
     placeholder,
     onAction,
@@ -54,28 +54,29 @@ export const Dropdown = ({
   },
   contextualLabelId,
   contextualDescriptionId,
-}: DropdownProps) => {
+}: ComboboxProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
-  const [value, setValue] = useState<string>(initialValue || '')
+  const [values, setValues] = useState<string[]>(initialValues || [])
 
   useEffect(() => {
-    putInputValue(actionId, initialValue || '')
+    putInputValue(actionId, initialValues || [])
     return () => deleteInputValue(actionId)
   }, [])
 
   const onChange = useCallback(
-    ({ target }: FormEvent<HTMLButtonElement>) => {
-      const nextValue = get(target, 'value', '')
-      setValue(nextValue)
-      if (nextValue) {
-        putInputValue(actionId, nextValue)
+    ({ target }: ChangeEvent<HTMLInputElement>) => {
+      // todo: figure out how v9 conveys values
+      const nextValues = [get(target, 'value', '')]
+      setValues(nextValues)
+      if (nextValues) {
+        putInputValue(actionId, nextValues)
       }
-      const actionPayload = makePayload<SingleValueInputActionPayload>(
+      const actionPayload = makePayload<MultipleValueInputActionPayload>(
         {
           actionId,
           type: 'change' as 'change',
-          value: nextValue,
+          values: nextValues,
         },
         metadata,
         include
@@ -88,10 +89,10 @@ export const Dropdown = ({
 
   return (
     <>
-      <FluentDropdown
+      <FluentCombobox
         {...{
           id: actionId,
-          value,
+          values,
           onChange,
           placeholder,
           ...(disambiguatingLabel
@@ -116,7 +117,7 @@ export const Dropdown = ({
             </Option>
           )
         })}
-      </FluentDropdown>
+      </FluentCombobox>
       {options.map(({ value, description }) => {
         if (description) {
           const optionDescriptionId = makeId(value, 'optionDescription')
@@ -139,10 +140,10 @@ export const Dropdown = ({
   )
 }
 
-function isDropdownProps(o: any): o is DropdownProps {
-  return 'select' in o && o.select.variant === 'combobox' && !o.select.multiple
+function isComboboxProps(o: any): o is ComboboxProps {
+  return 'select' in o && o.select.variant === 'combobox' && o.select.multiple
 }
 
-export function renderIfDropdown(o: any) {
-  return isDropdownProps(o) ? <Dropdown {...o} /> : null
+export function renderIfCombobox(o: any) {
+  return isComboboxProps(o) ? <Combobox {...o} /> : null
 }
