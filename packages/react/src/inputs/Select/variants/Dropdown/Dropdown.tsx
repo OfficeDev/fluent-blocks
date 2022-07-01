@@ -1,9 +1,10 @@
 import get from 'lodash/get'
-import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { ReactEventHandler, useCallback, useEffect, useState } from 'react'
 
 import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
 import {
   Dropdown as FluentDropdown,
+  DropdownProps as FluentDropdownProps,
   Option,
 } from '@fluentui/react-components/unstable'
 
@@ -40,6 +41,10 @@ export interface DropdownProps extends Omit<SingleSelectProps, 'select'> {
   contextualDescriptionId?: string
 }
 
+type OnSelectParams = Parameters<
+  Exclude<FluentDropdownProps['onSelect'], undefined>
+>
+
 export const Dropdown = ({
   select: {
     disambiguatingLabel,
@@ -64,9 +69,9 @@ export const Dropdown = ({
     return () => deleteInputValue(actionId)
   }, [])
 
-  const onChange = useCallback(
-    ({ target }: FormEvent<HTMLButtonElement>) => {
-      const nextValue = get(target, 'value', '')
+  const onSelect = useCallback(
+    ({ target }: OnSelectParams[0], _props: OnSelectParams[1]) => {
+      const nextValue = get(target, ['dataset', 'value'], '')
       setValue(nextValue)
       if (nextValue) {
         putInputValue(actionId, nextValue)
@@ -91,8 +96,12 @@ export const Dropdown = ({
       <FluentDropdown
         {...{
           id: actionId,
-          value,
-          onChange,
+          selectedOptions: [
+            options.find(({ value: optionValue }) => value === optionValue)
+              ?.label || '',
+          ],
+          multiselect: false,
+          onSelect: onSelect as ReactEventHandler,
           placeholder,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
@@ -106,7 +115,7 @@ export const Dropdown = ({
             <Option
               key={value}
               {...{
-                value,
+                'data-value': value,
                 ...(description && {
                   'aria-describedby': optionDescriptionId,
                 }),
