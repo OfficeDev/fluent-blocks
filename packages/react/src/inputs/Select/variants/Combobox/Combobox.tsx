@@ -23,6 +23,7 @@ import {
   makePayload,
   putInputValue,
   useFluentBlocksContext,
+  useShortInputStyles,
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
@@ -69,6 +70,8 @@ export const Combobox = ({
   contextualDescriptionId,
 }: ComboboxProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
+
+  const shortInputStyles = useShortInputStyles()
 
   const [values, setValues] = useState<string[]>(initialValues || [])
 
@@ -139,6 +142,7 @@ export const Combobox = ({
           ),
           multiselect: true,
           placeholder,
+          className: shortInputStyles.input,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': contextualLabelId }),

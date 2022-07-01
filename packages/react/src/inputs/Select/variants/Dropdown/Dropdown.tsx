@@ -15,6 +15,7 @@ import {
   makePayload,
   putInputValue,
   useFluentBlocksContext,
+  useShortInputStyles,
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
@@ -62,6 +63,8 @@ export const Dropdown = ({
 }: DropdownProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
+  const shortInputStyles = useShortInputStyles()
+
   const [value, setValue] = useState<string>(initialValue || '')
 
   useEffect(() => {
@@ -103,6 +106,7 @@ export const Dropdown = ({
           multiselect: false,
           onSelect: onSelect as ReactEventHandler,
           placeholder,
+          className: shortInputStyles.input,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': contextualLabelId }),

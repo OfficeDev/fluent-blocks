@@ -52,8 +52,8 @@ const useTableStyles = makeStyles({
     marginInlineEnd: rem(-16),
   },
   rootInner: {
-    ...sx.flex(1, 0, '0'),
-    width: '100%',
+    ...sx.flex(1, 0, '0px'),
+    width: '0',
     overflowX: 'auto',
     ...sx.padding(rem(4)),
   },
