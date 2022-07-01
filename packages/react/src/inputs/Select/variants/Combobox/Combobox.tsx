@@ -1,9 +1,18 @@
 import get from 'lodash/get'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import pick from 'lodash/pick'
+import getValues from 'lodash/values'
+import {
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 import { MultipleValueInputActionPayload } from '@fluent-blocks/schemas'
 import {
   Combobox as FluentCombobox,
+  ComboboxProps as FluentComboboxProps,
   Option,
 } from '@fluentui/react-components/unstable'
 
@@ -40,6 +49,10 @@ export interface ComboboxProps extends Omit<MultipleSelectProps, 'select'> {
   contextualDescriptionId?: string
 }
 
+type OnSelectParams = Parameters<
+  Exclude<FluentComboboxProps['onSelect'], undefined>
+>
+
 export const Combobox = ({
   select: {
     disambiguatingLabel,
@@ -59,30 +72,57 @@ export const Combobox = ({
 
   const [values, setValues] = useState<string[]>(initialValues || [])
 
+  const labelMap = useMemo(
+    () =>
+      options.reduce(
+        (acc: Record<string, DescribedStringLabeledValueProps>, option) => {
+          acc[option.label] = option
+          return acc
+        },
+        {}
+      ),
+    [options]
+  )
+
+  const valueMap = useMemo(
+    () =>
+      options.reduce(
+        (acc: Record<string, DescribedStringLabeledValueProps>, option) => {
+          acc[option.value] = option
+          return acc
+        },
+        {}
+      ),
+    [options]
+  )
+
   useEffect(() => {
     putInputValue(actionId, initialValues || [])
     return () => deleteInputValue(actionId)
   }, [])
 
-  const onChange = useCallback(
-    ({ target }: ChangeEvent<HTMLInputElement>) => {
-      // todo: figure out how v9 conveys values
-      const nextValues = [get(target, 'value', '')]
-      setValues(nextValues)
-      if (nextValues) {
-        putInputValue(actionId, nextValues)
+  const onSelect = useCallback(
+    (event: OnSelectParams[0], props?: OnSelectParams[1]) => {
+      if (props) {
+        const nextValues: string[] = getValues(
+          pick(labelMap, get(props, 'selectedOptions', []))
+        ).map(({ value }) => value)
+        setValues(nextValues)
+        if (nextValues) {
+          putInputValue(actionId, nextValues)
+        }
+        const actionPayload = makePayload<MultipleValueInputActionPayload>(
+          {
+            actionId,
+            type: 'change' as 'change',
+            values: nextValues,
+          },
+          metadata,
+          include
+        )
+        onAction && onAction(actionPayload)
+        contextOnAction && contextOnAction(actionPayload)
       }
-      const actionPayload = makePayload<MultipleValueInputActionPayload>(
-        {
-          actionId,
-          type: 'change' as 'change',
-          values: nextValues,
-        },
-        metadata,
-        include
-      )
-      onAction && onAction(actionPayload)
-      contextOnAction && contextOnAction(actionPayload)
     },
     [actionId, onAction, contextOnAction, metadata, include]
   )
@@ -93,7 +133,11 @@ export const Combobox = ({
         {...{
           id: actionId,
           values,
-          onChange,
+          onSelect: onSelect as ReactEventHandler,
+          selectedOptions: getValues(pick(valueMap, values)).map(
+            ({ label }) => label
+          ),
+          multiselect: true,
           placeholder,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
@@ -107,7 +151,7 @@ export const Combobox = ({
             <Option
               key={value}
               {...{
-                value,
+                'data-value': value,
                 ...(description && {
                   'aria-describedby': optionDescriptionId,
                 }),

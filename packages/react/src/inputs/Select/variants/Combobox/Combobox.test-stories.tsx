@@ -43,10 +43,12 @@ ComboboxChangeTest.args = {
         label: '9e7a193d-c6cb-4d53-9a26-e5abc4030e32',
       },
     ],
-    onAction: (payload: MultipleValueInputActionPayload) =>
+    placeholder: '46e6187f-2385-4388-a161-0c6bcc47f9d0',
+    onAction: (payload: MultipleValueInputActionPayload) => {
       document.defaultView?.alert(
         `${payload.actionId}::${payload.values.join(':')}`
-      ),
+      )
+    },
   },
 }
 ComboboxChangeTest.parameters = { chromatic: { disableSnapshot: true } }

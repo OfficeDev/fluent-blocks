@@ -12,12 +12,13 @@ describe('Combobox (multiple Select combobox)', function () {
         )
       })
       it('calls onAction on change', async function () {
+        await this.page.locator('input[role=combobox]').click()
         this.page
-          .locator('[id="6f72b1df-7e3e-4825-ae1b-200bd136a69f"]')
-          .selectOption('e44accde-e3ab-4080-a3de-109431277fe6')
+          .locator('text=9e7a193d-c6cb-4d53-9a26-e5abc4030e32')
+          .click({ noWaitAfter: true })
         const dialog = await this.page.waitForEvent('dialog')
         expect(dialog.message()).toEqual(
-          '6f72b1df-7e3e-4825-ae1b-200bd136a69f::e44accde-e3ab-4080-a3de-109431277fe6'
+          '6f72b1df-7e3e-4825-ae1b-200bd136a69f::b7a63920-a6fe-4c46-85fe-aa98b8e9dbd6'
         )
       })
     })

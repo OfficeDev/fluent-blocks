@@ -11,6 +11,7 @@ import { InlineContent } from '../../inlines'
 import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
 import { SelectProps } from '../../props'
 import { renderIfCheckboxGroup } from './variants/CheckboxGroup/CheckboxGroup'
+import { renderIfCombobox } from './variants/Combobox/Combobox'
 import { renderIfDropdown } from './variants/Dropdown/Dropdown'
 import { renderIfRadioGroup } from './variants/RadioGroup/RadioGroup'
 
@@ -71,7 +72,8 @@ export const Select = (o: SelectProps) => {
       <div role="none" className={selectStyles.input}>
         {renderIfRadioGroup(extendedSelectProps) ||
           renderIfCheckboxGroup(extendedSelectProps) ||
-          renderIfDropdown(extendedSelectProps)}
+          renderIfDropdown(extendedSelectProps) ||
+          renderIfCombobox(extendedSelectProps)}
       </div>
     </div>
   )
