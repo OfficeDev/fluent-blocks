@@ -59,6 +59,9 @@ const useShortTextInputStyles = makeStyles({
     width: '100%',
     '& .fuib-Icon': { fontSize: '1rem' },
   },
+  'input--no-block-siblings': {
+    marginBlockStart: 0,
+  },
 })
 
 export const ShortTextInput = ({
@@ -157,7 +160,12 @@ export const ShortTextInput = ({
           type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
-          className: shortTextInputStyles.input,
+          className: cx(
+            shortTextInputStyles.input,
+            labelVariant === 'visuallyHidden' &&
+              (!description || descriptionVariant === 'visuallyHidden') &&
+              shortTextInputStyles['input--no-block-siblings']
+          ),
           ...(autocomplete && { autocomplete }),
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
