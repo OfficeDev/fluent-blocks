@@ -24,6 +24,7 @@ import {
   useCommonStyles,
   useDebounce,
   useFluentBlocksContext,
+  useShortInputStyles,
   useTextBlockStyles,
 } from '../../lib'
 import {
@@ -44,20 +45,14 @@ export interface ShortTextInputProps
 }
 
 const useShortTextInputStyles = makeStyles({
-  root: {
-    minWidth: rem(140),
-    ...sx.flex(1, 0, '0'),
-  },
   'root--toolbar-item': {
     ...sx.flex(0, 1, rem(240)),
   },
   label: {
     display: 'block',
   },
-  input: {
-    marginBlockStart: rem(4),
-    width: '100%',
-    '& .fuib-Icon': { fontSize: '1rem' },
+  'input--no-block-siblings': {
+    marginBlockStart: 0,
   },
 })
 
@@ -83,6 +78,7 @@ export const ShortTextInput = ({
   contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
+  const shortInputStyles = useShortInputStyles()
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
   const [value, setValue] = useState(initialValue || '')
@@ -125,7 +121,7 @@ export const ShortTextInput = ({
     <div
       role="none"
       className={cx(
-        shortTextInputStyles.root,
+        shortInputStyles.root,
         contextualVariant === 'toolbar-item' &&
           shortTextInputStyles['root--toolbar-item']
       )}
@@ -157,7 +153,12 @@ export const ShortTextInput = ({
           type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
-          className: shortTextInputStyles.input,
+          className: cx(
+            shortInputStyles.input,
+            labelVariant === 'visuallyHidden' &&
+              (!description || descriptionVariant === 'visuallyHidden') &&
+              shortTextInputStyles['input--no-block-siblings']
+          ),
           ...(autocomplete && { autocomplete }),
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }

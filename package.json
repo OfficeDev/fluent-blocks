@@ -40,10 +40,5 @@
     "lint-staged": "latest",
     "prettier": "latest",
     "typescript": ">=4.4.0 <5.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@griffel/react": "^1.0.4"
-    }
   }
 }

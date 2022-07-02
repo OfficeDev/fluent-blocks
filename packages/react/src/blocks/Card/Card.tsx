@@ -43,6 +43,10 @@ const useCardStyles = makeStyles({
     ...sx.padding(0),
     paddingBlockEnd: rem(4),
     ...sx.gap(0),
+    '& > [role="none"]:not(.fui-CardPreview):not(.fui-CardHeader):not(.fui-CardFooter)':
+      {
+        flexGrow: 0,
+      },
   },
   hc: {
     ...sx.borderColor('var(--colorNeutralForeground1)'),

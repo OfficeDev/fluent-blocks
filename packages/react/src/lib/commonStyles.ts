@@ -108,3 +108,15 @@ export const useTextStyles = makeStyles({
   },
   inputMeta: {},
 })
+
+export const useShortInputStyles = makeStyles({
+  root: {
+    minWidth: rem(140),
+    ...sx.flex(1, 0, '0px'),
+  },
+  input: {
+    marginBlockStart: rem(4),
+    width: '100%',
+    '& .fuib-Icon': { fontSize: '1rem' },
+  },
+})
