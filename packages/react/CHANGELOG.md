@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.6
+
+### Minor Changes
+
+- [#148](https://github.com/OfficeDev/fluent-blocks/pull/148) [`224bd98`](https://github.com/OfficeDev/fluent-blocks/commit/224bd9842d4b08c353165b79a7321f09ed04770c) Thanks [@thure](https://github.com/thure)! - Use v9’s unstable Dropdown and Combobox for Fluent Blocks’ Select.
+
 ## 9.2.0-next.5
 
 ### Patch Changes
