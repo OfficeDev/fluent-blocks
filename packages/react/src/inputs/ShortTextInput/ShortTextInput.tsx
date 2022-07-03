@@ -41,7 +41,6 @@ export interface ShortTextInputProps
   extends Omit<NaturalShortTextInputProps, 'textInput'>,
     ShortInputContextualProps {
   textInput: ShortTextInputInnerProps
-  contextualElevationVariant?: 'surface' | 'elevated'
 }
 
 const useShortTextInputStyles = makeStyles({

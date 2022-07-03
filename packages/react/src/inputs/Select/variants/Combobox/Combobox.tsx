@@ -28,6 +28,7 @@ import {
 import {
   DescribedLabeledValueProps,
   MultipleSelectProps,
+  ShortInputContextualProps,
 } from '../../../../props'
 
 interface DescribedStringLabeledValueProps
@@ -35,7 +36,9 @@ interface DescribedStringLabeledValueProps
   label: string
 }
 
-export interface ComboboxProps extends Omit<MultipleSelectProps, 'select'> {
+export interface ComboboxProps
+  extends Omit<MultipleSelectProps, 'select'>,
+    ShortInputContextualProps {
   select: Omit<MultipleSelectProps['select'], 'options'> & {
     variant: 'combobox'
     multiple: true
@@ -68,6 +71,7 @@ export const Combobox = ({
   },
   contextualLabelId,
   contextualDescriptionId,
+  contextualElevationVariant = 'surface',
 }: ComboboxProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
@@ -142,6 +146,10 @@ export const Combobox = ({
           ),
           multiselect: true,
           placeholder,
+          appearance:
+            contextualElevationVariant === 'elevated'
+              ? 'filled-darker'
+              : 'filled-lighter',
           className: shortInputStyles.input,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
