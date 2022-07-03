@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.7
+
+### Patch Changes
+
+- [#150](https://github.com/OfficeDev/fluent-blocks/pull/150) [`cb9cc31`](https://github.com/OfficeDev/fluent-blocks/commit/cb9cc3104675748f931b47f69f43a7120661941a) Thanks [@thure](https://github.com/thure)! - Fix appearnace for Select combobox variants.
+
 ## 9.2.0-next.6
 
 ### Minor Changes
