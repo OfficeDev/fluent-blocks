@@ -115,8 +115,15 @@ export const useShortInputStyles = makeStyles({
     ...sx.flex(1, 0, '0px'),
   },
   input: {
+    boxShadow: 'var(--shadow2)',
     marginBlockStart: rem(4),
     width: '100%',
     '& .fuib-Icon': { fontSize: '1rem' },
+    '& > input:not(.fxc4j92)': {
+      color: 'var(--colorNeutralForeground1)',
+    },
+    '& > button:not(.fxc4j92)': {
+      color: 'var(--colorNeutralForeground1)',
+    },
   },
 })

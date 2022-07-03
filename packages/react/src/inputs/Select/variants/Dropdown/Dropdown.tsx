@@ -19,6 +19,7 @@ import {
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
+  ShortInputContextualProps,
   SingleSelectProps,
 } from '../../../../props'
 
@@ -27,7 +28,9 @@ interface DescribedStringLabeledValueProps
   label: string
 }
 
-export interface DropdownProps extends Omit<SingleSelectProps, 'select'> {
+export interface DropdownProps
+  extends Omit<SingleSelectProps, 'select'>,
+    ShortInputContextualProps {
   select: Omit<SingleSelectProps['select'], 'options'> & {
     variant: 'combobox'
     options: [
@@ -60,6 +63,7 @@ export const Dropdown = ({
   },
   contextualLabelId,
   contextualDescriptionId,
+  contextualElevationVariant = 'surface',
 }: DropdownProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
@@ -106,6 +110,10 @@ export const Dropdown = ({
           multiselect: false,
           onSelect: onSelect as ReactEventHandler,
           placeholder,
+          appearance:
+            contextualElevationVariant === 'elevated'
+              ? 'filled-darker'
+              : 'filled-lighter',
           className: shortInputStyles.input,
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }

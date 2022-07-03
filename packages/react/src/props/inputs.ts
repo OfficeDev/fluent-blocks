@@ -50,4 +50,5 @@ export type ShortInputContextualVariant =
 
 export interface ShortInputContextualProps {
   contextualVariant?: ShortInputContextualVariant
+  contextualElevationVariant?: 'surface' | 'elevated'
 }
