@@ -126,4 +126,9 @@ export const useShortInputStyles = makeStyles({
       color: 'var(--colorNeutralForeground1)',
     },
   },
+  listbox: {
+    // todo: replace these styles if/when Combobox & Dropdown support AutoSize
+    maxHeight: '20.5rem',
+    overflowY: 'auto',
+  },
 })
