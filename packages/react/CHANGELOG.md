@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.8
+
+### Patch Changes
+
+- [#152](https://github.com/OfficeDev/fluent-blocks/pull/152) [`bebfb5f`](https://github.com/OfficeDev/fluent-blocks/commit/bebfb5f4876a4495c9ebb9b2a86b8ce9a7e30e43) Thanks [@thure](https://github.com/thure)! - Set a fixed height for listboxes until v9 supports AutoSize for them.
+
 ## 9.2.0-next.7
 
 ### Patch Changes
