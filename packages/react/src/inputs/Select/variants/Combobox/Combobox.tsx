@@ -151,6 +151,7 @@ export const Combobox = ({
               ? 'filled-darker'
               : 'filled-lighter',
           className: shortInputStyles.input,
+          listbox: { className: shortInputStyles.listbox },
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': contextualLabelId }),
