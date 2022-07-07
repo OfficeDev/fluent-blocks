@@ -1,4 +1,5 @@
-<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg#gh-light-mode-only" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImageDark.svg#gh-dark-mode-only" width="320" />
 
 ### [Open Storybook ↗︎][storybook]
 
@@ -6,11 +7,15 @@ Fluent Blocks is a React implementation of [Fluent][figma-fluent] & [UI Kit][fig
 
 This package provides a set of components developers can use to build fully interactive & accessible experiences using whatever React coding convention they prefer, rendering experiences that match Fluent & UI Kit designs.
 
-## ⚠️ In active development
+## ⚠️ Not yet recommended for production
 
-This project’s API is subject to unannounced breaking changes and is not yet on any release cycle.
+This project is still being vetted. If you want to use Fluent Blocks, please bear in mind even non-prereleases don’t yet come with any particular guarantees.
 
-## Development & contributing
+For the best experience specify a specific version of Fluent Blocks when installing instead of using `~`/`^`/`*`, tags, or ranges. If you encounter issues or when you want to use new features, migrate to a newer version with care.
+
+## Getting help & contributing
+
+If you encounter issues, have questions, or want to participate, please don’t hesitate to [write an issue on Github][issues]. You can also [join us on Teams in our community channel][channel].
 
 If you’d like to run the development environment or contribute to this project, please see [the Contributing file](CONTRIBUTING.md).
 
@@ -18,10 +23,15 @@ If you’d like to run the development environment or contribute to this project
 
 Using TypeScript and an IDE that supports type inspections will make using this project much easier!
 
-1. Add `react@17`, `react-dom@17`, and `@fluentui/react-components@latest` if they’re not in your project already
-2. Add `chart.js@^2.9.4` if you want to use charts from this package
-3. Depending on your package manager, you may need to add `@fluent-blocks/basic-icons` to use icons
-4. Install this package, `@fluent-blocks/react`, using your package manager
+1. Add `react@17`, `react-dom@17` if they’re not in your project already
+    - Versions of React from `^16.14.0` up to `18` are supported, in case your project already uses a version in that range
+3. Depending on your bundler you may need to add `chart.js@^2.9.4`, which you’ll need anyway if you want to use charts from this package
+5. Install this package and the icons sprite **with `--save-exact`** using your package manager:
+   - NPM: `npm install --save --save-exact @fluent-blocks/react @fluent-blocks/basic-icons`
+   - Yarn: `yarn add --exact @fluent-blocks/react @fluent-blocks/basic-icons`
+   - PNPM: `pnpm add --save-exact @fluent-blocks/react @fluent-blocks/basic-icons`
+
+Fluent Blocks comes with `@fluentui/react-components@~9.0.1` as a dependency — if you anticipate wanting to use components from that library in your project alongside Fluent Blocks, you should also add it as a direct dependency.
 
 Now anywhere you can use React, you can use Fluent Blocks. If you want to delegate the entire viewport to Fluent Blocks, use the `View` component on its own:
 
@@ -149,7 +159,21 @@ Any component may also have **Exemplars**, which render the same component but w
 
 ## Icons
 
-This project supports using icons from [`fluentui-system-icons`][fluent-icons] through SVG sprites implemented in [an experimental fork of that project](https://github.com/thure/fluentui-system-icons/tree/master/packages/svg-sprites). The `Icon` component will render an SVG of the appropriate size containing a `use` element with an `href` to the appropriate sprite, e.g.:
+This project supports using icons from [`fluentui-system-icons`][fluent-icons] through `@fluent-blocks/basic-icons`.
+
+First, give Fluent Blocks’ Provider or View a URL to where your project serves the SVG sprite included in `@fluent-blocks/basic-icons`:
+
+```tsx
+import {View} from '@fluent-blocks/react'
+
+const iconSpriteUrl = require('@fluent-blocks/basic-icons/basic-icons.svg')
+
+return <View iconSpriteUrl={iconSpriteUrl}  
+  {/* etc */}
+/>
+```
+
+The `Icon`/`{icon: …}` component will render an SVG of the appropriate size containing a `use` element with an `href` to the appropriate sprite, e.g.:
 
 ```tsx
 // If used wherever `InlineSequence` or `IconPropsOrElement` is accepted,
@@ -159,10 +183,10 @@ const catIcon =
   <Icon icon='animal_cat' size={24} variant='outline'/>
 ```
 
-This project currently expects any requests to `/sprites/**` to serve an SVG sprite with the appropriate content, which for the Storybook development server is proxied to a specific release on jsDelivr.
-
 In your own project, we recommend serving just the sprites you need locally if possible. Do not use proxies for icons in production.
 
+[channel]: https://teams.microsoft.com/l/team/19%3atKKC3lewTMtk4IopGy7Seq7fok-lNW7lGEK-HmzfaKY1%40thread.tacv2/conversations?groupId=4f925ae9-c713-434b-a1f6-44b58ac57210&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47
+[issues]: https://github.com/OfficeDev/fluent-blocks/issues
 [figma-fluent]: https://www.figma.com/community/file/836828295772957889/Microsoft-Fluent-Web
 [figma-uikit]: https://www.figma.com/community/file/916836509871353159/Microsoft-Teams-UI-Kit
 [fluent-icons]: https://github.com/microsoft/fluentui-system-icons
