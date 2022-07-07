@@ -1,5 +1,11 @@
 # @fluent-blocks/colors
 
+## 9.2.0-next.1
+
+### Minor Changes
+
+- [#154](https://github.com/OfficeDev/fluent-blocks/pull/154) [`abb3da1`](https://github.com/OfficeDev/fluent-blocks/commit/abb3da1e68c487010ef292c82f3a983befda3924) Thanks [@thure](https://github.com/thure)! - Improve documentation. Export everything from colors package. Add dark mode image to READMEs.
+
 ## 9.1.1-next.0
 
 ### Patch Changes
