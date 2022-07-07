@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/colors",
-  "version": "9.1.1-next.0",
+  "version": "9.2.0-next.1",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>"

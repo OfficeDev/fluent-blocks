@@ -1,5 +1,14 @@
 # @fluent-blocks/schemas
 
+## 9.2.0-next.9
+
+### Patch Changes
+
+- [#154](https://github.com/OfficeDev/fluent-blocks/pull/154) [`abb3da1`](https://github.com/OfficeDev/fluent-blocks/commit/abb3da1e68c487010ef292c82f3a983befda3924) Thanks [@thure](https://github.com/thure)! - Improve documentation. Export everything from colors package. Add dark mode image to READMEs.
+
+- Updated dependencies [[`abb3da1`](https://github.com/OfficeDev/fluent-blocks/commit/abb3da1e68c487010ef292c82f3a983befda3924)]:
+  - @fluent-blocks/colors@9.2.0-next.1
+
 ## 9.2.0-next.3
 
 ### Minor Changes
