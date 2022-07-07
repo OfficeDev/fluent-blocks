@@ -1,4 +1,5 @@
-<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImage.svg#gh-light-mode-only" width="320" />
+<img alt="Fluent Blocks logo" src="https://cdn.jsdelivr.net/gh/OfficeDev/fluent-blocks@next/packages/react/.storybook/public/brandImageDark.svg#gh-dark-mode-only" width="320" />
 
 ### [Open Storybook ↗︎][storybook]
 
@@ -6,9 +7,11 @@ Fluent Blocks is a React implementation of [Fluent][figma-fluent] & [UI Kit][fig
 
 This package provides a set of components developers can use to build fully interactive & accessible experiences using whatever React coding convention they prefer, rendering experiences that match Fluent & UI Kit designs.
 
-## ⚠️ In active development
+## ⚠️ Not yet recommended for production
 
-This project’s API is subject to unannounced breaking changes and is not yet on any release cycle.
+This project is still being vetted. If you want to use Fluent Blocks, please bear in mind even non-prereleases don’t yet come with any particular guarantees.
+
+For the best experience specify a specific version of Fluent Blocks when installing instead of using `~`/`^`/`*`, tags, or ranges. If you encounter issues or when you want to use new features, migrate to a newer version with care.
 
 ## Development & contributing
 
@@ -18,10 +21,15 @@ If you’d like to run the development environment or contribute to this project
 
 Using TypeScript and an IDE that supports type inspections will make using this project much easier!
 
-1. Add `react@17`, `react-dom@17`, and `@fluentui/react-components@latest` if they’re not in your project already
-2. Add `chart.js@^2.9.4` if you want to use charts from this package
-3. Depending on your package manager, you may need to add `@fluent-blocks/basic-icons` to use icons
-4. Install this package, `@fluent-blocks/react`, using your package manager
+1. Add `react@17`, `react-dom@17` if they’re not in your project already
+    - Versions of React from `^16.14.0` up to `18` are supported, in case your project already uses a version in that range
+3. Depending on your bundler you may need to add `chart.js@^2.9.4`, which you’ll need anyway if you want to use charts from this package
+5. Install this package and the icons sprite **with `--save-exact`** using your package manager:
+   - NPM: `npm install --save --save-exact @fluent-blocks/react @fluent-blocks/basic-icons`
+   - Yarn: `yarn add --exact @fluent-blocks/react @fluent-blocks/basic-icons`
+   - PNPM: `pnpm add --save-exact @fluent-blocks/react @fluent-blocks/basic-icons`
+
+Fluent Blocks comes with `@fluentui/react-components@~9.0.1` as a dependency — if you anticipate wanting to use components from that library in your project alongside Fluent Blocks, you should also add it as a direct dependency.
 
 Now anywhere you can use React, you can use Fluent Blocks. If you want to delegate the entire viewport to Fluent Blocks, use the `View` component on its own:
 
