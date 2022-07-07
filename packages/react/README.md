@@ -13,7 +13,9 @@ This project is still being vetted. If you want to use Fluent Blocks, please bea
 
 For the best experience specify a specific version of Fluent Blocks when installing instead of using `~`/`^`/`*`, tags, or ranges. If you encounter issues or when you want to use new features, migrate to a newer version with care.
 
-## Development & contributing
+## Getting help & contributing
+
+If you encounter issues, have questions, or want to participate, please don’t hesitate to [write an issue on Github][issues]. You can also [join us on Teams in our community channel][channel].
 
 If you’d like to run the development environment or contribute to this project, please see [the Contributing file](CONTRIBUTING.md).
 
@@ -157,7 +159,21 @@ Any component may also have **Exemplars**, which render the same component but w
 
 ## Icons
 
-This project supports using icons from [`fluentui-system-icons`][fluent-icons] through SVG sprites implemented in [an experimental fork of that project](https://github.com/thure/fluentui-system-icons/tree/master/packages/svg-sprites). The `Icon` component will render an SVG of the appropriate size containing a `use` element with an `href` to the appropriate sprite, e.g.:
+This project supports using icons from [`fluentui-system-icons`][fluent-icons] through `@fluent-blocks/basic-icons`.
+
+First, give Fluent Blocks’ Provider or View a URL to where your project serves the SVG sprite included in `@fluent-blocks/basic-icons`:
+
+```tsx
+import {View} from '@fluent-blocks/react'
+
+const iconSpriteUrl = require('@fluent-blocks/basic-icons/basic-icons.svg')
+
+return <View iconSpriteUrl={iconSpriteUrl}  
+  {/* etc */}
+/>
+```
+
+The `Icon`/`{icon: …}` component will render an SVG of the appropriate size containing a `use` element with an `href` to the appropriate sprite, e.g.:
 
 ```tsx
 // If used wherever `InlineSequence` or `IconPropsOrElement` is accepted,
@@ -167,10 +183,10 @@ const catIcon =
   <Icon icon='animal_cat' size={24} variant='outline'/>
 ```
 
-This project currently expects any requests to `/sprites/**` to serve an SVG sprite with the appropriate content, which for the Storybook development server is proxied to a specific release on jsDelivr.
-
 In your own project, we recommend serving just the sprites you need locally if possible. Do not use proxies for icons in production.
 
+[channel]: https://teams.microsoft.com/l/team/19%3atKKC3lewTMtk4IopGy7Seq7fok-lNW7lGEK-HmzfaKY1%40thread.tacv2/conversations?groupId=4f925ae9-c713-434b-a1f6-44b58ac57210&tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47
+[issues]: https://github.com/OfficeDev/fluent-blocks/issues
 [figma-fluent]: https://www.figma.com/community/file/836828295772957889/Microsoft-Fluent-Web
 [figma-uikit]: https://www.figma.com/community/file/916836509871353159/Microsoft-Teams-UI-Kit
 [fluent-icons]: https://github.com/microsoft/fluentui-system-icons
