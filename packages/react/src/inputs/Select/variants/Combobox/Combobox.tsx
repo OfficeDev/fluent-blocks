@@ -1,10 +1,18 @@
 import get from 'lodash/get'
-import { ReactEventHandler, useCallback, useEffect, useState } from 'react'
-
-import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
+import pick from 'lodash/pick'
+import getValues from 'lodash/values'
 import {
-  Dropdown as FluentDropdown,
-  DropdownProps as FluentDropdownProps,
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+
+import { MultipleValueInputActionPayload } from '@fluent-blocks/schemas'
+import {
+  Combobox as FluentCombobox,
+  ComboboxProps as FluentComboboxProps,
   Option,
 } from '@fluentui/react-components/unstable'
 
@@ -19,8 +27,8 @@ import {
 } from '../../../../lib'
 import {
   DescribedLabeledValueProps,
+  MultipleSelectProps,
   ShortInputContextualProps,
-  SingleSelectProps,
 } from '../../../../props'
 
 interface DescribedStringLabeledValueProps
@@ -28,17 +36,17 @@ interface DescribedStringLabeledValueProps
   label: string
 }
 
-export interface DropdownProps
-  extends Omit<SingleSelectProps, 'select'>,
+export interface ComboboxProps
+  extends Omit<MultipleSelectProps, 'select'>,
     ShortInputContextualProps {
-  select: Omit<SingleSelectProps['select'], 'options'> & {
+  select: Omit<MultipleSelectProps['select'], 'options'> & {
     variant: 'combobox'
+    multiple: true
     options: [
       DescribedStringLabeledValueProps,
       DescribedStringLabeledValueProps,
       ...DescribedStringLabeledValueProps[]
     ]
-    multiple?: false
     placeholder?: string
   }
   contextualLabelId?: string
@@ -46,15 +54,15 @@ export interface DropdownProps
 }
 
 type OnSelectParams = Parameters<
-  Exclude<FluentDropdownProps['onSelect'], undefined>
+  Exclude<FluentComboboxProps['onSelect'], undefined>
 >
 
-export const Dropdown = ({
+export const Combobox = ({
   select: {
     disambiguatingLabel,
     description,
     actionId,
-    initialValue,
+    initialValues,
     options,
     placeholder,
     onAction,
@@ -64,51 +72,79 @@ export const Dropdown = ({
   contextualLabelId,
   contextualDescriptionId,
   contextualElevationVariant = 'surface',
-}: DropdownProps) => {
+}: ComboboxProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   const shortInputStyles = useShortInputStyles()
 
-  const [value, setValue] = useState<string>(initialValue || '')
+  const [values, setValues] = useState<string[]>(initialValues || [])
+
+  const labelMap = useMemo(
+    () =>
+      options.reduce(
+        (acc: Record<string, DescribedStringLabeledValueProps>, option) => {
+          acc[option.label] = option
+          return acc
+        },
+        {}
+      ),
+    [options]
+  )
+
+  const valueMap = useMemo(
+    () =>
+      options.reduce(
+        (acc: Record<string, DescribedStringLabeledValueProps>, option) => {
+          acc[option.value] = option
+          return acc
+        },
+        {}
+      ),
+    [options]
+  )
 
   useEffect(() => {
-    putInputValue(actionId, initialValue || '')
+    putInputValue(actionId, initialValues || [])
     return () => deleteInputValue(actionId)
   }, [])
 
   const onSelect = useCallback(
-    ({ target }: OnSelectParams[0], _props: OnSelectParams[1]) => {
-      const nextValue = get(target, ['dataset', 'value'], '')
-      setValue(nextValue)
-      if (nextValue) {
-        putInputValue(actionId, nextValue)
+    (event: OnSelectParams[0], props?: OnSelectParams[1]) => {
+      if (props) {
+        const nextValues: string[] = getValues(
+          pick(labelMap, get(props, 'selectedOptions', []))
+        ).map(({ value }) => value)
+        setValues(nextValues)
+        if (nextValues) {
+          putInputValue(actionId, nextValues)
+        }
+        const actionPayload = makePayload<MultipleValueInputActionPayload>(
+          {
+            actionId,
+            type: 'change' as 'change',
+            values: nextValues,
+          },
+          metadata,
+          include
+        )
+        onAction && onAction(actionPayload)
+        contextOnAction && contextOnAction(actionPayload)
       }
-      const actionPayload = makePayload<SingleValueInputActionPayload>(
-        {
-          actionId,
-          type: 'change' as 'change',
-          value: nextValue,
-        },
-        metadata,
-        include
-      )
-      onAction && onAction(actionPayload)
-      contextOnAction && contextOnAction(actionPayload)
     },
     [actionId, onAction, contextOnAction, metadata, include]
   )
 
   return (
     <>
-      <FluentDropdown
+      <FluentCombobox
         {...{
           id: actionId,
-          selectedOptions: [
-            options.find(({ value: optionValue }) => value === optionValue)
-              ?.label || '',
-          ],
-          multiselect: false,
+          values,
           onSelect: onSelect as ReactEventHandler,
+          selectedOptions: getValues(pick(valueMap, values)).map(
+            ({ label }) => label
+          ),
+          multiselect: true,
           placeholder,
           appearance:
             contextualElevationVariant === 'elevated'
@@ -138,7 +174,7 @@ export const Dropdown = ({
             </Option>
           )
         })}
-      </FluentDropdown>
+      </FluentCombobox>
       {options.map(({ value, description }) => {
         if (description) {
           const optionDescriptionId = makeId(value, 'optionDescription')
@@ -161,10 +197,10 @@ export const Dropdown = ({
   )
 }
 
-function isDropdownProps(o: any): o is DropdownProps {
-  return 'select' in o && o.select.variant === 'combobox' && !o.select.multiple
+function isComboboxProps(o: any): o is ComboboxProps {
+  return 'select' in o && o.select.variant === 'combobox' && o.select.multiple
 }
 
-export function renderIfDropdown(o: any) {
-  return isDropdownProps(o) ? <Dropdown {...o} /> : null
+export function renderIfCombobox(o: any) {
+  return isComboboxProps(o) ? <Combobox {...o} /> : null
 }

@@ -45,7 +45,7 @@ export const CheckboxGroup = ({
   useEffect(() => {
     putInputValue(actionId, initialValues || [])
     return () => deleteInputValue(actionId)
-  }, [initialValues])
+  }, [])
 
   const onChange = useCallback(
     (

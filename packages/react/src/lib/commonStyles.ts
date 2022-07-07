@@ -108,3 +108,27 @@ export const useTextStyles = makeStyles({
   },
   inputMeta: {},
 })
+
+export const useShortInputStyles = makeStyles({
+  root: {
+    minWidth: rem(140),
+    ...sx.flex(1, 0, '0px'),
+  },
+  input: {
+    boxShadow: 'var(--shadow2)',
+    marginBlockStart: rem(4),
+    width: '100%',
+    '& .fuib-Icon': { fontSize: '1rem' },
+    '& > input:not(.fxc4j92)': {
+      color: 'var(--colorNeutralForeground1)',
+    },
+    '& > button:not(.fxc4j92)': {
+      color: 'var(--colorNeutralForeground1)',
+    },
+  },
+  listbox: {
+    // todo: replace these styles if/when Combobox & Dropdown support AutoSize
+    maxHeight: '20.5rem',
+    overflowY: 'auto',
+  },
+})

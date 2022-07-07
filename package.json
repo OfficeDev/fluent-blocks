@@ -43,7 +43,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@griffel/react": "^1.0.4"
+      "tabster": "~1.4.2"
     }
   }
 }

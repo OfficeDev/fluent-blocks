@@ -8,9 +8,15 @@ import {
 
 import { Paragraph } from '../../blocks'
 import { InlineContent } from '../../inlines'
-import { makeId, useCommonStyles, useTextBlockStyles } from '../../lib'
+import {
+  makeId,
+  useCommonStyles,
+  useShortInputStyles,
+  useTextBlockStyles,
+} from '../../lib'
 import { SelectProps } from '../../props'
 import { renderIfCheckboxGroup } from './variants/CheckboxGroup/CheckboxGroup'
+import { renderIfCombobox } from './variants/Combobox/Combobox'
 import { renderIfDropdown } from './variants/Dropdown/Dropdown'
 import { renderIfRadioGroup } from './variants/RadioGroup/RadioGroup'
 
@@ -29,6 +35,7 @@ const useSelectStyles = makeStyles({
 
 export const Select = (o: SelectProps) => {
   const commonStyles = useCommonStyles()
+  const shortInputStyles = useShortInputStyles()
   const textBlockStyles = useTextBlockStyles()
   const selectStyles = useSelectStyles()
 
@@ -51,7 +58,9 @@ export const Select = (o: SelectProps) => {
       className={cx(
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        selectStyles.root
+        selectStyles.root,
+        extendedSelectProps.select.variant === 'combobox' &&
+          shortInputStyles.root
       )}
     >
       <Label
@@ -71,7 +80,8 @@ export const Select = (o: SelectProps) => {
       <div role="none" className={selectStyles.input}>
         {renderIfRadioGroup(extendedSelectProps) ||
           renderIfCheckboxGroup(extendedSelectProps) ||
-          renderIfDropdown(extendedSelectProps)}
+          renderIfDropdown(extendedSelectProps) ||
+          renderIfCombobox(extendedSelectProps)}
       </div>
     </div>
   )

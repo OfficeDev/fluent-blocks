@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   ShortTextInputProps as NaturalShortTextInputProps,
@@ -24,6 +24,7 @@ import {
   useCommonStyles,
   useDebounce,
   useFluentBlocksContext,
+  useShortInputStyles,
   useTextBlockStyles,
 } from '../../lib'
 import {
@@ -40,24 +41,17 @@ export interface ShortTextInputProps
   extends Omit<NaturalShortTextInputProps, 'textInput'>,
     ShortInputContextualProps {
   textInput: ShortTextInputInnerProps
-  contextualElevationVariant?: 'surface' | 'elevated'
 }
 
 const useShortTextInputStyles = makeStyles({
-  root: {
-    minWidth: rem(140),
-    ...sx.flex(1, 0, '0'),
-  },
   'root--toolbar-item': {
     ...sx.flex(0, 1, rem(240)),
   },
   label: {
     display: 'block',
   },
-  input: {
-    marginBlockStart: rem(4),
-    width: '100%',
-    '& .fuib-Icon': { fontSize: '1rem' },
+  'input--no-block-siblings': {
+    marginBlockStart: 0,
   },
 })
 
@@ -83,6 +77,7 @@ export const ShortTextInput = ({
   contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
+  const shortInputStyles = useShortInputStyles()
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
   const [value, setValue] = useState(initialValue || '')
@@ -93,25 +88,30 @@ export const ShortTextInput = ({
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
-  }, [initialValue])
+  }, [])
 
-  useEffect(() => {
-    putInputValue(actionId, debouncedValue)
-    if (didMount.current) {
-      const payload = makePayload(
-        {
-          actionId,
-          type: 'change' as 'change',
-          value: debouncedValue,
-        },
-        metadata,
-        include
-      )
-      onAction ? onAction(payload) : contextOnAction(payload)
-    } else {
-      didMount.current = true
-    }
-  }, [debouncedValue, actionId, onAction, contextOnAction, metadata, include])
+  const onChange = useCallback(
+    (nextValue: string) => {
+      putInputValue(actionId, nextValue)
+      if (didMount.current) {
+        const payload = makePayload(
+          {
+            actionId,
+            type: 'change' as 'change',
+            value: nextValue,
+          },
+          metadata,
+          include
+        )
+        onAction ? onAction(payload) : contextOnAction(payload)
+      } else {
+        didMount.current = true
+      }
+    },
+    [actionId, onAction, contextOnAction, metadata, include]
+  )
+
+  useEffect(() => onChange(debouncedValue), [debouncedValue])
 
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')
@@ -120,7 +120,7 @@ export const ShortTextInput = ({
     <div
       role="none"
       className={cx(
-        shortTextInputStyles.root,
+        shortInputStyles.root,
         contextualVariant === 'toolbar-item' &&
           shortTextInputStyles['root--toolbar-item']
       )}
@@ -152,7 +152,12 @@ export const ShortTextInput = ({
           type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
-          className: shortTextInputStyles.input,
+          className: cx(
+            shortInputStyles.input,
+            labelVariant === 'visuallyHidden' &&
+              (!description || descriptionVariant === 'visuallyHidden') &&
+              shortTextInputStyles['input--no-block-siblings']
+          ),
           ...(autocomplete && { autocomplete }),
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }

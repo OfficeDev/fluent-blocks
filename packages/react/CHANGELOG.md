@@ -1,5 +1,44 @@
 # @fluent-blocks/react
 
+## 9.2.0-next.8
+
+### Patch Changes
+
+- [#152](https://github.com/OfficeDev/fluent-blocks/pull/152) [`bebfb5f`](https://github.com/OfficeDev/fluent-blocks/commit/bebfb5f4876a4495c9ebb9b2a86b8ce9a7e30e43) Thanks [@thure](https://github.com/thure)! - Set a fixed height for listboxes until v9 supports AutoSize for them.
+
+## 9.2.0-next.7
+
+### Patch Changes
+
+- [#150](https://github.com/OfficeDev/fluent-blocks/pull/150) [`cb9cc31`](https://github.com/OfficeDev/fluent-blocks/commit/cb9cc3104675748f931b47f69f43a7120661941a) Thanks [@thure](https://github.com/thure)! - Fix appearnace for Select combobox variants.
+
+## 9.2.0-next.6
+
+### Minor Changes
+
+- [#148](https://github.com/OfficeDev/fluent-blocks/pull/148) [`224bd98`](https://github.com/OfficeDev/fluent-blocks/commit/224bd9842d4b08c353165b79a7321f09ed04770c) Thanks [@thure](https://github.com/thure)! - Use v9’s unstable Dropdown and Combobox for Fluent Blocks’ Select.
+
+## 9.2.0-next.5
+
+### Patch Changes
+
+- [#146](https://github.com/OfficeDev/fluent-blocks/pull/146) [`3f6f88f`](https://github.com/OfficeDev/fluent-blocks/commit/3f6f88f93ffa4ffbf26b754fa8d8b518c5abde60) Thanks [@thure](https://github.com/thure)! - Fix text input effects & callbacks to avoid infinite looping.
+
+## 9.2.0-next.4
+
+### Patch Changes
+
+- [#144](https://github.com/OfficeDev/fluent-blocks/pull/144) [`1df162b`](https://github.com/OfficeDev/fluent-blocks/commit/1df162b78cdb4d759dd334f1c03b4942b44cac7a) Thanks [@thure](https://github.com/thure)! - Inputs no longer set internal state on changes in the initialValue(s) prop.
+
+## 9.2.0-next.3
+
+### Patch Changes
+
+- [#142](https://github.com/OfficeDev/fluent-blocks/pull/142) [`86a3417`](https://github.com/OfficeDev/fluent-blocks/commit/86a341788aea6d2456345ae24bcd7738b0052e0a) Thanks [@thure](https://github.com/thure)! - Change Sidebar to use initialActiveItem. Allow initialValue(s) to programmatically change input state.
+
+- Updated dependencies [[`86a3417`](https://github.com/OfficeDev/fluent-blocks/commit/86a341788aea6d2456345ae24bcd7738b0052e0a)]:
+  - @fluent-blocks/schemas@9.2.0-next.3
+
 ## 9.2.0-next.2
 
 ### Minor Changes

@@ -43,6 +43,7 @@ DropdownChangeTest.args = {
         label: '57417f23-1a74-4c95-839b-74e47648d36c',
       },
     ],
+    placeholder: '04fb46ac-bb7c-4622-9c6c-35dae242b271',
     onAction: (payload: SingleValueInputActionPayload) =>
       document.defaultView?.alert(`${payload.actionId}::${payload.value}`),
   },
