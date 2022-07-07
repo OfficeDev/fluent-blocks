@@ -1,12 +1,9 @@
-import { ListProps } from './List'
-import {
-  AccentScheme,
-  ActionHandler,
-  ThemeName,
-  WithActionHandler,
-} from '../../lib'
 import { TableActionPayload } from '@fluent-blocks/schemas'
+
+import { AccentScheme, ThemeName } from '../../lib'
+import { ActionHandler, WithActionHandler } from '../../props'
 import { View } from '../../views'
+import { ListProps } from './List'
 
 export const List = ({
   themeName,

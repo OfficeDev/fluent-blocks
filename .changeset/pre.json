@@ -1,0 +1,34 @@
+{
+  "mode": "exit",
+  "tag": "next",
+  "initialVersions": {
+    "@fluent-blocks/colors": "9.1.0",
+    "@fluent-blocks/basic-icons": "9.1.2",
+    "@fluent-blocks/react": "9.1.3",
+    "@fluent-blocks/schemas": "9.1.0"
+  },
+  "changesets": [
+    "calm-avocados-doubt",
+    "clean-dingos-pay",
+    "cuddly-elephants-sip",
+    "early-mirrors-complain",
+    "eighty-insects-applaud",
+    "eighty-walls-deny",
+    "giant-otters-sin",
+    "grumpy-rice-clean",
+    "heavy-suits-end",
+    "hip-camels-learn",
+    "late-chefs-build",
+    "nine-clocks-sin",
+    "odd-news-cheer",
+    "rich-chefs-marry",
+    "serious-cows-sell",
+    "shy-bags-share",
+    "shy-pants-boil",
+    "tame-mails-march",
+    "tasty-walls-type",
+    "three-spoons-raise",
+    "tidy-coats-fail",
+    "witty-bags-travel"
+  ]
+}

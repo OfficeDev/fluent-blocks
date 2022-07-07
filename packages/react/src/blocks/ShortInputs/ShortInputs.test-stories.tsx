@@ -1,6 +1,6 @@
-import { ShortInputs, ShortInputsProps } from './ShortInputs'
 import { Parameters } from '@storybook/addons'
-import { Escape } from '../../lib'
+
+import { ShortInputs, ShortInputsProps } from './ShortInputs'
 
 export default {
   title: 'Tests/Sis',
@@ -19,9 +19,10 @@ export const ShortInputsJsonTest: typeof ShortInputsTemplate & {
 ShortInputsJsonTest.args = {
   inputs: [
     {
-      type: 'action',
-      label: '37db439e-ea0f-44b6-8fbe-61138ad48601',
-      actionId: '034919a8-d48e-4707-82c2-26b02c4348ba',
+      button: {
+        label: '37db439e-ea0f-44b6-8fbe-61138ad48601',
+        actionId: '034919a8-d48e-4707-82c2-26b02c4348ba',
+      },
     },
   ],
 }

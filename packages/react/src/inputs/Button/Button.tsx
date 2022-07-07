@@ -12,15 +12,15 @@ import {
 } from '@fluentui/react-components'
 
 import { Icon } from '../../inlines'
-import { rem, sx, useFluentBlocksContext } from '../../lib'
+import { makePayload, rem, sx, useFluentBlocksContext } from '../../lib'
 import { ShortInputContextualProps, WithActionHandler } from '../../props'
 
 export type ButtonActionPayload = NaturalButtonActionPayload
 
-export interface ButtonProps
-  extends NaturalButtonProps,
-    WithActionHandler<ButtonActionPayload>,
-    ShortInputContextualProps {}
+export interface ButtonProps extends ShortInputContextualProps {
+  button: NaturalButtonProps['button'] & WithActionHandler<ButtonActionPayload>
+  contextualRole?: 'button' | 'menuitem'
+}
 
 const useButtonStyles = makeStyles({
   root: {
@@ -42,85 +42,138 @@ const useButtonStyles = makeStyles({
   toolbarItemHidden: {
     display: 'none',
   },
+  alignInlineStart: {
+    textAlign: 'start',
+    justifyContent: 'flex-start',
+  },
+  wrapContents: {
+    display: 'block',
+    height: 'auto',
+    whiteSpace: 'normal',
+    paddingBlockStart: rem(4),
+    paddingBlockEnd: rem(4),
+    // These are added to override rules applied by @fluentui
+    paddingBottom: rem(4),
+    paddingTop: rem(4),
+  },
+  shrink: {
+    flexShrink: 1,
+  },
+  'label--shrink': {
+    display: 'block',
+    flexShrink: 1,
+    minWidth: 0,
+    overflowX: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  'background--default': {
+    backgroundColor: 'var(--colorNeutralBackground1)',
+  },
 })
 
 export const Button = ({
-  label,
-  iconOnly,
-  icon,
-  iconPosition,
-  variant,
-  size,
-  iconSize,
-  iconVariant,
-  actionId,
-  onAction,
-  selected,
-  controls,
-  disabled,
-  payload,
+  button: {
+    label,
+    disambiguatingLabel,
+    iconOnly,
+    icon,
+    iconPosition,
+    variant,
+    size,
+    iconSize,
+    iconVariant,
+    actionId,
+    onAction,
+    disabled,
+    metadata,
+    include,
+    selected,
+    controls,
+  },
   contextualVariant = 'block-inputs',
+  contextualRole = 'button',
 }: ButtonProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   const onButtonActivate = useCallback(() => {
-    const actionPayload = {
-      type: 'activate' as 'activate',
-      actionId,
-      ...payload,
-    }
+    const actionPayload = makePayload<ButtonActionPayload>(
+      {
+        type: 'activate' as 'activate',
+        actionId,
+      },
+      metadata,
+      include
+    )
     onAction && onAction(actionPayload)
     contextOnAction && contextOnAction(actionPayload)
-  }, [onAction, actionId, payload])
+  }, [onAction, contextOnAction, actionId, metadata, include])
 
   const buttonStyles = useButtonStyles()
 
   const derivedSize =
     contextualVariant === 'card-inputs' ? 'small' : size || 'medium'
-  const derivedIconSize =
-    iconSize || derivedSize === 'small' ? 16 : derivedSize === 'large' ? 32 : 24
+  const derivedIconSize = iconSize || 20
 
-  const button = (
+  const shrink = contextualVariant === 'nav'
+
+  const buttonElement = (
     <FluentButton
-      aria-label={label}
-      appearance={variant}
-      disabled={disabled}
-      size={derivedSize}
-      className={cx(
-        buttonStyles.root,
-        contextualVariant === 'narrow-inputs' && buttonStyles.fill,
-        contextualVariant.startsWith('toolbar-item') &&
-          buttonStyles.toolbarItemInFlow,
-        contextualVariant === 'toolbar-item--needs-update' &&
-          buttonStyles.toolbarItemNeedsUpdate,
-        contextualVariant === 'toolbar-item--hidden' &&
-          buttonStyles.toolbarItemHidden
-      )}
-      {...{ iconOnly, iconPosition }}
-      {...(icon && {
-        icon: (
-          <Icon
-            icon={icon}
-            size={derivedIconSize}
-            variant={iconVariant || 'outline'}
-          />
+      {...{
+        role: contextualRole,
+        appearance: variant,
+        disabled,
+        size: derivedSize,
+        className: cx(
+          buttonStyles.root,
+          variant === 'outline' && buttonStyles['background--default'],
+          contextualVariant === 'narrow-inputs' && buttonStyles.fill,
+          shrink && buttonStyles.shrink,
+          contextualVariant.startsWith('toolbar-item') &&
+            buttonStyles.toolbarItemInFlow,
+          contextualVariant === 'toolbar-item--needs-update' &&
+            buttonStyles.toolbarItemNeedsUpdate,
+          contextualVariant === 'toolbar-item--hidden' &&
+            buttonStyles.toolbarItemHidden
         ),
-      })}
-      onClick={onButtonActivate}
-      id={`${contextualVariant}__${actionId}`}
-      {...(selected && { 'aria-selected': selected })}
-      {...(controls && { 'aria-controls': controls })}
+        iconOnly,
+        iconPosition,
+        onClick: onButtonActivate,
+        id: actionId,
+        ...(icon && {
+          icon: (
+            <Icon
+              icon={icon}
+              size={derivedIconSize}
+              variant={iconVariant || 'outline'}
+            />
+          ),
+        }),
+        ...(!iconOnly &&
+          disambiguatingLabel && { 'aria-label': disambiguatingLabel }),
+        ...(selected && { 'aria-selected': selected }),
+        ...(controls && { 'aria-controls': controls }),
+        ...(shrink && { title: disambiguatingLabel || label }),
+      }}
     >
-      {iconOnly ? null : label}
+      {iconOnly ? null : shrink ? (
+        <span className={buttonStyles['label--shrink']}>{label}</span>
+      ) : (
+        label
+      )}
     </FluentButton>
   )
 
   return iconOnly ? (
-    <Tooltip content={label} relationship="label" withArrow>
-      {button}
+    <Tooltip
+      content={disambiguatingLabel || label}
+      relationship="label"
+      withArrow
+    >
+      {buttonElement}
     </Tooltip>
   ) : (
-    button
+    buttonElement
   )
 }
 
@@ -128,7 +181,7 @@ export type ButtonElement = ReactElement<ButtonProps, typeof Button>
 export type ButtonPropsOrElement = ButtonProps | ButtonElement
 
 function isButtonProps(o: any): o is ButtonProps {
-  return o && 'type' in o && o.type === 'action'
+  return 'button' in o
 }
 
 function isButtonElement(o: any): o is ButtonElement {

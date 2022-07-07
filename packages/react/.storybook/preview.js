@@ -1,3 +1,12 @@
+import isChromatic from 'chromatic/isChromatic'
+
+if (isChromatic()) {
+  const rtStyles = document.getElementById('runtime-styles')
+  if (rtStyles) {
+    rtStyles.parentElement.removeChild(rtStyles)
+  }
+}
+
 export const parameters = {
   layout: 'fullscreen',
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -9,7 +18,15 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'Views', 'Facets', 'Blocks', 'Media', '*'],
+      order: [
+        'Introduction',
+        'Facets',
+        'Views',
+        'Surfaces',
+        'Blocks',
+        'Media',
+        '*',
+      ],
     },
   },
   viewMode: 'docs',

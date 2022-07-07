@@ -11,7 +11,10 @@ import { InlineSequenceOrString } from '../inlines'
 import { ButtonProps } from '../inputs'
 import { WithActionHandler } from './actions'
 
-export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
+export type TableAction = Omit<
+  ButtonProps['button'],
+  'variant' | 'size' | 'iconSize'
+> & {
   multiple?: boolean
 }
 

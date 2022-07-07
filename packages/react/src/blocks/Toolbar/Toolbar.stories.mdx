@@ -1,8 +1,7 @@
-import { seed } from 'faker/locale/en_US'
-
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
+import { seed } from '../../lib/fake'
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { Toolbar } from './StorybookToolbar'
 
@@ -52,90 +51,102 @@ The Toolbar block presents the user a set of actions laid-out horizontally. Any 
       themeName: 'light',
       accentScheme: 'teams',
       toolbar: {
-        items: [
+        menu: [
           {
-            type: 'action',
-            actionId: 'font',
-            label: 'Font',
-            iconOnly: true,
-            icon: 'text_font',
+            action: {
+              actionId: 'font',
+              label: 'Font',
+              iconOnly: true,
+              icon: 'text_font',
+            },
           },
           {
-            type: 'action',
-            actionId: 'code',
-            label: 'Code',
-            iconOnly: true,
-            icon: 'code',
+            action: {
+              actionId: 'code',
+              label: 'Code',
+              iconOnly: true,
+              icon: 'code',
+            },
           },
           {
-            type: 'action',
-            actionId: 'eye',
-            label: 'Eye',
-            iconOnly: true,
-            icon: 'eye',
+            action: {
+              actionId: 'eye',
+              label: 'Eye',
+              iconOnly: true,
+              icon: 'eye',
+            },
           },
           {
-            type: 'action',
-            actionId: 'stack',
-            label: 'Respond',
-            iconOnly: false,
-            icon: 'stack',
+            action: {
+              actionId: 'stack',
+              label: 'Respond',
+              iconOnly: false,
+              icon: 'stack',
+            },
           },
           {
-            type: 'action',
-            actionId: 'heart',
-            label: 'Connect',
-            iconOnly: false,
-            icon: 'heart',
+            action: {
+              actionId: 'heart',
+              label: 'Connect',
+              iconOnly: false,
+              icon: 'heart',
+            },
           },
           {
-            type: 'action',
-            actionId: 'accessibility',
-            label: 'Include',
-            iconOnly: false,
-            icon: 'accessibility',
+            action: {
+              actionId: 'accessibility',
+              label: 'Include',
+              iconOnly: false,
+              icon: 'accessibility',
+            },
           },
           {
-            type: 'action',
-            actionId: 'chat',
-            label: 'Chat',
-            iconOnly: true,
-            icon: 'chat',
+            action: {
+              actionId: 'chat',
+              label: 'Chat',
+              iconOnly: true,
+              icon: 'chat',
+            },
           },
           {
-            type: 'action',
-            actionId: 'moon',
-            label: 'Moon',
-            iconOnly: true,
-            icon: 'weather_moon',
+            action: {
+              actionId: 'moon',
+              label: 'Moon',
+              iconOnly: true,
+              icon: 'weather_moon',
+            },
           },
           {
-            type: 'action',
-            actionId: 'cat',
-            label: 'Cat',
-            iconOnly: true,
-            icon: 'animal_cat',
+            action: {
+              actionId: 'cat',
+              label: 'Cat',
+              iconOnly: true,
+              icon: 'animal_cat',
+            },
           },
           {
-            type: 'action',
-            actionId: 'clock',
-            label: 'Clock',
-            iconOnly: false,
-            icon: 'clock',
+            action: {
+              actionId: 'clock',
+              label: 'Clock',
+              iconOnly: false,
+              icon: 'clock',
+            },
           },
           {
-            type: 'action',
-            actionId: 'origami',
-            label: 'Origami',
-            iconOnly: false,
-            icon: 'send',
+            action: {
+              actionId: 'origami',
+              label: 'Origami',
+              iconOnly: false,
+              icon: 'send',
+            },
           },
           {
-            type: 'action',
-            actionId: 'tools',
-            label: 'Tools',
-            iconOnly: false,
-            icon: 'wrench',
+            action: {
+              actionId: 'tools',
+              label: 'Tools',
+              iconOnly: false,
+              icon: 'wrench',
+            },
           },
         ],
       },

@@ -1,13 +1,23 @@
 import { ReactElement } from 'react'
 
-import { MultilineTextInputProps as NaturalMultilineTextInputProps } from '@fluent-blocks/schemas'
+import {
+  MultilineTextInputProps as NaturalMultilineTextInputProps,
+  SingleValueInputActionPayload,
+} from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Placeholder, useCommonStyles } from '../../lib'
-import { WithInputElements } from '../../props'
+import { WithActionHandler, WithInputElements } from '../../props'
+
+export interface MultilineTextInputInnerProps
+  extends WithInputElements<NaturalMultilineTextInputProps['textInput']>,
+    WithActionHandler<SingleValueInputActionPayload> {}
 
 export interface MultilineTextInputProps
-  extends WithInputElements<NaturalMultilineTextInputProps> {}
+  extends Omit<NaturalMultilineTextInputProps, 'textInput'> {
+  textInput: MultilineTextInputInnerProps
+  contextualElevationVariant?: 'surface' | 'elevated'
+}
 
 const useMultilineTextInputStyles = makeStyles({
   root: {
@@ -40,7 +50,7 @@ export type MultilineTextInputPropsOrElement =
   | MultilineTextInputElement
 
 function isMultilineTextInputProps(o: any): o is MultilineTextInputProps {
-  return 'type' in o && o.type === 'text' && 'multiline' in o && o.multiline
+  return 'textInput' in o && 'multiline' in o.textInput && o.textInput.multiline
 }
 
 function isMultilineTextInputElement(o: any): o is MultilineTextInputElement {

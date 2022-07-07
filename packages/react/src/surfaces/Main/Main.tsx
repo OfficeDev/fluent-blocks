@@ -6,12 +6,15 @@ import { rem, useCommonStyles } from '../../lib'
 
 export interface MainProps
   extends Pick<NaturalMainProps, 'variant'>,
-    SectionContentProps {}
+    SectionContentProps {
+  contextualVariant?: 'standalone' | 'view'
+}
 
 const useMainSectionStyles = makeStyles({
   root: {
-    overflowX: 'hidden',
-    overflowY: 'hidden',
+    // Allow `Main` to occupy its natural height and width; it is the
+    // responsibility of its parent (e.g. `View`) to control how it should
+    // overflow.
     backgroundColor: 'var(--surface-background)',
     color: 'var(--surface-foreground)',
     paddingBlockEnd: rem(44),
@@ -21,6 +24,10 @@ const useMainSectionStyles = makeStyles({
   'root--flush': {
     paddingInlineStart: 0,
     paddingInlineEnd: 0,
+  },
+  'root--view': {
+    overflowX: 'hidden',
+    overflowY: 'hidden',
   },
 })
 
@@ -35,7 +42,8 @@ export const Main = (props: MainProps) => {
       className={cx(
         commonStyles.baseSurface,
         mainStyles.root,
-        props.variant === 'flush' && mainStyles['root--flush']
+        props.variant === 'flush' && mainStyles['root--flush'],
+        props.contextualVariant === 'view' && mainStyles['root--view']
       )}
     />
   )

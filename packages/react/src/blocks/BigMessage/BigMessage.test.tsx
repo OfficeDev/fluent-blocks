@@ -1,6 +1,5 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
+import { expect } from '@playwright/test'
 
 describe('BigMessage', function () {
   describe('interactions', function () {
@@ -13,7 +12,7 @@ describe('BigMessage', function () {
       })
 
       it('renders to the page', async function () {
-        expect(await this.page.locator('#root svg').count()).toEqual(1)
+        await expect(this.page.locator('#root svg')).toHaveCount(1)
 
         expect(await this.page.locator('#root h2').first().innerText()).toEqual(
           '9bd4bf8e-6747-440f-bba2-fe419a17bbc5'
@@ -45,7 +44,7 @@ describe('BigMessage', function () {
       })
 
       it('renders to the page', async function () {
-        expect(await this.page.locator('#root svg').count()).toEqual(1)
+        await expect(this.page.locator('#root svg')).toHaveCount(1)
 
         expect(await this.page.locator('#root h2').first().innerText()).toEqual(
           '13ec92f2-57b6-4e50-9e5b-eb3924f4da88'
@@ -65,11 +64,9 @@ describe('BigMessage', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=ea3f02bc-b278-436e-b57a-9bfdba917bab')
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=ea3f02bc-b278-436e-b57a-9bfdba917bab')
+        ).toHaveCount(1)
         expect(
           await this.page
             .locator('text=c9ed0a93-3488-484b-bc18-6da5aa378f74')

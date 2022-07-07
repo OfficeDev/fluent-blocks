@@ -2,7 +2,7 @@ import { Chart as ChartJS } from 'chart.js'
 import set from 'lodash/set'
 import { ReactElement } from 'react'
 
-import { ChartProps } from '@fluent-blocks/schemas'
+import { ChartProps as NaturalChartProps } from '@fluent-blocks/schemas'
 import { makeStyles } from '@fluentui/react-components'
 
 import { invalidChart } from '../../lib'
@@ -12,6 +12,8 @@ import { LineChart } from './variants/LineChart'
 import { PieChart } from './variants/PieChart'
 import { StackedLineChart } from './variants/StackedLineChart'
 import { VerticalBarChart } from './variants/VerticalBarChart'
+
+export type ChartProps = NaturalChartProps
 
 set(ChartJS, 'defaults.global.legend.display', false)
 set(

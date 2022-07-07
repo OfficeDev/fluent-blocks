@@ -1,9 +1,10 @@
-import { cloneElement, ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+import { ReactElement, cloneElement } from 'react'
+
 import {
   LayoutVariant,
   LayoutItemProps as NaturalLayoutItemProps,
 } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import {
   EscapeElement,
@@ -12,7 +13,6 @@ import {
   renderIfEscape,
   sx,
 } from '../../lib'
-
 import { CardPropsOrElement, renderIfCard } from '../Card/Card'
 
 export type LayoutItemEntity = CardPropsOrElement | EscapeElement
@@ -20,6 +20,7 @@ export type LayoutItemEntity = CardPropsOrElement | EscapeElement
 export interface LayoutItemProps extends Omit<NaturalLayoutItemProps, 'item'> {
   item: LayoutItemEntity
   contextualVariant?: LayoutVariant
+  contextualIsBroad?: boolean
 }
 
 const useLayoutItemStyles = makeStyles({
@@ -37,9 +38,7 @@ const useLayoutItemStyles = makeStyles({
   flexBlockSizeFactor2: {},
   gridInlineSizeFactor1: {},
   gridInlineSizeFactor2: {
-    '@media screen and (min-width: 600px)': {
-      gridColumnEnd: 'span 2',
-    },
+    gridColumnEnd: 'span 2',
   },
   gridBlockSizeFactor1: {},
   gridBlockSizeFactor2: {
@@ -50,6 +49,7 @@ const useLayoutItemStyles = makeStyles({
 export const LayoutItem = ({
   item,
   contextualVariant = 'grid',
+  contextualIsBroad = false,
   inlineSizeFactor = 1,
   blockSizeFactor = 1,
 }: LayoutItemProps) => {
@@ -64,7 +64,9 @@ export const LayoutItem = ({
         className={cx(
           styles[
             `${contextualVariant}InlineSizeFactor${
-              inlineSizeFactor.toString() as '1' | '2'
+              contextualIsBroad
+                ? (inlineSizeFactor.toString() as '1' | '2')
+                : '1'
             }`
           ],
           styles[

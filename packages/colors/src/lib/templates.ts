@@ -1,9 +1,7 @@
-import { nanoid } from 'nanoid'
-
 import { NamedPalette, NamedTheme } from './types'
 
-export const paletteTemplate = (): NamedPalette & { id: string } => ({
-  id: nanoid(),
+export const paletteTemplate = (id: string): NamedPalette & { id: string } => ({
+  id,
   name: '',
   keyColor: [44.51, 39.05, 288.84],
   darkCp: 2 / 3,
@@ -11,8 +9,8 @@ export const paletteTemplate = (): NamedPalette & { id: string } => ({
   hueTorsion: 0,
 })
 
-export const themeTemplate = (): NamedTheme & { id: string } => ({
-  id: nanoid(),
+export const themeTemplate = (id: string): NamedTheme & { id: string } => ({
+  id,
   name: '',
   backgrounds: {},
   foregrounds: {},

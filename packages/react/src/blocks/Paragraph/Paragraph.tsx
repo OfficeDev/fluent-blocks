@@ -3,13 +3,16 @@ import { ReactElement } from 'react'
 import { ParagraphProps as NaturalParagraphProps } from '@fluent-blocks/schemas'
 import { mergeClasses as cx } from '@fluentui/react-components'
 
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
-import { useCommonStyles, useTextBlockStyles } from '../../lib'
+import {
+  DescribedInlineContent,
+  DescribedInlineSequenceOrString,
+} from '../../inlines'
+import { useCommonStyles, useTextBlockStyles, useTextStyles } from '../../lib'
 
 export interface ParagraphProps
   extends Omit<NaturalParagraphProps, 'paragraph'> {
-  paragraph: InlineSequenceOrString
-  contextualVariant?: 'card' | 'block'
+  paragraph: DescribedInlineSequenceOrString
+  contextualVariant?: 'card' | 'block' | 'inputMeta' | 'inputMeta--selectOption'
   contextualId?: string
   visuallyHidden?: boolean
 }
@@ -21,20 +24,25 @@ export const Paragraph = (props: ParagraphProps) => {
     contextualId,
     visuallyHidden,
   } = props
-  const textStyles = useTextBlockStyles()
+  const textBlockStyles = useTextBlockStyles()
+  const textStyles = useTextStyles()
   const commonStyles = useCommonStyles()
   return (
     <p
       className={cx(
-        textStyles.root,
+        textBlockStyles.root,
         commonStyles.centerBlock,
         commonStyles.mainContentWidth,
-        contextualVariant === 'card' && textStyles.cardSpacing,
+        contextualVariant === 'card' && textBlockStyles.cardSpacing,
+        contextualVariant === 'inputMeta' && textBlockStyles.inputMetaSpacing,
+        contextualVariant === 'inputMeta--selectOption' &&
+          textBlockStyles.selectOptionMetaSpacing,
+        contextualVariant === 'inputMeta' && textStyles.inputMeta,
         visuallyHidden && commonStyles.visuallyHidden
       )}
       {...(contextualId && { id: contextualId })}
     >
-      <InlineContent inlines={paragraph} />
+      {DescribedInlineContent({ inlines: paragraph })}
     </p>
   )
 }

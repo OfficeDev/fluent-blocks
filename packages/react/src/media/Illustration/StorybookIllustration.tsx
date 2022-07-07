@@ -1,6 +1,6 @@
+import { AccentScheme, ThemeName } from '../../lib'
+import { View } from '../../views'
 import { IllustrationProps } from './Illustration'
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
-import { Main } from '../../surfaces'
 
 export const Illustration = ({
   themeName,
@@ -12,10 +12,15 @@ export const Illustration = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main
-      blocks={[{ media: props, variant: 'narrow' }]}
-      title={[{ text: ' ' }]}
-    />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        blocks: [{ media: props, variant: 'narrow' }],
+        title: ' ',
+      },
+    }}
+  />
 )

@@ -1,7 +1,6 @@
-import { InlineSequenceOrString } from '../../inlines'
-import { AccentScheme, FluentBlocksProvider, ThemeName } from '../../lib'
+import { AccentScheme, ThemeName } from '../../lib'
 import { LayoutProps } from '../../props'
-import { Main } from '../../surfaces'
+import { View } from '../../views'
 
 export const Layout = ({
   themeName,
@@ -13,10 +12,15 @@ export const Layout = ({
   accentScheme: AccentScheme
   iconSpriteUrl: string
 }) => (
-  <FluentBlocksProvider {...{ themeName, accentScheme, iconSpriteUrl }}>
-    <Main
-      blocks={[{ ...props }]}
-      title={null as unknown as InlineSequenceOrString}
-    />
-  </FluentBlocksProvider>
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        title: '',
+        blocks: [{ ...props }],
+      },
+    }}
+  />
 )

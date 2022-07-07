@@ -1,21 +1,31 @@
 import get from 'lodash/get'
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   ShortTextInputProps as NaturalShortTextInputProps,
   SingleValueInputActionPayload,
 } from '@fluent-blocks/schemas'
-import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
-// todo: fix this import when it stabilizes
-import { Input, Label } from '@fluentui/react-components/unstable'
+import {
+  Input,
+  Label,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
 
+import { Paragraph } from '../../blocks'
 import { Inline, InlineContent } from '../../inlines'
 import {
+  deleteInputValue,
+  makeId,
+  makePayload,
+  putInputValue,
   rem,
   sx,
   useCommonStyles,
   useDebounce,
   useFluentBlocksContext,
+  useShortInputStyles,
+  useTextBlockStyles,
 } from '../../lib'
 import {
   ShortInputContextualProps,
@@ -23,80 +33,116 @@ import {
   WithInputElements,
 } from '../../props'
 
+export interface ShortTextInputInnerProps
+  extends WithInputElements<NaturalShortTextInputProps['textInput']>,
+    WithActionHandler<SingleValueInputActionPayload> {}
+
 export interface ShortTextInputProps
-  extends WithInputElements<NaturalShortTextInputProps>,
-    WithActionHandler<SingleValueInputActionPayload>,
+  extends Omit<NaturalShortTextInputProps, 'textInput'>,
     ShortInputContextualProps {
-  contextualElevationVariant?: 'surface' | 'elevated'
+  textInput: ShortTextInputInnerProps
 }
 
 const useShortTextInputStyles = makeStyles({
-  root: {
-    minWidth: rem(140),
-    ...sx.flex(1, 0, '0'),
-  },
   'root--toolbar-item': {
     ...sx.flex(0, 1, rem(240)),
   },
   label: {
-    color: 'var(--surface-foreground)',
+    display: 'block',
   },
-  input: {
-    width: '100%',
-    '& .fuib-Icon': { fontSize: '1rem' },
+  'input--no-block-siblings': {
+    marginBlockStart: 0,
   },
 })
 
 export const ShortTextInput = ({
-  label,
-  actionId,
-  placeholder,
-  inputType,
-  before,
-  after,
-  initialValue,
-  labelVisuallyHidden,
-  onAction,
+  textInput: {
+    label,
+    disambiguatingLabel,
+    labelVariant = 'block',
+    description,
+    descriptionVariant = 'block',
+    actionId,
+    placeholder,
+    inputType,
+    before,
+    after,
+    autocomplete,
+    initialValue,
+    onAction,
+    metadata,
+    include,
+  },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
 }: ShortTextInputProps) => {
   const shortTextInputStyles = useShortTextInputStyles()
+  const shortInputStyles = useShortInputStyles()
   const commonStyles = useCommonStyles()
+  const textBlockStyles = useTextBlockStyles()
   const [value, setValue] = useState(initialValue || '')
   const debouncedValue = useDebounce(value, 400)
   const didMount = useRef(false)
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   useEffect(() => {
-    if (didMount.current) {
-      const payload = {
-        actionId,
-        type: 'change' as 'change',
-        value: debouncedValue,
+    putInputValue(actionId, initialValue || '')
+    return () => deleteInputValue(actionId)
+  }, [])
+
+  const onChange = useCallback(
+    (nextValue: string) => {
+      putInputValue(actionId, nextValue)
+      if (didMount.current) {
+        const payload = makePayload(
+          {
+            actionId,
+            type: 'change' as 'change',
+            value: nextValue,
+          },
+          metadata,
+          include
+        )
+        onAction ? onAction(payload) : contextOnAction(payload)
+      } else {
+        didMount.current = true
       }
-      onAction ? onAction(payload) : contextOnAction(payload)
-    } else {
-      didMount.current = true
-    }
-  }, [debouncedValue])
+    },
+    [actionId, onAction, contextOnAction, metadata, include]
+  )
+
+  useEffect(() => onChange(debouncedValue), [debouncedValue])
+
+  const labelId = makeId(actionId, 'label')
+  const descriptionId = makeId(actionId, 'description')
 
   return (
     <div
+      role="none"
       className={cx(
-        shortTextInputStyles.root,
+        shortInputStyles.root,
         contextualVariant === 'toolbar-item' &&
           shortTextInputStyles['root--toolbar-item']
       )}
     >
       <Label
-        htmlFor={actionId}
+        id={labelId}
         className={cx(
           shortTextInputStyles.label,
-          labelVisuallyHidden && commonStyles.visuallyHidden
+          textBlockStyles.inputMetaSpacing,
+          labelVariant === 'visuallyHidden' && commonStyles.visuallyHidden
         )}
       >
         <InlineContent inlines={label} />
       </Label>
+      {description && (
+        <Paragraph
+          paragraph={description}
+          contextualId={descriptionId}
+          visuallyHidden={descriptionVariant === 'visuallyHidden'}
+          contextualVariant="inputMeta"
+        />
+      )}
       <Input
         {...{
           id: actionId,
@@ -106,12 +152,22 @@ export const ShortTextInput = ({
           type: inputType || 'text',
           ...(before && { contentBefore: Inline(before) }),
           ...(after && { contentAfter: Inline(after) }),
-          className: shortTextInputStyles.input,
+          className: cx(
+            shortInputStyles.input,
+            labelVariant === 'visuallyHidden' &&
+              (!description || descriptionVariant === 'visuallyHidden') &&
+              shortTextInputStyles['input--no-block-siblings']
+          ),
+          ...(autocomplete && { autocomplete }),
+          ...(disambiguatingLabel
+            ? { 'aria-label': disambiguatingLabel }
+            : { 'aria-labelledby': labelId }),
+          ...(description && { 'aria-describedby': descriptionId }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'
-            ? 'filledDarker'
-            : 'filledLighter'
+            ? 'filled-darker'
+            : 'filled-lighter'
         }
       />
     </div>
@@ -127,11 +183,13 @@ export type ShortTextInputPropsOrElement =
   | ShortTextInputElement
 
 function isShortTextInputProps(o: any): o is ShortTextInputProps {
-  return 'type' in o && o.type === 'text' && !('multiline' in o && o.multiline)
+  return (
+    'textInput' in o && !('multiline' in o.textInput && o.textInput.multiline)
+  )
 }
 
 function isShortTextInputElement(o: any): o is ShortTextInputElement {
-  return o?.type === ShortTextInput && isShortTextInputProps(o?.props)
+  return o?.type === ShortTextInput
 }
 
 export function renderIfShortTextInput(o: any) {

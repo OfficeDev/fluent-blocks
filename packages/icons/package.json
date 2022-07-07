@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/basic-icons",
-  "version": "9.1.2",
+  "version": "9.1.3-next.2",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>"
@@ -14,10 +14,13 @@
   ],
   "scripts": {
     "prepublishOnly": "pnpm bundle",
-    "bundle": "touch ./basic-icons.svg && fluentui-svg-icon-sprites bundle -i ./basic-icons.json -s ./node_modules/fluentui-svg-icon-sprites/icons -o ./basic-icons.svg",
+    "bundle": "touch ./basic-icons.svg && node ./scripts/build.js bundle -i ./basic-icons.json -s ./node_modules/@fluentui/svg-icons/icons -o ./basic-icons.svg",
     "postinstall": "node ./scripts/postinstall.js"
   },
   "devDependencies": {
-    "fluentui-svg-icon-sprites": "1.1.167"
+    "@fluentui/svg-icons": "^1.1.172",
+    "glob": "^8.0.3",
+    "svgstore": "^3.0.1",
+    "yargs": "^17.5.1"
   }
 }

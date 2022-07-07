@@ -5,9 +5,12 @@ import {
   TabsItemProps as NaturalTabsItemProps,
   TabsProps as NaturalTabsProps,
 } from '@fluent-blocks/schemas'
-import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
-// todo: fix this import when it stabilizes
-import { Tab, TabList } from '@fluentui/react-components/unstable'
+import {
+  Tab,
+  TabList,
+  mergeClasses as cx,
+  makeStyles,
+} from '@fluentui/react-components'
 
 import { ButtonProps } from '../../inputs'
 import {
@@ -16,7 +19,6 @@ import {
   invalidTabPanelItem,
   rem,
   renderIfEscape,
-  sx,
 } from '../../lib'
 import {
   DescriptionListPropsOrElement,
@@ -36,13 +38,8 @@ import { TablePropsOrElement, renderIfTable } from '../Table/Table'
 
 export interface TabProps
   extends Omit<
-    ButtonProps,
-    | 'type'
-    | 'actionId'
-    | 'variant'
-    | 'iconVariant'
-    | 'onAction'
-    | 'contextualVariant'
+    ButtonProps['button'],
+    'actionId' | 'variant' | 'iconVariant' | 'onAction'
   > {}
 
 export type TabPanelItemEntity =

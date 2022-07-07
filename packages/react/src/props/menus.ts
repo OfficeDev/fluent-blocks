@@ -5,14 +5,12 @@ import {
 
 import { ButtonProps } from '../inputs'
 
-export interface MenuAction
-  extends NaturalMenuAction,
-    Omit<
-      ButtonProps,
-      'type' | 'variant' | 'size' | 'iconSze' | 'contextualVariant'
-    > {}
+export interface MenuAction extends Omit<NaturalMenuAction, 'action'> {
+  action: NaturalMenuAction['action'] &
+    Omit<ButtonProps['button'], 'type' | 'size' | 'iconSze'>
+}
 
-export type MenuActionSequence = MenuAction[]
+export type MenuActionSequence = MenuAction['action'][]
 
 export type MenuItemEntity = MenuAction | MenuDivider
 

@@ -1,7 +1,10 @@
 import { ReactElement } from 'react'
-import { TextProps } from '@fluent-blocks/schemas'
+
+import { TextProps as NaturalTextProps } from '@fluent-blocks/schemas'
 
 import { useTextStyles } from '../../lib'
+
+export type TextProps = NaturalTextProps
 
 export const Text = (props: TextProps) => {
   const { text, variant } = props

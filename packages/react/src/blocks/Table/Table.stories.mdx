@@ -1,9 +1,9 @@
-import { fake, seed } from 'faker/locale/en_US'
 import range from 'lodash/range'
 
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
+import { fake, seed } from '../../lib/fake'
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { Table } from './StorybookTable'
 
@@ -45,7 +45,6 @@ component instead.
       },
       rowActions: {
         copy: {
-          type: 'action',
           actionId: 'copy',
           label: 'Copy',
           icon: 'copy',

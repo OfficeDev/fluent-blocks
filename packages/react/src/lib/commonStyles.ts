@@ -69,6 +69,16 @@ export const useTextBlockStyles = makeStyles({
     marginInlineEnd: 0,
     marginBlockStart: 0,
   },
+  inputMetaSpacing: {
+    marginBlockStart: 0,
+    marginBlockEnd: 0,
+  },
+  selectOptionMetaSpacing: {
+    marginBlockStart: rem(-4),
+    marginBlockEnd: rem(4),
+    marginInlineEnd: 0,
+    marginInlineStart: rem(36),
+  },
   h1: {
     fontSize: rem(24),
     lineHeight: 32 / 24,
@@ -91,5 +101,34 @@ export const useTextStyles = makeStyles({
     boxShadow: 'var(--content-elevation)',
     backgroundColor: 'var(--input-background)',
     ...sx.padding('.1em', '.3em'),
+  },
+  described: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
+  },
+  inputMeta: {},
+})
+
+export const useShortInputStyles = makeStyles({
+  root: {
+    minWidth: rem(140),
+    ...sx.flex(1, 0, '0px'),
+  },
+  input: {
+    boxShadow: 'var(--shadow2)',
+    marginBlockStart: rem(4),
+    width: '100%',
+    '& .fuib-Icon': { fontSize: '1rem' },
+    '& > input:not(.fxc4j92)': {
+      color: 'var(--colorNeutralForeground1)',
+    },
+    '& > button:not(.fxc4j92)': {
+      color: 'var(--colorNeutralForeground1)',
+    },
+  },
+  listbox: {
+    // todo: replace these styles if/when Combobox & Dropdown support AutoSize
+    maxHeight: '20.5rem',
+    overflowY: 'auto',
   },
 })

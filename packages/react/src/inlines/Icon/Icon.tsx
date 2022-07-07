@@ -2,10 +2,16 @@ import get from 'lodash/get'
 import { ReactElement } from 'react'
 
 import basicIcons from '@fluent-blocks/basic-icons'
-import { IconProps, IconSize, IconVariant } from '@fluent-blocks/schemas'
+import {
+  IconSize,
+  IconVariant,
+  IconProps as NaturalIconProps,
+} from '@fluent-blocks/schemas'
 import { makeStyles } from '@fluentui/react-components'
 
 import { useFluentBlocksContext } from '../../lib'
+
+export type IconProps = NaturalIconProps
 
 function spriteHref(
   icon: string,
@@ -33,7 +39,7 @@ function spriteHref(
   }
 }
 
-const iconToTextRatio = 1.25
+const iconToTextRatio = 1
 
 const useIconStyles = makeStyles({
   root: {
@@ -41,11 +47,12 @@ const useIconStyles = makeStyles({
     width: `${iconToTextRatio}em`,
     verticalAlign: 'text-bottom',
     fill: 'currentcolor',
+    flexShrink: 0,
   },
 })
 
 export const Icon = (props: IconProps) => {
-  const { icon, variant = 'outline', size = 16 } = props
+  const { icon, variant = 'outline', size = 20 } = props
   const iconStyles = useIconStyles()
   const { iconSpriteUrl } = useFluentBlocksContext()
   return (

@@ -13,7 +13,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Icon } from '../../inlines'
-import { Sequence, sx, useFluentBlocksContext } from '../../lib'
+import { Sequence, makePayload, sx, useFluentBlocksContext } from '../../lib'
 import {
   ActionHandler,
   MenuAction,
@@ -26,13 +26,14 @@ export interface OverflowProps extends Omit<NaturalOverflowProps, 'overflow'> {
   contextualHiddenFlags?: { hidden?: boolean }[]
   triggerIcon?: string
   triggerLabel?: string
+  contextualRole?: 'button' | 'menuitem'
 }
 
 function isAction(o: any): o is MenuAction {
-  return 'actionId' in o
+  return 'action' in o && 'actionId' in o.action
 }
 
-const defaultIconSize = 16
+const defaultIconSize = 20
 
 const useOverflowStyles = makeStyles({
   trigger: {
@@ -49,36 +50,37 @@ const OverflowItem = (
 ) => {
   const onItemActivate = isAction(item)
     ? () => {
-        const payload = {
-          type: 'activate' as 'activate',
-          actionId: item.actionId,
-          ...item.payload,
-        }
-        item.onAction && item.onAction(payload)
+        const payload = makePayload(
+          {
+            type: 'activate' as 'activate',
+            actionId: item.action.actionId,
+          },
+          item.action.metadata,
+          item.action.include
+        )
+        item.action.onAction && item.action.onAction(payload)
         item.contextOnAction && item.contextOnAction(payload)
       }
     : noop
-
-  switch (item.type) {
-    case 'action':
-      return item.hidden ? null : (
-        <MenuItem
-          {...(item.icon && {
-            icon: (
-              <Icon
-                icon={item.icon}
-                size={item.iconSize || defaultIconSize}
-                variant="outline"
-              />
-            ),
-          })}
-          onClick={onItemActivate}
-        >
-          {item.label}
-        </MenuItem>
-      )
-    default:
-      return null
+  if ('action' in item) {
+    return item.hidden ? null : (
+      <MenuItem
+        {...(item.action.icon && {
+          icon: (
+            <Icon
+              icon={item.action.icon}
+              size={item.action.iconSize || defaultIconSize}
+              variant="outline"
+            />
+          ),
+        })}
+        onClick={onItemActivate}
+      >
+        {item.action.label}
+      </MenuItem>
+    )
+  } else {
+    return null
   }
 }
 
@@ -89,6 +91,7 @@ export const Overflow = ({
   contextualHiddenFlags,
   triggerIcon = 'more_horizontal',
   triggerLabel,
+  contextualRole,
 }: OverflowProps) => {
   const { translations, onAction } = useFluentBlocksContext()
   const overflowStyles = useOverflowStyles()
@@ -102,6 +105,7 @@ export const Overflow = ({
             className={overflowStyles.trigger}
             icon={<Icon icon={triggerIcon} size={iconSize} variant="outline" />}
             size={buttonSize}
+            role={contextualRole}
           />
         </Tooltip>
       </MenuTrigger>

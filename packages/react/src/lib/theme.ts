@@ -19,7 +19,6 @@ import {
   teamsHighContrastTheme,
   teamsLightTheme,
   webDarkTheme,
-  webHighContrastTheme,
   webLightTheme,
 } from '@fluentui/react-components'
 
@@ -66,24 +65,21 @@ export const getTheme = (
 ) => {
   const resolvedAccentScheme = accentScheme || 'web'
   const resolvedThemeName = themeName || 'light'
+  if (resolvedThemeName === 'highContrast') {
+    return teamsHighContrastTheme
+  }
   if (isPalette(resolvedAccentScheme)) {
-    if (resolvedThemeName === 'highContrast') {
-      return webHighContrastTheme
+    const brandTokens = getBrandTokensFromPalette(resolvedAccentScheme)
+    if (resolvedThemeName === 'light') {
+      return createLightTheme(brandTokens)
     } else {
-      const brandTokens = getBrandTokensFromPalette(resolvedAccentScheme)
-      if (resolvedThemeName === 'light') {
-        return createLightTheme(brandTokens)
-      } else {
-        return createDarkTheme(brandTokens)
-      }
+      return createDarkTheme(brandTokens)
     }
   } else {
     switch (resolvedAccentScheme) {
       case 'teams':
         return (() => {
           switch (resolvedThemeName) {
-            case 'highContrast':
-              return teamsHighContrastTheme
             case 'dark':
               return teamsDarkTheme
             default:
@@ -93,8 +89,6 @@ export const getTheme = (
       default:
         return (() => {
           switch (resolvedThemeName) {
-            case 'highContrast':
-              return webHighContrastTheme
             case 'dark':
               return webDarkTheme
             default:
@@ -130,5 +124,5 @@ export const contextArgTypes = {
       defaultValue: { summary: 'web' },
     },
   },
-  onAction: { action: 'action' },
+  onAction: { action: 'action', table: { disable: true } },
 }

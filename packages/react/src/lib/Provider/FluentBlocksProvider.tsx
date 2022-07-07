@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { FluentProvider } from '@fluentui/react-components'
+import { FluentProvider, makeStyles } from '@fluentui/react-components'
 
 import { getTheme } from '../theme'
 import {
@@ -9,11 +9,18 @@ import {
   defaultContext,
 } from './FluentBlocksContext'
 
+const useProviderStyles = makeStyles({
+  root: {
+    display: 'contents',
+  },
+})
+
 export const FluentBlocksProvider = ({
   children,
   ...props
 }: PropsWithChildren<Partial<Omit<FluentPatternsBlocksData, 'theme'>>>) => {
   const theme = getTheme(props.themeName, props.accentScheme)
+  const providerStyles = useProviderStyles()
   const context: FluentPatternsBlocksData = {
     ...defaultContext,
     ...props,
@@ -25,6 +32,7 @@ export const FluentBlocksProvider = ({
         theme,
         targetDocument: typeof document === 'undefined' ? void 0 : document,
         dir: context.translations.dir,
+        className: providerStyles.root,
       }}
     >
       <FluentBlocksContext.Provider value={context}>

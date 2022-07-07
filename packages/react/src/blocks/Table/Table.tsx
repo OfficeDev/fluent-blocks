@@ -1,4 +1,3 @@
-import debounce from 'lodash/debounce'
 import get from 'lodash/get'
 import keys from 'lodash/keys'
 import {
@@ -6,7 +5,6 @@ import {
   MouseEvent,
   ReactElement,
   useCallback,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -14,12 +12,11 @@ import {
 
 import { TableRowActivateAction } from '@fluent-blocks/schemas'
 import {
+  Checkbox,
   Button as FluentButton,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
-// todo: fix this import when it stabilizes
-import { Checkbox } from '@fluentui/react-components/unstable'
 import {
   useArrowNavigationGroup,
   useFocusableGroup,
@@ -33,6 +30,7 @@ import {
   sx,
   useCommonStyles,
   useFluentBlocksContext,
+  useLayoutResize,
 } from '../../lib'
 import { ListColumnProps, MenuItemSequence, TableProps } from '../../props'
 import { ShortInputs } from '../ShortInputs/ShortInputs'
@@ -54,7 +52,7 @@ const useTableStyles = makeStyles({
     marginInlineEnd: rem(-16),
   },
   rootInner: {
-    ...sx.flex(1, 0, '0'),
+    ...sx.flex(1, 0, '0px'),
     width: '0',
     overflowX: 'auto',
     ...sx.padding(rem(4)),
@@ -217,38 +215,15 @@ export const Table = (props: TableProps) => {
     }
   }, [])
 
-  const debouncedUpdateTableLayout = useCallback(
-    debounce(
-      () => {
-        if ($table.current) {
-          const nextColumnsInFlow = getNextColumnsInFlow()
-          setInFlowColumns(nextColumnsInFlow!)
-          setContentColumnsHidden(
-            getContentColumnsHidden(nextColumnsInFlow!, colKeys)
-          )
-        }
-      },
-      100,
-      { leading: false, trailing: true }
-    ),
-    []
-  )
-
-  useLayoutEffect(() => {
-    document.defaultView?.addEventListener('resize', debouncedUpdateTableLayout)
-    if ($table.current) {
-      const nextColumnsInFlow = getNextColumnsInFlow()
-      setInFlowColumns(nextColumnsInFlow!)
-      setContentColumnsHidden(
-        getContentColumnsHidden(nextColumnsInFlow!, colKeys)
-      )
-    }
-    return () =>
-      document.defaultView?.removeEventListener(
-        'resize',
-        debouncedUpdateTableLayout
-      )
+  const updateTableLayout = useCallback(() => {
+    const nextColumnsInFlow = getNextColumnsInFlow()
+    setInFlowColumns(nextColumnsInFlow!)
+    setContentColumnsHidden(
+      getContentColumnsHidden(nextColumnsInFlow!, colKeys)
+    )
   }, [])
+
+  useLayoutResize($table, updateTableLayout)
 
   const rootRowHeaderActivate = useCallback(
     ({ target }: MouseEvent<HTMLButtonElement>) => {
@@ -287,18 +262,23 @@ export const Table = (props: TableProps) => {
         default:
           return [
             {
-              label: translations['sort--alphabetical-ascending'],
-              actionId: `${colKey}:sort--alphabetical-ascending`,
-              onAction: () =>
-                sort?.setSort({ sortColumn: colKey, sortOrder: 'ascending' }),
-              type: 'action',
+              action: {
+                label: translations['sort--alphabetical-ascending'],
+                actionId: `${colKey}:sort--alphabetical-ascending`,
+                onAction: () =>
+                  sort?.setSort({ sortColumn: colKey, sortOrder: 'ascending' }),
+              },
             },
             {
-              label: translations['sort--alphabetical-descending'],
-              actionId: `${colKey}:sort--alphabetical-descending`,
-              onAction: () =>
-                sort?.setSort({ sortColumn: colKey, sortOrder: 'descending' }),
-              type: 'action',
+              action: {
+                label: translations['sort--alphabetical-descending'],
+                actionId: `${colKey}:sort--alphabetical-descending`,
+                onAction: () =>
+                  sort?.setSort({
+                    sortColumn: colKey,
+                    sortOrder: 'descending',
+                  }),
+              },
             },
           ]
       }
@@ -317,34 +297,30 @@ export const Table = (props: TableProps) => {
         maxWidthVariant === 'textWidth' && commonStyles.mainContentWidth
       )}
     >
-      <style>
-        {Array.from(inFlowColumns).reduce((acc: string, colKey: string) => {
+      <style>{`${Array.from(inFlowColumns).reduce(
+        (acc: string, colKey: string) => {
           if (colKey === 'selection' || colKey === 'overflow') {
-            return `${acc}.${colWidthClassName(colKey)} { flex-basis: ${rem(
+            return `${acc}.${colWidthClassName(colKey)}{flex-basis:${rem(
               accessoryWidth
-            )}; flex-grow: 0; flex-shrink: 0; }`
+            )};flex-grow:0;flex-shrink:0;}`
           } else {
             const minWidth = get(columns, [colKey, 'minWidth'], defaultMinWidth)
-            return `${acc}.${colWidthClassName(colKey)} { min-width: ${rem(
+            return `${acc}.${colWidthClassName(colKey)} {min-width:${rem(
               minWidth
-            )}; flex-grow: ${minWidth}; }\n`
+            )};flex-grow:${minWidth};}`
           }
-        }, '')}
-        {`.row-width { min-width: ${rem(
-          Array.from(inFlowColumns).reduce((acc: number, colKey: string) => {
-            if (colKey === 'selection' || colKey === 'overflow') {
-              return acc + accessoryWidth
-            } else {
-              const minWidth = get(
-                columns,
-                [colKey, 'minWidth'],
-                defaultMinWidth
-              )
-              return acc + minWidth
-            }
-          }, 0)
-        )} }`}
-      </style>
+        },
+        ''
+      )}.row-width{min-width:${rem(
+        Array.from(inFlowColumns).reduce((acc: number, colKey: string) => {
+          if (colKey === 'selection' || colKey === 'overflow') {
+            return acc + accessoryWidth
+          } else {
+            const minWidth = get(columns, [colKey, 'minWidth'], defaultMinWidth)
+            return acc + minWidth
+          }
+        }, 0)
+      )}}`}</style>
       <div role="none" className={tableStyles.rootSpacingAdjust}>
         <div role="none" className={tableStyles.rootInner}>
           <div
@@ -413,6 +389,7 @@ export const Table = (props: TableProps) => {
                                         : 'arrow_down'
                                       : 'arrow_sort'
                                   }
+                                  contextualRole="button"
                                 />
                               )}
                           </div>
@@ -456,11 +433,13 @@ export const Table = (props: TableProps) => {
                                     ...(contentColumnsHidden
                                       ? [
                                           {
-                                            type: 'action' as 'action',
-                                            label: translations.viewAllDetails,
-                                            actionId: `${rowKey}__details`,
+                                            action: {
+                                              label:
+                                                translations.viewAllDetails,
+                                              actionId: `${rowKey}__details`,
+                                            },
                                           },
-                                          { type: 'divider' as 'divider' },
+                                          { divider: {} },
                                         ]
                                       : []),
                                     ...(row.actions
@@ -468,9 +447,11 @@ export const Table = (props: TableProps) => {
                                         rowActions.hasOwnProperty(actionId)
                                       )
                                       .map((actionId) => ({
-                                        ...rowActions[actionId],
-                                        actionId,
-                                        payload: { rows: [rowKey] },
+                                        action: {
+                                          ...rowActions[actionId],
+                                          actionId,
+                                          metadata: { rows: [rowKey] },
+                                        },
                                       })) || []),
                                   ]}
                                 />
@@ -497,9 +478,11 @@ export const Table = (props: TableProps) => {
                                     rowActions.hasOwnProperty(actionId)
                                   )
                                   .map((actionId) => ({
-                                    ...rowActions[actionId],
-                                    actionId,
-                                    payload: { rows: [rowKey] },
+                                    button: {
+                                      ...rowActions[actionId],
+                                      actionId,
+                                      metadata: { rows: [rowKey] },
+                                    },
                                   }))}
                               />
                             </div>

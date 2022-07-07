@@ -1,10 +1,9 @@
-import { fake, seed } from 'faker/locale/en_US'
 import range from 'lodash/range'
 
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
-import fakeTitle from '../../lib/fakeTitle'
+import { fake, fakeTitle, seed } from '../../lib/fake'
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { View } from './View'
 
@@ -24,6 +23,18 @@ import { View } from './View'
 />
 
 export const ViewTemplate = (props) => <View {...props} />
+
+export const learnMore = {
+  link: 'Learn more.',
+  href: 'https://github.com/OfficeDev/fluent-blocks#readme',
+  external: true,
+  targetBlank: true,
+}
+
+export const activate = {
+  link: 'Activate.',
+  actionId: 'link--activate',
+}
 
 # View
 
@@ -75,90 +86,102 @@ that time `View` will call its interaction callback with the update.
             blocks: [
               {
                 toolbar: {
-                  items: [
+                  menu: [
                     {
-                      type: 'action',
-                      actionId: 'font',
-                      label: 'Font',
-                      iconOnly: true,
-                      icon: 'text_font',
+                      action: {
+                        actionId: 'font',
+                        label: 'Font',
+                        iconOnly: true,
+                        icon: 'text_font',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'code',
-                      label: 'Code',
-                      iconOnly: true,
-                      icon: 'code',
+                      action: {
+                        actionId: 'code',
+                        label: 'Code',
+                        iconOnly: true,
+                        icon: 'code',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'eye',
-                      label: 'Eye',
-                      iconOnly: true,
-                      icon: 'eye',
+                      action: {
+                        actionId: 'eye',
+                        label: 'Eye',
+                        iconOnly: true,
+                        icon: 'eye',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'stack',
-                      label: 'Respond',
-                      iconOnly: false,
-                      icon: 'stack',
+                      action: {
+                        actionId: 'stack',
+                        label: 'Respond',
+                        iconOnly: false,
+                        icon: 'stack',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'heart',
-                      label: 'Connect',
-                      iconOnly: false,
-                      icon: 'heart',
+                      action: {
+                        actionId: 'heart',
+                        label: 'Connect',
+                        iconOnly: false,
+                        icon: 'heart',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'accessibility',
-                      label: 'Include',
-                      iconOnly: false,
-                      icon: 'accessibility',
+                      action: {
+                        actionId: 'accessibility',
+                        label: 'Include',
+                        iconOnly: false,
+                        icon: 'accessibility',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'chat',
-                      label: 'Chat',
-                      iconOnly: true,
-                      icon: 'chat',
+                      action: {
+                        actionId: 'chat',
+                        label: 'Chat',
+                        iconOnly: true,
+                        icon: 'chat',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'moon',
-                      label: 'Moon',
-                      iconOnly: true,
-                      icon: 'weather_moon',
+                      action: {
+                        actionId: 'moon',
+                        label: 'Moon',
+                        iconOnly: true,
+                        icon: 'weather_moon',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'cat',
-                      label: 'Cat',
-                      iconOnly: true,
-                      icon: 'animal_cat',
+                      action: {
+                        actionId: 'cat',
+                        label: 'Cat',
+                        iconOnly: true,
+                        icon: 'animal_cat',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'clock',
-                      label: 'Clock',
-                      iconOnly: false,
-                      icon: 'clock',
+                      action: {
+                        actionId: 'clock',
+                        label: 'Clock',
+                        iconOnly: false,
+                        icon: 'clock',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'origami',
-                      label: 'Origami',
-                      iconOnly: false,
-                      icon: 'send',
+                      action: {
+                        actionId: 'origami',
+                        label: 'Origami',
+                        iconOnly: false,
+                        icon: 'send',
+                      },
                     },
                     {
-                      type: 'action',
-                      actionId: 'tools',
-                      label: 'Tools',
-                      iconOnly: false,
-                      icon: 'wrench',
+                      action: {
+                        actionId: 'tools',
+                        label: 'Tools',
+                        iconOnly: false,
+                        icon: 'wrench',
+                      },
                     },
                   ],
                 },
@@ -166,38 +189,140 @@ that time `View` will call its interaction callback with the update.
               {
                 inputs: [
                   {
-                    type: 'text',
-                    actionId: 'a1',
-                    label: [{ text: fakeTitle(fake) }],
-                    initialValue: fake('{{name.firstName}} {{name.lastName}}'),
-                    after: { icon: 'person' },
+                    textInput: {
+                      actionId: 'a1',
+                      label: [{ text: fakeTitle(fake) }],
+                      initialValue: fake(
+                        '{{name.firstName}} {{name.lastName}}'
+                      ),
+                      after: { icon: 'person' },
+                      include: ['a2', 'a3'],
+                    },
                   },
                   {
-                    type: 'text',
-                    actionId: 'a2',
-                    label: [{ text: fakeTitle(fake) }],
-                    inputType: 'email',
-                    placeholder: 'username',
-                    after: { text: '@live.com' },
+                    textInput: {
+                      actionId: 'a2',
+                      label: [{ text: fakeTitle(fake) }],
+                      inputType: 'email',
+                      placeholder: 'username',
+                      after: { text: '@live.com' },
+                      include: ['a1', 'a3'],
+                    },
                   },
                   {
-                    type: 'text',
-                    actionId: 'a3',
-                    label: [{ text: fakeTitle(fake) }],
-                    inputType: 'tel',
-                    initialValue: fake('{{phone.phoneNumber}}'),
-                    before: { icon: 'call' },
+                    textInput: {
+                      actionId: 'a3',
+                      label: [{ text: fakeTitle(fake) }],
+                      inputType: 'tel',
+                      initialValue: fake('000 x1829'),
+                      before: { icon: 'call' },
+                      include: ['a1', 'a2'],
+                    },
                   },
                 ],
               },
               {
-                type: 'radio-group',
-                actionId: 'b1',
-                label: [{ text: `${fakeTitle(fake)}:` }],
-                options: [
-                  { label: [{ text: fakeTitle(fake) }], value: 'v1' },
-                  { label: [{ text: fakeTitle(fake) }], value: 'v2' },
+                inputs: [
+                  {
+                    textInput: {
+                      actionId: 'a4',
+                      label: fakeTitle(fake),
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                  },
                 ],
+              },
+              {
+                select: {
+                  variant: 'group',
+                  actionId: 'b1',
+                  include: ['b2'],
+                  metadata: { peach: 'pit' },
+                  label: [{ text: fakeTitle(fake) }],
+                  description: fake('{{lorem.sentence}}'),
+                  options: [
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'v1',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'v2',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                  ],
+                },
+              },
+              {
+                select: {
+                  variant: 'group',
+                  multiple: true,
+                  actionId: 'b2',
+                  include: ['b3'],
+                  metadata: { palm: 'coconut' },
+                  label: [{ text: fakeTitle(fake) }],
+                  description: fake('{{lorem.sentence}}'),
+                  options: [
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'u1',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                    {
+                      label: [{ text: fakeTitle(fake) }],
+                      value: 'u2',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                  ],
+                },
+              },
+              {
+                select: {
+                  variant: 'combobox',
+                  actionId: 'b3',
+                  label: [{ text: fakeTitle(fake) }],
+                  description: fake('{{lorem.sentence}}'),
+                  include: ['b1'],
+                  metadata: { oak: 'acorn' },
+                  options: [
+                    {
+                      label: fakeTitle(fake),
+                      value: 'w1',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                    {
+                      label: fakeTitle(fake),
+                      value: 'w2',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                  ],
+                  placeholder: 'Select a value',
+                },
+              },
+              {
+                select: {
+                  variant: 'combobox',
+                  multiple: true,
+                  actionId: 'b4',
+                  label: [{ text: fakeTitle(fake) }],
+                  description: fake('{{lorem.sentence}}'),
+                  include: ['b3'],
+                  metadata: { oak: 'acorn' },
+                  options: [
+                    {
+                      label: fakeTitle(fake),
+                      value: 'w3',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                    {
+                      label: fakeTitle(fake),
+                      value: 'w4',
+                      description: fake('{{lorem.sentence}}'),
+                    },
+                  ],
+                  placeholder: 'Select a value',
+                },
               },
               {
                 table: {
@@ -207,7 +332,7 @@ that time `View` will call its interaction callback with the update.
                   maxWidthVariant: 'textWidth',
                   minWidthVariant: 'fill',
                   columns: {
-                    c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
+                    c1: { title: 'Name' },
                     c2: { title: 'Office' },
                     c3: { title: 'Email', hideable: true },
                   },
@@ -232,18 +357,33 @@ that time `View` will call its interaction callback with the update.
             sections: range(2).map((r) => ({
               title: [{ text: fakeTitle(fake) }],
               blocks: [
-                ...range(3).map(() => ({
+                ...range(3).map((q) => ({
                   paragraph: range(3).map(() => ({
                     text: fake('{{lorem.sentence}} '),
                   })),
                 })),
                 {
                   card: {
-                    title: fakeTitle(fake),
-                    body: [{ paragraph: fake('{{lorem.paragraph}}') }],
+                    title: [
+                      { text: `${fakeTitle(fake)} ` },
+                      { icon: 'info', description: fake('{{lorem.sentence}}') },
+                    ],
+                    body: [
+                      { paragraph: fake('{{lorem.paragraph}}') },
+                      {
+                        paragraph: [
+                          { text: fake('{{lorem.sentence}} ') },
+                          {
+                            text: fake('{{lorem.sentence}}'),
+                            description: fake('{{lorem.sentence}}'),
+                          },
+                          { text: fake(' {{lorem.sentence}} ') },
+                          r % 2 === 0 ? learnMore : activate,
+                        ],
+                      },
+                    ],
                     actions: [
                       {
-                        type: 'action',
                         actionId: `edit:card-${r}`,
                         label: 'Edit',
                         icon: 'edit',
@@ -329,10 +469,11 @@ Here’s `View` rendering the Teams Toolkit tab boilerplate experience
                         {
                           inputs: [
                             {
-                              type: 'action',
-                              actionId: 'auth',
-                              label: 'Authorize',
-                              variant: 'primary',
+                              button: {
+                                actionId: 'auth',
+                                label: 'Authorize',
+                                variant: 'primary',
+                              },
                             },
                           ],
                           variant: 'narrow-block',

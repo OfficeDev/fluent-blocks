@@ -1,3 +1,5 @@
+export * from './DescribedInline'
 export * from './Icon'
-export * from './Text'
 export * from './Inline'
+export * from './Link'
+export * from './Text'

@@ -1,8 +1,8 @@
-import { ReactElement } from 'react'
+import { ReactElement, useRef, useState } from 'react'
 
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
-import { Sequence, sx } from '../../lib'
+import { Sequence, sx, useLayoutResize } from '../../lib'
 import { LayoutProps } from '../../props'
 import { LayoutItemPropsOrElement, renderIfLayoutItem } from './LayoutItem'
 import {
@@ -19,9 +19,9 @@ const useLayoutStyles = makeStyles({
     display: 'grid',
     gridTemplateColumns: '1fr',
     ...sx.gap('.5rem'),
-    '@media screen and (min-width: 600px)': {
-      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-    },
+  },
+  'grid--broad': {
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
   },
   flex: {
     display: 'flex',
@@ -29,17 +29,32 @@ const useLayoutStyles = makeStyles({
     marginInlineEnd: '-.5rem',
     marginBlockEnd: '-.5rem',
   },
+  'flex--broad': {},
 })
 
 export const Layout = ({ layout: { variant, items } }: LayoutProps) => {
   const styles = useLayoutStyles()
+  const $layout = useRef<HTMLElement | null>(null)
+  const [isBroad, setIsBroad] = useState(false)
+
+  useLayoutResize($layout, () =>
+    setIsBroad(!!$layout.current && $layout.current.clientWidth >= 512)
+  )
 
   return (
-    <section className={cx(styles.root, styles[variant])}>
+    <section
+      ref={$layout}
+      className={cx(
+        styles.root,
+        styles[variant],
+        isBroad && styles[`${variant}--broad`]
+      )}
+    >
       {
         <>
           {Sequence<LayoutItemPropsOrElement>(items, renderIfLayoutItem, {
             contextualVariant: variant,
+            contextualIsBroad: isBroad,
           })}
         </>
       }

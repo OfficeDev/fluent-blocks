@@ -1,29 +1,28 @@
-import { invalidBlock, EscapeElement, renderIfEscape } from '../../lib'
-
-import {
-  ParagraphPropsOrElement,
-  renderIfParagraph,
-} from '../Paragraph/Paragraph'
-import { FigurePropsOrElement, renderIfFigure } from '../Figure/Figure'
-import {
-  ShortInputsPropsOrElement,
-  renderIfShortInputs,
-} from '../ShortInputs/ShortInputs'
 import {
   MultilineTextInputPropsOrElement,
+  SelectPropsOrElement,
   renderIfMultilineTextInput,
-  RadioGroupPropsOrElement,
-  renderIfRadioGroup,
+  renderIfSelect,
 } from '../../inputs'
+import { EscapeElement, invalidBlock, renderIfEscape } from '../../lib'
 import {
   BigMessagePropsOrElement,
   renderIfBigMessage,
 } from '../BigMessage/BigMessage'
-import { LayoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 import { CardPropsOrElement, renderIfCard } from '../Card/Card'
-import { ToolbarPropsOrElement, renderIfToolbar } from '../Toolbar/Toolbar'
-import { TablePropsOrElement, renderIfTable } from '../Table/Table'
+import { FigurePropsOrElement, renderIfFigure } from '../Figure/Figure'
+import { LayoutPropsOrElement, renderIfLayout } from '../Layout/Layout'
 import { ListPropsOrElement, renderIfList } from '../List/List'
+import {
+  ParagraphPropsOrElement,
+  renderIfParagraph,
+} from '../Paragraph/Paragraph'
+import {
+  ShortInputsPropsOrElement,
+  renderIfShortInputs,
+} from '../ShortInputs/ShortInputs'
+import { TablePropsOrElement, renderIfTable } from '../Table/Table'
+import { ToolbarPropsOrElement, renderIfToolbar } from '../Toolbar/Toolbar'
 
 export type BlockEntity =
   | ParagraphPropsOrElement
@@ -33,7 +32,7 @@ export type BlockEntity =
   | ToolbarPropsOrElement
   | ShortInputsPropsOrElement
   | MultilineTextInputPropsOrElement
-  | RadioGroupPropsOrElement
+  | SelectPropsOrElement
   | BigMessagePropsOrElement
   | TablePropsOrElement
   | ListPropsOrElement
@@ -52,7 +51,7 @@ export const Block = (o: BlockEntity) =>
   renderIfToolbar(o) ||
   renderIfShortInputs(o) ||
   renderIfMultilineTextInput(o) ||
-  renderIfRadioGroup(o) ||
+  renderIfSelect(o) ||
   renderIfBigMessage(o) ||
   renderIfTable(o) ||
   renderIfList(o) ||

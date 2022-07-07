@@ -26,4 +26,13 @@ module.exports = {
     './addons/expand-all/register.js',
   ],
   staticDirs: ['./public'],
+  core: {
+    channelOptions: {
+      allowFunction: false,
+    },
+  },
+  features: {
+    storyStoreV7: true,
+    buildStoriesJson: true,
+  },
 }

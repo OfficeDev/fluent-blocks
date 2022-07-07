@@ -1,13 +1,6 @@
-import debounce from 'lodash/debounce'
 import every from 'lodash/every'
 import get from 'lodash/get'
-import {
-  ReactElement,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { ReactElement, useCallback, useRef, useState } from 'react'
 
 import {
   ToolbarProps as NaturalToolbarProps,
@@ -26,6 +19,7 @@ import {
   rem,
   useCommonStyles,
   useFluentBlocksContext,
+  useLayoutResize,
 } from '../../lib'
 import {
   MenuItemEntity,
@@ -34,13 +28,15 @@ import {
 } from '../../props'
 
 export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
-  toolbar: Omit<NaturalToolbarProps['toolbar'], 'items'> & {
-    items: MenuItemSequence
+  toolbar: Omit<NaturalToolbarProps['toolbar'], 'menu'> & {
+    menu: MenuItemSequence
   }
   contextualVariant?: 'block' | 'viewportWidth'
   contextualFindProps?: {
     onAction: (payload: SingleValueInputActionPayload) => void
   }
+  contextualJustifyEnd?: boolean
+  contextualRole?: 'menubar' | 'group'
 }
 
 type ToolbarItemContextualOptions = Pick<
@@ -54,15 +50,19 @@ type ToolbarItemContextualOptions = Pick<
     }
   >
 
-const defaultIconSize = 16
+const defaultIconSize = 20
 const defaultButtonSize = 'medium'
 
 const useToolbarStyles = makeStyles({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: rem(48),
   },
   find: {
+    order: 3,
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'flex-end',
@@ -75,6 +75,9 @@ const useToolbarStyles = makeStyles({
   },
   'root--large': {
     height: rem(40),
+  },
+  'root--justifyEnd': {
+    flexDirection: 'row-reverse',
   },
   flexDivider: {
     flexGrow: 1,
@@ -93,22 +96,23 @@ const useToolbarStyles = makeStyles({
 const ToolbarItemInFlow = (
   item: MenuItemEntity & Partial<ToolbarItemContextualOptions>
 ) => {
-  switch (item.type) {
-    case 'action':
-      return Button({
-        ...item,
-        variant: 'transparent',
+  if ('action' in item) {
+    return Button({
+      button: {
+        ...item.action,
+        variant: item.action.variant || 'transparent',
         size: item.buttonSize || defaultButtonSize,
         iconSize: item.iconSize || defaultIconSize,
-        contextualVariant: item.layoutNeedsUpdate
-          ? 'toolbar-item--needs-update'
-          : item.hidden
-          ? 'toolbar-item--hidden'
-          : 'toolbar-item',
-        type: 'action',
-      })
-    default:
-      return null
+      },
+      contextualVariant: item.layoutNeedsUpdate
+        ? 'toolbar-item--needs-update'
+        : item.hidden
+        ? 'toolbar-item--hidden'
+        : 'toolbar-item',
+      contextualRole: 'menuitem',
+    })
+  } else {
+    return null
   }
 }
 
@@ -116,6 +120,8 @@ export const Toolbar = ({
   toolbar,
   contextualVariant = 'block',
   contextualFindProps,
+  contextualJustifyEnd,
+  contextualRole = 'menubar',
 }: ToolbarProps) => {
   const commonStyles = useCommonStyles()
   const toolbarStyles = useToolbarStyles()
@@ -138,7 +144,7 @@ export const Toolbar = ({
           !$child.hasAttribute('data-layout') &&
           $child.offsetTop === baseOffset
         ) {
-          const actionId = $child.getAttribute('id')?.split('__')[1]
+          const actionId = $child.getAttribute('id')
           if (actionId) {
             nextActionsInFlow.push(actionId)
           }
@@ -148,37 +154,23 @@ export const Toolbar = ({
     return new Set(nextActionsInFlow)
   }, [])
 
-  const debouncedUpdateToolbarLayout = useCallback(
-    debounce(
-      () => {
-        setActionsInFlow(getNextActionsInFlow())
-        setLayoutNeedsUpdate(false)
-      },
-      100,
-      { leading: false, trailing: true }
-    ),
-    []
-  )
-
-  const handleResize = useCallback(() => {
-    setLayoutNeedsUpdate(true)
-    debouncedUpdateToolbarLayout()
+  const onComputeResize = useCallback(() => {
+    setActionsInFlow(getNextActionsInFlow())
+    setLayoutNeedsUpdate(false)
   }, [])
 
-  useLayoutEffect(() => {
-    document.defaultView?.addEventListener('resize', handleResize)
-    if ($toolbar.current && layoutNeedsUpdate) {
-      setActionsInFlow(getNextActionsInFlow())
-      setLayoutNeedsUpdate(false)
-    }
-    return () =>
-      document.defaultView?.removeEventListener('resize', handleResize)
-  }, [toolbar, $toolbar.current])
+  const onResizeStart = useCallback(() => {
+    setLayoutNeedsUpdate(true)
+  }, [])
+
+  useLayoutResize($toolbar, onComputeResize, onResizeStart)
 
   const menuItemHiddenFlags = layoutNeedsUpdate
     ? undefined
-    : toolbar.items.map((item) => ({
-        hidden: item.hidden || actionsInFlow.has(get(item, 'actionId', false)),
+    : toolbar.menu.map((item) => ({
+        hidden:
+          item.hidden ||
+          actionsInFlow.has(get(item, ['action', 'actionId'], false)),
       }))
 
   const hideOverflowTrigger = menuItemHiddenFlags
@@ -187,16 +179,18 @@ export const Toolbar = ({
 
   return (
     <div
+      role={contextualRole}
       className={cx(
         toolbarStyles.root,
         toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`],
+        contextualJustifyEnd && toolbarStyles['root--justifyEnd'],
         contextualVariant === 'block' && commonStyles.mainContentWidth,
         contextualVariant === 'block' && commonStyles.centerBlock
       )}
       ref={$toolbar}
     >
       {Sequence<MenuItemEntity, ToolbarItemContextualOptions>(
-        toolbar.items,
+        toolbar.menu,
         ToolbarItemInFlow,
         {
           iconSize: toolbar.iconSize,
@@ -205,12 +199,14 @@ export const Toolbar = ({
         },
         layoutNeedsUpdate
           ? undefined
-          : toolbar.items.map((item) => ({
+          : toolbar.menu.map((item) => ({
               hidden:
-                item.hidden || !actionsInFlow.has(get(item, 'actionId', false)),
+                item.hidden ||
+                !actionsInFlow.has(get(item, ['action', 'actionId'], false)),
             }))
       )}
       <div
+        role="none"
         data-layout="required"
         className={cx(
           toolbarStyles.requiredInFlow,
@@ -219,14 +215,16 @@ export const Toolbar = ({
         )}
       >
         <Overflow
-          overflow={toolbar.items}
+          overflow={toolbar.menu}
           contextualHiddenFlags={menuItemHiddenFlags}
           iconSize={toolbar.iconSize || defaultIconSize}
           buttonSize={toolbar.buttonSize || defaultButtonSize}
+          contextualRole="menuitem"
         />
       </div>
       {toolbar.find && (
         <div
+          role="none"
           data-layout="required"
           className={cx(
             toolbarStyles.requiredInFlow,
@@ -236,17 +234,18 @@ export const Toolbar = ({
         >
           <ShortTextInput
             {...{
-              actionId: toolbar.find,
-              type: 'text',
-              inputType: 'search',
-              labelVisuallyHidden: true,
-              label: translations['list__find'],
-              placeholder: translations['list__find'],
-              after: { icon: 'document_search' },
+              textInput: {
+                actionId: toolbar.find,
+                inputType: 'search',
+                labelVariant: 'visuallyHidden',
+                label: translations['list__find'],
+                placeholder: translations['list__find'],
+                after: { icon: 'document_search' },
+                ...(contextualFindProps?.onAction && {
+                  onAction: (payload) => contextualFindProps.onAction(payload),
+                }),
+              },
               contextualVariant: 'toolbar-item',
-              ...(contextualFindProps?.onAction && {
-                onAction: (payload) => contextualFindProps.onAction(payload),
-              }),
             }}
           />
         </div>

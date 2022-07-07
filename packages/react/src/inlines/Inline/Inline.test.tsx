@@ -1,9 +1,10 @@
 /* eslint func-names: 0 */
-
-import expect from 'expect'
-import renderer from 'react-test-renderer'
-import { Inline } from './Inline'
 import get from 'lodash/get'
+import renderer from 'react-test-renderer'
+
+import { expect } from '@playwright/test'
+
+import { Inline } from './Inline'
 
 describe('Inline', function () {
   describe('unit tests', function () {
@@ -30,18 +31,14 @@ describe('Inline', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=d0192c39-f601-40fa-a174-1b68d87c50ee')
-            .count()
-        ).toEqual(1)
-        expect(
-          await this.page
-            .locator(
-              'use[href^="/sprites/313be9f9-1c3b-4cf8-adb4-5dc59d4197a3"]'
-            )
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=d0192c39-f601-40fa-a174-1b68d87c50ee')
+        ).toHaveCount(1)
+        await expect(
+          this.page.locator(
+            'use[href^="/sprites/313be9f9-1c3b-4cf8-adb4-5dc59d4197a3"]'
+          )
+        ).toHaveCount(1)
       })
     })
 
@@ -51,18 +48,14 @@ describe('Inline', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=335e225e-b295-4995-8dc4-dfe9d0eed3e8')
-            .count()
-        ).toEqual(1)
-        expect(
-          await this.page
-            .locator(
-              'use[href^="/sprites/3e6f7b4e-9d9c-4c4a-85fe-4e36e558b052"]'
-            )
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=335e225e-b295-4995-8dc4-dfe9d0eed3e8')
+        ).toHaveCount(1)
+        await expect(
+          this.page.locator(
+            'use[href^="/sprites/3e6f7b4e-9d9c-4c4a-85fe-4e36e558b052"]'
+          )
+        ).toHaveCount(1)
       })
     })
 
@@ -72,11 +65,9 @@ describe('Inline', function () {
       })
 
       it('renders to the page', async function () {
-        expect(
-          await this.page
-            .locator('text=12d046a8-1649-4d84-b240-35c7c0ee7a91')
-            .count()
-        ).toEqual(1)
+        await expect(
+          this.page.locator('text=12d046a8-1649-4d84-b240-35c7c0ee7a91')
+        ).toHaveCount(1)
       })
     })
   })
