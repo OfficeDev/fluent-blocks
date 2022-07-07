@@ -21,7 +21,6 @@
     "url-pattern": "^1.0.3"
   },
   "devDependencies": {
-    "@griffel/react": "^1.1.0",
     "@types/lodash": "latest",
     "@types/node": "latest",
     "@types/react": "18.x",

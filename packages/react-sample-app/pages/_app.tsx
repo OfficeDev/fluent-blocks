@@ -10,13 +10,12 @@ import {
   SSRProvider as IncorrectlyTypedSSRProvider,
   createDOMRenderer,
 } from '@fluentui/react-components'
-import { RendererProviderProps } from '@griffel/react/RendererContext'
 
 import sidebarFragment from '../fragments/sidebar'
 import topbarFragment from '../fragments/topbar'
 
 const RendererProvider = IncorrectlyTypedRendererProvider as FC<
-  PropsWithChildren<RendererProviderProps>
+  PropsWithChildren<{ renderer: any }>
 >
 
 const SSRProvider = IncorrectlyTypedSSRProvider as FC<PropsWithChildren<{}>>
@@ -36,12 +35,12 @@ function FuibApp({
   Component,
   pageProps,
   renderer,
-}: AppProps & { renderer?: RendererProviderProps['renderer'] }) {
+}: AppProps & { renderer?: any }) {
   const router = useRouter()
   const fragmentProps = pick(router, ['pathname', 'query'])
   return (
-    <RendererProvider renderer={renderer || createDOMRenderer()}>
-      <SSRProvider>
+    <SSRProvider>
+      <RendererProvider renderer={renderer || createDOMRenderer()}>
         <View
           themeName="light"
           accentScheme="teams"
@@ -68,8 +67,8 @@ function FuibApp({
             ],
           }}
         />
-      </SSRProvider>
-    </RendererProvider>
+      </RendererProvider>
+    </SSRProvider>
   )
 }
 
