@@ -39,6 +39,11 @@ export interface LabeledValueProps
 export interface DescribedLabeledValueProps
   extends WithDescribedInputElements<NaturalDescribedLabeledValueProps> {}
 
+export interface AddableLabeledValueProps
+  extends WithDescribedInputElements<NaturalDescribedLabeledValueProps> {
+  adds?: string[]
+}
+
 export type ShortInputContextualVariant =
   | 'block-inputs'
   | 'card-inputs'
