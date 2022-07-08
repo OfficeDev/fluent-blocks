@@ -56,8 +56,8 @@ export interface DescribedLabeledValueProps
   extends LabeledValueProps,
     DescriptionProps {}
 
-export interface IncludableLabeledValueProps
+export interface AddableLabeledValueProps
   extends LabeledValueProps,
     DescriptionProps {
-  includes?: string[]
+  adds?: string[]
 }
