@@ -1,4 +1,12 @@
-import { ChangeEvent, Fragment, useCallback, useEffect, useState } from 'react'
+import get from 'lodash/get'
+import {
+  ChangeEvent,
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 import { MultipleValueInputActionPayload } from '@fluent-blocks/schemas'
 import { Checkbox, CheckboxOnChangeData } from '@fluentui/react-components'
@@ -12,7 +20,10 @@ import {
   putInputValue,
   useFluentBlocksContext,
 } from '../../../../lib'
-import { MultipleSelectProps } from '../../../../props'
+import {
+  AddableLabeledValueProps,
+  MultipleSelectProps,
+} from '../../../../props'
 
 export interface CheckboxGroupProps
   extends Omit<MultipleSelectProps, 'select'> {
@@ -40,7 +51,32 @@ export const CheckboxGroup = ({
 }: CheckboxGroupProps) => {
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
+  const valueMap = useMemo(
+    () =>
+      options.reduce(
+        (acc: Record<string, AddableLabeledValueProps>, option) => {
+          acc[option.value] = option
+          return acc
+        },
+        {}
+      ),
+    [options]
+  )
+
   const [values, setValues] = useState<Set<string>>(new Set(initialValues))
+
+  const disabledValueMap = useMemo(
+    () =>
+      options.reduce((acc: Record<string, boolean>, option) => {
+        get(option, 'adds', []).forEach((addedValue: string) => {
+          if (values.has(option.value)) {
+            acc[addedValue] = true
+          }
+        })
+        return acc
+      }, {}),
+    [values, options]
+  )
 
   useEffect(() => {
     putInputValue(actionId, initialValues || [])
@@ -54,6 +90,12 @@ export const CheckboxGroup = ({
     ) => {
       if (checked) {
         values.add(value)
+        get(valueMap, [value, 'adds'], []).forEach((addedValue) =>
+          values.add(addedValue)
+        )
+        get(valueMap, [value, 'addsForConvenience'], []).forEach((addedValue) =>
+          values.add(addedValue)
+        )
       } else {
         values.delete(value)
       }
@@ -99,6 +141,7 @@ export const CheckboxGroup = ({
                 ...(description && {
                   'aria-describedby': optionDescriptionId,
                 }),
+                ...(disabledValueMap[value] && { disabled: true }),
               }}
             />
             {description && (

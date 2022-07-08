@@ -8,6 +8,7 @@ import {
 
 import { WithActionHandler } from './actions'
 import {
+  AddableLabeledValueProps,
   DescribedLabeledValueProps,
   WithDescribedInputElements,
 } from './inputs'
@@ -30,9 +31,9 @@ export interface MultipleSelectInnerProps
     >,
     WithActionHandler<MultipleValueInputActionPayload> {
   options: [
-    DescribedLabeledValueProps,
-    DescribedLabeledValueProps,
-    ...DescribedLabeledValueProps[]
+    AddableLabeledValueProps,
+    AddableLabeledValueProps,
+    ...AddableLabeledValueProps[]
   ]
 }
 
