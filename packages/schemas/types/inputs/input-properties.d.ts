@@ -60,4 +60,5 @@ export interface AddableLabeledValueProps
   extends LabeledValueProps,
     DescriptionProps {
   adds?: string[]
+  addsForConvenience?: string[]
 }

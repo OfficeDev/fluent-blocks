@@ -93,6 +93,9 @@ export const CheckboxGroup = ({
         get(valueMap, [value, 'adds'], []).forEach((addedValue) =>
           values.add(addedValue)
         )
+        get(valueMap, [value, 'addsForConvenience'], []).forEach((addedValue) =>
+          values.add(addedValue)
+        )
       } else {
         values.delete(value)
       }

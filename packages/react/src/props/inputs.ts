@@ -42,6 +42,7 @@ export interface DescribedLabeledValueProps
 export interface AddableLabeledValueProps
   extends WithDescribedInputElements<NaturalDescribedLabeledValueProps> {
   adds?: string[]
+  addsForConvenience?: string[]
 }
 
 export type ShortInputContextualVariant =
