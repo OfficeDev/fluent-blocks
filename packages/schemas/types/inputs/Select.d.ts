@@ -1,6 +1,7 @@
 import {
   DescribedInputProps,
   DescribedLabeledValueProps,
+  IncludableLabeledValueProps,
   InputInitialValueProps,
   InputInitialValuesProps,
   InputRequiredProps,
@@ -28,9 +29,9 @@ export interface MultipleSelectInnerProps
   variant: SelectVariant
   multiple: true
   options: [
-    DescribedLabeledValueProps,
-    DescribedLabeledValueProps,
-    ...DescribedLabeledValueProps[]
+    IncludableLabeledValueProps,
+    IncludableLabeledValueProps,
+    ...IncludableLabeledValueProps[]
   ]
 }
 
