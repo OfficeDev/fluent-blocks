@@ -1,5 +1,16 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.0
+
+### Minor Changes
+
+- [#161](https://github.com/OfficeDev/fluent-blocks/pull/161) [`ebb1866`](https://github.com/OfficeDev/fluent-blocks/commit/ebb18667590840f91cc9a0b1070f061055a9c0e0) Thanks [@thure](https://github.com/thure)! - Add 'addable' to option props, which instructs multiple Selects which other options are added automatically when another option is added.
+
+### Patch Changes
+
+- Updated dependencies [[`ebb1866`](https://github.com/OfficeDev/fluent-blocks/commit/ebb18667590840f91cc9a0b1070f061055a9c0e0)]:
+  - @fluent-blocks/schemas@9.3.0-next.0
+
 ## 9.2.0
 
 ### Minor Changes
