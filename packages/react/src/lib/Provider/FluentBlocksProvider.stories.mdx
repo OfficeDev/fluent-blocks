@@ -4,7 +4,7 @@ import { seed } from '../fake'
 import { StorybookColorProvider } from './StorybookColorProvider'
 
 <Meta
-  title="Facets/Color"
+  title="Facets/Procedural color"
   component={StorybookColorProvider}
   argTypes={{
     keyColor: {
@@ -52,7 +52,7 @@ import { StorybookColorProvider } from './StorybookColorProvider'
 
 export const ColorTemplate = (props) => <StorybookColorProvider {...props} />
 
-# Color
+# Procedural color
 
 Fluent Blocks allows you to specify an accent color palette that **may be
 accessible\*** with very little effort on your part. In the
@@ -72,7 +72,7 @@ components you use, in both light and dark themes.
 
 <Canvas withSource="none">
   <Story
-    name="Color"
+    name="Procedural color"
     args={{
       keyColor: '#e38651',
       lightCp: 0.8,
@@ -85,4 +85,4 @@ components you use, in both light and dark themes.
   </Story>
 </Canvas>
 
-<ArgsTable story="Color" />
+<ArgsTable story="Procedural color" />

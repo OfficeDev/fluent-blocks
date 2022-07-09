@@ -11,7 +11,11 @@ export const Text = (props: TextProps) => {
   const textStyles = useTextStyles()
   switch (variant) {
     case 'code':
-      return <code className={textStyles.code}>{text}</code>
+      return <code className={textStyles[variant]}>{text}</code>
+    case 'strong':
+    case 'emphasized':
+    case 'subtle':
+      return <span className={textStyles[variant]}>{text}</span>
     default:
       return <>{text}</>
   }

@@ -107,6 +107,19 @@ export const useTextStyles = makeStyles({
     textDecorationStyle: 'dotted',
   },
   inputMeta: {},
+  strong: {
+    fontWeight: 600,
+  },
+  stronger: {
+    fontWeight: 700,
+  },
+  emphasized: {
+    fontStyle: 'italic',
+  },
+  subtle: {
+    color: 'var(--colorNeutralForeground3)',
+    fontSize: 'var(--fontSizeBase200)',
+  },
 })
 
 export const useShortInputStyles = makeStyles({
