@@ -63,6 +63,7 @@ const useCardStyles = makeStyles({
   headingRow: {
     display: 'flex',
     paddingBlockStart: rem(8),
+    paddingBlockEnd: 0,
   },
   headingText: {
     ...sx.flex(1, 1, 'auto'),
@@ -71,6 +72,7 @@ const useCardStyles = makeStyles({
   cardContentSpacing: {
     paddingInlineStart: rem(16),
     paddingInlineEnd: rem(16),
+    paddingBlockEnd: rem(8),
   },
 })
 
