@@ -1,0 +1,196 @@
+import range from 'lodash/range'
+
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import { fake, fakeTitle, seed } from '../../lib/fake'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { View } from '../../views'
+import { Select } from './Select'
+
+<Meta
+  title="Inputs/Select (radio buttons, checkboxes, dropdowns, and comboboxes)"
+  component={Select}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+/>
+
+export const SelectTemplate = ({ themeName, accentScheme, ...props }) => (
+  <View
+    {...{
+      themeName,
+      accentScheme,
+      iconSpriteUrl,
+      main: {
+        title: '',
+        blocks: [{ select: props.select }],
+      },
+    }}
+  />
+)
+
+# Select
+
+Fluent Blocks organizes several design patterns with closely related underlying
+ontologies: radio button groups, groups of checkboxes, dropdown menus, and
+multiple-select “combobox” menus, into a single component, ‘Select’.
+
+## Radio buttons (`variant: 'group', multiple: false`)
+
+<Canvas withSource="none">
+  <Story
+    name="Radio buttons"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      select: {
+        variant: 'group',
+        actionId: 's1',
+        label: 'Radio group',
+        description:
+          'Using a group-variant Select without the multiple flag will render a radio group',
+        options: range(5).map((r) => ({
+          label: [{ text: fakeTitle(fake) }],
+          value: `s1__o${r}`,
+          description: fake('{{lorem.sentence}}'),
+        })),
+      },
+    }}
+  >
+    {seed(1234) || SelectTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Radio buttons" />
+
+## Checkboxes (`variant: 'group', multiple: true`)
+
+<Canvas withSource="none">
+  <Story
+    name="Checkboxes"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      select: {
+        variant: 'group',
+        multiple: true,
+        actionId: 's2',
+        label: 'Checkboxes',
+        description:
+          'Using a group-variant Select with the multiple flag will render a group of checkboxes',
+        options: range(5).map((r) => ({
+          label: [{ text: fakeTitle(fake) }],
+          value: `s2__o${r}`,
+          description: fake('{{lorem.sentence}}'),
+        })),
+      },
+    }}
+  >
+    {seed(1234) || SelectTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Checkboxes" />
+
+Checkboxes permit special properties on their `options` that will automatically
+add sibling options when they’re checked, either in a mandatory way with the
+`adds` prop, or for convenience with the `addsForConvenience` prop.
+
+<Canvas withSource="none">
+  <Story
+    name="Checkboxes with automatic selection"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      select: {
+        variant: 'group',
+        multiple: true,
+        actionId: 's3',
+        label: 'Checkboxes with automatic selection',
+        description: [
+          { text: 'Using ' },
+          { text: 'adds', variant: 'code' },
+          { text: ' or ' },
+          { text: 'addsForConvenience', variant: 'code' },
+          { text: ' will automatically select sibling options.' },
+        ],
+        options: range(5).map((r) => ({
+          label:
+            r === 1
+              ? 'Selecting this option will add others'
+              : [{ text: fakeTitle(fake) }],
+          value: `s3__o${r}`,
+          description: fake('{{lorem.sentence}}'),
+          ...(r === 1 && {
+            adds: [`s3__o${r + 1}`],
+            addsForConvenience: [`s3__o${r + 2}`],
+          }),
+        })),
+      },
+    }}
+  >
+    {seed(1234) || SelectTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Checkboxes with automatic selection" />
+
+## Dropdown (`variant: 'combobox', multiple: false`)
+
+<Canvas withSource="none">
+  <Story
+    name="Dropdown"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      select: {
+        variant: 'combobox',
+        actionId: 's4',
+        label: 'Dropdown',
+        description:
+          'Using a combobox-variant Select without the multiple flag will render a Dropdown',
+        placeholder: 'Select a value',
+        options: range(5).map((r) => ({
+          label: fakeTitle(fake),
+          value: `s4__o${r}`,
+          description: fake('{{lorem.sentence}}'),
+        })),
+      },
+    }}
+  >
+    {seed(1234) || SelectTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Dropdown" />
+
+## Combobox (`variant: 'combobox', multiple: true`)
+
+<Canvas withSource="none">
+  <Story
+    name="Combobox"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      select: {
+        variant: 'combobox',
+        multiple: true,
+        actionId: 's5',
+        label: 'Combobox',
+        description:
+          'Using a combobox-variant Select with the multiple flag will render a Combobox',
+        placeholder: 'Select some values',
+        options: range(5).map((r) => ({
+          label: fakeTitle(fake),
+          value: `s5__o${r}`,
+          description: fake('{{lorem.sentence}}'),
+        })),
+      },
+    }}
+  >
+    {seed(1234) || SelectTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Combobox" />
