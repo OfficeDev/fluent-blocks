@@ -1,10 +1,4 @@
-export type TextVariant =
-  | 'normal'
-  | 'emphasized'
-  | 'strong'
-  | 'stronger'
-  | 'subtle'
-  | 'code'
+export type TextVariant = 'normal' | 'emphasized' | 'strong' | 'subtle' | 'code'
 
 export interface TextProps {
   text: string

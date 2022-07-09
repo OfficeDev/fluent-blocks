@@ -108,10 +108,7 @@ export const useTextStyles = makeStyles({
   },
   inputMeta: {},
   strong: {
-    fontWeight: 600,
-  },
-  stronger: {
-    fontWeight: 700,
+    fontWeight: 'var(--fontWeightSemibold)',
   },
   emphasized: {
     fontStyle: 'italic',
