@@ -106,7 +106,16 @@ export const useTextStyles = makeStyles({
     textDecorationLine: 'underline',
     textDecorationStyle: 'dotted',
   },
-  inputMeta: {},
+  strong: {
+    fontWeight: 'var(--fontWeightSemibold)',
+  },
+  emphasized: {
+    fontStyle: 'italic',
+  },
+  subtle: {
+    color: 'var(--colorNeutralForeground3)',
+    fontSize: 'var(--fontSizeBase200)',
+  },
 })
 
 export const useShortInputStyles = makeStyles({

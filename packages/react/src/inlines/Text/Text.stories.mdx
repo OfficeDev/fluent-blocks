@@ -1,0 +1,69 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { fake, seed } from '../../lib/fake'
+import { View } from '../../views'
+
+<Meta
+  title="Facets/Type styles"
+  component={View}
+  parameters={{
+    viewMode: 'docs',
+    previewTabs: {
+      canvas: { hidden: true },
+    },
+  }}
+/>
+
+# Type styles
+
+Fluent and the UI Kit specify some type styles which content authors can use freely in some contexts and which in other contexts are applied automatically.
+
+- [Fluent › Text](https://www.figma.com/file/IkBEp9pnO4Ep7HH4Bq5xrW/Text?node-id=2%3A895)
+
+Each of these variants is demonstrated here, preceded by the specific `variant` value you can use in typical instances of `<Text text={"…"} variant={…}/>`/`{text: "…", variant: "…"}`.
+
+<Canvas withSource="none">
+  <Story name="Type styles">
+    <View
+      main={
+        seed(1234) || {
+          title: '',
+          blocks: [
+            {
+              paragraph: [{ text: fake('Default text — {{lorem.sentence}} ') }],
+            },
+            {
+              paragraph: [
+                {
+                  text: fake('‘emphasized’ — {{lorem.sentence}} '),
+                  variant: 'emphasized',
+                },
+              ],
+            },
+            {
+              paragraph: [
+                { text: fake('‘code’ — {{lorem.sentence}} '), variant: 'code' },
+              ],
+            },
+            {
+              paragraph: [
+                {
+                  text: fake('‘subtle’ — {{lorem.sentence}} '),
+                  variant: 'subtle',
+                },
+              ],
+            },
+            {
+              paragraph: [
+                {
+                  text: fake('‘strong’ — {{lorem.sentence}} '),
+                  variant: 'strong',
+                },
+              ],
+            },
+          ],
+        }
+      }
+    />
+  </Story>
+</Canvas>

@@ -24,6 +24,7 @@ export const parameters = {
         'Views',
         'Surfaces',
         'Blocks',
+        'Inputs',
         'Media',
         '*',
       ],
