@@ -37,7 +37,8 @@ export const Paragraph = (props: ParagraphProps) => {
         contextualVariant === 'inputMeta' && textBlockStyles.inputMetaSpacing,
         contextualVariant === 'inputMeta--selectOption' &&
           textBlockStyles.selectOptionMetaSpacing,
-        contextualVariant === 'inputMeta' && textStyles.inputMeta,
+        contextualVariant === 'inputMeta' && textStyles.subtle,
+        contextualVariant === 'inputMeta--selectOption' && textStyles.subtle,
         visuallyHidden && commonStyles.visuallyHidden
       )}
       {...(contextualId && { id: contextualId })}

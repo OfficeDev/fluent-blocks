@@ -106,7 +106,6 @@ export const useTextStyles = makeStyles({
     textDecorationLine: 'underline',
     textDecorationStyle: 'dotted',
   },
-  inputMeta: {},
   strong: {
     fontWeight: 'var(--fontWeightSemibold)',
   },
