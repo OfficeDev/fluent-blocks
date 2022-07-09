@@ -1,5 +1,11 @@
 # @fluent-blocks/schemas
 
+## 9.3.0-next.1
+
+### Minor Changes
+
+- [#163](https://github.com/OfficeDev/fluent-blocks/pull/163) [`7b19f85`](https://github.com/OfficeDev/fluent-blocks/commit/7b19f8569cd4908242cfbe1cbaab84844d14c8db) Thanks [@thure](https://github.com/thure)! - Adds support for Text variants, and uses the subtle variant for input descriptions.
+
 ## 9.3.0-next.0
 
 ### Minor Changes
