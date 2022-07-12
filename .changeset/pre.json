@@ -8,6 +8,7 @@
     "@fluent-blocks/schemas": "9.2.0"
   },
   "changesets": [
+    "blue-shoes-press",
     "quiet-taxis-hide",
     "six-mice-listen"
   ]

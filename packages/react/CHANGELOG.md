@@ -1,5 +1,16 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.2
+
+### Minor Changes
+
+- [#170](https://github.com/OfficeDev/fluent-blocks/pull/170) [`322df38`](https://github.com/OfficeDev/fluent-blocks/commit/322df38fe9a8c4b4d1e549384438d5e479638fb7) Thanks [@thure](https://github.com/thure)! - Add Loading as media variant, icon, and special state for Table and List.
+
+### Patch Changes
+
+- Updated dependencies [[`322df38`](https://github.com/OfficeDev/fluent-blocks/commit/322df38fe9a8c4b4d1e549384438d5e479638fb7)]:
+  - @fluent-blocks/schemas@9.3.0-next.2
+
 ## 9.3.0-next.1
 
 ### Minor Changes
