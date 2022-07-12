@@ -7,7 +7,7 @@ import {
   IconVariant,
   IconProps as NaturalIconProps,
 } from '@fluent-blocks/schemas'
-import { makeStyles } from '@fluentui/react-components'
+import { Spinner, makeStyles } from '@fluentui/react-components'
 
 import { useFluentBlocksContext } from '../../lib'
 
@@ -49,13 +49,23 @@ const useIconStyles = makeStyles({
     fill: 'currentcolor',
     flexShrink: 0,
   },
+  spinner: {
+    display: 'inline',
+  },
 })
 
 export const Icon = (props: IconProps) => {
   const { icon, variant = 'outline', size = 20 } = props
   const iconStyles = useIconStyles()
   const { iconSpriteUrl } = useFluentBlocksContext()
-  return (
+  return icon === 'loading' ? (
+    <Spinner
+      size="tiny"
+      appearance="inverted"
+      className={iconStyles.spinner}
+      data-chromatic="ignore"
+    />
+  ) : (
     <svg className={`${iconStyles.root} fuib-Icon`} data-chromatic="ignore">
       <use href={spriteHref(icon, size, variant, iconSpriteUrl)} />
     </svg>
