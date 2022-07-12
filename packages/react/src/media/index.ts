@@ -1,20 +1,22 @@
-import { EscapeElement, renderIfEscape, invalidMedia } from '../lib'
+import { EscapeElement, invalidMedia, renderIfEscape } from '../lib'
+import { ChartPropsOrElement, renderIfChart } from './Chart/Chart'
+import { CodePropsOrElement, renderIfCode } from './Code/Code'
 import {
   IllustrationPropsOrElement,
   renderIfIllustration,
 } from './Illustration/Illustration'
-import { CodePropsOrElement, renderIfCode } from './Code/Code'
+import { LoadingPropsOrElement, renderIfLoading } from './Loading/Loading'
 import {
-  renderIfThemedImage,
   ThemedImagePropsOrElement,
+  renderIfThemedImage,
 } from './ThemedImage/ThemedImage'
-import { ChartPropsOrElement, renderIfChart } from './Chart/Chart'
 
 export type MediaEntity =
   | IllustrationPropsOrElement
   | ChartPropsOrElement
   | CodePropsOrElement
   | ThemedImagePropsOrElement
+  | LoadingPropsOrElement
   | EscapeElement
 
 export const Media = (o: MediaEntity) =>
@@ -22,9 +24,11 @@ export const Media = (o: MediaEntity) =>
   renderIfChart(o) ||
   renderIfCode(o) ||
   renderIfThemedImage(o) ||
+  renderIfLoading(o) ||
   renderIfEscape(o) ||
   invalidMedia(o)
 
 export * from './Illustration/Illustration'
 export * from './Code/Code'
 export * from './ThemedImage/ThemedImage'
+export * from './Loading/Loading'
