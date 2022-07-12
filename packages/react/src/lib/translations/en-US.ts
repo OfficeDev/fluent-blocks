@@ -23,4 +23,5 @@ export default {
   'link--targetBlank': 'Opens a new tab or window.',
   'link--externalTargetBlank':
     'Opens a new tab or window to an external website.',
+  loading: 'Loading',
 }

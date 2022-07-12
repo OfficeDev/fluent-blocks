@@ -14,6 +14,7 @@ import { TableRowActivateAction } from '@fluent-blocks/schemas'
 import {
   Checkbox,
   Button as FluentButton,
+  Spinner,
   mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
@@ -138,6 +139,7 @@ export const Table = (props: TableProps) => {
     maxWidthVariant = 'viewportWidth',
     minWidthVariant = 'fill',
     wrap,
+    loading,
   } = props.table
 
   const sort = props.contextualSortProps?.setSort
@@ -399,162 +401,170 @@ export const Table = (props: TableProps) => {
                 </div>
               </div>
 
-              {rowKeys.map((rowKey, ri) => {
-                const row = rows[rowKey]
+              {loading ? (
+                <Spinner
+                  size="huge"
+                  labelPosition="below"
+                  label={translations['loading']}
+                />
+              ) : (
+                rowKeys.map((rowKey, ri) => {
+                  const row = rows[rowKey]
 
-                return (
-                  <div
-                    role="row"
-                    tabIndex={0}
-                    key={rowKey}
-                    aria-labelledby={`rh__${rowKey}`}
-                    {...groupAttrs}
-                    className={`${tableStyles.row} row-width`}
-                  >
-                    <div {...rowInnerAttrs} className={tableStyles.inner}>
-                      {columnOrder.filter(includeColumn).map((colKey, ci) => {
-                        const cell = row[colKey]
-                        const cellIsActions = isActionsCell(cell)
-                        const cellHasButtons =
-                          colKey === 'overflow' ||
-                          cellIsActions ||
-                          (rowsActivable && rowHeaderColumn === colKey)
+                  return (
+                    <div
+                      role="row"
+                      tabIndex={0}
+                      key={rowKey}
+                      aria-labelledby={`rh__${rowKey}`}
+                      {...groupAttrs}
+                      className={`${tableStyles.row} row-width`}
+                    >
+                      <div {...rowInnerAttrs} className={tableStyles.inner}>
+                        {columnOrder.filter(includeColumn).map((colKey, ci) => {
+                          const cell = row[colKey]
+                          const cellIsActions = isActionsCell(cell)
+                          const cellHasButtons =
+                            colKey === 'overflow' ||
+                            cellIsActions ||
+                            (rowsActivable && rowHeaderColumn === colKey)
 
-                        const cellContent =
-                          colKey === 'overflow' ? (
-                            contentColumnsHidden || row.actions ? (
+                          const cellContent =
+                            colKey === 'overflow' ? (
+                              contentColumnsHidden || row.actions ? (
+                                <div
+                                  className={
+                                    tableStyles.tbodyCellWithButtonsContent
+                                  }
+                                >
+                                  <Overflow
+                                    overflow={[
+                                      ...(contentColumnsHidden
+                                        ? [
+                                            {
+                                              action: {
+                                                label:
+                                                  translations.viewAllDetails,
+                                                actionId: `${rowKey}__details`,
+                                              },
+                                            },
+                                            { divider: {} },
+                                          ]
+                                        : []),
+                                      ...(row.actions
+                                        ?.filter((actionId) =>
+                                          rowActions.hasOwnProperty(actionId)
+                                        )
+                                        .map((actionId) => ({
+                                          action: {
+                                            ...rowActions[actionId],
+                                            actionId,
+                                            metadata: { rows: [rowKey] },
+                                          },
+                                        })) || []),
+                                    ]}
+                                  />
+                                </div>
+                              ) : null
+                            ) : colKey === 'selection' ? (
+                              <Checkbox
+                                checked={!!select?.selection.has(rowKey)}
+                                data-row={rowKey}
+                                onChange={rootSelectActivate}
+                                className={
+                                  tableStyles.tbodyCellWithButtonsContent
+                                }
+                              />
+                            ) : !cell ? null : cellIsActions ? (
                               <div
                                 className={
                                   tableStyles.tbodyCellWithButtonsContent
                                 }
                               >
-                                <Overflow
-                                  overflow={[
-                                    ...(contentColumnsHidden
-                                      ? [
-                                          {
-                                            action: {
-                                              label:
-                                                translations.viewAllDetails,
-                                              actionId: `${rowKey}__details`,
-                                            },
-                                          },
-                                          { divider: {} },
-                                        ]
-                                      : []),
-                                    ...(row.actions
-                                      ?.filter((actionId) =>
-                                        rowActions.hasOwnProperty(actionId)
-                                      )
-                                      .map((actionId) => ({
-                                        action: {
-                                          ...rowActions[actionId],
-                                          actionId,
-                                          metadata: { rows: [rowKey] },
-                                        },
-                                      })) || []),
-                                  ]}
+                                <ShortInputs
+                                  inputs={cell
+                                    .filter((actionId) =>
+                                      rowActions.hasOwnProperty(actionId)
+                                    )
+                                    .map((actionId) => ({
+                                      button: {
+                                        ...rowActions[actionId],
+                                        actionId,
+                                        metadata: { rows: [rowKey] },
+                                      },
+                                    }))}
                                 />
                               </div>
-                            ) : null
-                          ) : colKey === 'selection' ? (
-                            <Checkbox
-                              checked={!!select?.selection.has(rowKey)}
-                              data-row={rowKey}
-                              onChange={rootSelectActivate}
-                              className={
-                                tableStyles.tbodyCellWithButtonsContent
-                              }
-                            />
-                          ) : !cell ? null : cellIsActions ? (
+                            ) : (
+                              <InlineContent inlines={cell.cell} />
+                            )
+
+                          const cellElementProps = {
+                            key: colKey,
+                            ...(!cellHasButtons && {
+                              tabIndex: 0,
+                            }),
+                            ...groupAttrs,
+                            className: `${cx(
+                              tableStyles.cell,
+                              tableStyles.tbodyCell,
+                              !(
+                                cellHasButtons ||
+                                colKey === 'selection' ||
+                                wrap
+                              ) && tableStyles.tbodyCellWithTextContent,
+                              colKey === 'overflow' &&
+                                tableStyles.tbodyCellAlignEnd
+                            )} ${colWidthClassName(colKey)}`,
+                            'aria-colindex': ci + 1,
+                            'aria-rowindex': ri + 2,
+                          }
+
+                          return rowHeaderColumn === colKey ? (
                             <div
-                              className={
-                                tableStyles.tbodyCellWithButtonsContent
-                              }
+                              role="rowheader"
+                              id={`rh__${rowKey}`}
+                              aria-describedby={`ch__${colKey}`}
+                              {...cellElementProps}
                             >
-                              <ShortInputs
-                                inputs={cell
-                                  .filter((actionId) =>
-                                    rowActions.hasOwnProperty(actionId)
-                                  )
-                                  .map((actionId) => ({
-                                    button: {
-                                      ...rowActions[actionId],
-                                      actionId,
-                                      metadata: { rows: [rowKey] },
-                                    },
-                                  }))}
-                              />
+                              {cellIsActions ? (
+                                cellContent
+                              ) : rowsActivable ? (
+                                <FluentButton
+                                  className={cx(
+                                    tableStyles.activableRowHeader,
+                                    tableStyles.tbodyCellWithButtonsContent,
+                                    wrap && tableStyles.rowHeaderButtonWrap
+                                  )}
+                                  appearance="transparent"
+                                  data-row={rowKey}
+                                  onClick={rootRowHeaderActivate}
+                                >
+                                  {cellContent}
+                                </FluentButton>
+                              ) : (
+                                cellContent
+                              )}
                             </div>
                           ) : (
-                            <InlineContent inlines={cell.cell} />
+                            <div
+                              role="gridcell"
+                              {...{
+                                [colKey === 'selection' || colKey === 'overflow'
+                                  ? 'aria-labelledby'
+                                  : 'aria-describedby']: `rh__${rowKey} ch__${colKey}`,
+                              }}
+                              {...cellElementProps}
+                            >
+                              {cellContent}
+                            </div>
                           )
-
-                        const cellElementProps = {
-                          key: colKey,
-                          ...(!cellHasButtons && {
-                            tabIndex: 0,
-                          }),
-                          ...groupAttrs,
-                          className: `${cx(
-                            tableStyles.cell,
-                            tableStyles.tbodyCell,
-                            !(
-                              cellHasButtons ||
-                              colKey === 'selection' ||
-                              wrap
-                            ) && tableStyles.tbodyCellWithTextContent,
-                            colKey === 'overflow' &&
-                              tableStyles.tbodyCellAlignEnd
-                          )} ${colWidthClassName(colKey)}`,
-                          'aria-colindex': ci + 1,
-                          'aria-rowindex': ri + 2,
-                        }
-
-                        return rowHeaderColumn === colKey ? (
-                          <div
-                            role="rowheader"
-                            id={`rh__${rowKey}`}
-                            aria-describedby={`ch__${colKey}`}
-                            {...cellElementProps}
-                          >
-                            {cellIsActions ? (
-                              cellContent
-                            ) : rowsActivable ? (
-                              <FluentButton
-                                className={cx(
-                                  tableStyles.activableRowHeader,
-                                  tableStyles.tbodyCellWithButtonsContent,
-                                  wrap && tableStyles.rowHeaderButtonWrap
-                                )}
-                                appearance="transparent"
-                                data-row={rowKey}
-                                onClick={rootRowHeaderActivate}
-                              >
-                                {cellContent}
-                              </FluentButton>
-                            ) : (
-                              cellContent
-                            )}
-                          </div>
-                        ) : (
-                          <div
-                            role="gridcell"
-                            {...{
-                              [colKey === 'selection' || colKey === 'overflow'
-                                ? 'aria-labelledby'
-                                : 'aria-describedby']: `rh__${rowKey} ch__${colKey}`,
-                            }}
-                            {...cellElementProps}
-                          >
-                            {cellContent}
-                          </div>
-                        )
-                      })}
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })
+              )}
             </div>
           </div>
         </div>

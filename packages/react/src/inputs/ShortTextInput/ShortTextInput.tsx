@@ -72,6 +72,7 @@ export const ShortTextInput = ({
     onAction,
     metadata,
     include,
+    disabled,
   },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
@@ -147,6 +148,7 @@ export const ShortTextInput = ({
         {...{
           id: actionId,
           placeholder,
+          disabled,
           value,
           onChange: ({ target }) => setValue(get(target, 'value', '')),
           type: inputType || 'text',

@@ -48,4 +48,5 @@ export interface TableInnerProps {
   wrap?: boolean
   maxWidthVariant?: 'viewportWidth' | 'textWidth'
   minWidthVariant?: 'auto' | 'fill'
+  loading?: boolean
 }
