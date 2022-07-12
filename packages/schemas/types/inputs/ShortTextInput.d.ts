@@ -20,6 +20,7 @@ export interface ShortTextInputInnerProps extends TextInputInnerProps {
   before?: InlineEntity
   after?: InlineEntity
   multiline?: false
+  disabled?: boolean
 }
 
 export interface ShortTextInputProps {

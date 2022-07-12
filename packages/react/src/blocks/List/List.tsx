@@ -186,12 +186,15 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
         <Toolbar
           toolbar={{
             menu: [
-              ...(list.listActions || []).map((action) => ({ action })),
+              ...(list.listActions || []).map((action) => ({
+                action: { ...action, ...(list.loading && { disabled: true }) },
+              })),
               ...Object.keys(rowActions || []).map((actionId) => ({
                 action: {
                   ...rowActions![actionId],
                   actionId,
                   metadata: { rows: Array.from(selection) },
+                  ...(list.loading && { disabled: true }),
                 },
                 ...(!commonActions.has(actionId) && {
                   hidden: true,
@@ -213,6 +216,7 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
                 setPage(0)
               }
             },
+            ...(list.loading && { disabled: true }),
           }}
         />
       )}
@@ -223,14 +227,16 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
           contextualSelectionProps: { selection, setSelection },
         })}
       />
-      <Pagination
-        {...{
-          page,
-          setPage,
-          pageSize,
-          collectionSize: sortedRowKeys.length,
-        }}
-      />
+      {!list.loading && (
+        <Pagination
+          {...{
+            page,
+            setPage,
+            pageSize,
+            collectionSize: sortedRowKeys.length,
+          }}
+        />
+      )}
     </>
   )
 }

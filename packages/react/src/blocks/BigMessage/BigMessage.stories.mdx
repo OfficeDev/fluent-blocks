@@ -192,3 +192,24 @@ Error states come in many forms. Consider an appropriate illustration to ease th
 </Canvas>
 
 <ArgsTable story="Error without illustration" />
+
+<Canvas>
+  <Story
+    name="Loading"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      title: '',
+      media: {
+        loading: {
+          variant: 'spinner',
+        },
+        label: 'Loading',
+      },
+    }}
+  >
+    {BigMessageTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Loading" />

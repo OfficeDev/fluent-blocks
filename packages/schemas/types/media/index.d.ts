@@ -1,6 +1,7 @@
 export * from './Chart'
 export * from './Code'
 export * from './Illustration'
+export * from './Loading'
 export * from './ThemedImage'
 export * from './Medium'
 export * from './media-properties'

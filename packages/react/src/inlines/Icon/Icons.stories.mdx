@@ -1,0 +1,100 @@
+import { Canvas, Meta } from '@storybook/addon-docs'
+
+import { fake, seed } from '../../lib/fake'
+import storybookIconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { View } from '../../views'
+import { Icon } from './Icon'
+
+<Meta
+  title="Facets/Icons"
+  component={Icon}
+  parameters={{
+    viewMode: 'docs',
+    previewTabs: {
+      canvas: { hidden: true },
+    },
+  }}
+/>
+
+# Icons
+
+The `Icon` component rolls three modes into one:
+
+- If the specified icon is exactly `loading`, it will show a small
+  inline spinner.
+- If the specified icon is bundled in `basic-icons.svg`, it will serve the icon
+  from that asset
+- If the specified icon is not undled in `basic-icons.svg`, it will request the
+  icon from your app’s `/sprites` path
+
+## Loading
+
+<Canvas>
+  <Story name="Loading">
+    <View
+      iconSpriteUrl={storybookIconSpriteUrl}
+      main={
+        seed(1234) || {
+          title: '',
+          blocks: [
+            {
+              paragraph: [
+                { text: fake('{{lorem.sentence}} ') },
+                { icon: 'loading' },
+                { text: fake(' {{lorem.sentence}}') },
+              ],
+            },
+          ],
+        }
+      }
+    />
+  </Story>
+</Canvas>
+
+## Bundled
+
+<Canvas>
+  <Story name="Bundled">
+    <View
+      iconSpriteUrl={storybookIconSpriteUrl}
+      main={
+        seed(1234) || {
+          title: '',
+          blocks: [
+            {
+              paragraph: [
+                { text: fake('{{lorem.sentence}} ') },
+                { icon: 'globe' },
+                { text: fake(' {{lorem.sentence}}') },
+              ],
+            },
+          ],
+        }
+      }
+    />
+  </Story>
+</Canvas>
+
+## Fetched / proxied
+
+<Canvas>
+  <Story name="Fetched / proxied">
+    <View
+      iconSpriteUrl={storybookIconSpriteUrl}
+      main={
+        seed(1234) || {
+          title: '',
+          blocks: [
+            {
+              paragraph: [
+                { text: fake('{{lorem.sentence}} ') },
+                { icon: 'book_globe', size: 24 },
+                { text: fake(' {{lorem.sentence}}') },
+              ],
+            },
+          ],
+        }
+      }
+    />
+  </Story>
+</Canvas>

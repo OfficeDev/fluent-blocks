@@ -34,6 +34,7 @@ export interface ToolbarProps extends Omit<NaturalToolbarProps, 'toolbar'> {
   contextualVariant?: 'block' | 'viewportWidth'
   contextualFindProps?: {
     onAction: (payload: SingleValueInputActionPayload) => void
+    disabled?: boolean
   }
   contextualJustifyEnd?: boolean
   contextualRole?: 'menubar' | 'group'
@@ -243,6 +244,9 @@ export const Toolbar = ({
                 after: { icon: 'document_search' },
                 ...(contextualFindProps?.onAction && {
                   onAction: (payload) => contextualFindProps.onAction(payload),
+                }),
+                ...(contextualFindProps?.disabled && {
+                  disabled: true,
                 }),
               },
               contextualVariant: 'toolbar-item',
