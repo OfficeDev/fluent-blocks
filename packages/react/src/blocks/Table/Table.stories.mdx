@@ -52,7 +52,14 @@ component instead.
       },
       rows: range(32).reduce((acc, r) => {
         acc[`r${r}`] = {
-          c1: { cell: fake('{{name.firstName}} {{name.lastName}}') },
+          c1: {
+            cell: [
+              {
+                avatar: { shape: 'square' },
+                label: fake('{{name.firstName}} {{name.lastName}}'),
+              },
+            ],
+          },
           c2: {
             cell: [
               { icon: 'organization' },

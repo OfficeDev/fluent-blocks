@@ -12,6 +12,7 @@ import {
   invalidInline,
   renderIfEscape,
 } from '../../lib'
+import { AvatarElement, renderIfAvatar } from '../Avatar/Avatar'
 import { IconElement, renderIfIcon } from '../Icon/Icon'
 import { TextElement, renderIfText } from '../Text/Text'
 
@@ -19,6 +20,7 @@ export type InlineEntity =
   | NaturalInlineEntity
   | TextElement
   | IconElement
+  | AvatarElement
   | EscapeElement
 
 export type InlineSequence = InlineEntity[]
@@ -42,6 +44,7 @@ export const Inline = (o: InlineEntity) =>
   renderAsTextIfString(o) ||
   renderIfIcon(o) ||
   renderIfText(o) ||
+  renderIfAvatar(o) ||
   renderIfEscape(o) ||
   invalidInline(o)
 

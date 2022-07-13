@@ -1,3 +1,4 @@
+export * from './Avatar'
 export * from './DescribedInline'
 export * from './Icon'
 export * from './Inline'
