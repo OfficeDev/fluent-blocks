@@ -1,4 +1,7 @@
-import { MainProps as NaturalMainProps } from '@fluent-blocks/schemas'
+import {
+  HeadingLevel,
+  MainProps as NaturalMainProps,
+} from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { Section, SectionContentProps } from '../../blocks'
@@ -8,6 +11,7 @@ export interface MainProps
   extends Pick<NaturalMainProps, 'variant'>,
     SectionContentProps {
   contextualVariant?: 'standalone' | 'view'
+  level?: HeadingLevel
 }
 
 const useMainSectionStyles = makeStyles({
@@ -38,7 +42,7 @@ export const Main = (props: MainProps) => {
     <Section
       {...props}
       as="main"
-      level={1}
+      level={props.level || 1}
       className={cx(
         commonStyles.baseSurface,
         mainStyles.root,

@@ -1,3 +1,4 @@
+import { AvatarProps } from './Avatar'
 import { DescribedIconProps, IconProps } from './Icon'
 import { LinkProps } from './Link'
 import { DescribedTextProps, TextProps } from './Text'
@@ -8,6 +9,7 @@ export type DescribedInlineEntity =
   | TextProps
   | DescribedIconProps
   | IconProps
+  | AvatarProps
   | LinkProps
 export type DescribedInlineSequence = DescribedInlineEntity[]
 export type DescribedInlineSequenceOrString = string | DescribedInlineSequence

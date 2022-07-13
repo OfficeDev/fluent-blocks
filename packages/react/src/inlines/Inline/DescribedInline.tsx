@@ -11,6 +11,7 @@ import {
   invalidInline,
   renderIfEscape,
 } from '../../lib'
+import { AvatarElement, renderIfAvatar } from '../Avatar/Avatar'
 import {
   DescribedIconElement,
   renderIfDescribedIcon,
@@ -31,6 +32,7 @@ export type DescribedInlineEntity =
   | DescribedIconElement
   | IconElement
   | LinkElement
+  | AvatarElement
   | EscapeElement
 
 export type DescribedInlineSequence = DescribedInlineEntity[]
@@ -53,6 +55,7 @@ export const DescribedInline = (o: DescribedInlineEntity) =>
   renderIfDescribedText(o) ||
   renderIfText(o) ||
   renderIfLink(o) ||
+  renderIfAvatar(o) ||
   renderIfEscape(o) ||
   invalidInline(o)
 

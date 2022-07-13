@@ -228,13 +228,13 @@ export const Table = (props: TableProps) => {
   useLayoutResize($table, updateTableLayout)
 
   const rootRowHeaderActivate = useCallback(
-    ({ target }: MouseEvent<HTMLButtonElement>) => {
-      const row = get(target, ['dataset', 'row'])
+    ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+      const row = get(currentTarget, ['dataset', 'row'])
       if (row) {
         const payload: TableRowActivateAction = {
           type: 'activate',
           actionId: 'activate',
-          row: get(target, ['dataset', 'row']),
+          row,
         }
         props.onAction && props.onAction(payload)
         contextOnAction && contextOnAction(payload)

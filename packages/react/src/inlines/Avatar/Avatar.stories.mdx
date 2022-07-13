@@ -1,0 +1,43 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import { fake, seed } from '../../lib/fake'
+import storybookIconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { Avatar } from './StorybookAvatar'
+
+export const AvatarTemplate = (props) => (
+  <Avatar {...props} iconSpriteUrl={storybookIconSpriteUrl} />
+)
+
+<Meta
+  title="Facets/Avatars"
+  component={Avatar}
+  parameters={{
+    viewMode: 'docs',
+  }}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+/>
+
+# Avatars
+
+In Fluent Blocks, Avatars are a type of Inline component and are composed
+alongside other inline content.
+
+<Canvas withSource="none">
+  <Story
+    name="Avatars"
+    args={{
+      themeName: 'light',
+      accentScheme: 'teams',
+      label: fake('{{name.firstName}} {{name.lastName}}'),
+      color: 'peach',
+      presenceBadge: { status: 'away' },
+    }}
+  >
+    {seed(1234) || AvatarTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Avatars" />
