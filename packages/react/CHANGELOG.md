@@ -1,5 +1,16 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.3
+
+### Minor Changes
+
+- [#172](https://github.com/OfficeDev/fluent-blocks/pull/172) [`e5d34b7`](https://github.com/OfficeDev/fluent-blocks/commit/e5d34b72f240ed0692c1adb0da26a7b9b68f3cfd) Thanks [@thure](https://github.com/thure)! - Add Avatars as a type of Inline element.
+
+### Patch Changes
+
+- Updated dependencies [[`e5d34b7`](https://github.com/OfficeDev/fluent-blocks/commit/e5d34b72f240ed0692c1adb0da26a7b9b68f3cfd)]:
+  - @fluent-blocks/schemas@9.3.0-next.3
+
 ## 9.3.0-next.2
 
 ### Minor Changes
