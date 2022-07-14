@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.5
+
+### Patch Changes
+
+- [#176](https://github.com/OfficeDev/fluent-blocks/pull/176) [`cb3ad84`](https://github.com/OfficeDev/fluent-blocks/commit/cb3ad84d84291e42d6b0ace30bcd24c1b953d5aa) Thanks [@thure](https://github.com/thure)! - Fix foreground color.
+
 ## 9.3.0-next.4
 
 ### Patch Changes
