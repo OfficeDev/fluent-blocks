@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.4
+
+### Patch Changes
+
+- [#174](https://github.com/OfficeDev/fluent-blocks/pull/174) [`ccf24ea`](https://github.com/OfficeDev/fluent-blocks/commit/ccf24eac22a42cc4ca1dee9dc0f6539d6456e2c5) Thanks [@thure](https://github.com/thure)! - Fix Avatar issues. Add Main variant for aligning content.
+
 ## 9.3.0-next.3
 
 ### Minor Changes
