@@ -5,11 +5,12 @@ import {
   AvatarNamedColor,
   BadgeProps,
   Avatar as FluentAvatar,
+  mergeClasses as cx,
   makeStyles,
 } from '@fluentui/react-components'
 
 import { Icon } from '..'
-import { key, makeId } from '../../lib'
+import { key, makeId, rem } from '../../lib'
 
 export interface AvatarProps extends Omit<NaturalAvatarProps, 'avatar'> {
   avatar: Omit<NaturalAvatarProps['avatar'], 'color'> & {
@@ -20,7 +21,14 @@ export interface AvatarProps extends Omit<NaturalAvatarProps, 'avatar'> {
 const useAvatarStyles = makeStyles({
   avatar: {
     verticalAlign: 'middle',
-    marginBlockStart: '-.2em',
+    marginBlockStart: '-.25em',
+    marginInlineEnd: rem(6),
+  },
+  'initials--hidden': {
+    '& .fui-Avatar__initials': { display: 'none' },
+  },
+  'icon--hidden': {
+    '& .fui-Avatar__icon': { display: 'none' },
   },
 })
 
@@ -44,24 +52,29 @@ export const Avatar = (props: AvatarProps) => {
     <>
       <FluentAvatar
         {...{
-          name: label,
           size,
           shape,
           color,
           active,
-          ...(image && { image: { src: image } }),
-          ...(icon && <Icon {...icon} />),
+          ...(image
+            ? { image: { src: image } }
+            : icon
+            ? { icon: <Icon {...icon} /> }
+            : { name: label }),
           ...(presenceBadge && {
             badge: {
               status: presenceBadge.status,
               outOfOffice: presenceBadge.outOfOffice,
             } as BadgeProps,
           }),
-          className: avatarStyles.avatar,
+          className: cx(
+            avatarStyles.avatar,
+            (image || icon) && avatarStyles['initials--hidden'],
+            image && avatarStyles['icon--hidden']
+          ),
           'aria-labelledby': labelId,
         }}
       />
-      {' '}
       <span id={labelId}>{label}</span>
     </>
   )

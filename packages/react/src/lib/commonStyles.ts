@@ -25,6 +25,9 @@ export const useCommonStyles = makeStyles({
     '--content-margin-inline-start': 'auto',
     '--content-margin-inline-end': 'auto',
   },
+  'baseSurface--start': {
+    '--content-margin-inline-start': 0,
+  },
   elevatedSurface: {
     '--surface-background': 'var(--colorNeutralBackground1)',
     '--surface-foreground': 'var(--colorNeutralForeground1)',
