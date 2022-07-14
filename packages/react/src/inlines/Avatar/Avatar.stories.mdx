@@ -25,6 +25,12 @@ export const AvatarTemplate = (props) => (
 In Fluent Blocks, Avatars are a type of Inline component and are composed
 alongside other inline content.
 
+Avatars accept `image` and `icon`, and will prioritize them as follows:
+
+1. If `image` is specified, it will be displayed instead of `icon` or initials based on `label`.
+1. If `icon` is specified, it will be displayed instead of initials based on `label`.
+1. Otherwise, initials based on `label` will be displayed.
+
 <Canvas withSource="none">
   <Story
     name="Avatars"
@@ -34,6 +40,7 @@ alongside other inline content.
       label: fake('{{name.firstName}} {{name.lastName}}'),
       color: 'peach',
       presenceBadge: { status: 'away' },
+      icon: { icon: 'person' },
     }}
   >
     {seed(1234) || AvatarTemplate.bind({})}

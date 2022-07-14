@@ -11,6 +11,7 @@ export interface MainProps
   extends Pick<NaturalMainProps, 'variant'>,
     SectionContentProps {
   contextualVariant?: 'standalone' | 'view'
+  surfaceVariant?: 'centered' | 'start'
   level?: HeadingLevel
 }
 
@@ -45,6 +46,7 @@ export const Main = (props: MainProps) => {
       level={props.level || 1}
       className={cx(
         commonStyles.baseSurface,
+        props.surfaceVariant === 'start' && commonStyles['baseSurface--start'],
         mainStyles.root,
         props.variant === 'flush' && mainStyles['root--flush'],
         props.contextualVariant === 'view' && mainStyles['root--view']
