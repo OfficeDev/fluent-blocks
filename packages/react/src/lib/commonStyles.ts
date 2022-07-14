@@ -19,7 +19,7 @@ export const useCommonStyles = makeStyles({
   },
   baseSurface: {
     '--surface-background': 'var(--colorNeutralBackground3)',
-    '--surface-foreground': 'var(--colorNeutralForeground3)',
+    '--surface-foreground': 'var(--colorNeutralForeground1)',
     '--input-background': 'var(--colorNeutralBackground1)',
     '--content-elevation': 'var(--shadow4)',
     '--content-margin-inline-start': 'auto',
