@@ -1,19 +1,23 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
+
 import {
+  DescriptionListItemProps as NaturalDescriptionListItemProps,
   DescriptionListProps as NaturalDescriptionListProps,
-  DescriptionListItemProps,
 } from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
 import { InlineContent, InlineSequenceOrString } from '../../inlines'
 import { key, sx, useCommonStyles, useTextBlockStyles } from '../../lib'
 
+export interface DescriptionListItemProps
+  extends Omit<NaturalDescriptionListItemProps, 'title' | 'description'> {
+  title: InlineSequenceOrString
+  description: InlineSequenceOrString
+}
+
 export interface DescriptionListProps
   extends Omit<NaturalDescriptionListProps, 'descriptionList'> {
-  descriptionList: (DescriptionListItemProps & {
-    title: InlineSequenceOrString
-    description: InlineSequenceOrString
-  })[]
+  descriptionList: DescriptionListItemProps[]
 }
 
 const useDescriptionListStyles = makeStyles({
