@@ -109,7 +109,7 @@ export const Combobox = ({
   }, [])
 
   const onSelect = useCallback(
-    (event: OnSelectParams[0], props?: OnSelectParams[1]) => {
+    (_event: OnSelectParams[0], props?: OnSelectParams[1]) => {
       if (props) {
         const nextValues: string[] = getValues(
           pick(labelMap, get(props, 'selectedOptions', []))
