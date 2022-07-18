@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.6
+
+### Patch Changes
+
+- [#178](https://github.com/OfficeDev/fluent-blocks/pull/178) [`7281520`](https://github.com/OfficeDev/fluent-blocks/commit/7281520e7cc49a945e5181ac8da3a422373eac2b) Thanks [@thure](https://github.com/thure)! - Update dependencies. Fix Dropdown onChange handler.
+
 ## 9.3.0-next.5
 
 ### Patch Changes
