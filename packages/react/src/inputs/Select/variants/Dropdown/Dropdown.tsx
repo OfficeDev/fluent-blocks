@@ -1,3 +1,4 @@
+import find from 'lodash/find'
 import get from 'lodash/get'
 import { ReactEventHandler, useCallback, useEffect, useState } from 'react'
 
@@ -77,8 +78,12 @@ export const Dropdown = ({
   }, [])
 
   const onSelect = useCallback(
-    ({ target }: OnSelectParams[0], _props: OnSelectParams[1]) => {
-      const nextValue = get(target, ['dataset', 'value'], '')
+    (_event: OnSelectParams[0], { optionValue }: OnSelectParams[1]) => {
+      const nextValue = get(
+        find(options, ({ label }) => label === optionValue),
+        'value',
+        ''
+      )
       setValue(nextValue)
       if (nextValue) {
         putInputValue(actionId, nextValue)
