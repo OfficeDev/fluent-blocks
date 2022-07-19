@@ -32,7 +32,9 @@ const useLayoutStyles = makeStyles({
   'flex--broad': {},
 })
 
-export const Layout = ({ layout: { variant, items } }: LayoutProps) => {
+export const Layout = ({
+  layout: { variant = 'grid', items },
+}: LayoutProps) => {
   const styles = useLayoutStyles()
   const $layout = useRef<HTMLElement | null>(null)
   const [isBroad, setIsBroad] = useState(false)
