@@ -1,10 +1,11 @@
-import { InlineSequenceOrString } from '../inlines'
+import { DescribedInlineSequenceOrString } from '../inlines'
 
 export interface DescriptionListItemProps {
-  title: InlineSequenceOrString
-  description: InlineSequenceOrString
+  title: DescribedInlineSequenceOrString
+  description: DescribedInlineSequenceOrString
 }
 
 export interface DescriptionListProps {
   descriptionList: DescriptionListItemProps[]
+  sizeVariant?: 1 | 2 | 3 | '1' | '2' | '3'
 }

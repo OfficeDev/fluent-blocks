@@ -1,19 +1,26 @@
 import { ReactElement } from 'react'
-import { makeStyles, mergeClasses as cx } from '@fluentui/react-components'
-import {
-  DescriptionListProps as NaturalDescriptionListProps,
-  DescriptionListItemProps,
-} from '@fluent-blocks/schemas'
 
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
+import {
+  DescriptionListItemProps as NaturalDescriptionListItemProps,
+  DescriptionListProps as NaturalDescriptionListProps,
+} from '@fluent-blocks/schemas'
+import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+
+import {
+  DescribedInlineContent,
+  DescribedInlineSequenceOrString,
+} from '../../inlines'
 import { key, sx, useCommonStyles, useTextBlockStyles } from '../../lib'
+
+export interface DescriptionListItemProps
+  extends Omit<NaturalDescriptionListItemProps, 'title' | 'description'> {
+  title: DescribedInlineSequenceOrString
+  description: DescribedInlineSequenceOrString
+}
 
 export interface DescriptionListProps
   extends Omit<NaturalDescriptionListProps, 'descriptionList'> {
-  descriptionList: (DescriptionListItemProps & {
-    title: InlineSequenceOrString
-    description: InlineSequenceOrString
-  })[]
+  descriptionList: DescriptionListItemProps[]
 }
 
 const useDescriptionListStyles = makeStyles({
@@ -30,13 +37,14 @@ const useDescriptionListStyles = makeStyles({
   },
   itemDescription: {
     order: 0,
-    fontSize: '1.5rem',
-    lineHeight: 4 / 3,
     marginLeft: 0,
   },
 })
 
-export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
+export const DescriptionList = ({
+  descriptionList,
+  sizeVariant = 1,
+}: DescriptionListProps) => {
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
   const descriptionListStyles = useDescriptionListStyles()
@@ -51,10 +59,15 @@ export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
       {descriptionList.map((item) => (
         <div key={key(item)} className={descriptionListStyles.listItem}>
           <dt className={descriptionListStyles.itemTitle}>
-            <InlineContent inlines={item.title} />
+            <DescribedInlineContent inlines={item.title} />
           </dt>
-          <dd className={descriptionListStyles.itemDescription}>
-            <InlineContent inlines={item.description} />
+          <dd
+            className={cx(
+              textBlockStyles[`h${sizeVariant}`],
+              descriptionListStyles.itemDescription
+            )}
+          >
+            <DescribedInlineContent inlines={item.description} />
           </dd>
         </div>
       ))}

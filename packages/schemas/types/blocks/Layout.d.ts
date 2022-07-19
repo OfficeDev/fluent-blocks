@@ -12,7 +12,7 @@ export interface LayoutItemProps {
 
 export interface LayoutProps {
   layout: {
-    variant: LayoutVariant
+    variant?: LayoutVariant
     items: LayoutItemProps[]
   }
 }
