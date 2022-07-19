@@ -1,5 +1,14 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.7
+
+### Patch Changes
+
+- [#180](https://github.com/OfficeDev/fluent-blocks/pull/180) [`2f3c36b`](https://github.com/OfficeDev/fluent-blocks/commit/2f3c36bfecc681d2f19fd8f0a22ce4e90b2c5e28) Thanks [@thure](https://github.com/thure)! - Fixed DescriptionList’s types. Also adjust props for Layout and add sizeVariant prop to DescriptionList.
+
+- Updated dependencies [[`2f3c36b`](https://github.com/OfficeDev/fluent-blocks/commit/2f3c36bfecc681d2f19fd8f0a22ce4e90b2c5e28)]:
+  - @fluent-blocks/schemas@9.3.0-next.7
+
 ## 9.3.0-next.6
 
 ### Patch Changes
