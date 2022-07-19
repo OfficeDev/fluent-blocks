@@ -6,13 +6,16 @@ import {
 } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 
-import { InlineContent, InlineSequenceOrString } from '../../inlines'
+import {
+  DescribedInlineContent,
+  DescribedInlineSequenceOrString,
+} from '../../inlines'
 import { key, sx, useCommonStyles, useTextBlockStyles } from '../../lib'
 
 export interface DescriptionListItemProps
   extends Omit<NaturalDescriptionListItemProps, 'title' | 'description'> {
-  title: InlineSequenceOrString
-  description: InlineSequenceOrString
+  title: DescribedInlineSequenceOrString
+  description: DescribedInlineSequenceOrString
 }
 
 export interface DescriptionListProps
@@ -56,7 +59,7 @@ export const DescriptionList = ({
       {descriptionList.map((item) => (
         <div key={key(item)} className={descriptionListStyles.listItem}>
           <dt className={descriptionListStyles.itemTitle}>
-            <InlineContent inlines={item.title} />
+            <DescribedInlineContent inlines={item.title} />
           </dt>
           <dd
             className={cx(
@@ -64,7 +67,7 @@ export const DescriptionList = ({
               descriptionListStyles.itemDescription
             )}
           >
-            <InlineContent inlines={item.description} />
+            <DescribedInlineContent inlines={item.description} />
           </dd>
         </div>
       ))}
