@@ -34,13 +34,14 @@ const useDescriptionListStyles = makeStyles({
   },
   itemDescription: {
     order: 0,
-    fontSize: '1.5rem',
-    lineHeight: 4 / 3,
     marginLeft: 0,
   },
 })
 
-export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
+export const DescriptionList = ({
+  descriptionList,
+  sizeVariant = 1,
+}: DescriptionListProps) => {
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
   const descriptionListStyles = useDescriptionListStyles()
@@ -57,7 +58,12 @@ export const DescriptionList = ({ descriptionList }: DescriptionListProps) => {
           <dt className={descriptionListStyles.itemTitle}>
             <InlineContent inlines={item.title} />
           </dt>
-          <dd className={descriptionListStyles.itemDescription}>
+          <dd
+            className={cx(
+              textBlockStyles[`h${sizeVariant}`],
+              descriptionListStyles.itemDescription
+            )}
+          >
             <InlineContent inlines={item.description} />
           </dd>
         </div>
