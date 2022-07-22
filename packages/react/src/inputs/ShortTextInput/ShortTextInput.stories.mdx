@@ -1,0 +1,52 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import { fake, fakeTitle, seed } from '../../lib/fake'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { View } from '../../views'
+import { ShortTextInput } from './ShortTextInput'
+
+<Meta
+  title="Inputs/Short text"
+  component={ShortTextInput}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+/>
+
+export const ShortTextInputTemplate = ({ textInput, ...props }) => (
+  <View
+    {...{
+      iconSpriteUrl,
+      ...props,
+      main: { blocks: [{ inputs: [{ textInput }] }] },
+    }}
+  />
+)
+
+# Short text input
+
+<Canvas withSource="none">
+  <Story
+    name="Short text"
+    args={
+      seed(1234) || {
+        themeName: 'light',
+        accentScheme: 'teams',
+        textInput: {
+          actionId: 'a1',
+          label: [{ text: fakeTitle(fake) }],
+          description: fake('{{lorem.sentence}}'),
+          placeholder: fake('{{lorem.sentence}}'),
+          initialValue: fake('{{name.firstName}} {{name.lastName}}'),
+          after: { icon: 'person' },
+          include: ['a2', 'a3'],
+        },
+      }
+    }
+  >
+    {ShortTextInputTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Short text" />
