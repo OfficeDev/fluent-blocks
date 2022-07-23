@@ -13,7 +13,12 @@ import {
 } from '@fluentui/react-components'
 
 import { Paragraph } from '../../blocks'
-import { Inline, InlineContent } from '../../inlines'
+import {
+  Inline,
+  InlineContent,
+  InlineEntity,
+  InlineSequenceOrString,
+} from '../../inlines'
 import {
   deleteInputValue,
   makeId,
@@ -34,14 +39,30 @@ import {
 } from '../../props'
 
 export interface ShortTextInputInnerProps
-  extends WithInputElements<NaturalShortTextInputProps['textInput']>,
-    WithActionHandler<SingleValueInputActionPayload> {}
+  extends WithInputElements<
+      Omit<
+        NaturalShortTextInputProps['textInput'],
+        'before' | 'after' | 'validationMessage'
+      >
+    >,
+    WithActionHandler<SingleValueInputActionPayload> {
+  before?: InlineEntity
+  after?: InlineEntity
+  validationMessage?: InlineSequenceOrString
+}
 
 export interface ShortTextInputProps
   extends Omit<NaturalShortTextInputProps, 'textInput'>,
     ShortInputContextualProps {
   textInput: ShortTextInputInnerProps
 }
+
+const inputValidationStyle = (color: string) => ({
+  ...sx.border('1px', 'solid', color),
+  '&:hover, &:focus-within': {
+    ...sx.border('1px', 'solid', color),
+  },
+})
 
 const useShortTextInputStyles = makeStyles({
   'root--toolbar-item': {
@@ -50,8 +71,31 @@ const useShortTextInputStyles = makeStyles({
   label: {
     display: 'block',
   },
+  'validation--valid': {
+    // this intentionally does not apply a border
+  },
+  'validation--pending': {
+    // this intentionally does not apply a border
+  },
+  'validation--invalid': inputValidationStyle(
+    'var(--colorPaletteRedForeground1)'
+  ),
   'input--no-block-siblings': {
     marginBlockStart: 0,
+  },
+  validationMessage: {
+    minHeight: rem((16 * 20) / 14),
+    marginTop: rem(4),
+  },
+  'validationMessage--valid': {
+    '& > p': {
+      color: 'var(--colorPaletteGreenForeground1)',
+    },
+  },
+  'validationMessage--invalid': {
+    '& > p': {
+      color: 'var(--colorPaletteRedForeground1)',
+    },
   },
 })
 
@@ -73,6 +117,8 @@ export const ShortTextInput = ({
     metadata,
     include,
     disabled,
+    validationValence,
+    validationMessage,
   },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
@@ -116,6 +162,7 @@ export const ShortTextInput = ({
 
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')
+  const validationId = makeId(actionId, 'validation')
 
   return (
     <div
@@ -158,13 +205,21 @@ export const ShortTextInput = ({
             shortInputStyles.input,
             labelVariant === 'visuallyHidden' &&
               (!description || descriptionVariant === 'visuallyHidden') &&
-              shortTextInputStyles['input--no-block-siblings']
+              shortTextInputStyles['input--no-block-siblings'],
+            validationValence &&
+              shortTextInputStyles[`validation--${validationValence}`]
           ),
           ...(autocomplete && { autocomplete }),
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': labelId }),
           ...(description && { 'aria-describedby': descriptionId }),
+          ...(validationValence && validationValence === 'valid'
+            ? { 'aria-invalid': false }
+            : {
+                'aria-invalid': true,
+                ...(validationMessage && { 'aria-errormessage': validationId }),
+              }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'
@@ -172,6 +227,23 @@ export const ShortTextInput = ({
             : 'filled-lighter'
         }
       />
+      {validationValence && (
+        <div
+          className={cx(
+            shortTextInputStyles.validationMessage,
+            validationValence !== 'pending' &&
+              shortTextInputStyles[`validationMessage--${validationValence}`]
+          )}
+        >
+          {validationValence !== 'pending' && (
+            <Paragraph
+              paragraph={validationMessage || ''}
+              contextualId={validationId}
+              contextualVariant="inputMeta"
+            />
+          )}
+        </div>
+      )}
     </div>
   )
 }

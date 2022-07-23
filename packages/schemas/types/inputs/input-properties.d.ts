@@ -35,6 +35,8 @@ export interface TextInputInnerProps
   placeholder?: string
   labelVariant?: 'block' | 'visuallyHidden'
   autocomplete?: string
+  validationValence?: 'valid' | 'invalid' | 'pending'
+  validationMessage?: InlineSequenceOrString
 }
 
 export interface SingleValueInputActionPayload extends ActionPayload {
