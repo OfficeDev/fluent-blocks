@@ -23,7 +23,7 @@ import {
   useFocusableGroup,
 } from '@fluentui/react-tabster'
 
-import { InlineContent } from '../../inlines'
+import { DescribedInlineContent, InlineContent } from '../../inlines'
 import { Overflow } from '../../inputs'
 import {
   key,
@@ -374,7 +374,9 @@ export const Table = (props: TableProps) => {
                       default:
                         return (
                           <div {...cellElementProps} {...groupAttrs}>
-                            <InlineContent inlines={columns[colKey].title} />
+                            <DescribedInlineContent
+                              inlines={columns[colKey].title}
+                            />
                             {sort &&
                               columns[colKey].hasOwnProperty('sortVariant') && (
                                 <Overflow
@@ -496,7 +498,7 @@ export const Table = (props: TableProps) => {
                                 />
                               </div>
                             ) : (
-                              <InlineContent inlines={cell.cell} />
+                              <DescribedInlineContent inlines={cell.cell} />
                             )
 
                           const cellElementProps = {
