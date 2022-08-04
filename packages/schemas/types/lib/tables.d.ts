@@ -1,4 +1,7 @@
-import { InlineSequenceOrString } from '../inlines'
+import {
+  DescribedInlineSequenceOrString,
+  InlineSequenceOrString,
+} from '../inlines'
 import { ButtonProps } from '../inputs'
 import { ActionPayload } from './actions'
 
@@ -12,11 +15,11 @@ export type TableAction = Omit<ButtonProps, 'variant' | 'size' | 'iconSize'> & {
 }
 
 export interface CellProps {
-  cell: InlineSequenceOrString
+  cell: DescribedInlineSequenceOrString
 }
 
 export interface TableColumnProps {
-  title: InlineSequenceOrString
+  title: DescribedInlineSequenceOrString
   minWidth?: number
   hideable?: boolean
   hidePriority?: number
