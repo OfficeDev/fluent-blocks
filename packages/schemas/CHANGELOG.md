@@ -1,5 +1,11 @@
 # @fluent-blocks/schemas
 
+## 9.3.0-next.8
+
+### Patch Changes
+
+- [#183](https://github.com/OfficeDev/fluent-blocks/pull/183) [`fd9a5b7`](https://github.com/OfficeDev/fluent-blocks/commit/fd9a5b7841647d2ef14b53d55508ba5d89de07aa) Thanks [@thure](https://github.com/thure)! - Permit described inline sequences for table body cell and header cell content.
+
 ## 9.3.0-next.7
 
 ### Patch Changes

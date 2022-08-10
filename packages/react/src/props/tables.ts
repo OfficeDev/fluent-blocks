@@ -7,7 +7,10 @@ import {
   TableActionPayload,
 } from '@fluent-blocks/schemas'
 
-import { InlineSequenceOrString } from '../inlines'
+import {
+  DescribedInlineSequenceOrString,
+  InlineSequenceOrString,
+} from '../inlines'
 import { ButtonProps } from '../inputs'
 import { WithActionHandler } from './actions'
 
@@ -19,12 +22,12 @@ export type TableAction = Omit<
 }
 
 export interface CellProps extends Omit<NaturalCellProps, 'cell'> {
-  cell: InlineSequenceOrString
+  cell: DescribedInlineSequenceOrString
 }
 
 export interface TableColumnProps
   extends Omit<NaturalTableColumnProps, 'title'> {
-  title: InlineSequenceOrString
+  title: DescribedInlineSequenceOrString
 }
 
 export interface RowProps {

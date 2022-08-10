@@ -39,7 +39,12 @@ component instead.
       maxWidthVariant: 'viewportWidth',
       rowsActivable: true,
       columns: {
-        c1: { title: [{ text: 'Name ' }, { icon: 'info' }] },
+        c1: {
+          title: [
+            { text: 'Name ' },
+            { icon: 'info', description: 'Format: FirstName{space}LastName' },
+          ],
+        },
         c2: { title: 'Office' },
         c3: { title: 'Email', hideable: true },
       },
@@ -62,7 +67,7 @@ component instead.
           },
           c2: {
             cell: [
-              { icon: 'organization' },
+              { icon: 'organization', description: 'Corporate office' },
               { text: fake(' {{address.city}}') },
             ],
           },
