@@ -54,8 +54,10 @@ cause the content below the input to move around.
           initialValue: fake('{{name.firstName}} {{name.lastName}}'),
           after: { icon: 'person' },
           include: ['a2', 'a3'],
-          validationValence: 'invalid',
-          validationMessage: fake('{{lorem.sentence}}'),
+          validation: {
+            valence: 'invalid',
+            message: fake('{{lorem.sentence}}'),
+          },
         },
       }
     }

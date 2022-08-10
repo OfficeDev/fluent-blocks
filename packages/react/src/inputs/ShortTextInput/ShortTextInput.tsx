@@ -40,10 +40,7 @@ import {
 
 export interface ShortTextInputInnerProps
   extends WithInputElements<
-      Omit<
-        NaturalShortTextInputProps['textInput'],
-        'before' | 'after' | 'validationMessage'
-      >
+      Omit<NaturalShortTextInputProps['textInput'], 'before' | 'after'>
     >,
     WithActionHandler<SingleValueInputActionPayload> {
   before?: InlineEntity
@@ -58,9 +55,10 @@ export interface ShortTextInputProps
 }
 
 const inputValidationStyle = (color: string) => ({
-  ...sx.border('1px', 'solid', color),
+  ...sx.borderColor(color),
   '&:hover, &:focus-within': {
-    ...sx.border('1px', 'solid', color),
+    // v9/Griffel offers no alternative to !important here.
+    ...sx.borderColor(`${color} !important`),
   },
 })
 
@@ -117,8 +115,7 @@ export const ShortTextInput = ({
     metadata,
     include,
     disabled,
-    validationValence,
-    validationMessage,
+    validation,
   },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
@@ -206,20 +203,21 @@ export const ShortTextInput = ({
             labelVariant === 'visuallyHidden' &&
               (!description || descriptionVariant === 'visuallyHidden') &&
               shortTextInputStyles['input--no-block-siblings'],
-            validationValence &&
-              shortTextInputStyles[`validation--${validationValence}`]
+            validation &&
+              shortTextInputStyles[`validation--${validation.valence}`]
           ),
           ...(autocomplete && { autocomplete }),
           ...(disambiguatingLabel
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': labelId }),
           ...(description && { 'aria-describedby': descriptionId }),
-          ...(validationValence && validationValence === 'valid'
-            ? { 'aria-invalid': false }
-            : {
-                'aria-invalid': true,
-                ...(validationMessage && { 'aria-errormessage': validationId }),
-              }),
+          ...(validation &&
+            (validation.valence === 'valid'
+              ? { 'aria-invalid': false }
+              : {
+                  'aria-invalid': true,
+                  'aria-errormessage': validationId,
+                })),
         }}
         appearance={
           contextualElevationVariant === 'elevated'
@@ -227,17 +225,17 @@ export const ShortTextInput = ({
             : 'filled-lighter'
         }
       />
-      {validationValence && (
+      {validation && (
         <div
           className={cx(
             shortTextInputStyles.validationMessage,
-            validationValence !== 'pending' &&
-              shortTextInputStyles[`validationMessage--${validationValence}`]
+            validation.valence !== 'pending' &&
+              shortTextInputStyles[`validationMessage--${validation.valence}`]
           )}
         >
-          {validationValence !== 'pending' && (
+          {validation.valence !== 'pending' && (
             <Paragraph
-              paragraph={validationMessage || ''}
+              paragraph={validation.message}
               contextualId={validationId}
               contextualVariant="inputMeta"
             />

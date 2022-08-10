@@ -5,6 +5,7 @@ import {
   InputInitialValueProps as NaturalInputWithInitialStringValue,
   LabeledValueProps as NaturalLabeledValueProps,
   TextInputInnerProps as NaturalTextInputInnerProps,
+  ValidationProps as NaturalValidationProps,
 } from '@fluent-blocks/schemas'
 
 import { InlineSequenceOrString } from '../inlines'
@@ -24,6 +25,11 @@ export type WithDescribedInputElements<
   description?: InlineSequenceOrString
 }
 
+export interface ValidationProps
+  extends Omit<NaturalValidationProps, 'message'> {
+  message: InlineSequenceOrString
+}
+
 export interface InputProps extends WithInputElements<NaturalInputProps> {}
 
 export interface InputInitialValueProps
@@ -31,7 +37,11 @@ export interface InputInitialValueProps
     NaturalInputWithInitialStringValue {}
 
 export interface TextInputProps
-  extends WithDescribedInputElements<NaturalTextInputInnerProps> {}
+  extends WithDescribedInputElements<
+    Omit<NaturalTextInputInnerProps, 'validation'>
+  > {
+  validation?: ValidationProps
+}
 
 export interface LabeledValueProps
   extends WithInputElements<NaturalLabeledValueProps> {}
