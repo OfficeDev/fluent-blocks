@@ -6,6 +6,7 @@ import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
 import { SectionContentProps } from '../../blocks'
 import {
   FluentBlocksProvider,
+  Translations,
   defaultTranslations,
   rem,
   useCommonStyles,
@@ -24,11 +25,15 @@ import {
 } from '../../surfaces'
 
 export interface ViewProps
-  extends Omit<NaturalViewProps, 'main' | 'sidebar' | 'topbar'>,
+  extends Omit<
+      NaturalViewProps,
+      'main' | 'sidebar' | 'topbar' | 'translations'
+    >,
     WithActionHandler<any> {
   main: SectionContentProps
   sidebar?: SidebarProps
   topbar?: TopbarProps
+  translations?: Translations
   iconSpriteUrl?: string
 }
 
@@ -131,6 +136,7 @@ export const View = ({
   translations = defaultTranslations,
   iconSpriteUrl,
   onAction,
+  requiredVariant = 'requiredAsterisk',
 }: ViewProps) => (
   <FluentBlocksProvider
     {...{
@@ -139,6 +145,7 @@ export const View = ({
       translations,
       onAction,
       iconSpriteUrl,
+      requiredVariant,
     }}
   >
     <ViewContent {...{ main, sidebar, topbar }} />

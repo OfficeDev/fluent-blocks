@@ -116,6 +116,7 @@ export const ShortTextInput = ({
     include,
     disabled,
     validation,
+    required,
   },
   contextualVariant = 'block-inputs',
   contextualElevationVariant = 'surface',
@@ -127,7 +128,11 @@ export const ShortTextInput = ({
   const [value, setValue] = useState(initialValue || '')
   const debouncedValue = useDebounce(value, 400)
   const didMount = useRef(false)
-  const { onAction: contextOnAction } = useFluentBlocksContext()
+  const {
+    onAction: contextOnAction,
+    requiredVariant,
+    translations,
+  } = useFluentBlocksContext()
 
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
@@ -179,6 +184,16 @@ export const ShortTextInput = ({
         )}
       >
         <InlineContent inlines={label} />
+        {requiredVariant === 'requiredAsterisk' && required && (
+          <span className={commonStyles.requiredAsterisk}>
+            {translations['requiredAsterisk']}
+          </span>
+        )}
+        {requiredVariant === 'optionalInParens' && !required && (
+          <span className={commonStyles.optionalInParens}>
+            {translations['optionalInParens']}
+          </span>
+        )}
       </Label>
       {description && (
         <Paragraph
@@ -218,6 +233,7 @@ export const ShortTextInput = ({
                   'aria-invalid': true,
                   'aria-errormessage': validationId,
                 })),
+          ...(required && { 'aria-required': true }),
         }}
         appearance={
           contextualElevationVariant === 'elevated'

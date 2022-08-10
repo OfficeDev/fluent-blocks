@@ -12,6 +12,7 @@ export type FluentPatternsBlocksData = {
   theme: ReturnType<typeof getTheme>
   onAction: ActionHandler<any>
   iconSpriteUrl: string
+  requiredVariant: 'requiredAsterisk' | 'optionalInParens'
 }
 
 export const defaultContext: FluentPatternsBlocksData = {
@@ -21,6 +22,7 @@ export const defaultContext: FluentPatternsBlocksData = {
   theme: getTheme('light', 'web'),
   onAction: noop,
   iconSpriteUrl: '/sprites/basic-icons.svg',
+  requiredVariant: 'requiredAsterisk',
 }
 
 export const FluentBlocksContext =

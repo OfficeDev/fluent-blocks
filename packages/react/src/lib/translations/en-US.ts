@@ -24,4 +24,6 @@ export default {
   'link--externalTargetBlank':
     'Opens a new tab or window to an external website.',
   loading: 'Loading',
+  optionalInParens: '(optional)',
+  requiredAsterisk: '*',
 }
