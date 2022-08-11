@@ -41,7 +41,6 @@ export interface ShortTextInputInnerProps
     WithActionHandler<SingleValueInputActionPayload> {
   before?: InlineEntity
   after?: InlineEntity
-  validationMessage?: InlineSequenceOrString
 }
 
 export interface ShortTextInputProps
