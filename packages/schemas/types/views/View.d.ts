@@ -7,6 +7,7 @@ export interface ViewMetaProps {
   translations?: Translations
   themeName?: ThemeName
   accentScheme?: AccentScheme
+  requiredVariant?: 'requiredAsterisk' | 'optionalInParens'
 }
 
 export interface ViewProps extends ViewMetaProps {

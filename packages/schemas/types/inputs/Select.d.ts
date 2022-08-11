@@ -24,7 +24,6 @@ export interface SingleSelectInnerProps
 
 export interface MultipleSelectInnerProps
   extends DescribedInputProps,
-    InputRequiredProps,
     InputInitialValuesProps {
   variant: SelectVariant
   multiple: true

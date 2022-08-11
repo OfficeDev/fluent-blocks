@@ -1,0 +1,89 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+
+import { contextArgTypes } from '../../lib'
+import { fake, fakeTitle, seed } from '../../lib/fake'
+import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
+import { View } from '../../views'
+import { ShortInputs } from './ShortInputs'
+
+<Meta
+  title="Blocks/Short inputs"
+  component={ShortInputs}
+  argTypes={{
+    ...contextArgTypes,
+  }}
+  parameters={{
+    viewMode: 'docs',
+  }}
+/>
+
+export const ShortInputsTemplate = ({ inputs, ...props }) => (
+  <View
+    {...{ iconSpriteUrl, ...props, main: { title: '', blocks: [{ inputs }] } }}
+  />
+)
+
+# Short inputs block
+
+A short inputs block (`<ShortInputs inputs={[…]}/>` or `{inputs: […]}`) is used
+to arrange certain inputs as block-level elements. On sufficiently wide
+viewports they can appear next to each other.
+
+Inputs that are arranged into a block this way are:
+
+- non-multiline text inputs (`<ShortTextInput {…}/>` or `{textInput: {multiline: false, …}}`)
+- dropdowns (`<Dropdown {…}/>` or `{select: {variant: 'combobox', multiple: false, …}}`)
+- buttons (`<Button {…}/>` or `{button: …}`)
+
+Demonstrated here is an extreme case, will all types, all with labels,
+descriptions, and validation messages.
+
+<Canvas>
+  <Story
+    name="Short inputs"
+    args={
+      seed(1234) || {
+        themeName: 'light',
+        accentScheme: 'teams',
+        inputs: [
+          {
+            textInput: {
+              actionId: 'a1',
+              label: [{ text: fakeTitle(fake) }],
+              description: fake('{{lorem.sentence}}'),
+              initialValue: fake('{{name.firstName}} {{name.lastName}}'),
+              after: { icon: 'person' },
+              include: ['a2', 'a3'],
+            },
+          },
+          {
+            textInput: {
+              actionId: 'a2',
+              label: [{ text: fakeTitle(fake) }],
+              description: fake('{{lorem.sentence}}'),
+              inputType: 'email',
+              placeholder: 'username',
+              after: { text: '@live.com' },
+              include: ['a1', 'a3'],
+            },
+          },
+          {
+            textInput: {
+              actionId: 'a3',
+              label: [{ text: fakeTitle(fake) }],
+              description: fake('{{lorem.sentence}}'),
+              inputType: 'tel',
+              initialValue: fake('000 x1829'),
+              before: { icon: 'call' },
+              include: ['a1', 'a2'],
+            },
+          },
+        ],
+      }
+    }
+  >
+    {ShortInputsTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Short inputs" />

@@ -1,20 +1,24 @@
 import { useContext } from 'react'
 
-import { Translations as NaturalTranslations } from '@fluent-blocks/schemas'
+import { Dir } from '@fluent-blocks/schemas'
 
 import { FluentBlocksContext } from '../Provider'
 import enUS from './en-US'
 
-export type Translations = NaturalTranslations
+export type Translations = Record<keyof typeof enUS, string> & {
+  dir: Dir
+  locale: string
+}
 
 export const defaultTranslations = enUS
 
 export const getTranslation = (
   translations: Translations,
-  key: string
+  key: keyof Translations
 ): string => (translations.hasOwnProperty(key) ? translations[key] : key)
 
 export const useTranslations = () => {
   const translations = useContext(FluentBlocksContext).translations
-  return (key: string): string => getTranslation(translations, key)
+  return (key: string): string =>
+    getTranslation(translations, key as keyof Translations)
 }

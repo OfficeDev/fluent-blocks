@@ -28,6 +28,11 @@ export interface InputInitialValuesProps {
   initialValues?: string[]
 }
 
+export interface ValidationProps {
+  valence: 'valid' | 'invalid' | 'pending'
+  message: InlineSequenceOrString
+}
+
 export interface TextInputInnerProps
   extends DescribedInputProps,
     InputRequiredProps,
@@ -35,6 +40,7 @@ export interface TextInputInnerProps
   placeholder?: string
   labelVariant?: 'block' | 'visuallyHidden'
   autocomplete?: string
+  validation?: ValidationProps
 }
 
 export interface SingleValueInputActionPayload extends ActionPayload {
