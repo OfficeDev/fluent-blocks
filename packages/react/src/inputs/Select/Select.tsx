@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 import { ReactElement } from 'react'
 
 import {
@@ -7,7 +8,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Paragraph } from '../../blocks'
-import { InlineContent } from '../../inlines'
+import { InputLabelContent } from '../../internal'
 import {
   makeId,
   useCommonStyles,
@@ -67,7 +68,10 @@ export const Select = (o: SelectProps) => {
         id={labelId}
         className={cx(selectStyles.label, textBlockStyles.inputMetaSpacing)}
       >
-        <InlineContent inlines={label} />
+        <InputLabelContent
+          label={label}
+          required={get(o.select, 'required', false)}
+        />
       </Label>
       {description && (
         <Paragraph

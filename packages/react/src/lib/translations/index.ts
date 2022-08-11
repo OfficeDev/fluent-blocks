@@ -19,5 +19,6 @@ export const getTranslation = (
 
 export const useTranslations = () => {
   const translations = useContext(FluentBlocksContext).translations
-  return (key: keyof Translations): string => getTranslation(translations, key)
+  return (key: string): string =>
+    getTranslation(translations, key as keyof Translations)
 }

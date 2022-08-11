@@ -49,14 +49,6 @@ export const useCommonStyles = makeStyles({
     marginBlockStart: '0',
     marginBlockEnd: '1rem',
   },
-  requiredAsterisk: {
-    marginInlineStart: '.125em',
-    color: 'var(--colorPaletteRedForeground1)',
-  },
-  optionalInParens: {
-    marginInlineStart: '.25em',
-    color: 'var(--colorNeutralForeground3)',
-  },
 })
 
 export const useTextBlockStyles = makeStyles({

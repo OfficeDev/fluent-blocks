@@ -61,6 +61,7 @@ export const Dropdown = ({
     onAction,
     metadata,
     include,
+    required,
   },
   contextualLabelId,
   contextualDescriptionId,
@@ -125,6 +126,7 @@ export const Dropdown = ({
             ? { 'aria-label': disambiguatingLabel }
             : { 'aria-labelledby': contextualLabelId }),
           ...(description && { 'aria-describedby': contextualDescriptionId }),
+          'aria-required': !!required,
         }}
       >
         {options.map(({ value, label, description, descriptionVariant }) => {
