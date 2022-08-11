@@ -1,6 +1,6 @@
 {
   "name": "@fluent-blocks/react",
-  "version": "9.3.0-next.8",
+  "version": "9.3.0-next.9",
   "repository": "git@github.com:OfficeDev/fluent-blocks.git",
   "authors": [
     "Will Shown <willshown@microsoft.com>",
@@ -76,7 +76,7 @@
   "dependencies": {
     "@fluent-blocks/basic-icons": "workspace:9.1.3",
     "@fluent-blocks/colors": "workspace:9.2.0",
-    "@fluent-blocks/schemas": "workspace:9.3.0-next.8",
+    "@fluent-blocks/schemas": "workspace:9.3.0-next.9",
     "@fluentui/react-components": "~9.1.1",
     "@fluentui/react-tabster": "~9.0.3",
     "@react-hook/resize-observer": "^1.2.5",

@@ -1,5 +1,16 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.9
+
+### Minor Changes
+
+- [#182](https://github.com/OfficeDev/fluent-blocks/pull/182) [`42ea784`](https://github.com/OfficeDev/fluent-blocks/commit/42ea7842dc55680fe2fb00b25ffef939a25bb365) Thanks [@thure](https://github.com/thure)! - Add validation messages and required/optional signaling to inputs.
+
+### Patch Changes
+
+- Updated dependencies [[`42ea784`](https://github.com/OfficeDev/fluent-blocks/commit/42ea7842dc55680fe2fb00b25ffef939a25bb365)]:
+  - @fluent-blocks/schemas@9.3.0-next.9
+
 ## 9.3.0-next.8
 
 ### Patch Changes
