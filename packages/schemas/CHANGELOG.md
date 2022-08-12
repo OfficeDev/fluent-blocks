@@ -1,5 +1,11 @@
 # @fluent-blocks/schemas
 
+## 9.3.0-next.10
+
+### Patch Changes
+
+- [#187](https://github.com/OfficeDev/fluent-blocks/pull/187) [`9d9a5e0`](https://github.com/OfficeDev/fluent-blocks/commit/9d9a5e0c4f83525b9a18b947cc0cf43aed2728ae) Thanks [@thure](https://github.com/thure)! - Adjust validation props.
+
 ## 9.3.0-next.9
 
 ### Minor Changes
