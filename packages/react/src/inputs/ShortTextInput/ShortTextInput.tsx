@@ -28,8 +28,10 @@ import {
   useShortInputStyles,
   useTextBlockStyles,
 } from '../../lib'
+import { useValidation } from '../../lib/useValidation'
 import {
   ShortInputContextualProps,
+  ValidationProps,
   WithActionHandler,
   WithInputElements,
 } from '../../props'
@@ -41,7 +43,6 @@ export interface ShortTextInputInnerProps
     WithActionHandler<SingleValueInputActionPayload> {
   before?: InlineEntity
   after?: InlineEntity
-  validationMessage?: InlineSequenceOrString
 }
 
 export interface ShortTextInputProps
@@ -111,7 +112,8 @@ export const ShortTextInput = ({
     metadata,
     include,
     disabled,
-    validation,
+    initialValidation,
+    validator,
     required,
   },
   contextualVariant = 'block-inputs',
@@ -121,7 +123,11 @@ export const ShortTextInput = ({
   const shortInputStyles = useShortInputStyles()
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
-  const [value, setValue] = useState(initialValue || '')
+  const [value, setValue, validation] = useValidation(
+    initialValue,
+    initialValidation,
+    validator
+  )
   const debouncedValue = useDebounce(value, 400)
   const didMount = useRef(false)
   const { onAction: contextOnAction } = useFluentBlocksContext()
@@ -200,7 +206,7 @@ export const ShortTextInput = ({
             labelVariant === 'visuallyHidden' &&
               (!description || descriptionVariant === 'visuallyHidden') &&
               shortTextInputStyles['input--no-block-siblings'],
-            validation &&
+            !!validation &&
               shortTextInputStyles[`validation--${validation.valence}`]
           ),
           ...(autocomplete && { autocomplete }),

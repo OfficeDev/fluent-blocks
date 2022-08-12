@@ -2,9 +2,7 @@ import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
 
 import { contextArgTypes } from '../../lib'
 import { fake, fakeTitle, seed } from '../../lib/fake'
-import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
-import { View } from '../../views'
-import { ShortTextInput } from './ShortTextInput'
+import { ShortTextInput } from './StorybookShortTextInput'
 
 <Meta
   title="Inputs/Short text"
@@ -14,15 +12,7 @@ import { ShortTextInput } from './ShortTextInput'
   }}
 />
 
-export const ShortTextInputTemplate = ({ textInput, ...props }) => (
-  <View
-    {...{
-      iconSpriteUrl,
-      ...props,
-      main: { blocks: [{ inputs: [{ textInput }] }] },
-    }}
-  />
-)
+export const ShortTextInputTemplate = (props) => <ShortTextInput {...props} />
 
 # Short text input
 
@@ -51,13 +41,8 @@ cause the content below the input to move around.
           label: [{ text: fakeTitle(fake) }],
           description: fake('{{lorem.sentence}}'),
           placeholder: fake('{{lorem.sentence}}'),
-          initialValue: fake('{{name.firstName}} {{name.lastName}}'),
           after: { icon: 'person' },
           include: ['a2', 'a3'],
-          validation: {
-            valence: 'invalid',
-            message: fake('{{lorem.sentence}}'),
-          },
           required: true,
         },
       }
