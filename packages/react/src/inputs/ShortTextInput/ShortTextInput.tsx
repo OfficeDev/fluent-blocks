@@ -31,15 +31,19 @@ import {
 import { useValidation } from '../../lib/useValidation'
 import {
   ShortInputContextualProps,
-  ValidationProps,
+  TextInputProps,
   WithActionHandler,
   WithInputElements,
 } from '../../props'
 
 export interface ShortTextInputInnerProps
   extends WithInputElements<
-      Omit<NaturalShortTextInputProps['textInput'], 'before' | 'after'>
+      Omit<
+        NaturalShortTextInputProps['textInput'],
+        'before' | 'after' | 'initialValidation' | 'validator' | 'description'
+      >
     >,
+    TextInputProps,
     WithActionHandler<SingleValueInputActionPayload> {
   before?: InlineEntity
   after?: InlineEntity
