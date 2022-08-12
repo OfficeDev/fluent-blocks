@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.11
+
+### Patch Changes
+
+- [#189](https://github.com/OfficeDev/fluent-blocks/pull/189) [`4959829`](https://github.com/OfficeDev/fluent-blocks/commit/4959829c7339116b2138de44acc83271253d30c1) Thanks [@thure](https://github.com/thure)! - Allow custom validator functions in React package.
+
 ## 9.3.0-next.10
 
 ### Patch Changes
