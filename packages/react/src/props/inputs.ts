@@ -57,14 +57,19 @@ interface RegexpValidatorProps extends ValidatorProps {
   regexp: string
 }
 
-export type Validator = LengthValidatorProps | RegexpValidatorProps
+export type CustomValidator = (value?: string) => ValidationProps
+
+export type Validator =
+  | LengthValidatorProps
+  | RegexpValidatorProps
+  | CustomValidator
 
 export interface TextInputProps
   extends WithDescribedInputElements<
     Omit<NaturalTextInputInnerProps, 'initialValidation' | 'validator'>
   > {
   initialValidation?: ValidationProps
-  validator?: ValidatorProps
+  validator?: Validator
 }
 
 export interface LabeledValueProps

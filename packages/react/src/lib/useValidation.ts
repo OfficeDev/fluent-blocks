@@ -1,3 +1,4 @@
+import isFunction from 'lodash/isFunction'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { ValidationProps, Validator } from '../props'
@@ -5,10 +6,14 @@ import { ValidationProps, Validator } from '../props'
 function bindValidator(
   validator?: Validator
 ): (value?: string) => ValidationProps | null {
-  if (!validator)
-    {return function noOpValidation(value?: string) {
+  if (!validator) {
+    return function noOpValidation(value?: string) {
       return null
-    }}
+    }
+  }
+  if (isFunction(validator)) {
+    return validator
+  }
   switch (validator.validator) {
     case 'length':
       return (value?: string) => {
@@ -25,7 +30,8 @@ function bindValidator(
       }
     case 'regexp':
       const regexp = new RegExp(validator.regexp)
-      return (value?: string) => regexp.test(value || '')
+      return (value?: string) =>
+        regexp.test(value || '')
           ? 'validMessage' in validator
             ? { valence: 'valid', message: validator.validMessage! }
             : { valence: 'pending', message: '' }
