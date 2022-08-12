@@ -36,11 +36,35 @@ export interface InputInitialValueProps
   extends InputProps,
     NaturalInputWithInitialStringValue {}
 
+export interface ValidationProps {
+  valence: 'valid' | 'invalid' | 'pending'
+  message: InlineSequenceOrString
+}
+
+interface ValidatorProps {
+  validMessage?: InlineSequenceOrString
+  invalidMessage: InlineSequenceOrString
+}
+
+interface LengthValidatorProps extends ValidatorProps {
+  validator: 'length'
+  min?: number
+  max?: number
+}
+
+interface RegexpValidatorProps extends ValidatorProps {
+  validator: 'regexp'
+  regexp: string
+}
+
+export type Validator = LengthValidatorProps | RegexpValidatorProps
+
 export interface TextInputProps
   extends WithDescribedInputElements<
-    Omit<NaturalTextInputInnerProps, 'validation'>
+    Omit<NaturalTextInputInnerProps, 'initialValidation' | 'validator'>
   > {
-  validation?: ValidationProps
+  initialValidation?: ValidationProps
+  validator?: ValidatorProps
 }
 
 export interface LabeledValueProps

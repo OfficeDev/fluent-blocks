@@ -28,19 +28,42 @@ export interface InputInitialValuesProps {
   initialValues?: string[]
 }
 
+export interface InputInitialValidationProps {
+  initialValidation?: ValidationProps
+}
+
 export interface ValidationProps {
   valence: 'valid' | 'invalid' | 'pending'
   message: InlineSequenceOrString
 }
 
+interface ValidatorProps {
+  validMessage?: InlineSequenceOrString
+  invalidMessage: InlineSequenceOrString
+}
+
+interface LengthValidatorProps extends ValidatorProps {
+  validator: 'length'
+  min?: number
+  max?: number
+}
+
+interface RegexpValidatorProps extends ValidatorProps {
+  validator: 'regexp'
+  regexp: string
+}
+
+export type Validator = LengthValidatorProps | RegexpValidatorProps
+
 export interface TextInputInnerProps
   extends DescribedInputProps,
     InputRequiredProps,
-    InputInitialValueProps {
+    InputInitialValueProps,
+    InputInitialValidationProps {
   placeholder?: string
   labelVariant?: 'block' | 'visuallyHidden'
   autocomplete?: string
-  validation?: ValidationProps
+  validator?: Validator
 }
 
 export interface SingleValueInputActionPayload extends ActionPayload {

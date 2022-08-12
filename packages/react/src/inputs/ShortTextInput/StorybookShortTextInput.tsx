@@ -1,7 +1,3 @@
-import { useState } from 'react'
-
-import { SingleValueInputActionPayload } from '@fluent-blocks/schemas'
-
 import iconSpriteUrl from '../../lib/storybookIconSpriteUrl'
 import { View, ViewProps } from '../../views'
 import { ShortTextInputProps } from './ShortTextInput'
@@ -9,23 +5,8 @@ import { ShortTextInputProps } from './ShortTextInput'
 export const ShortTextInput = ({
   textInput,
   ...props
-}: ShortTextInputProps & ViewProps) => {
-  const [validation, setValidation] = useState<
-    ShortTextInputProps['textInput']['validation']
-  >({ valence: 'pending', message: 'Type' })
-  const onAction = ({ value }: SingleValueInputActionPayload) => {
-    setValidation(
-      value.length > 1
-        ? { valence: 'valid', message: 'Ready' }
-        : {
-            valence: 'invalid',
-            message: 'Too short',
-          }
-    )
-  }
-  return (
+}: ShortTextInputProps & ViewProps) => (
     <View
-      key={'q'}
       {...{
         iconSpriteUrl,
         ...props,
@@ -37,8 +18,17 @@ export const ShortTextInput = ({
                 {
                   textInput: {
                     ...textInput,
-                    onAction,
-                    ...(validation && { validation }),
+                    initialValidation: {
+                      valence: 'pending',
+                      message: '',
+                    },
+                    validator: {
+                      validator: 'length',
+                      min: 2,
+                      max: 24,
+                      invalidMessage: 'Too short or too long.',
+                      validMessage: 'Looks good!',
+                    },
                   },
                 },
               ],
@@ -48,4 +38,3 @@ export const ShortTextInput = ({
       }}
     />
   )
-}
