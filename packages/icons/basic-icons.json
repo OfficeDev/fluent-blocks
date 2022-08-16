@@ -84,6 +84,7 @@
     "more_horizontal": {},
     "more_vertical": {},
     "navigation": {},
+    "open": {},
     "options": {},
     "organization": {},
     "person": {},
@@ -109,6 +110,7 @@
     "text_italic": {},
     "video_person": {},
     "video_person_off": {},
+    "warning": {},
     "weather_moon": {},
     "weather_sunny": {},
     "wrench": {}
