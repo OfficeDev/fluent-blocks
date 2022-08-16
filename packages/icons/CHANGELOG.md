@@ -1,5 +1,11 @@
 # @fluent-blocks/basic-icons
 
+## 9.2.0-next.0
+
+### Minor Changes
+
+- [#191](https://github.com/OfficeDev/fluent-blocks/pull/191) [`5cd9d8c`](https://github.com/OfficeDev/fluent-blocks/commit/5cd9d8c1ef593de4b7ced42cf2243be64b1e0bd8) Thanks [@thure](https://github.com/thure)! - Add warning and open icons to basic bundle.
+
 ## 9.1.3
 
 ### Patch Changes
