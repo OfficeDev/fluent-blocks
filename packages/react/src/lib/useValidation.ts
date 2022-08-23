@@ -7,7 +7,7 @@ function bindValidator(
   validator?: Validator
 ): (value?: string) => ValidationProps | null {
   if (!validator) {
-    return function noOpValidation(value?: string) {
+    return function noOpValidation(_value?: string) {
       return null
     }
   }
@@ -54,7 +54,7 @@ export const useValidation = (
 
   useEffect(() => {
     hasMounted ? setValidation(validatorFn(value)) : setHasMounted(true)
-  }, [value])
+  }, [hasMounted, validatorFn, value])
 
   return [value, setValue, validation]
 }

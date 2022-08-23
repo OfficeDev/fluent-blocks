@@ -12,8 +12,9 @@ export function useLayoutResize<T extends HTMLElement>(
     if (ref.current) {
       onResizeCompute()
     }
-  }, [])
+  }, [onResizeCompute, ref])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedOnResizeCompute = useCallback(
     debounce(
       () => {
@@ -32,7 +33,7 @@ export function useLayoutResize<T extends HTMLElement>(
       onResizeStart()
     }
     debouncedOnResizeCompute()
-  }, [onResizeCompute, onResizeStart])
+  }, [debouncedOnResizeCompute, onResizeStart])
 
   useResizeObserver(ref, onResize)
 }
