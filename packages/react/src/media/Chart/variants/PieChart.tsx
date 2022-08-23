@@ -2,7 +2,7 @@ import Chart from 'chart.js'
 import cloneDeep from 'lodash/cloneDeep'
 import isNumber from 'lodash/isNumber'
 import update from 'lodash/update'
-import { memo, useContext, useEffect, useRef } from 'react'
+import { memo, useCallback, useContext, useEffect, useRef } from 'react'
 
 import { FluentBlocksContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
@@ -67,7 +67,7 @@ export const PieChart = memo(
       })
     )
 
-    const createDataPoints = (): Chart.ChartDataSets[] => {
+    const createDataPoints = useCallback((): Chart.ChartDataSets[] => {
       let dataPointConfig = {
         label: translate(data.datasets[0].label),
         data: cloneDeep(data.datasets[0].data),
@@ -88,7 +88,15 @@ export const PieChart = memo(
         }
       }
       return [dataPointConfig]
-    }
+    }, [
+      chartDataPointColors,
+      data.datasets,
+      pieChartHoverPatterns,
+      pieChartPatterns,
+      theme,
+      themeName,
+      translate,
+    ])
 
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
@@ -263,11 +271,20 @@ export const PieChart = memo(
             removeFocusStyleOnClick
           )
           canvasRef.current.removeEventListener('keydown', changeFocus)
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           canvasRef.current.removeEventListener('focusout', resetChartStates)
         }
         chartRef.current.destroy()
       }
-    }, [])
+    }, [
+      chartDataPointColors,
+      chartId,
+      cutoutPercentage,
+      data,
+      theme,
+      themeName,
+      translate,
+    ])
 
     /**
      * Theme updates
@@ -298,7 +315,7 @@ export const PieChart = memo(
       axesConfig({ chart: chartRef.current, ctx, theme })
 
       chartRef.current.update()
-    }, [themeName])
+    }, [chartDataPointColors, createDataPoints, theme, themeName])
 
     function onLegendClick(datasetIndex: number) {
       if (!chartRef.current) {

@@ -1,5 +1,5 @@
 import { Chart } from 'chart.js'
-import { memo, useContext, useEffect, useRef } from 'react'
+import { memo, useCallback, useContext, useEffect, useRef } from 'react'
 
 import { FluentBlocksContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
@@ -37,120 +37,124 @@ export const LineChart = memo(
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()
 
-    const createDataPoints = (): Chart.ChartDataSets[] =>
-      Array.from(data.datasets, (set, i) => {
-        let dataPointConfig = {
-          label: translate(set.label),
-          data: set.data,
-          borderColor: chartDataPointColors[i],
-          hoverBorderColor: chartDataPointColors[i],
-          hoverBorderWidth: 2,
-          backgroundColor: 'transparent',
-          hoverBackgroundColor: 'transparent',
-          borderWidth: 2,
-          pointBorderColor: chartDataPointColors[i],
-          pointBackgroundColor: chartDataPointColors[i],
-          pointHoverBackgroundColor: chartDataPointColors[i],
-          pointHoverBorderColor: chartDataPointColors[i],
-          pointHoverBorderWidth: 0,
-          borderCapStyle: 'round',
-          borderJoinStyle: 'round',
-          pointBorderWidth: 0,
-          pointRadius: 2,
-          pointHoverRadius: 2,
-          pointStyle: 'circle',
-          borderDash: [],
-        }
-        if (themeName === 'highContrast') {
-          dataPointConfig = {
-            ...dataPointConfig,
-            borderColor: theme.colorBrandBackground,
-            hoverBorderColor: theme.colorNeutralStroke1Hover,
-            pointBorderColor: theme.colorBrandBackground,
-            pointBackgroundColor: theme.colorBrandBackground,
-            pointHoverBackgroundColor: theme.colorBrandBackground,
-            pointHoverBorderColor: theme.colorBrandBackground,
-            hoverBorderWidth: 4,
-            pointRadius: 4,
-            pointHoverRadius: 4,
-            pointStyle: lineChartPatterns[i].pointStyle,
-            borderDash: lineChartPatterns[i].lineBorderDash,
-          } as any
-        }
-        return dataPointConfig as Chart.ChartDataSets
-      })
+    const createDataPoints = useCallback(
+      (): Chart.ChartDataSets[] =>
+        Array.from(data.datasets, (set, i) => {
+          let dataPointConfig = {
+            label: translate(set.label),
+            data: set.data,
+            borderColor: chartDataPointColors[i],
+            hoverBorderColor: chartDataPointColors[i],
+            hoverBorderWidth: 2,
+            backgroundColor: 'transparent',
+            hoverBackgroundColor: 'transparent',
+            borderWidth: 2,
+            pointBorderColor: chartDataPointColors[i],
+            pointBackgroundColor: chartDataPointColors[i],
+            pointHoverBackgroundColor: chartDataPointColors[i],
+            pointHoverBorderColor: chartDataPointColors[i],
+            pointHoverBorderWidth: 0,
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round',
+            pointBorderWidth: 0,
+            pointRadius: 2,
+            pointHoverRadius: 2,
+            pointStyle: 'circle',
+            borderDash: [],
+          }
+          if (themeName === 'highContrast') {
+            dataPointConfig = {
+              ...dataPointConfig,
+              borderColor: theme.colorBrandBackground,
+              hoverBorderColor: theme.colorNeutralStroke1Hover,
+              pointBorderColor: theme.colorBrandBackground,
+              pointBackgroundColor: theme.colorBrandBackground,
+              pointHoverBackgroundColor: theme.colorBrandBackground,
+              pointHoverBorderColor: theme.colorBrandBackground,
+              hoverBorderWidth: 4,
+              pointRadius: 4,
+              pointHoverRadius: 4,
+              pointStyle: lineChartPatterns[i].pointStyle,
+              borderDash: lineChartPatterns[i].lineBorderDash,
+            } as any
+          }
+          return dataPointConfig as Chart.ChartDataSets
+        }),
+      [chartDataPointColors, data.datasets, theme, themeName, translate]
+    )
 
-    const createAreaChartDataPoints = (
-      ctx: CanvasRenderingContext2D
-    ): Chart.ChartDataSets[] =>
-      Array.from(data.datasets, (set, i) => {
-        const gradientStroke = ctx.createLinearGradient(
-          0,
-          0,
-          0,
-          ctx.canvas.clientHeight * 0.8
-        )
-        const hoverGradientStroke = ctx.createLinearGradient(
-          0,
-          0,
-          0,
-          ctx.canvas.clientHeight * 0.8
-        )
-        if (themeName === 'highContrast') {
-          const colorRGB = hexToRgb(theme.colorBrandBackground)
-          const hoverColorRGB = hexToRgb(theme.colorNeutralStroke1Hover)
-          gradientStroke.addColorStop(0, `rgba(${colorRGB}, .2)`)
-          gradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
-          hoverGradientStroke.addColorStop(0, `rgba(${hoverColorRGB}, .4)`)
-          hoverGradientStroke.addColorStop(1, `rgba(${hoverColorRGB}, .0)`)
-        } else {
-          const colorRGB = hexToRgb(chartDataPointColors[i])
-          gradientStroke.addColorStop(0, `rgba(${colorRGB}, .4)`)
-          gradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
-          hoverGradientStroke.addColorStop(0, `rgba(${colorRGB}, .6)`)
-          hoverGradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
-        }
+    const createAreaChartDataPoints = useCallback(
+      (ctx: CanvasRenderingContext2D): Chart.ChartDataSets[] =>
+        Array.from(data.datasets, (set, i) => {
+          const gradientStroke = ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            ctx.canvas.clientHeight * 0.8
+          )
+          const hoverGradientStroke = ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            ctx.canvas.clientHeight * 0.8
+          )
+          if (themeName === 'highContrast') {
+            const colorRGB = hexToRgb(theme.colorBrandBackground)
+            const hoverColorRGB = hexToRgb(theme.colorNeutralStroke1Hover)
+            gradientStroke.addColorStop(0, `rgba(${colorRGB}, .2)`)
+            gradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
+            hoverGradientStroke.addColorStop(0, `rgba(${hoverColorRGB}, .4)`)
+            hoverGradientStroke.addColorStop(1, `rgba(${hoverColorRGB}, .0)`)
+          } else {
+            const colorRGB = hexToRgb(chartDataPointColors[i])
+            gradientStroke.addColorStop(0, `rgba(${colorRGB}, .4)`)
+            gradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
+            hoverGradientStroke.addColorStop(0, `rgba(${colorRGB}, .6)`)
+            hoverGradientStroke.addColorStop(1, `rgba(${colorRGB}, .0)`)
+          }
 
-        let dataPointConfig = {
-          label: translate(set.label),
-          data: set.data,
-          borderColor: chartDataPointColors[i],
-          hoverBorderColor: chartDataPointColors[i],
-          hoverBorderWidth: 2,
-          backgroundColor: gradientStroke as any,
-          hoverBackgroundColor: hoverGradientStroke as any,
-          borderWidth: 2,
-          pointBorderColor: chartDataPointColors[i],
-          pointBackgroundColor: chartDataPointColors[i],
-          pointHoverBackgroundColor: chartDataPointColors[i],
-          pointHoverBorderColor: chartDataPointColors[i],
-          pointHoverBorderWidth: 0,
-          borderCapStyle: 'round',
-          borderJoinStyle: 'round',
-          pointBorderWidth: 0,
-          pointRadius: 2,
-          pointHoverRadius: 2,
-          pointStyle: 'circle',
-          borderDash: [],
-        }
-        if (themeName === 'highContrast') {
-          dataPointConfig = {
-            ...dataPointConfig,
-            borderColor: theme.colorBrandBackground,
-            hoverBorderColor: theme.colorNeutralStroke1Hover,
-            pointBorderColor: theme.colorBrandBackground,
-            pointBackgroundColor: theme.colorBrandBackground,
-            pointHoverBackgroundColor: theme.colorBrandBackground,
-            pointHoverBorderColor: theme.colorBrandBackground,
-            hoverBorderWidth: 4,
-            pointRadius: 4,
-            pointHoverRadius: 4,
-            pointStyle: lineChartPatterns[i].pointStyle,
-            borderDash: lineChartPatterns[i].lineBorderDash,
-          } as any
-        }
-        return dataPointConfig as Chart.ChartDataSets
-      })
+          let dataPointConfig = {
+            label: translate(set.label),
+            data: set.data,
+            borderColor: chartDataPointColors[i],
+            hoverBorderColor: chartDataPointColors[i],
+            hoverBorderWidth: 2,
+            backgroundColor: gradientStroke as any,
+            hoverBackgroundColor: hoverGradientStroke as any,
+            borderWidth: 2,
+            pointBorderColor: chartDataPointColors[i],
+            pointBackgroundColor: chartDataPointColors[i],
+            pointHoverBackgroundColor: chartDataPointColors[i],
+            pointHoverBorderColor: chartDataPointColors[i],
+            pointHoverBorderWidth: 0,
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round',
+            pointBorderWidth: 0,
+            pointRadius: 2,
+            pointHoverRadius: 2,
+            pointStyle: 'circle',
+            borderDash: [],
+          }
+          if (themeName === 'highContrast') {
+            dataPointConfig = {
+              ...dataPointConfig,
+              borderColor: theme.colorBrandBackground,
+              hoverBorderColor: theme.colorNeutralStroke1Hover,
+              pointBorderColor: theme.colorBrandBackground,
+              pointBackgroundColor: theme.colorBrandBackground,
+              pointHoverBackgroundColor: theme.colorBrandBackground,
+              pointHoverBorderColor: theme.colorBrandBackground,
+              hoverBorderWidth: 4,
+              pointRadius: 4,
+              pointHoverRadius: 4,
+              pointStyle: lineChartPatterns[i].pointStyle,
+              borderDash: lineChartPatterns[i].lineBorderDash,
+            } as any
+          }
+          return dataPointConfig as Chart.ChartDataSets
+        }),
+      [chartDataPointColors, data.datasets, theme, themeName, translate]
+    )
 
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
@@ -328,11 +332,12 @@ export const LineChart = memo(
             removeFocusStyleOnClick
           )
           canvasRef.current.removeEventListener('keydown', changeFocus)
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           canvasRef.current.removeEventListener('focusout', resetChartStates)
         }
         chartRef.current.destroy()
       }
-    }, [])
+    }, [chartId, data, theme, themeName, translate])
 
     /**
      * Theme updates
@@ -363,7 +368,14 @@ export const LineChart = memo(
       axesConfig({ chart: chartRef.current, ctx, theme })
       // Show style changes
       chartRef.current.update()
-    }, [theme])
+    }, [
+      chartDataPointColors,
+      createAreaChartDataPoints,
+      createDataPoints,
+      gradients,
+      theme,
+      themeName,
+    ])
 
     function onLegendClick(datasetIndex: number) {
       if (!chartRef.current) {

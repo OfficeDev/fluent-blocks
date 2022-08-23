@@ -1,7 +1,9 @@
 // eslint-disable-next-line max-classes-per-file
-import { ThemeName } from '../../lib'
-import { Theme } from '@fluentui/react-components'
 import { useMemo } from 'react'
+
+import { Theme } from '@fluentui/react-components'
+
+import { ThemeName } from '../../lib'
 
 export enum PointStyles {
   Circle = 'circle',
@@ -36,7 +38,7 @@ const SIZE = 20
 
 type ChartColorsProps = { theme: Theme; themeName: ThemeName }
 
-export const chartColors = ({ theme, themeName }: ChartColorsProps) => [
+export const chartColors = ({ theme }: ChartColorsProps) => [
   theme.colorBrandForeground1,
   theme.colorNeutralForeground2,
   theme.colorBrandForeground2,
@@ -47,7 +49,7 @@ export const chartColors = ({ theme, themeName }: ChartColorsProps) => [
 ]
 
 export const useChartColors = ({ theme, themeName }: ChartColorsProps) =>
-  useMemo(() => chartColors({ theme, themeName }), [themeName])
+  useMemo(() => chartColors({ theme, themeName }), [theme, themeName])
 
 export const lineChartPatterns: LineChartPattern[] = [
   { lineBorderDash: [], pointStyle: PointStyles.Circle },
@@ -481,9 +483,7 @@ export function buildPattern({
   const Shape = shapes[shapeType]
   const shape = new Shape({ size, backgroundColor, patternColor })
 
-  const pattern = patternContext
+  return patternContext
     ? patternContext.createPattern(shape.drawTile()!, 'repeat')
     : null
-
-  return pattern
 }

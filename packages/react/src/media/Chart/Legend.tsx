@@ -94,7 +94,7 @@ const ColorValue = ({
       dataPointColor,
       index,
     })
-  }, [theme])
+  }, [dataPointColor, index, patterns, theme, themeName])
   return (
     <div
       className={
@@ -117,7 +117,6 @@ const ColorValue = ({
 const LegendItem = ({
   index,
   value,
-  hidden,
   themeName,
   theme,
   chartDataPointColors,

@@ -1,5 +1,12 @@
 import isFunction from 'lodash/isFunction'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 import { ValidationProps, Validator } from '../props'
 
@@ -7,7 +14,7 @@ function bindValidator(
   validator?: Validator
 ): (value?: string) => ValidationProps | null {
   if (!validator) {
-    return function noOpValidation(value?: string) {
+    return function noOpValidation(_value?: string) {
       return null
     }
   }
@@ -40,21 +47,22 @@ function bindValidator(
 }
 
 export const useValidation = (
+  didMount: MutableRefObject<boolean>,
   initialValue?: string,
   initialValidation?: ValidationProps,
   validator?: Validator
 ): [string, Dispatch<SetStateAction<string>>, ValidationProps | null] => {
-  const validatorFn = bindValidator(validator)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validatorFn = useCallback(bindValidator(validator), [validator])
 
-  const [hasMounted, setHasMounted] = useState(false)
   const [value, setValue] = useState(initialValue || '')
   const [validation, setValidation] = useState<ValidationProps | null>(
     initialValidation || (validator ? validatorFn(value) : null)
   )
 
   useEffect(() => {
-    hasMounted ? setValidation(validatorFn(value)) : setHasMounted(true)
-  }, [value])
+    didMount.current && setValidation(validatorFn(value))
+  }, [didMount, validatorFn, value])
 
   return [value, setValue, validation]
 }

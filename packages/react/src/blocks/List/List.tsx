@@ -97,7 +97,7 @@ function getCellText(cell: CellProps | string[] | undefined): string {
   return !cell || isArray(cell) ? '' : getInlineText(cell.cell)
 }
 
-export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
+export const List = ({ list }: ListProps) => {
   const { pageSize = 16, rows, columns, rowActions } = list
   const rowKeys = Object.keys(rows)
   const colKeys = Object.keys(columns)
@@ -138,7 +138,7 @@ export const List = ({ list, contextualVariant = 'block' }: ListProps) => {
     } else {
       return new Set()
     }
-  }, [selection])
+  }, [rowActions, rows, selection])
 
   const findableColumns = colKeys.filter((colKey) => columns[colKey].findable)
   const lowercaseFindQuery = find?.toLowerCase()

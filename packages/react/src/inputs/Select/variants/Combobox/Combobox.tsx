@@ -106,7 +106,7 @@ export const Combobox = ({
   useEffect(() => {
     putInputValue(actionId, initialValues || [])
     return () => deleteInputValue(actionId)
-  }, [])
+  }, [actionId, initialValues])
 
   const onSelect = useCallback(
     (_event: OnSelectParams[0], props?: OnSelectParams[1]) => {
@@ -131,7 +131,7 @@ export const Combobox = ({
         contextOnAction && contextOnAction(actionPayload)
       }
     },
-    [actionId, onAction, contextOnAction, metadata, include]
+    [labelMap, actionId, metadata, include, onAction, contextOnAction]
   )
 
   return (
@@ -158,7 +158,7 @@ export const Combobox = ({
           ...(description && { 'aria-describedby': contextualDescriptionId }),
         }}
       >
-        {options.map(({ value, label, description, descriptionVariant }) => {
+        {options.map(({ value, label, description }) => {
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
             <Option

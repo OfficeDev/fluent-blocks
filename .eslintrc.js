@@ -282,6 +282,8 @@ const eslintrc = {
     'react/no-find-dom-node': 'warn',
     'react/no-direct-mutation-state': 'warn',
     'react/display-name': 'warn',
+    'react-hooks/rules-of-hooks': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
     'spaced-comment': [
       'warn',
       'always',
