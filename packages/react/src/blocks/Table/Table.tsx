@@ -158,8 +158,8 @@ export const Table = (props: TableProps) => {
   const commonStyles = useCommonStyles()
   const tableStyles = useTableStyles()
 
-  const colKeys = keys(columns)
-  const rowKeys = keys(rows)
+  const colKeys = useMemo(() => keys(columns), [columns])
+  const rowKeys = useMemo(() => keys(rows), [rows])
   const columnOrder = ['selection', ...colKeys, 'overflow']
 
   const groupAttrs = {
