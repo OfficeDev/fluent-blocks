@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.13
+
+### Patch Changes
+
+- [#193](https://github.com/OfficeDev/fluent-blocks/pull/193) [`89614b8`](https://github.com/OfficeDev/fluent-blocks/commit/89614b898fe077f845cd85e294bbf0e81e6a77a5) Thanks [@thure](https://github.com/thure)! - Fix React hooks dependencies issues.
+
 ## 9.3.0-next.12
 
 ### Patch Changes
