@@ -1,5 +1,5 @@
 import { Chart } from 'chart.js'
-import { memo, useContext, useEffect, useRef } from 'react'
+import { memo, useCallback, useContext, useEffect, useRef } from 'react'
 
 import { FluentBlocksContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
@@ -43,55 +43,58 @@ export const BubbleChart = memo(
       dataset.data.sort((a: any, b: any) => a.x - b.x)
     })
 
-    const createDataPoints = (): Chart.ChartDataSets[] =>
-      Array.from(data.datasets, (set, i) => {
-        let dataPointConfig = {
-          label: translate(set.label),
-          data: set.data,
-          borderWidth: 0,
-          borderSkipped: false,
-          borderColor: theme.colorNeutralBackground1,
-          hoverBorderColor: chartDataPointColors[i],
-          backgroundColor: chartDataPointColors[i],
-          hoverBorderWidth: 0,
-          hoverBackgroundColor: chartDataPointColors[i],
-          pointBorderColor: theme.colorNeutralBackground1,
-          pointBackgroundColor: theme.colorNeutralForeground2,
-          pointHoverBackgroundColor: theme.colorNeutralForeground2,
-          pointHoverBorderColor: chartDataPointColors[i],
-          pointHoverBorderWidth: 0,
-          borderCapStyle: 'round',
-          borderJoinStyle: 'round',
-          pointBorderWidth: 0,
-          pointRadius: 0,
-          pointHoverRadius: 0,
-        }
-        if (themeName === 'highContrast') {
-          const backgroundPattern = buildPattern({
-            ...chartBubbleDataPointPatterns[i],
-            backgroundColor: theme.colorNeutralBackground1,
-            patternColor: theme.colorBrandBackground,
-          })
-          const backgroundPatternHover = buildPattern({
-            ...chartBubbleDataPointPatterns[i],
-            backgroundColor: theme.colorNeutralBackground1,
-            patternColor: theme.colorNeutralStroke1Hover,
-          })
-          dataPointConfig = {
-            ...dataPointConfig,
-            borderWidth: 1,
-            hoverBorderColor: theme.colorNeutralStroke1Hover,
-            hoverBorderWidth: 3,
-            pointBorderColor: theme.colorNeutralStroke1,
-            pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+    const createDataPoints = useCallback(
+      (): Chart.ChartDataSets[] =>
+        Array.from(data.datasets, (set, i) => {
+          let dataPointConfig = {
+            label: translate(set.label),
+            data: set.data,
+            borderWidth: 0,
+            borderSkipped: false,
+            borderColor: theme.colorNeutralBackground1,
+            hoverBorderColor: chartDataPointColors[i],
+            backgroundColor: chartDataPointColors[i],
+            hoverBorderWidth: 0,
+            hoverBackgroundColor: chartDataPointColors[i],
+            pointBorderColor: theme.colorNeutralBackground1,
+            pointBackgroundColor: theme.colorNeutralForeground2,
+            pointHoverBackgroundColor: theme.colorNeutralForeground2,
+            pointHoverBorderColor: chartDataPointColors[i],
+            pointHoverBorderWidth: 0,
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round',
+            pointBorderWidth: 0,
+            pointRadius: 0,
             pointHoverRadius: 0,
-            borderColor: theme.colorBrandBackground,
-            backgroundColor: backgroundPattern as unknown as string,
-            hoverBackgroundColor: backgroundPatternHover as unknown as string,
           }
-        }
-        return dataPointConfig as any
-      })
+          if (themeName === 'highContrast') {
+            const backgroundPattern = buildPattern({
+              ...chartBubbleDataPointPatterns[i],
+              backgroundColor: theme.colorNeutralBackground1,
+              patternColor: theme.colorBrandBackground,
+            })
+            const backgroundPatternHover = buildPattern({
+              ...chartBubbleDataPointPatterns[i],
+              backgroundColor: theme.colorNeutralBackground1,
+              patternColor: theme.colorNeutralStroke1Hover,
+            })
+            dataPointConfig = {
+              ...dataPointConfig,
+              borderWidth: 1,
+              hoverBorderColor: theme.colorNeutralStroke1Hover,
+              hoverBorderWidth: 3,
+              pointBorderColor: theme.colorNeutralStroke1,
+              pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+              pointHoverRadius: 0,
+              borderColor: theme.colorBrandBackground,
+              backgroundColor: backgroundPattern as unknown as string,
+              hoverBackgroundColor: backgroundPatternHover as unknown as string,
+            }
+          }
+          return dataPointConfig as any
+        }),
+      [chartDataPointColors, data.datasets, theme, themeName, translate]
+    )
 
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
@@ -267,11 +270,12 @@ export const BubbleChart = memo(
             removeFocusStyleOnClick
           )
           canvasRef.current.removeEventListener('keydown', changeFocus)
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           canvasRef.current.removeEventListener('focusout', resetChartStates)
         }
         chartRef.current.destroy()
       }
-    }, [])
+    }, [chartId, data, theme, themeName, translate])
 
     /**
      * Theme updates
@@ -301,7 +305,7 @@ export const BubbleChart = memo(
       axesConfig({ chart: chartRef.current, ctx, theme })
 
       chartRef.current.update()
-    }, [themeName])
+    }, [chartDataPointColors, createDataPoints, theme, themeName])
 
     function onLegendClick(datasetIndex: number) {
       if (!chartRef.current) {

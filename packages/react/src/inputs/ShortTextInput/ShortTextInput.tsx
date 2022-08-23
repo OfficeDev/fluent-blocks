@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useRef } from 'react'
 
 import {
   ShortTextInputProps as NaturalShortTextInputProps,
@@ -13,7 +13,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Paragraph } from '../../blocks'
-import { Inline, InlineEntity, InlineSequenceOrString } from '../../inlines'
+import { Inline, InlineEntity } from '../../inlines'
 import { InputLabelContent } from '../../internal'
 import {
   deleteInputValue,
@@ -139,7 +139,7 @@ export const ShortTextInput = ({
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
-  }, [])
+  }, [actionId, initialValue])
 
   const onChange = useCallback(
     (nextValue: string) => {
@@ -162,7 +162,7 @@ export const ShortTextInput = ({
     [actionId, onAction, contextOnAction, metadata, include]
   )
 
-  useEffect(() => onChange(debouncedValue), [debouncedValue])
+  useEffect(() => onChange(debouncedValue), [debouncedValue, onChange])
 
   const labelId = makeId(actionId, 'label')
   const descriptionId = makeId(actionId, 'description')

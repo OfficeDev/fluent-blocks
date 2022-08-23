@@ -1,5 +1,5 @@
 import { Chart } from 'chart.js'
-import { memo, useContext, useEffect, useRef } from 'react'
+import { memo, useCallback, useContext, useEffect, useRef } from 'react'
 
 import { FluentBlocksContext, useTranslations } from '../../../lib'
 import { Legend } from '../Legend'
@@ -41,55 +41,58 @@ export const VerticalBarChart = memo(
     const chartDataPointColors = useChartColors({ theme, themeName })
     const translate = useTranslations()
 
-    const createDataPoints = (): Chart.ChartDataSets[] =>
-      Array.from(data.datasets, (set, i) => {
-        let dataPointConfig = {
-          label: translate(set.label),
-          data: set.data,
-          borderWidth: 0,
-          borderSkipped: false,
-          borderColor: theme.colorNeutralBackground1,
-          hoverBorderColor: chartDataPointColors[i],
-          backgroundColor: chartDataPointColors[i],
-          hoverBorderWidth: 0,
-          hoverBackgroundColor: chartDataPointColors[i],
-          pointBorderColor: theme.colorNeutralBackground1,
-          pointBackgroundColor: theme.colorNeutralForeground2,
-          pointHoverBackgroundColor: theme.colorNeutralForeground2,
-          pointHoverBorderColor: chartDataPointColors[i],
-          pointHoverBorderWidth: 0,
-          borderCapStyle: 'round',
-          borderJoinStyle: 'round',
-          pointBorderWidth: 0,
-          pointRadius: 0,
-          pointHoverRadius: 0,
-        }
-        if (themeName === 'highContrast') {
-          const bgPattern = buildPattern({
-            ...chartBarDataPointPatterns[i],
-            backgroundColor: theme.colorNeutralBackground1,
-            patternColor: theme.colorBrandBackground,
-          })
-          const bgHoverPattern = buildPattern({
-            ...chartBarDataPointPatterns[i],
-            backgroundColor: theme.colorNeutralBackground1,
-            patternColor: theme.colorNeutralStroke1Hover,
-          })
-          dataPointConfig = {
-            ...dataPointConfig,
-            borderWidth: 1,
-            hoverBorderColor: theme.colorNeutralStroke1Hover,
-            hoverBorderWidth: 3,
-            pointBorderColor: theme.colorNeutralStroke1,
-            pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+    const createDataPoints = useCallback(
+      (): Chart.ChartDataSets[] =>
+        Array.from(data.datasets, (set, i) => {
+          let dataPointConfig = {
+            label: translate(set.label),
+            data: set.data,
+            borderWidth: 0,
+            borderSkipped: false,
+            borderColor: theme.colorNeutralBackground1,
+            hoverBorderColor: chartDataPointColors[i],
+            backgroundColor: chartDataPointColors[i],
+            hoverBorderWidth: 0,
+            hoverBackgroundColor: chartDataPointColors[i],
+            pointBorderColor: theme.colorNeutralBackground1,
+            pointBackgroundColor: theme.colorNeutralForeground2,
+            pointHoverBackgroundColor: theme.colorNeutralForeground2,
+            pointHoverBorderColor: chartDataPointColors[i],
+            pointHoverBorderWidth: 0,
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round',
+            pointBorderWidth: 0,
+            pointRadius: 0,
             pointHoverRadius: 0,
-            borderColor: theme.colorBrandBackground,
-            backgroundColor: bgPattern as unknown as string,
-            hoverBackgroundColor: bgHoverPattern as unknown as string,
           }
-        }
-        return dataPointConfig as any
-      })
+          if (themeName === 'highContrast') {
+            const bgPattern = buildPattern({
+              ...chartBarDataPointPatterns[i],
+              backgroundColor: theme.colorNeutralBackground1,
+              patternColor: theme.colorBrandBackground,
+            })
+            const bgHoverPattern = buildPattern({
+              ...chartBarDataPointPatterns[i],
+              backgroundColor: theme.colorNeutralBackground1,
+              patternColor: theme.colorNeutralStroke1Hover,
+            })
+            dataPointConfig = {
+              ...dataPointConfig,
+              borderWidth: 1,
+              hoverBorderColor: theme.colorNeutralStroke1Hover,
+              hoverBorderWidth: 3,
+              pointBorderColor: theme.colorNeutralStroke1,
+              pointHoverBorderColor: theme.colorNeutralStroke1Hover,
+              pointHoverRadius: 0,
+              borderColor: theme.colorBrandBackground,
+              backgroundColor: bgPattern as unknown as string,
+              hoverBackgroundColor: bgHoverPattern as unknown as string,
+            }
+          }
+          return dataPointConfig as any
+        }),
+      [chartDataPointColors, data.datasets, theme, themeName, translate]
+    )
 
     // eslint-disable-next-line max-lines-per-function
     useEffect(() => {
@@ -281,11 +284,12 @@ export const VerticalBarChart = memo(
             removeFocusStyleOnClick
           )
           canvasRef.current.removeEventListener('keydown', changeFocus)
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           canvasRef.current.removeEventListener('focusout', resetChartStates)
         }
         chartRef.current.destroy()
       }
-    }, [])
+    }, [chartId, data, stacked, theme, themeName, translate])
 
     /**
      * Theme updates
@@ -314,7 +318,7 @@ export const VerticalBarChart = memo(
       // Update axeses
       axesConfig({ chart: chartRef.current, ctx, theme })
       chartRef.current.update()
-    }, [theme])
+    }, [chartDataPointColors, createDataPoints, theme, themeName])
 
     function onLegendClick(datasetIndex: number) {
       if (!chartRef.current) {
