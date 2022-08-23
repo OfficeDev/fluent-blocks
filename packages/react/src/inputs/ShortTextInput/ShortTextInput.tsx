@@ -127,13 +127,14 @@ export const ShortTextInput = ({
   const shortInputStyles = useShortInputStyles()
   const commonStyles = useCommonStyles()
   const textBlockStyles = useTextBlockStyles()
+  const didMount = useRef(false)
   const [value, setValue, validation] = useValidation(
+    didMount,
     initialValue,
     initialValidation,
     validator
   )
   const debouncedValue = useDebounce(value, 400)
-  const didMount = useRef(false)
   const { onAction: contextOnAction } = useFluentBlocksContext()
 
   useEffect(() => {
