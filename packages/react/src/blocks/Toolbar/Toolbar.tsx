@@ -158,7 +158,7 @@ export const Toolbar = ({
   const onComputeResize = useCallback(() => {
     setActionsInFlow(getNextActionsInFlow())
     setLayoutNeedsUpdate(false)
-  }, [])
+  }, [getNextActionsInFlow])
 
   const onResizeStart = useCallback(() => {
     setLayoutNeedsUpdate(true)

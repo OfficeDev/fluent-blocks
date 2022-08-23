@@ -49,7 +49,7 @@ export const Link = ({
     }
     derivedOnAction && derivedOnAction(actionPayload)
     contextOnAction && contextOnAction(actionPayload)
-  }, [derivedOnAction, derivedActionId])
+  }, [derivedActionId, derivedOnAction, contextOnAction])
 
   const derivedDescription = [
     ...(external && targetBlank

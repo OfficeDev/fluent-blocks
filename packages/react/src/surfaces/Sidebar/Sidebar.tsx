@@ -155,18 +155,21 @@ export const Sidebar = (props: SidebarProps) => {
     setActiveItem(initialActiveItem || null)
   }, [initialActiveItem])
 
-  const onSidebarItemClick: SelectTabEventHandler = useCallback((event) => {
-    const nextActiveItem = get(event, ['currentTarget', 'id'], null)
-    setActiveItem(nextActiveItem)
-    if (nextActiveItem) {
-      const payload = makePayload({
-        type: 'activate' as 'activate',
-        actionId: nextActiveItem,
-      })
-      onAction && onAction(payload)
-      contextOnAction && contextOnAction(payload)
-    }
-  }, [])
+  const onSidebarItemClick: SelectTabEventHandler = useCallback(
+    (event) => {
+      const nextActiveItem = get(event, ['currentTarget', 'id'], null)
+      setActiveItem(nextActiveItem)
+      if (nextActiveItem) {
+        const payload = makePayload({
+          type: 'activate' as 'activate',
+          actionId: nextActiveItem,
+        })
+        onAction && onAction(payload)
+        contextOnAction && contextOnAction(payload)
+      }
+    },
+    [contextOnAction, onAction]
+  )
 
   return (
     <nav

@@ -184,7 +184,7 @@ export const Table = (props: TableProps) => {
           0,
         !!select
       ),
-    [rows, columns, select]
+    [columns, rowKeys, select, rows]
   )
 
   const $table = useRef<HTMLDivElement | null>(null)
@@ -215,7 +215,7 @@ export const Table = (props: TableProps) => {
     } else {
       return breakpoints.get(Infinity)
     }
-  }, [])
+  }, [breakpoints])
 
   const updateTableLayout = useCallback(() => {
     const nextColumnsInFlow = getNextColumnsInFlow()
@@ -223,7 +223,7 @@ export const Table = (props: TableProps) => {
     setContentColumnsHidden(
       getContentColumnsHidden(nextColumnsInFlow!, colKeys)
     )
-  }, [])
+  }, [colKeys, getNextColumnsInFlow])
 
   useLayoutResize($table, updateTableLayout)
 
@@ -240,7 +240,7 @@ export const Table = (props: TableProps) => {
         contextOnAction && contextOnAction(payload)
       }
     },
-    [props.onAction, contextOnAction]
+    [props, contextOnAction]
   )
 
   const rootSelectActivate = useCallback(
@@ -285,7 +285,7 @@ export const Table = (props: TableProps) => {
           ]
       }
     },
-    [translations]
+    [sort, translations]
   )
 
   return (

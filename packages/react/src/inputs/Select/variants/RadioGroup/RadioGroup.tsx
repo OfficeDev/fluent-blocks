@@ -49,7 +49,7 @@ export const RadioGroup = ({
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
-  }, [])
+  }, [actionId, initialValue])
 
   const onChange = useCallback(
     (

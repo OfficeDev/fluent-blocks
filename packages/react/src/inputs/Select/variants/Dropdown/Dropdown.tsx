@@ -76,7 +76,7 @@ export const Dropdown = ({
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
     return () => deleteInputValue(actionId)
-  }, [])
+  }, [actionId, initialValue])
 
   const onSelect = useCallback(
     (_event: OnSelectParams[0], { optionValue }: OnSelectParams[1]) => {
@@ -101,7 +101,7 @@ export const Dropdown = ({
       onAction && onAction(actionPayload)
       contextOnAction && contextOnAction(actionPayload)
     },
-    [actionId, onAction, contextOnAction, metadata, include]
+    [options, actionId, metadata, include, onAction, contextOnAction]
   )
 
   return (
@@ -129,7 +129,7 @@ export const Dropdown = ({
           'aria-required': !!required,
         }}
       >
-        {options.map(({ value, label, description, descriptionVariant }) => {
+        {options.map(({ value, label, description }) => {
           const optionDescriptionId = makeId(value, 'optionDescription')
           return (
             <Option
