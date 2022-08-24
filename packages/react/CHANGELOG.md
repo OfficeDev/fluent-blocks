@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.14
+
+### Patch Changes
+
+- [#195](https://github.com/OfficeDev/fluent-blocks/pull/195) [`d4625da`](https://github.com/OfficeDev/fluent-blocks/commit/d4625da0f6ae551ef84760d9b1b3cbdb46ea78de) Thanks [@thure](https://github.com/thure)! - Upgrade Fluent UI and tabster (et al) dependencies. Fix Table infinite rerender bug. Fix short text input validation hooks and styling in high contrast theme.
+
 ## 9.3.0-next.13
 
 ### Patch Changes
