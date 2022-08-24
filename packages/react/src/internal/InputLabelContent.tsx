@@ -10,9 +10,16 @@ const useInputLabelContentStyles = makeStyles({
     marginInlineStart: '.125em',
     color: 'var(--colorPaletteRedForeground1)',
   },
+  'requiredAsterisk-hc': {
+    marginInlineStart: '.125em',
+    color: 'var(--colorCompoundBrandForeground1)',
+  },
   optionalInParens: {
     marginInlineStart: '.25em',
     color: 'var(--colorNeutralForeground3)',
+  },
+  'optionalInParens-hc': {
+    marginInlineStart: '.25em',
   },
 })
 
@@ -25,17 +32,33 @@ export const InputLabelContent = ({
   required,
 }: InputLabelContentProps) => {
   const inputLabelContentStyles = useInputLabelContentStyles()
-  const { translations, requiredVariant } = useFluentBlocksContext()
+  const { translations, requiredVariant, themeName } = useFluentBlocksContext()
   return (
     <>
       <InlineContent inlines={label} />
       {requiredVariant === 'requiredAsterisk' && required && (
-        <span className={inputLabelContentStyles.requiredAsterisk}>
+        <span
+          className={
+            inputLabelContentStyles[
+              themeName === 'highContrast'
+                ? 'requiredAsterisk-hc'
+                : 'requiredAsterisk'
+            ]
+          }
+        >
           {translations['requiredAsterisk']}
         </span>
       )}
       {requiredVariant === 'optionalInParens' && !required && (
-        <span className={inputLabelContentStyles.optionalInParens}>
+        <span
+          className={
+            inputLabelContentStyles[
+              themeName === 'highContrast'
+                ? 'optionalInParens-hc'
+                : 'optionalInParens'
+            ]
+          }
+        >
           {translations['optionalInParens']}
         </span>
       )}

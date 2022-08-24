@@ -77,8 +77,8 @@
     "@fluent-blocks/basic-icons": "workspace:9.2.0-next.0",
     "@fluent-blocks/colors": "workspace:9.2.0",
     "@fluent-blocks/schemas": "workspace:9.3.0-next.10",
-    "@fluentui/react-components": "~9.1.1",
-    "@fluentui/react-tabster": "~9.0.3",
+    "@fluentui/react-components": "~9.2.0",
+    "@fluentui/react-tabster": "~9.1.0",
     "@react-hook/resize-observer": "^1.2.5",
     "alea": "^1.0.1",
     "lodash": "^4.17.21"

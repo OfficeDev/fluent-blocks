@@ -79,6 +79,15 @@ const useShortTextInputStyles = makeStyles({
   'validation--invalid': inputValidationStyle(
     'var(--colorPaletteRedForeground1)'
   ),
+  'validation-hc--valid': {
+    // this intentionally does not apply a border
+  },
+  'validation-hc--pending': {
+    // this intentionally does not apply a border
+  },
+  'validation-hc--invalid': inputValidationStyle(
+    'var(--colorBrandForegroundLink)'
+  ),
   'input--no-block-siblings': {
     marginBlockStart: 0,
   },
@@ -94,6 +103,16 @@ const useShortTextInputStyles = makeStyles({
   'validationMessage--invalid': {
     '& > p': {
       color: 'var(--colorPaletteRedForeground1)',
+    },
+  },
+  'validationMessage-hc--valid': {
+    '& > p': {
+      color: 'var(--colorNeutralForeground1)',
+    },
+  },
+  'validationMessage-hc--invalid': {
+    '& > p': {
+      color: 'var(--colorBrandForegroundLink)',
     },
   },
 })
@@ -135,7 +154,7 @@ export const ShortTextInput = ({
     validator
   )
   const debouncedValue = useDebounce(value, 400)
-  const { onAction: contextOnAction } = useFluentBlocksContext()
+  const { onAction: contextOnAction, themeName } = useFluentBlocksContext()
 
   useEffect(() => {
     putInputValue(actionId, initialValue || '')
@@ -212,7 +231,11 @@ export const ShortTextInput = ({
               (!description || descriptionVariant === 'visuallyHidden') &&
               shortTextInputStyles['input--no-block-siblings'],
             !!validation &&
-              shortTextInputStyles[`validation--${validation.valence}`]
+              shortTextInputStyles[
+                `validation${themeName === 'highContrast' ? '-hc' : ''}--${
+                  validation.valence
+                }`
+              ]
           ),
           ...(autocomplete && { autocomplete }),
           ...(disambiguatingLabel
@@ -239,7 +262,11 @@ export const ShortTextInput = ({
           className={cx(
             shortTextInputStyles.validationMessage,
             validation.valence !== 'pending' &&
-              shortTextInputStyles[`validationMessage--${validation.valence}`]
+              shortTextInputStyles[
+                `validationMessage${
+                  themeName === 'highContrast' ? '-hc' : ''
+                }--${validation.valence}`
+              ]
           )}
         >
           {validation.valence !== 'pending' && (

@@ -6,15 +6,6 @@ import { shorthands as FUIShorthands } from '@fluentui/react-components'
 // functions by the same name become available in Griffel.
 
 const sxExtensions = {
-  transition: (
-    property: CSS.TransitionPropertyProperty,
-    duration: CSS.GlobalsString,
-    timingFunction: CSS.TransitionTimingFunctionProperty
-  ) => ({
-    transitionProperty: property,
-    transitionDuration: duration,
-    transitionTimingFunction: timingFunction,
-  }),
   flexFlow: (
     direction: CSS.FlexDirectionProperty,
     wrap: CSS.FlexWrapProperty
