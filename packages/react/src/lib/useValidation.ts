@@ -21,7 +21,7 @@ function bindValidator(
   if (isFunction(validator)) {
     return validator
   }
-  switch (validator.validator) {
+  switch (validator.predicate) {
     case 'length':
       return (value?: string) => {
         const length = value ? value.length : 0
