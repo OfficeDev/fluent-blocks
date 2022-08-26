@@ -47,13 +47,13 @@ interface ValidatorProps {
 }
 
 interface LengthValidatorProps extends ValidatorProps {
-  validator: 'length'
+  predicate: 'length'
   min?: number
   max?: number
 }
 
 interface RegexpValidatorProps extends ValidatorProps {
-  validator: 'regexp'
+  predicate: 'regexp'
   regexp: string
 }
 
