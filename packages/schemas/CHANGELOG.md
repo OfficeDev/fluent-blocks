@@ -1,5 +1,11 @@
 # @fluent-blocks/schemas
 
+## 9.3.0-next.15
+
+### Minor Changes
+
+- [#197](https://github.com/OfficeDev/fluent-blocks/pull/197) [`2d95d1f`](https://github.com/OfficeDev/fluent-blocks/commit/2d95d1f40052dbc40a2686e7fc133042a59fa03a) Thanks [@thure](https://github.com/thure)! - Adjust validator ontology for clarity.
+
 ## 9.3.0-next.10
 
 ### Patch Changes
