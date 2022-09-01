@@ -1,5 +1,18 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.15
+
+### Minor Changes
+
+- [#197](https://github.com/OfficeDev/fluent-blocks/pull/197) [`2d95d1f`](https://github.com/OfficeDev/fluent-blocks/commit/2d95d1f40052dbc40a2686e7fc133042a59fa03a) Thanks [@thure](https://github.com/thure)! - Adjust validator ontology for clarity.
+
+### Patch Changes
+
+- [#199](https://github.com/OfficeDev/fluent-blocks/pull/199) [`1ba2e27`](https://github.com/OfficeDev/fluent-blocks/commit/1ba2e27808ac2563323f2248abd3958d29dbefd8) Thanks [@thure](https://github.com/thure)! - Update deps and fix tabbing in Toolbar
+
+- Updated dependencies [[`2d95d1f`](https://github.com/OfficeDev/fluent-blocks/commit/2d95d1f40052dbc40a2686e7fc133042a59fa03a)]:
+  - @fluent-blocks/schemas@9.3.0-next.15
+
 ## 9.3.0-next.14
 
 ### Patch Changes
