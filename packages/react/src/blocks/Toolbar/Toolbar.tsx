@@ -7,6 +7,7 @@ import {
   SingleValueInputActionPayload,
 } from '@fluent-blocks/schemas'
 import { mergeClasses as cx, makeStyles } from '@fluentui/react-components'
+import { useArrowNavigationGroup } from '@fluentui/react-tabster'
 
 import {
   Button,
@@ -131,6 +132,11 @@ export const Toolbar = ({
   const [layoutNeedsUpdate, setLayoutNeedsUpdate] = useState(true)
   const [actionsInFlow, setActionsInFlow] = useState<Set<string>>(new Set())
 
+  const inFlowAttrs = {
+    role: contextualRole,
+    ...useArrowNavigationGroup({ axis: 'horizontal' }),
+  }
+
   const getNextActionsInFlow = useCallback(() => {
     const $trigger = $toolbar.current?.querySelector('[data-layout]')
     const $children = $toolbar.current?.children
@@ -180,7 +186,7 @@ export const Toolbar = ({
 
   return (
     <div
-      role={contextualRole}
+      {...inFlowAttrs}
       className={cx(
         toolbarStyles.root,
         toolbarStyles[`root--${toolbar.buttonSize || defaultButtonSize}`],
