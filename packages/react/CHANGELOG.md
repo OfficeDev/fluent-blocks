@@ -1,5 +1,16 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.16
+
+### Minor Changes
+
+- [#200](https://github.com/OfficeDev/fluent-blocks/pull/200) [`e704f3e`](https://github.com/OfficeDev/fluent-blocks/commit/e704f3ec723637c814b7402ebecedcd23ae21111) Thanks [@thure](https://github.com/thure)! - Allow described inlines in Card titles. Allow heading level prop for Card titles.
+
+### Patch Changes
+
+- Updated dependencies [[`e704f3e`](https://github.com/OfficeDev/fluent-blocks/commit/e704f3ec723637c814b7402ebecedcd23ae21111)]:
+  - @fluent-blocks/schemas@9.3.0-next.16
+
 ## 9.3.0-next.15
 
 ### Minor Changes

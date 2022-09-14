@@ -8,6 +8,7 @@
     "@fluent-blocks/schemas": "9.2.0"
   },
   "changesets": [
+    "beige-elephants-juggle",
     "blue-shoes-press",
     "early-roses-compare",
     "gold-months-care",
