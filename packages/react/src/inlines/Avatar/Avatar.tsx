@@ -10,7 +10,7 @@ import {
 } from '@fluentui/react-components'
 
 import { Icon } from '..'
-import { key, makeId, rem } from '../../lib'
+import { key, makeId, rem, useCommonStyles } from '../../lib'
 
 export interface AvatarProps extends Omit<NaturalAvatarProps, 'avatar'> {
   avatar: Omit<NaturalAvatarProps['avatar'], 'color'> & {
@@ -36,6 +36,7 @@ export const Avatar = (props: AvatarProps) => {
   const labelId = makeId(key(props), 'label')
   const {
     label,
+    labelVisuallyHidden,
     avatar: {
       image,
       icon,
@@ -47,6 +48,7 @@ export const Avatar = (props: AvatarProps) => {
     },
   } = props
   const avatarStyles = useAvatarStyles()
+  const commonStyles = useCommonStyles()
 
   return (
     <>
@@ -75,7 +77,12 @@ export const Avatar = (props: AvatarProps) => {
           'aria-labelledby': labelId,
         }}
       />
-      <span id={labelId}>{label}</span>
+      <span
+        id={labelId}
+        className={cx(labelVisuallyHidden && commonStyles.visuallyHidden)}
+      >
+        {label}
+      </span>
     </>
   )
 }
