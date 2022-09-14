@@ -1,7 +1,8 @@
-import { InlineSequenceOrString } from '../inlines'
+import { DescribedInlineSequenceOrString } from '../inlines'
 import { MenuActionSequence } from '../lib/menu'
 import { DescriptionListProps } from './DescriptionList'
 import { FigureProps } from './Figure'
+import { HeadingLevel } from './Heading'
 import { ParagraphProps } from './Paragraph'
 import { ShortInputsProps } from './ShortInputs'
 import { TableProps } from './Table'
@@ -19,7 +20,8 @@ export type CardContentItemSequence = CardContentItemEntity[]
 
 export interface CardProps {
   card: {
-    title: InlineSequenceOrString
+    title: DescribedInlineSequenceOrString
+    level?: HeadingLevel
     titleVisuallyHidden?: boolean
     actions?: MenuActionSequence
     body: CardContentItemSequence

@@ -107,7 +107,7 @@ export const Card = ({ card, contextualVariant = 'block' }: CardProps) => {
         >
           <Heading
             paragraph={card.title}
-            level={3}
+            level={card.level || 3}
             contextualVariant="card"
             contextualId={id}
           />

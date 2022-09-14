@@ -9,7 +9,7 @@ import {
   TablePropsOrElement,
   TabsPropsOrElement,
 } from '../blocks'
-import { InlineSequenceOrString } from '../inlines'
+import { DescribedInlineSequenceOrString } from '../inlines'
 import { EscapeElement } from '../lib'
 import { MenuActionSequence } from './menus'
 
@@ -27,7 +27,7 @@ export type CardContentItemSequence = CardContentItemEntity[]
 
 export interface CardProps extends Omit<NaturalCardProps, 'card'> {
   card: Omit<NaturalCardProps['card'], 'title' | 'actions' | 'body'> & {
-    title: InlineSequenceOrString
+    title: DescribedInlineSequenceOrString
     actions?: MenuActionSequence
     body: CardContentItemSequence
   }
