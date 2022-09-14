@@ -1,5 +1,11 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.18
+
+### Minor Changes
+
+- [#204](https://github.com/OfficeDev/fluent-blocks/pull/204) [`005982f`](https://github.com/OfficeDev/fluent-blocks/commit/005982f515028dd8eef0b037e770c74e3a28fc73) Thanks [@thure](https://github.com/thure)! - Add preferActionHandler to React package Anchor props to prevent navigation and use onAction where possible.
+
 ## 9.3.0-next.17
 
 ### Minor Changes
