@@ -1,5 +1,4 @@
-import noop from 'lodash/noop'
-import { ReactElement, useCallback } from 'react'
+import { KeyboardEvent, MouseEvent, ReactElement, useCallback } from 'react'
 
 import {
   ButtonActionPayload,
@@ -11,11 +10,24 @@ import { Link as FluentLink } from '@fluentui/react-components'
 import { Described, useFluentBlocksContext } from '../../lib'
 import { WithActionHandler } from '../../props'
 
-export type AnchorProps = NaturalAnchorProps
-
 export interface InlineButtonProps
   extends NaturalInlineButtonProps,
     WithActionHandler<ButtonActionPayload> {}
+
+interface AnchorPropsPlain
+  extends NaturalAnchorProps,
+    WithActionHandler<ButtonActionPayload> {
+  preferActionHandler?: false
+  actionId?: string
+}
+
+interface AnchorPropsPrefersActionHandler
+  extends Omit<AnchorPropsPlain, 'preferActionHandler'> {
+  preferActionHandler: true
+  actionId: string
+}
+
+export type AnchorProps = AnchorPropsPlain | AnchorPropsPrefersActionHandler
 
 export type LinkProps = AnchorProps | InlineButtonProps
 
@@ -24,7 +36,7 @@ function isAnchor(o: any): o is AnchorProps {
 }
 
 function isInlineButton(o: any): o is InlineButtonProps {
-  return 'actionId' in o
+  return !('href' in o)
 }
 
 export const Link = ({
@@ -38,18 +50,40 @@ export const Link = ({
 }: LinkProps) => {
   const { translations, onAction: contextOnAction } = useFluentBlocksContext()
 
-  const derivedActionId = isInlineButton(props) ? props.actionId : null
-  const derivedOnAction =
-    isInlineButton(props) && props.onAction ? props.onAction : noop
+  const linkIsAnchor = isAnchor(props)
+  const linkIsInlineButton = isInlineButton(props)
+  const preferActionHandler = linkIsAnchor ? props.preferActionHandler : true
 
-  const onLinkActivate = useCallback(() => {
-    const actionPayload = {
-      type: 'activate' as 'activate',
-      actionId: derivedActionId,
-    }
-    derivedOnAction && derivedOnAction(actionPayload)
-    contextOnAction && contextOnAction(actionPayload)
-  }, [derivedActionId, derivedOnAction, contextOnAction])
+  const derivedOnAction =
+    (linkIsInlineButton || (linkIsAnchor && props.preferActionHandler)) &&
+    props.onAction
+      ? props.onAction
+      : undefined
+
+  const onLinkActivate = useCallback(
+    (e: MouseEvent | KeyboardEvent) => {
+      if (
+        linkIsAnchor &&
+        preferActionHandler &&
+        (derivedOnAction || contextOnAction)
+      ) {
+        e.preventDefault()
+      }
+      const actionPayload = {
+        type: 'activate' as 'activate',
+        actionId: props.actionId!,
+      }
+      derivedOnAction && derivedOnAction(actionPayload)
+      contextOnAction && contextOnAction(actionPayload)
+    },
+    [
+      props.actionId,
+      preferActionHandler,
+      linkIsAnchor,
+      derivedOnAction,
+      contextOnAction,
+    ]
+  )
 
   const derivedDescription = [
     ...(external && targetBlank
@@ -72,6 +106,7 @@ export const Link = ({
           as: 'a' as 'a',
           href: props.href,
           ...(targetBlank && { target: '_blank', rel: 'noopener' }),
+          ...(props.preferActionHandler && { onClick: onLinkActivate }),
         }
       : {
           as: 'button' as 'button',
