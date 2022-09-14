@@ -1,5 +1,5 @@
-import { MediaProps } from '../media/media-properties'
-import { IconProps } from './index'
+import { MediaProps } from '../media'
+import { IconProps } from './Icon'
 
 export type AvatarSize =
   | 20
@@ -43,4 +43,5 @@ export interface AvatarProps extends MediaProps {
     color?: AvatarColor
     presenceBadge?: PresenceBadgeProps
   }
+  labelVisuallyHidden?: boolean
 }
