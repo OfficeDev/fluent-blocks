@@ -1,5 +1,16 @@
 # @fluent-blocks/react
 
+## 9.3.0-next.17
+
+### Minor Changes
+
+- [#202](https://github.com/OfficeDev/fluent-blocks/pull/202) [`9bc192c`](https://github.com/OfficeDev/fluent-blocks/commit/9bc192cc9291de19f3a18841cfdc55630c4e30c5) Thanks [@thure](https://github.com/thure)! - Allow Avatar labels to be visually hidden.
+
+### Patch Changes
+
+- Updated dependencies [[`9bc192c`](https://github.com/OfficeDev/fluent-blocks/commit/9bc192cc9291de19f3a18841cfdc55630c4e30c5)]:
+  - @fluent-blocks/schemas@9.3.0-next.17
+
 ## 9.3.0-next.16
 
 ### Minor Changes
